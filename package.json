@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "name": "google_books_search",
+  "description": "React based Google Books search app, utilizing React components, Node, Express, and MongoDB.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raseward14/Google_Books_Search.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raseward14/Google_Books_Search/issues"
+  },
+  "homepage": "https://github.com/raseward14/Google_Books_Search#readme"
+}
