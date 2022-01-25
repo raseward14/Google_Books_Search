@@ -19,7 +19,10 @@ app.get('/hello/:name', (req, res) => res.send(`Hello ${req.params.name}`));
 // all of our routes will be prefixed with /api
 app.use('/api', routes);
 
-mongoose.connect('mongodb://localhost:27017/google-books-search');
+mongoose.connect('mongodb://localhost:27017/google-books-search', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
 app.listen(8000, () => console.log('Listening on port 8000!'));
 

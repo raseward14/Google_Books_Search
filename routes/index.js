@@ -12,8 +12,8 @@ router.get('/', (req, res) => {
     res.json({ message: 'welcome to our api :)' })
 });
 
-// routes that end in /toread (http://localhost:8000/api/toread)
-router.route('/toread')
+// routes that end in /read (http://localhost:8000/api/read)
+router.route('/read')
     .get((req, res) => {
         // GET To Read Books List
         Book.findAll((err, books) => {
@@ -25,7 +25,7 @@ router.route('/toread')
         });
     })
     .post((req, res) => {
-        // POST a Book To Read (http://localhost:8000/api/toread)
+        // POST a Book To Read (http://localhost:8000/api/read)
         const newBook = new Book();
         newBook.title = req.body.title;
         newBook.authors.authorName = req.body.authors.authorName;
