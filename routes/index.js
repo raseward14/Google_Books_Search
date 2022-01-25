@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Book } = require('../models');
+const { Read, Library, Favorite } = require('../models');
 
 // middleware to use for all requests
 router.use((req, res, next) => {
