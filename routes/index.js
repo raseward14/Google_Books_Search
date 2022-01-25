@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 router.route('/read')
     .get((req, res) => {
         // GET To Read Books List
-        Read.findAll((err, books) => {
+        Read.find((err, books) => {
             if(err) {
                 // res.send(err);
             } else {
@@ -28,7 +28,7 @@ router.route('/read')
         // POST a Book To Read (http://localhost:8000/api/read)
         const newBook = new Read();
         newBook.title = req.body.title;
-        newBook.authors.authorName = req.body.authors.authorName;
+        newBook.authors.authorName = req.body.authors[0].authorName;
         newBook.description = req.body.description;
         // newBook.imageLink = req.body.imageLink;
         // newBook.infoLink = req.body.infoLink;
@@ -40,10 +40,22 @@ router.route('/read')
                 res.json({ message: 'Book just saved: ', newBook })
             }
         });
-    })
+    });
 
-
+// routes that end in /read/:id (http://localhost:8000/api/read/:id)
+router.route('/read/:id')
+.get((req, res) => {
+    // GET a book I read
+    Read.findById(req.params.id, (err, book) => {
+        if(err) {
+            res.send(err);
+        } else {
+            res.send(book);
+        };
+    });
+});
 // DELETE a Book To Read
+
 
 
 //routes that end in /library
