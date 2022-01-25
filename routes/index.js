@@ -16,9 +16,9 @@ router.get('/', (req, res) => {
 router.route('/read')
     .get((req, res) => {
         // GET To Read Books List
-        Book.findAll((err, books) => {
+        Read.findAll((err, books) => {
             if(err) {
-                res.send(err);
+                // res.send(err);
             } else {
                 res.send(books);
             };
@@ -26,14 +26,14 @@ router.route('/read')
     })
     .post((req, res) => {
         // POST a Book To Read (http://localhost:8000/api/read)
-        const newBook = new Book();
+        const newBook = new Read();
         newBook.title = req.body.title;
         newBook.authors.authorName = req.body.authors.authorName;
         newBook.description = req.body.description;
         // newBook.imageLink = req.body.imageLink;
         // newBook.infoLink = req.body.infoLink;
         // newBook.dateAdded = req.body.dateAdded;
-        newBook.save(() => {
+        newBook.save((err) => {
             if(err) {
                 res.send(err);
             } else {
@@ -46,7 +46,7 @@ router.route('/read')
 // DELETE a Book To Read
 
 
-//routes that end in /alreadyread
+//routes that end in /library
 // GET books I've Read Shelf
 
 // POST Book I've Read
@@ -54,7 +54,7 @@ router.route('/read')
 // DELETE a Book I've Read
 
 
-// routes that end in /favorites
+// routes that end in /favorite
 // GET My Reading Recommendations
 
 // POST a My Reading Recommendation
