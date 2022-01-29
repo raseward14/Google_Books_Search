@@ -119,9 +119,10 @@ router.route('/library/:id')
     });
 
 
-// routes that end in /favorite
-router.route('/favorite')
+    // routes that end in /favorite
+    router.route('/favorite')
     .post((req, res) => {
+        // POST a My Reading Recommendation or favorite
         const myFavorite = new Favorite();
         myFavorite.title = req.body.title;
         myFavorite.description = req.body.description;
@@ -135,7 +136,7 @@ router.route('/favorite')
         });
     })
     .get((req, res) => {
-        // GET My Reading Recommendations
+        // GET My Reading Recommendations or favorites
         Favorite.find((err, books) => {
             if(err) {
                 res.send(err);
@@ -145,12 +146,27 @@ router.route('/favorite')
         });
     })
 
-// POST a My Reading Recommendation
-
 // routes that end in /favorite/:id
-
-// DELETE a Reading Recommendation
-
-
+router.route('/favorite/:id')
+    .get((req, res) => {
+        // GET a Reading Recommendation or favorite
+        Favorite.findById(req.params.id, (err, book) => {
+            if(err) {
+                res.send(err);
+            } else {
+                res.send(book)
+            };
+        })
+    })
+    .delete((req, res) => {
+        // GET a Reading Recommendation or favorite
+        Favorite.findByIdAndDelete(req.params.id, (err, book) => {
+            if(err) {
+                res.send(err);
+            } else {
+                res.send(book);
+            }
+        })
+    })
 
 module.exports = router;
