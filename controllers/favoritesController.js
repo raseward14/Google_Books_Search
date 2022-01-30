@@ -3,10 +3,13 @@ const db = require('../models/index');
 module.exports = {
     findAll: (req, res) => {
         // GET My Reading Recommendations or favorites
-        db.Favorite.find(req.query)
-            .sort({ title: -1 })
-            .then((dbModel) => res.json(dbModel))
-            .catch((err) => res.status(422).json(err));
+        db.Favorite.find((err, books) => {
+            if(err) {
+                res.send(err);
+            } else {
+                res.send(books);
+            };
+        })
     },
     findById: (req, res) => {
         // GET a Reading Recommendation or favorite
@@ -23,7 +26,7 @@ module.exports = {
         const myFavorite = new db.Favorite();
         myFavorite.title = req.body.title;
         myFavorite.description = req.body.description;
-        myFavorite.authors = req.body.authors.authorName;
+        myFavorite.authors.authorName = req.body.authors.authorName;
         myFavorite.save(req.body, (err) => {
             if(err) {
                 res.send(err);
