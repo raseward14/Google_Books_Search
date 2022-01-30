@@ -17,7 +17,7 @@ app.post('/hello', (req, res) => res.send(`Hello ${req.body.name}!`));
 app.get('/hello/:name', (req, res) => res.send(`Hello ${req.params.name}`));
 
 // all of our routes will be prefixed with /api
-app.use('/api', routes);
+app.use(routes);
 
 mongoose.connect('mongodb://localhost:27017/google-books-search', {
     useNewUrlParser: true,
