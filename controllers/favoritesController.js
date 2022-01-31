@@ -26,7 +26,8 @@ module.exports = {
         const myFavorite = new db.Favorite();
         myFavorite.title = req.body.title;
         myFavorite.description = req.body.description;
-        myFavorite.authors.authorName = req.body.authors.authorName;
+        myFavorite.authors = req.body.authors;
+        myFavorite.date = Date.now();
         myFavorite.save(req.body, (err) => {
             if(err) {
                 res.send(err);

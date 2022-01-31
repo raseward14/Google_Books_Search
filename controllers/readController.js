@@ -27,9 +27,7 @@ module.exports = {
         newRead.title = req.body.title;
         newRead.authors = req.body.authors;
         newRead.description = req.body.description;
-        // newRead.imageLink = req.body.imageLink;
-        // newRead.infoLink = req.body.infoLink;
-        // newRead.dateAdded = req.body.dateAdded;
+        newRead.date = Date.now();
         newRead.save((err) => {
             if (err) {
                 res.send(err);
