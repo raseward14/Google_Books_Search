@@ -6,3 +6,4 @@ React based Google Books search app, utilizing React components, Node, Express, 
 * [MongoDB Documentation](https://docs.mongodb.com/manual/reference/method/db.createCollection/)
 * [DigitalOcean Build a RESTful API using Node and Express 4](https://www.digitalocean.com/community/tutorials/build-a-restful-api-using-node-and-express-4)
 * [mongoose.js Documentation](https://mongoosejs.com/)
+* [DigitalOcean Introduction to Mongoose Schema Types](https://attacomsian.com/blog/mongoose-schema-types#arrays)
