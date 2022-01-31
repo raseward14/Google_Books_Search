@@ -10,6 +10,7 @@ router.use((req, res, next) => {
     next();
 })
 
+// routes that end in /api/favorite & /api/read & /api/library
 router.use('/favorite', favoriteRoutes);
 router.use('/read', readRoutes);
 router.use('/library', libraryRoutes);

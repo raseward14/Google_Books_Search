@@ -1,55 +1,14 @@
 const router = require('express').Router();
-const { Library } = require('../../models');
+const libraryController = require('../../controllers/libraryController');
 
-//routes that end in /library
-router.route('/library')
-    .post((req, res) => {
-    // POST Book I've Read
-    const libraryBook = new Library();
-    libraryBook.title = req.body.title;
-    libraryBook.authors.authorName = req.body.authors.authorName
-    libraryBook.description = req.body.description
-        libraryBook.save(req.body, (err) => {
-            if(err) {
-                res.send(err);
-            } else {
-                res.send({ message: 'Book added to Library:', libraryBook });
-            };
-        })
-    })
-    .get((req, res) => {
-    // GET books I've Read Shelf
-        Library.find((err, books) => {
-            if(err) {
-                res.send(err);
-            } else {
-                res.send(books);
-            };
-        });
-    });
+//routes that end in api/library
+router.route('/')
+    .post(libraryController.create)
+    .get(libraryController.findAll);
 
-// routes that end in /library/:id
-router.route('/library/:id')
-    .get((req, res) => {
-        // GET a book I've read
-        Library.findById(req.params.id, (err, book) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send(book);
-            };
-        })
-    })
-    .delete((req, res) => {
-        // DELETE a Book I've Read
-        Library.findByIdAndDelete(req.params.id, (err, book) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send(book);
-            };
-        });
-    });
-
+// routes that end in api/library/:id
+router.route('/:id')
+    .get(libraryController.findById)
+    .delete(libraryController.remove);
 
 module.exports = router;
