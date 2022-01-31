@@ -4,37 +4,40 @@ const { Schema } = mongoose;
 // Read Model Schema
 const readSchema = new Schema({
     title: String,
-    authors: [{
-        authorName: String
-    }],
+    authors: {
+        type: [String],
+        default: undefined
+    },
     description: String,
     imageLink: String, 
     infoLink: String,
-    dateAdded: Date,
+    date: Date,
 });
 
 // Library Model Schema
 const librarySchema = new Schema({
     title: String,
-    authors: [{
-        authorName: String
-    }],
+    authors: {
+        type: [String],
+        default: undefined
+    },
     description: String,
     imageLink: String, 
     infoLink: String,
-    dateAdded: Date,
+    date: Date,
 });
 
 // Favorite Model Schema
 const favoriteSchema = new Schema({
     title: String,
-    authors: [{
-        authorName: String
-    }],
+    authors: {
+        type: [String],
+        default: undefined
+    },
     description: String,
     imageLink: String, 
     infoLink: String,
-    dateAdded: Date,
+    date: Date,
 });
 
 // Creating model objects

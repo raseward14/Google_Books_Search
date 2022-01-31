@@ -25,7 +25,7 @@ module.exports = {
         // POST a Book To Read (http://localhost:8000/api/read)
         const newRead = new db.Read();
         newRead.title = req.body.title;
-        newRead.authors.authorName = req.body.authors[0].authorName;
+        newRead.authors = req.body.authors;
         newRead.description = req.body.description;
         // newRead.imageLink = req.body.imageLink;
         // newRead.infoLink = req.body.infoLink;
