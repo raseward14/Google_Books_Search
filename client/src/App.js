@@ -4,18 +4,17 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-
-import NavBar from './components/nav'
-
+import Layout from './components/Layout/layout';
+import HomePage
 function App() {
   return (
     <Router>
-      <div className="App">
-        <NavBar />
         <Routes>
+          <Route path='/' element={<Layout />}>
+            <Route index element={} />
 
+          </Route>
         </Routes>
-      </div>
     </Router>
   );
 }
