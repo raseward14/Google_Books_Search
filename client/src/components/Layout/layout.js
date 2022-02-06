@@ -10,7 +10,7 @@ const Layout = ({ search, setSearch }) => {
     return (
         <div className='App'>
             <Header title='Google Books Search' />
-            <NavBar search={search} setSearch={setSearch} />
+            <NavBar />
             <Outlet />
             <Footer />
         </div>
