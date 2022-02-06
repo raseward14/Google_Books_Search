@@ -7,9 +7,9 @@ const NavBar = () => {
         <ul className='navlinks'>
         <Link to='/' active className='navlink'>Home</Link>
         <Link to='search' className='navlink'>Search</Link>
-        <Link to='read' className='navlink'>To Read</Link>
-        <Link to='library' className='navlink'>Books I've Read</Link>
-        <Link to='favorites' className='navlink'>My Favorites</Link>
+        <Link to='read' className='navlink'>Read</Link>
+        <Link to='library' className='navlink'>Library</Link>
+        <Link to='favorites' className='navlink'>Favorites</Link>
         </ul>
     );
 };

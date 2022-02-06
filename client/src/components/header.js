@@ -2,7 +2,7 @@ import React from 'react';
 const Header = () => {
     return (
         <>
-        <p>I'm a header</p>
+        <h1>Google Books Search</h1>
         </>
     );
 };
