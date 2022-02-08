@@ -23,15 +23,14 @@ const SearchPage = () => {
         const printResult = async () => {
             const booksArray = await result;
             console.log(booksArray);
+
+            for(let i = 0; i < books.length; i++) {
+                var bookTitle = document.createElement('p');
+                // bookTitle.textContent = null
+    
+    
+            }
         };
-
-
-        for(let i = 0; i < books.length; i++) {
-            var bookTitle = document.createElement('p');
-            // bookTitle.textContent = null
-
-
-        }
     };
 
     return (
