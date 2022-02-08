@@ -28,7 +28,7 @@ const SearchPage = () => {
 
         for(let i = 0; i < books.length; i++) {
             var bookTitle = document.createElement('p');
-            // bookTitle.textContent = null
+            bookTitle.textContent = 'book goes here';
 
 
         }
