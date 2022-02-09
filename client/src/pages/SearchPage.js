@@ -5,7 +5,7 @@ const SearchPage = () => {
 
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
-    const bookShelf = document.getElementsByClassName('container');
+    const bookShelf = document.getElementById('container');
 
     const handleSubmit = async () => {
         // clear the bookshelf each time
@@ -22,16 +22,26 @@ const SearchPage = () => {
         // this function prints the booksArray
         const printResult = async () => {
             const booksArray = await result;
-            console.log(booksArray);
+            setBooks(booksArray);
+            // console.log(booksArray);
+            for(let i = 0; i < books.length; i++) {
+                var bookTitle = document.createElement('p');
+                bookTitle.textContent = books[i].volumeInfo.title;
+                bookShelf.append(bookTitle);
+                // console.log(books[i].volumeInfo.authors)
+                // console.log(books[i].volumeInfo.description)
+                // console.log(books[i].volumeInfo.imageLinks.smallThumbnail)
+                // console.log(books[i].volumeInfo.imageLinks.thumbnail)
+                // console.log(books[i].volumeInfo.previewLink)
+
+
+
+
+
+            }
         };
 
 
-        for(let i = 0; i < books.length; i++) {
-            var bookTitle = document.createElement('p');
-            // bookTitle.textContent = null
-
-
-        }
     };
 
     return (
@@ -42,7 +52,7 @@ const SearchPage = () => {
                     setSearch(event.target.value);
                 }} />
             <button onClick={handleSubmit}>Submit</button>
-            <div className='container'/>
+            <div id='container'/>
         </div>
     );
 };
