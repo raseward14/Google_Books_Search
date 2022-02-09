@@ -33,15 +33,8 @@ const SearchPage = () => {
                 // console.log(books[i].volumeInfo.imageLinks.smallThumbnail)
                 // console.log(books[i].volumeInfo.imageLinks.thumbnail)
                 // console.log(books[i].volumeInfo.previewLink)
-
-
-
-
-
             }
         };
-
-
     };
 
     return (
