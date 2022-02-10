@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 
 const SearchPage = () => {
@@ -7,15 +7,17 @@ const SearchPage = () => {
     const [books, setBooks] = useState([]);
     const bookShelf = document.getElementById('container');
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         // clear the bookshelf each time
         bookShelf.innerHTML = null;
+        console.log('one')
 
         // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async await function that will wait for this to finish 
         const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
             .then((response) => response.json())
             .then((books) => {
                 printResult();
+                console.log('two')
                 return books.items;
             });
 
@@ -24,15 +26,29 @@ const SearchPage = () => {
             const booksArray = await result;
             setBooks(booksArray);
             // console.log(booksArray);
-            for(let i = 0; i < books.length; i++) {
+            console.log(books)
+            for(let i = 0; i < booksArray.length; i++) {
+                var singleBook = document.createElement('div');
                 var bookTitle = document.createElement('p');
-                bookTitle.textContent = books[i].volumeInfo.title;
-                bookShelf.append(bookTitle);
-                // console.log(books[i].volumeInfo.authors)
-                // console.log(books[i].volumeInfo.description)
-                // console.log(books[i].volumeInfo.imageLinks.smallThumbnail)
-                // console.log(books[i].volumeInfo.imageLinks.thumbnail)
-                // console.log(books[i].volumeInfo.previewLink)
+                bookTitle.textContent = booksArray[i].volumeInfo.title;
+                var bookAuthors = document.createElement('p');
+                bookAuthors.textContent = booksArray[i].volumeInfo.authors;
+                var bookDescription = document.createElement('p');
+                bookDescription.textContent = booksArray[i].volumeInfo.description;
+                // var bookSmallImage = document.createElement('p');
+                // bookSmallImage.textContent = booksArray[i].volumeInfo.imageLinks.smallThumbnail;
+                // var bookImage = document.createElement('p');
+                // bookImage.textContent = booksArray[i].volumeInfo.imageLinks.thumbnail;
+                var bookLink = document.createElement('p');
+                bookLink.textContent = booksArray[i].volumeInfo.previewLink;
+                var divide = document.createElement('hr');
+                singleBook.append(bookTitle)
+                singleBook.append(bookAuthors)
+                singleBook.append(divide)
+
+
+                bookShelf.append(singleBook);
+                console.log('four')
             }
         };
     };
