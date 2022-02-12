@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const SearchPage = () => {
 
@@ -35,15 +34,17 @@ const SearchPage = () => {
                 bookAuthors.textContent = booksArray[i].volumeInfo.authors;
                 var bookDescription = document.createElement('p');
                 bookDescription.textContent = booksArray[i].volumeInfo.description;
-                // var bookSmallImage = document.createElement('p');
-                // bookSmallImage.textContent = booksArray[i].volumeInfo.imageLinks.smallThumbnail;
+                var bookSmallImage = document.createElement('img');
+                bookSmallImage.src = `${booksArray[i].volumeInfo.imageLinks.smallThumbnail}`;
                 // var bookImage = document.createElement('p');
                 // bookImage.textContent = booksArray[i].volumeInfo.imageLinks.thumbnail;
-                var bookLink = document.createElement('p');
-                bookLink.textContent = booksArray[i].volumeInfo.previewLink;
+                var bookLink = document.createElement('a');
+                bookLink.href = `${booksArray[i].volumeInfo.previewLink}`;
                 var divide = document.createElement('hr');
                 singleBook.append(bookTitle)
                 singleBook.append(bookAuthors)
+                singleBook.append(bookDescription)
+                singleBook.append(bookSmallImage)
                 singleBook.append(divide)
 
 
