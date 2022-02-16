@@ -5,10 +5,13 @@
     "mongoose": "^6.1.7"
   },
   "devDependencies": {
+    "concurrently": "^7.0.0",
     "nodemon": "^2.0.15"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start"
   },
   "name": "google_books_search",
   "description": "React based Google Books search app, utilizing React components, Node, Express, and MongoDB.",

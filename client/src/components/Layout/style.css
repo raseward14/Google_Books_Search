@@ -2,4 +2,16 @@
   position: relative;
   /* min-height: 100vh; */
   text-align: center;
+  width: 50%;
+  margin: auto;
+}
+
+.book {
+  border: 1px solid black;
+  padding: 10px;
+  height: auto;
+}
+
+.book-content {
+  /* float: left; */
 }
