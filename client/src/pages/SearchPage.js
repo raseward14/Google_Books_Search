@@ -5,23 +5,34 @@ const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     const bookShelf = document.getElementById('container');
-    
-    useEffect(() => {
+
+    useEffect((books) => {
         // console.log(books)
         // console.log(JSON.parse(localStorage.getItem('lastBookSearch')))
         // if (books === []) {
-            const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
-            //     setBooks(yourBooks);
-            //     printResult(yourBooks);
+        // const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
+        //     setBooks(yourBooks);
+        //     printResult(yourBooks);
+        // console.log(yourBooks)
         // } else {
-            printResult(books);
+        // printResult(yourBooks);
         // };
+
+        // async function fetchStorage() {
+        //     let yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+        //     setBooks(yourBooks);
+        //     printResult(yourBooks);
+        //     console.log('here')
+        // };
+        // books !== undefined ? console.log('nothing') :
+        // printResult(books)  ;
+        console.log(typeof books);
     }, [books])
 
     const handleSubmit = () => {
         // clear the bookshelf each time
         bookShelf.innerHTML = null;
-        console.log('one')
+        console.log('handleSubmit')
 
         // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async await function that will wait for this to finish 
         const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
@@ -36,7 +47,9 @@ const SearchPage = () => {
             const booksArray = await result;
             setBooks(booksArray);
             localStorage.setItem('lastBookSearch', JSON.stringify(booksArray))
+            console.log(booksArray)
             console.log(books)
+
         };
     };
 
@@ -53,6 +66,7 @@ const SearchPage = () => {
 
     const printResult = (booksArray) => {
         console.log(booksArray)
+
         for (let i = 0; i < booksArray.length; i++) {
             var singleBook = document.createElement('div');
             singleBook.classList.add('book')
@@ -77,9 +91,23 @@ const SearchPage = () => {
             singleBook.append(bookDescription);
             singleBook.append(bookLink);
 
+            console.log(singleBook);
             bookShelf.append(singleBook);
         }
     };
+
+    useEffect(() => {
+        // const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
+        // printResult(yourBooks);
+        async function fetchStorage() {
+            let yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+            // setBooks(yourBooks);
+            console.log(yourBooks)
+            // printResult(yourBooks);
+        };
+
+        fetchStorage();
+    });
 
     return (
         <div>
