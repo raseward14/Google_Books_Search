@@ -1,33 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 const SearchPage = () => {
-
+    
     const [search, setSearch] = useState('');
-    const [books, setBooks] = useState([]);
+    const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
+    const [books, setBooks] = useState(yourBooks || []);
     const bookShelf = document.getElementById('container');
-
-    useEffect((books) => {
-        // console.log(books)
-        // console.log(JSON.parse(localStorage.getItem('lastBookSearch')))
-        // if (books === []) {
-        // const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
-        //     setBooks(yourBooks);
-        //     printResult(yourBooks);
-        // console.log(yourBooks)
-        // } else {
-        // printResult(yourBooks);
-        // };
-
-        // async function fetchStorage() {
-        //     let yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        //     setBooks(yourBooks);
-        //     printResult(yourBooks);
-        //     console.log('here')
-        // };
-        // books !== undefined ? console.log('nothing') :
-        // printResult(books)  ;
-        console.log(typeof books);
-    }, [books])
+    
+    useEffect(() => {
+        console.log(books);
+    }, [])
 
     const handleSubmit = () => {
         // clear the bookshelf each time
@@ -49,8 +31,9 @@ const SearchPage = () => {
             localStorage.setItem('lastBookSearch', JSON.stringify(booksArray))
             console.log(booksArray)
             console.log(books)
-
+            printResult(books);
         };
+
     };
 
     // const addBook = (bookTitle, bookAuthors, bookDescription, bookImage, bookLink) => {
@@ -65,6 +48,7 @@ const SearchPage = () => {
     // }
 
     const printResult = (booksArray) => {
+
         console.log(booksArray)
 
         for (let i = 0; i < booksArray.length; i++) {
@@ -91,23 +75,11 @@ const SearchPage = () => {
             singleBook.append(bookDescription);
             singleBook.append(bookLink);
 
-            console.log(singleBook);
             bookShelf.append(singleBook);
         }
     };
 
-    useEffect(() => {
-        // const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
-        // printResult(yourBooks);
-        async function fetchStorage() {
-            let yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-            // setBooks(yourBooks);
-            console.log(yourBooks)
-            // printResult(yourBooks);
-        };
-
-        fetchStorage();
-    });
+    printResult(books);
 
     return (
         <div>
