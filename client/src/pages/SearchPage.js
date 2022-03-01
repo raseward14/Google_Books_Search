@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import BooksList from '../components/BooksList';
 
 const SearchPage = () => {
-    
+
     const [search, setSearch] = useState('');
     const bookShelf = document.getElementById('container');
     const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
     const [books, setBooks] = useState(yourBooks || []);
-    
+
     useEffect(() => {
         console.log('three', books);
     }, [])
@@ -32,7 +33,7 @@ const SearchPage = () => {
 
     };
 
-    document.addEventListener('DOMContentLoaded', function(event) {
+    document.addEventListener('DOMContentLoaded', function (event) {
         console.log('one', 'book state', books)
         printResult(books)
     })
@@ -40,46 +41,44 @@ const SearchPage = () => {
     const printResult = (booksArray) => {
         console.log('two', booksArray.length)
 
-        setTimeout((booksArray) => {
-            if(undefined !== booksArray && booksArray.length) {
+        for (let i = 0; i < booksArray.length; i++) {
+            var singleBook = document.createElement('div');
+            singleBook.classList.add('book')
+            var bookTitle = document.createElement('p');
+            bookTitle.textContent = booksArray[i]?.volumeInfo?.title;
+            var bookAuthors = document.createElement('p');
+            bookAuthors.textContent = booksArray[i]?.volumeInfo?.authors;
+            var bookDescription = document.createElement('p');
+            bookDescription.textContent = booksArray[i]?.volumeInfo?.description;
+            bookDescription.classList.add('book-content');
+            var bookImage = document.createElement('img');
+            bookImage.src = `${booksArray[i]?.volumeInfo?.imageLinks?.thumbnail}`;
+            bookImage.classList.add('book-content');
 
-                for (let i = 0; i < booksArray.length; i++) {
-                    var singleBook = document.createElement('div');
-                    singleBook.classList.add('book')
-                    var bookTitle = document.createElement('p');
-                    bookTitle.textContent = booksArray[i]?.volumeInfo?.title;
-                    var bookAuthors = document.createElement('p');
-                    bookAuthors.textContent = booksArray[i]?.volumeInfo?.authors;
-                    var bookDescription = document.createElement('p');
-                    bookDescription.textContent = booksArray[i]?.volumeInfo?.description;
-                    bookDescription.classList.add('book-content');
-                    var bookImage = document.createElement('img');
-                    bookImage.src = `${booksArray[i]?.volumeInfo?.imageLinks?.thumbnail}`;
-                    bookImage.classList.add('book-content');
-                    
-                    var bookLink = document.createElement('a');
-                    bookLink.href = `${booksArray[i]?.volumeInfo?.previewLink}`;
-                    bookLink.textContent = 'Learn more!'
-                    
-                    singleBook.append(bookTitle);
-                    singleBook.append(bookAuthors);
-                    singleBook.append(bookImage);
-                    singleBook.append(bookDescription);
-                    singleBook.append(bookLink);
-                    
-                    bookShelf.append(singleBook);
-                }
-            } else {
-                console.log('this is to prevent an error');
-                return
-            }
-        }, 5000)
+            var bookLink = document.createElement('a');
+            bookLink.href = `${booksArray[i]?.volumeInfo?.previewLink}`;
+            bookLink.textContent = 'Learn more!'
+
+            singleBook.append(bookTitle);
+            singleBook.append(bookAuthors);
+            singleBook.append(bookImage);
+            singleBook.append(bookDescription);
+            singleBook.append(bookLink);
+            
+            const bookShelf = document.getElementById('container');
+            bookShelf.append(singleBook);
+        }
     };
 
-    
+const loadHistory = async () => {
+    const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+    printResult(yourBooks);
+};
 
-    return (
-        <div>
+loadHistory();
+
+return (
+    <div>
             <p>Search</p>
             <input placeholder='Search'
                 onChange={(event) => {
@@ -87,6 +86,7 @@ const SearchPage = () => {
                 }} />
             <button onClick={handleSubmit}>Submit</button>
             <div id='container' />
+            <BooksList search={search} />
         </div>
     );
 };
