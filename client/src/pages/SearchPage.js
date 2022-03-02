@@ -39,7 +39,7 @@ const SearchPage = () => {
         for (let i = 0; i < booksArray.length; i++) {
 
             var singleBook = document.createElement('div');
-            singleBook.classList.add('book');
+            singleBook.classList.add('single-book');
 
             var lineBreak = document.createElement('br');
 
