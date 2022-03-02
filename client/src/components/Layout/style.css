@@ -2,22 +2,30 @@
   position: relative;
   /* min-height: 100vh; */
   text-align: center;
-  width: 50%;
+  width: 80%;
   margin: auto;
 }
 
+/*SearchPage css*/
 .book {
   border: 1px solid black;
   padding: 10px;
   height: auto;
 }
-
-.book-content {
-  /* float: left; */
+.headingContainer {
+  display: flex;
+  align-items: flex-start;
+  max-height: 10vh;
+  margin-bottom: 10px;
 }
 
 .contentContainer {
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
+  max-height: 25vh;
+  overflow-y: hidden;
+
 }
+
+
