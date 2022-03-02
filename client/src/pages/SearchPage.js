@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BooksList from '../components/BooksList';
+// import BooksList from '../components/BooksList';
 
 const SearchPage = () => {
 
@@ -57,7 +57,7 @@ const SearchPage = () => {
 
             var bookLink = document.createElement('a');
             bookLink.href = `${booksArray[i]?.volumeInfo?.previewLink}`;
-            bookLink.textContent = 'Learn more!'
+            bookLink.textContent = 'Buy me!'
 
             singleBook.append(bookTitle);
             singleBook.append(bookAuthors);
@@ -86,7 +86,6 @@ return (
                 }} />
             <button onClick={handleSubmit}>Submit</button>
             <div id='container' />
-            <BooksList search={search} />
         </div>
     );
 };

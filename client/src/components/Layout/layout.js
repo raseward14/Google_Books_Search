@@ -9,7 +9,7 @@ import './style.css'
 const Layout = ({ search, setSearch }) => {
     return (
         <div className='App'>
-            <Header title='Google Books Search' />
+            <Header title='Blurb Books' />
             <NavBar />
             <Outlet />
             <Footer />
