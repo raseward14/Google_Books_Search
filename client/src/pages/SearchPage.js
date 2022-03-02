@@ -5,12 +5,12 @@ const SearchPage = () => {
 
     const [search, setSearch] = useState('');
     const bookShelf = document.getElementById('container');
-    const yourBooks = JSON.parse(localStorage.getItem('lastBookSearch'));
-    const [books, setBooks] = useState(yourBooks || []);
+    const [books, setBooks] = useState([]);
 
     useEffect(() => {
         console.log('three', books);
-    }, [])
+        printResult(books)
+    }, [books])
 
     const handleSubmit = () => {
         // clear the bookshelf each time
@@ -28,15 +28,10 @@ const SearchPage = () => {
             const booksArray = await result;
             setBooks(booksArray);
             localStorage.setItem('lastBookSearch', JSON.stringify(booksArray))
-            printResult(books);
+            printResult(booksArray);
         };
 
     };
-
-    document.addEventListener('DOMContentLoaded', function (event) {
-        console.log('one', 'book state', books)
-        printResult(books)
-    })
 
     const printResult = (booksArray) => {
         console.log('two', booksArray.length)
@@ -55,18 +50,26 @@ const SearchPage = () => {
             bookImage.src = `${booksArray[i]?.volumeInfo?.imageLinks?.thumbnail}`;
             bookImage.classList.add('book-content');
 
+            var myLibrary = document.createElement('button');
+            myLibrary.textContent = 'Add to Library';
+            var contentContainer = document.createElement('div');
+            contentContainer.classList.add('contentContainer');
+
             var bookLink = document.createElement('a');
             bookLink.href = `${booksArray[i]?.volumeInfo?.previewLink}`;
             bookLink.textContent = 'Buy me!'
 
             singleBook.append(bookTitle);
             singleBook.append(bookAuthors);
-            singleBook.append(bookImage);
-            singleBook.append(bookDescription);
+
+            contentContainer.append(bookImage);
+            contentContainer.append(bookDescription);
+
             singleBook.append(bookLink);
             
             const bookShelf = document.getElementById('container');
             bookShelf.append(singleBook);
+            singleBook.append(contentContainer);
         }
     };
 

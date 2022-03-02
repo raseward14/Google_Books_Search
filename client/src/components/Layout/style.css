@@ -15,3 +15,9 @@
 .book-content {
   /* float: left; */
 }
+
+.contentContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
