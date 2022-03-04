@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import BooksList from '../components/BooksList';
+import * as favoritesAPIFunctions from '../utils/FavoriteAPI';
 
 const SearchPage = () => {
 
@@ -51,12 +52,22 @@ const SearchPage = () => {
             var bookLink = document.createElement('a');
             bookLink.href = `${booksArray[i]?.volumeInfo?.previewLink}`;
             bookLink.textContent = 'Buy me!'
+
+            var favButton = document.createElement('button');
+            favButton.textContent = 'FAVORITE';
+            var libraryButton = document.createElement('button');
+            libraryButton.textContent = 'ADD TO YOUR LIBRARY';
+            var needToRead = document.createElement('button');
+            needToRead.textContent = 'NEED TO READ';
             
             headingContainer.append(bookTitle);
             bookTitle.append(lineBreak);
             bookTitle.append(bookAuthors);
             bookAuthors.append(lineBreak);
             bookAuthors.append(bookLink);
+            headingContainer.append(favButton);
+            favButton.append(libraryButton);
+            libraryButton.append(needToRead);
             singleBook.append(headingContainer);
             
             contentContainer.append(bookImage);
@@ -67,6 +78,26 @@ const SearchPage = () => {
             const bookShelf = document.getElementById('container');
             bookShelf.append(singleBook);
         }
+    };
+
+    function favoriteBook() {
+        favoritesController.create({
+            title: books.title,
+            description: books.description,
+            authors: books.authors,
+            date: books.date
+        })
+        .then(() => {
+            console.log('delete this book now!')
+        })
+    };
+
+    function addToLibrary() {
+
+    };
+
+    function addToRead() {
+
     };
 
     const handleSubmit = () => {
