@@ -94,6 +94,7 @@ const SearchPage = () => {
             toReadButton.addEventListener('click', addToRead, once);
 
             
+            
             headingContainer.append(bookTitle);
             bookTitle.append(lineBreak);
             bookTitle.append(bookAuthors);
