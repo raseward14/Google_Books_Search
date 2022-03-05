@@ -10,8 +10,11 @@ const SearchPage = () => {
 
     useEffect(() => {
         console.log('use effect fired books:', books);
-        bookShelf.innerHTML = null;
-        printResult(books)
+
+        if(bookShelf !== null) {
+            bookShelf.innerHTML = null;
+            printResult(books)
+        }
     }, [books])
 
 
@@ -57,8 +60,8 @@ const SearchPage = () => {
             favButton.textContent = 'FAVORITE';
             var libraryButton = document.createElement('button');
             libraryButton.textContent = 'ADD TO YOUR LIBRARY';
-            var needToRead = document.createElement('button');
-            needToRead.textContent = 'NEED TO READ';
+            var ToReadButton = document.createElement('button');
+            ToReadButton.textContent = 'NEED TO READ';
             
             headingContainer.append(bookTitle);
             bookTitle.append(lineBreak);
@@ -67,7 +70,7 @@ const SearchPage = () => {
             bookAuthors.append(bookLink);
             headingContainer.append(favButton);
             favButton.append(libraryButton);
-            libraryButton.append(needToRead);
+            libraryButton.append(ToReadButton);
             singleBook.append(headingContainer);
             
             contentContainer.append(bookImage);
@@ -81,15 +84,15 @@ const SearchPage = () => {
     };
 
     function favoriteBook() {
-        favoritesController.create({
-            title: books.title,
-            description: books.description,
-            authors: books.authors,
-            date: books.date
-        })
-        .then(() => {
-            console.log('delete this book now!')
-        })
+        // favoritesController.create({
+        //     title: books.title,
+        //     description: books.description,
+        //     authors: books.authors,
+        //     date: books.date
+        // })
+        // .then(() => {
+        //     console.log('delete this book now!')
+        // })
     };
 
     function addToLibrary() {
