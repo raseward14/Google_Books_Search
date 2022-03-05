@@ -81,6 +81,7 @@ const SearchPage = () => {
                 once : true
             }
 
+            
             var favButton = document.createElement('button');
             var libraryButton = document.createElement('button');
             var toReadButton = document.createElement('button');
@@ -93,7 +94,7 @@ const SearchPage = () => {
             libraryButton.addEventListener('click', addToLibrary, once);
             toReadButton.addEventListener('click', addToRead, once);
 
-            
+
             
             headingContainer.append(bookTitle);
             bookTitle.append(lineBreak);
