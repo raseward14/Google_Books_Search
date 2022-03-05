@@ -10,14 +10,33 @@ const SearchPage = () => {
 
     useEffect(() => {
         console.log('use effect fired books:', books);
-
+        // on load, check if there are books on our shelf, if so, clear them and print the new books array, else return
         if(bookShelf !== null) {
             bookShelf.innerHTML = null;
-            printResult(books)
+            printResult(books);
         }
     }, [books])
+    
+    function favoriteBook() {
+        // favoritesController.create({
+        //     title: books.title,
+        //     description: books.description,
+        //     authors: books.authors,
+        //     date: books.date
+        // })
+        // .then(() => {
+        //     console.log('delete this book now!')
+        // })
+        console.log('favorited')
+    };
+    
+    function addToLibrary() {
 
+    };
 
+    function addToRead() {
+
+    };
     
     const printResult = (booksArray) => {
         console.log('printing this many books:', booksArray.length)
@@ -56,12 +75,24 @@ const SearchPage = () => {
             bookLink.href = `${booksArray[i]?.volumeInfo?.previewLink}`;
             bookLink.textContent = 'Buy me!'
 
+            // once: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+            // A boolean value indicating that the listener should be invoked at most once after being added. If true, the listener would be automatically removed when invoked. If not specified, defaults to false.
+            const once = {
+                once : true
+            }
+
             var favButton = document.createElement('button');
-            favButton.textContent = 'FAVORITE';
             var libraryButton = document.createElement('button');
+            var toReadButton = document.createElement('button');
+
+            favButton.textContent = 'FAVORITE';
             libraryButton.textContent = 'ADD TO YOUR LIBRARY';
-            var ToReadButton = document.createElement('button');
-            ToReadButton.textContent = 'NEED TO READ';
+            toReadButton.textContent = 'NEED TO READ';
+
+            favButton.addEventListener('click', favoriteBook, once);
+            libraryButton.addEventListener('click', addToLibrary, once);
+            toReadButton.addEventListener('click', addToRead, once);
+
             
             headingContainer.append(bookTitle);
             bookTitle.append(lineBreak);
@@ -69,8 +100,8 @@ const SearchPage = () => {
             bookAuthors.append(lineBreak);
             bookAuthors.append(bookLink);
             headingContainer.append(favButton);
-            favButton.append(libraryButton);
-            libraryButton.append(ToReadButton);
+            headingContainer.append(libraryButton);
+            headingContainer.append(toReadButton);
             singleBook.append(headingContainer);
             
             contentContainer.append(bookImage);
@@ -83,25 +114,7 @@ const SearchPage = () => {
         }
     };
 
-    function favoriteBook() {
-        // favoritesController.create({
-        //     title: books.title,
-        //     description: books.description,
-        //     authors: books.authors,
-        //     date: books.date
-        // })
-        // .then(() => {
-        //     console.log('delete this book now!')
-        // })
-    };
 
-    function addToLibrary() {
-
-    };
-
-    function addToRead() {
-
-    };
 
     const handleSubmit = () => {
         // clear the bookshelf each time
@@ -120,7 +133,8 @@ const SearchPage = () => {
             localStorage.setItem('lastBookSearch', JSON.stringify(booksArray))
         };
     };
-    
+
+    // loaded last, grab books from localStorage, wait for them, then print them
     const loadHistory = async () => {
         const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
         printResult(yourBooks);
