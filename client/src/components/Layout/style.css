@@ -18,7 +18,7 @@
 
 .headingContainer {
   display: flex;
-  max-height: 10vh;
+  margin-bottom: 5px;
 }
 /*https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container*/
 .button-container {
@@ -32,7 +32,10 @@
   max-height: 25vh;
   overflow-y: hidden;
   flex-direction: row;
+}
 
+.book-link {
+  font-weight: bold;
 }
 
 

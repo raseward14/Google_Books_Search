@@ -52,9 +52,12 @@ const SearchPage = () => {
             var lineBreak = document.createElement('br');
             
             var headingContainer = document.createElement('div');
+
+            var summaryContainer = document.createElement('div');
             var bookTitle = document.createElement('p');
             var bookAuthors = document.createElement('p');
             var bookLink = document.createElement('a');
+
             var buttonContainer = document.createElement('div');
             var favButton = document.createElement('button');
             var libraryButton = document.createElement('button');
@@ -74,15 +77,17 @@ const SearchPage = () => {
            
             headingContainer.classList.add('headingContainer');
             
-            headingContainer.append(bookTitle);
-            bookTitle.append(lineBreak);
-            bookTitle.append(bookAuthors);
-            bookAuthors.append(lineBreak);
-            bookAuthors.append(bookLink);
+            summaryContainer.append(bookTitle);
+            summaryContainer.append(bookAuthors)
+            summaryContainer.append(bookLink);
+
             buttonContainer.append(favButton);
             buttonContainer.append(libraryButton);
             buttonContainer.append(toReadButton);
+
+            headingContainer.append(summaryContainer);
             headingContainer.append(buttonContainer);
+
             singleBook.append(headingContainer);
             
             var contentContainer = document.createElement('div');
@@ -96,14 +101,13 @@ const SearchPage = () => {
             contentContainer.classList.add('content-container');
             bookDescription.classList.add('book-content');
             bookImage.classList.add('book-content');
+            bookLink.classList.add('book-link')
  
-            singleBook.classList.add('single-book');
-            
+            singleBook.classList.add('single-book');       
             
             contentContainer.append(bookImage);
             contentContainer.append(bookDescription);
             singleBook.append(contentContainer);
-            
             
             const bookShelf = document.getElementById('container');
             bookShelf.append(singleBook);
