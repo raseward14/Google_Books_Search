@@ -12,16 +12,20 @@
   flex-direction: column;
   border: 1px solid black;
   padding: 10px;
-  height: auto;
-}
-.headingContainer {
-  display: flex;
-  align-items: flex-start;
-  max-height: 10vh;
-  margin-bottom: 10px;
+  height: 200px;
+  text-align: left;
 }
 
-.contentContainer {
+.headingContainer {
+  display: flex;
+  max-height: 10vh;
+}
+/*https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container*/
+.button-container {
+  margin-left: auto;
+}
+
+.content-container {
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
