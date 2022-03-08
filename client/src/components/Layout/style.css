@@ -1,5 +1,5 @@
 .App {
-  position: relative;
+  /* position: relative; */
   /* min-height: 100vh; */
   text-align: center;
   width: 80%;
@@ -28,7 +28,6 @@
 .content-container {
   display: flex;
   align-items: flex-start;
-  justify-content: space-evenly;
   max-height: 25vh;
   overflow-y: hidden;
   flex-direction: row;
