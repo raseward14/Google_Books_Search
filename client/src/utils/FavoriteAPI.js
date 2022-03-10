@@ -1,9 +1,13 @@
 import axios from 'axios';
 
 // get all favorites by user_id
-const getFavorites = (userID) => {
-    return axios.get('/api/favorite?user_id=' + userID);
+// const getFavorites = (userID) => {
+//     return axios.get('/api/favorite?user_id=' + userID);
+// };
+const getFavorites = () => {
+        return axios.get('/api/favorite');
 };
+    
 
 // save a new favorite
 // favorites are title, authors, image, description
