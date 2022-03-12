@@ -4,18 +4,25 @@ import * as favoriteAPIFunctions from'../utils/FavoriteAPI';
 const FavoritesPage = () => {
 
     const [favorites, setFavorites] = useState([]);
-    const bookshelf = document.getElementById('bookshelf');
+    const bookShelf = document.getElementById('bookshelf');
 
     useEffect(() => {
-        async function loadFavorites() {
-            let result = await favoriteAPIFunctions.getFavorites();
-            let favoritesArray = result.data;
-            setFavorites(favoritesArray);
+        // async function loadFavorites() {
+            //     let result = await favoriteAPIFunctions.getFavorites();
+            //     let favoritesArray = result.data;
+            //     setFavorites(favoritesArray);
+            if(favorites.length === 0) {
+                console.log('favorites is empty')
+                return
+            } else {
+                console.log('favorites have been set!', favorites)
+            }
             // printFavorites(favoritesArray)
-            console.log(favoritesArray)
-        }
+            // console.log('favorites array: ', favoritesArray)
+            // console.log('favorites: ', favorites)
+        // }
 
-        loadFavorites()
+        // loadFavorites()
         // load your favorites on page load
         // favoriteAPIFunctions.getFavorites()
         // .then((res) => {
@@ -98,25 +105,30 @@ const FavoritesPage = () => {
             contentContainer.append(bookDescription);
             singleBook.append(contentContainer);
             
-            const bookShelf = document.getElementById('container');
+            // const bookShelf = document.getElementById('container');
             bookShelf.append(singleBook);
         }
     };
 
-    // useEffect(() => {
-    //     // re-load favorites after comment is posted
-    //     if(favorites !== null) {
-    //         bookshelf.innerHTML = null;
-    //         printFavorites(favorites);
-    //     }
-    // }, [favorites])
+    async function loadFavorites() {
+        let result = await favoriteAPIFunctions.getFavorites();
+        let favoritesArray = result.data;
+        // if(bookShelf.innerHTML !== null) {
+            // bookShelf.innerHTML = null;
+        // }
+        console.log(favoritesArray)
+        setFavorites(favoritesArray);
+        // printFavorites(favoritesArray);
+    };
 
+    // loadFavorites();
 
     return (
-        <>
+        <div>
             <p>Favorites</p>
             <div id='bookshelf'></div>
-        </>
+        </div>
     );
 };
+
 export default FavoritesPage;
