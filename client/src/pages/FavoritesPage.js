@@ -7,19 +7,19 @@ const FavoritesPage = () => {
     const bookShelf = document.getElementById('bookshelf');
     let APIFavorites;
 
-    useEffect(() => {
+    // useEffect(() => {
         // async function loadFavorites() {
             //     let result = await favoriteAPIFunctions.getFavorites();
             //     let favoritesArray = result.data;
             //     setFavorites(favoritesArray);    
 
-        console.log(typeof favorites)
-        if(typeof favorites === 'object') {
-            console.log('object:', favorites);
-        } else {
-            console.log('array:', favorites);
-            // printFavorites(favorites)
-        }
+        // console.log(typeof favorites)
+        // if(typeof favorites === 'object') {
+        //     console.log('object:', favorites);
+        // } else {
+        //     console.log('array:', favorites);
+        //     // printFavorites(favorites)
+        // }
 
 
 
@@ -50,7 +50,7 @@ const FavoritesPage = () => {
         //     printFavorites(favorites)
         // })
         // .catch((err) => console.log(err))
-    }, [favorites]);
+    // }, [favorites]);
 
     const printFavorites = (favoritesArray) => {
         for (let i = 0; i < favoritesArray.length; i++) {
@@ -115,13 +115,25 @@ const FavoritesPage = () => {
         console.log(APIFavorites)
         setFavorites(APIFavorites);
     };
+
+    useEffect(() => {
+        loadFavorites()
+    }, [])
     
     // loadFavorites();
     
     return (
         <div>
             <p>Favorites</p>
-            <div id='bookshelf'></div>
+            <div id='bookshelf'>
+                {favorites.length > 0 && (
+                    <div>
+                        {favorites.map((favorite) => (
+                            <div key={favorite.id}>{favorite.title}<div/>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
