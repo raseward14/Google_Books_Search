@@ -159,7 +159,11 @@ const SearchPage = () => {
             {books.length > 0 && (
                 <div id='container'>
                     {books.map((book) => (
-                        <div className='single-book' key={book.id}>{book.volumeInfo?.title}</div>
+                        <div className='single-book' key={book.id}>
+                            <div>
+                                <p>{book.volumeInfo?.title}</p>
+                            </div>
+                        </div>
                     ))}
                 </div>
             )}
