@@ -9,3 +9,4 @@ React based Google Books search app, utilizing React components, Node, Express, 
 * [DigitalOcean Introduction to Mongoose Schema Types](https://attacomsian.com/blog/mongoose-schema-types#arrays)
 * [MDN Event.Target.addEventListener()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
 * [MDN Aligning Items in a Flex Container](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container)
+* [CodingDeft Fetch and Display Data from API in React js](https://www.codingdeft.com/posts/react-fetch-data-api/)
