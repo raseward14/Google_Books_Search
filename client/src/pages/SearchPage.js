@@ -8,15 +8,15 @@ const SearchPage = () => {
     const bookShelf = document.getElementById('container');
     const [books, setBooks] = useState([]);
 
-    useEffect(() => {
-        console.log('use effect fired books:', books);
-        // on load, check if there are books on our shelf, if so, clear them and print the new books array, else return
-        if(bookShelf !== null) {
-            bookShelf.innerHTML = null;
-            printResult(books);
-        }
-    }, [books])
-    
+    // useEffect(() => {
+    //     console.log('use effect fired books:', books);
+    //     // on load, check if there are books on our shelf, if so, clear them and print the new books array, else return
+    //     if (bookShelf !== null) {
+    //         bookShelf.innerHTML = null;
+    //         printResult(books);
+    //     }
+    // }, [books])
+
     function favoriteBook() {
         // favoritesController.create({
         //     title: books.title,
@@ -29,7 +29,7 @@ const SearchPage = () => {
         // })
         console.log('favorited')
     };
-    
+
     function addToLibrary() {
 
     };
@@ -37,20 +37,20 @@ const SearchPage = () => {
     function addToRead() {
 
     };
-    
+
     const printResult = (booksArray) => {
         console.log('printing this many books:', booksArray.length)
-        
+
         for (let i = 0; i < booksArray.length; i++) {
             // once: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
             // A boolean value indicating that the listener should be invoked at most once after being added. If true, the listener would be automatically removed when invoked. If not specified, defaults to false.
             const once = {
-                once : true
+                once: true
             }
-            
+
             var singleBook = document.createElement('div');
             var lineBreak = document.createElement('br');
-            
+
             var headingContainer = document.createElement('div');
 
             var summaryContainer = document.createElement('div');
@@ -70,13 +70,13 @@ const SearchPage = () => {
             favButton.textContent = 'FAVORITE';
             libraryButton.textContent = 'ADD TO YOUR LIBRARY';
             toReadButton.textContent = 'NEED TO READ';
-            
+
             favButton.addEventListener('click', favoriteBook, once);
             libraryButton.addEventListener('click', addToLibrary, once);
             toReadButton.addEventListener('click', addToRead, once);
-           
+
             headingContainer.classList.add('headingContainer');
-            
+
             summaryContainer.append(bookTitle);
             summaryContainer.append(bookAuthors)
             summaryContainer.append(bookLink);
@@ -89,11 +89,11 @@ const SearchPage = () => {
             headingContainer.append(buttonContainer);
 
             singleBook.append(headingContainer);
-            
+
             var contentContainer = document.createElement('div');
             var bookDescription = document.createElement('p');
             var bookImage = document.createElement('img');
-            
+
             bookDescription.textContent = booksArray[i]?.volumeInfo?.description;
             bookImage.src = `${booksArray[i]?.volumeInfo?.imageLinks?.thumbnail}`;
 
@@ -102,23 +102,19 @@ const SearchPage = () => {
             bookDescription.classList.add('book-content');
             bookImage.classList.add('book-content');
             bookLink.classList.add('book-link')
- 
-            singleBook.classList.add('single-book');       
-            
+
+            singleBook.classList.add('single-book');
+
             contentContainer.append(bookImage);
             contentContainer.append(bookDescription);
             singleBook.append(contentContainer);
-            
+
             const bookShelf = document.getElementById('container');
             bookShelf.append(singleBook);
         }
     };
 
-
-
     const handleSubmit = () => {
-        // clear the bookshelf each time
-        console.log('handleSubmit')
         // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
         const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
             .then((response) => response.json())
@@ -134,13 +130,23 @@ const SearchPage = () => {
         };
     };
 
-    // loaded last, grab books from localStorage, wait for them, then print them
     const loadHistory = async () => {
         const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        printResult(yourBooks);
+        setBooks(yourBooks);
     };
 
-    loadHistory();
+    useEffect(() => {
+        loadHistory()
+    }, [])
+
+
+    // loaded last, grab books from localStorage, wait for them, then print them
+    // const loadHistory = async () => {
+    //     const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+    //     printResult(yourBooks);
+    // };
+
+    // loadHistory();
 
     return (
         <div>
@@ -150,7 +156,13 @@ const SearchPage = () => {
                     setSearch(event.target.value);
                 }} />
             <button onClick={handleSubmit}>Submit</button>
-            <div id='container' />
+            {books.length > 0 && (
+                <div id='container'>
+                    {books.map((book) => (
+                        <div className='single-book' key={book.id}>{book.volumeInfo?.title}</div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
