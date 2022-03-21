@@ -11,7 +11,7 @@ const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
 
-    function favoriteBook() {
+    function favoriteBook(book) {
         // favoritesController.create({
         //     title: books.title,
         //     description: books.description,
@@ -21,13 +21,20 @@ const SearchPage = () => {
         // .then(() => {
         //     console.log('delete this book now!')
         // })
-        console.log('favorited')
+        favoritesAPIFunctions.saveFavorite({
+            title: book.volumeInfo.title,
+            authors: book.volumeInfo.authors,
+            description: book.volumeInfo.description,
+            imageLink: book.volumeInfo.imageLinks.thumbnail,
+            infoLink: book.volumeInfo.infoLink
+        })
+        console.log('favorited', book)
     };
 
-    function clickedFavorite(e) {
+    function clickedFavorite(book) {
         if (!clickedFav) {
             setClickedFav(true);
-            favoriteBook(e);
+            favoriteBook(book);
         };
     };
 
@@ -98,7 +105,7 @@ const SearchPage = () => {
                                     <a href={book.volumeInfo?.infoLink} className='book-link'>Buy me!</a>
                                 </div>
                                 <div className='button-container'>
-                                    <button onClick={clickedFavorite}>FAVORITE</button>
+                                    <button onClick={() => clickedFavorite(book)}>FAVORITE</button>
                                     <button onClick={clickedLibrary}>ADD TO YOUR LIBRARY</button>
                                     <button onClick={clickedRead}>NEED TO READ</button>
                                 </div>
