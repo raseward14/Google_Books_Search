@@ -9,7 +9,6 @@ const SearchPage = () => {
     const [clickedNeed, setClickedNeed] = useState(false);
 
     const [search, setSearch] = useState('');
-    const bookShelf = document.getElementById('container');
     const [books, setBooks] = useState([]);
 
     function favoriteBook() {
@@ -73,6 +72,7 @@ const SearchPage = () => {
     const loadHistory = async () => {
         const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
         setBooks(yourBooks);
+        console.log(yourBooks)
     };
 
     useEffect(() => {
@@ -88,14 +88,14 @@ const SearchPage = () => {
                 }} />
             <button onClick={handleSubmit}>Submit</button>
             {books.length > 0 && (
-                <div id='container'>
+                <div>
                     {books.map((book) => (
-                        <div className='single-book' key={book.id}>
+                        <div key={book.id} className='single-book'>
                             <div className='heading-container'>
                                 <div>
                                     <p>{book.volumeInfo?.title}</p>
                                     <p>{book.volumeInfo?.authors}</p>
-                                    <a href={book.volumeInfo?.previewLink} className='book-link'>Buy me!</a>
+                                    <a href={book.volumeInfo?.infoLink} className='book-link'>Buy me!</a>
                                 </div>
                                 <div className='button-container'>
                                     <button onClick={clickedFavorite}>FAVORITE</button>
