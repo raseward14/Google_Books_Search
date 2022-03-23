@@ -11,6 +11,7 @@ const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
 
+    // 2jdwvaw favorite book
     function favoriteBook(book) {
         // favoritesController.create({
         //     title: books.title,
