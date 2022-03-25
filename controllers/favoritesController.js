@@ -27,6 +27,8 @@ module.exports = {
         myFavorite.title = req.body.title;
         myFavorite.description = req.body.description;
         myFavorite.authors = req.body.authors;
+        myFavorite.imageLink = req.body.imageLink;
+        myFavorite.infoLink = req.body.infoLink;
         myFavorite.date = Date.now();
         myFavorite.save(req.body, (err) => {
             if(err) {

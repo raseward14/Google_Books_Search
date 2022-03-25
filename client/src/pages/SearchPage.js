@@ -22,6 +22,8 @@ const SearchPage = () => {
         // .then(() => {
         //     console.log('delete this book now!')
         // })
+
+        // working other than image link and info link
         favoritesAPIFunctions.saveFavorite({
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
@@ -29,7 +31,7 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink
         })
-        console.log('favorited', book)
+        console.log('favorited', book.volumeInfo.imageLinks.thumbnail)
     };
 
     function clickedFavorite(book) {
