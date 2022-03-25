@@ -31,7 +31,7 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink
         })
-        console.log('favorited', book.volumeInfo.imageLinks.thumbnail)
+        // then remove from search page
     };
 
     function clickedFavorite(book) {
