@@ -27,6 +27,8 @@ module.exports = {
         libraryBook.title = req.body.title;
         libraryBook.authors = req.body.authors;
         libraryBook.description = req.body.description;
+        libraryBook.imageLink = req.body.imageLink;
+        libraryBook.infoLink = req.body.infoLink;
         libraryBook.date = Date.now();
         libraryBook.save(req.body, (err) => {
             if (err) {

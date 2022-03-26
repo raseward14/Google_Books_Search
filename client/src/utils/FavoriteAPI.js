@@ -10,7 +10,7 @@ const getFavorites = () => {
     
 
 // save a new favorite
-// favorites are title, authors, image, description
+// favorites are title, authors, image, link, description
 // date and user_id will be set already
 const saveFavorite = (bookInfo) => {
     return axios.post('/api/favorite', bookInfo);
