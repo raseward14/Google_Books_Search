@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 // import BooksList from '../components/BooksList';
 import * as favoritesAPIFunctions from '../utils/FavoriteAPI';
+import * as libraryAPIFunctions from '../utils/LibraryAPI';
+import * as readAPIFunctions from '../utils/ToReadAPI';
 
 const SearchPage = () => {
 
@@ -23,7 +25,6 @@ const SearchPage = () => {
         //     console.log('delete this book now!')
         // })
 
-        // working other than image link and info link
         favoritesAPIFunctions.saveFavorite({
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
@@ -41,7 +42,17 @@ const SearchPage = () => {
         };
     };
 
-    function addToLibrary() {
+    function addToLibrary(book) {
+
+        libraryAPIFunctions.saveLibrary({
+            title: book.volumeInfo.title,
+            authors: book.volumeInfo.authors,
+            description: book.volumeInfo.description,
+            imageLink: book.volumeInfo.imageLinks.thumbnail,
+            infoLink: book.volumeInfo.infoLink
+        })
+
+
         console.log("added to the library of books you've read")
     };
 
@@ -52,7 +63,17 @@ const SearchPage = () => {
         };
     };
 
-    function addToRead() {
+    function addToRead(book) {
+
+        readAPIFunctions.saveRead({
+            title: book.volumeInfo.title,
+            authors: book.volumeInfo.authors,
+            description: book.volumeInfo.description,
+            imageLink: book.volumeInfo.imageLinks.thumbnail,
+            infoLink: book.volumeInfo.infoLink
+        })
+
+
         console.log('added to need to read list')
     };
 
@@ -109,8 +130,8 @@ const SearchPage = () => {
                                 </div>
                                 <div className='button-container'>
                                     <button onClick={() => clickedFavorite(book)}>FAVORITE</button>
-                                    <button onClick={clickedLibrary}>ADD TO YOUR LIBRARY</button>
-                                    <button onClick={clickedRead}>NEED TO READ</button>
+                                    <button onClick={() => clickedLibrary(book)}>ADD TO YOUR LIBRARY</button>
+                                    <button onClick={() => clickedRead(book)}>NEED TO READ</button>
                                 </div>
                             </div>
                             <div className='content-container'>
