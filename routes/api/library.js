@@ -4,6 +4,7 @@ const libraryController = require('../../controllers/libraryController');
 //routes that end in api/library
 router.route('/')
     .post(libraryController.create)
+    .put(libraryController.update)
     .get(libraryController.findAll);
 
 // routes that end in api/library/:id

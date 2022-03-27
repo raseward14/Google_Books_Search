@@ -24,6 +24,7 @@ const librarySchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
+    // favorited: false,
     date: Date,
 });
 
@@ -37,6 +38,7 @@ const favoriteSchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
+    // favorited: true,
     date: Date,
 });
 

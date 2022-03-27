@@ -38,6 +38,11 @@ module.exports = {
             };
         })
     },
+    update: (req, res) => {
+        db.Library.findOneAndUpdate({ _id: req.body.id }, req.body)
+        .then((dbModel) => res.json(dbModel))
+        .catch((err) => res.status(422).json(err));
+    },
     remove: (req, res) => {
         // DELETE a Book I've Read
         db.Library.findByIdAndDelete(req.params.id, (err, book) => {

@@ -128,7 +128,7 @@ const SearchPage = () => {
                                     <a href={book.volumeInfo?.infoLink} className='book-link'>Buy me!</a>
                                 </div>
                                 <div className='button-container'>
-                                    <button onClick={() => clickedFavorite(book)}>FAVORITE</button>
+                                    {/* <button onClick={() => clickedFavorite(book)}>FAVORITE</button> */}
                                     <button onClick={() => clickedRead(book)}>READ</button>
                                     <button onClick={() => clickedWantToRead(book)}>WANT TO READ</button>
                                 </div>
