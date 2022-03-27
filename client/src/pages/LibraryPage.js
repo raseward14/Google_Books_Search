@@ -29,7 +29,7 @@ const LibraryPage = () => {
 
     useEffect(() => {
         loadRead();
-    }, [])
+    }, []);
 
     // i can favorite books from my library DEV-298
 
@@ -53,7 +53,6 @@ const LibraryPage = () => {
                                         favoriteBook(book);
                                     }
                                 }}>Favorite</button>
-
                             </div>
                         </div>
                         <div className='content-container'>
