@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import * as libraryAPIFunctions from '../utils/LibraryAPI';
+import * as readAPIFunctions from '../utils/ReadAPI';
+import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 
 const LibraryPage = () => {
 
-    const [library, setLibrary] = useState([]);
-    let APILibrary;
+    const [read, setRead] = useState([]);
+    let APIRead;
 
-    async function loadLibrary() {
-        let result = await libraryAPIFunctions.getLibrary();
-        APILibrary = result.data;
-        setLibrary(APILibrary);
+    function favoriteBook(book) {
+        favoriteAPIFunctions.saveFavorite({
+            title: book.title,
+            authors: book.authors,
+            description: book.description,
+            imageLink: book.imageLink,
+            infoLink: book.infoLink
+        })
+    };
+
+    // function clickedFavorite(book) {
+    //     favoriteBook(book);
+    // };
+
+    async function loadRead() {
+        let result = await readAPIFunctions.getRead();
+        APIRead = result.data;
+        setRead(APIRead);
     };
 
     useEffect(() => {
-        loadLibrary();
+        loadRead();
     }, [])
 
     // i can favorite books from my library DEV-298
@@ -22,13 +37,23 @@ const LibraryPage = () => {
         <div>
             <p>Library of books I've read.</p>
             <div>
-                {library.map((book) => (
+                {read.map((book) => (
                     <div key={book.id} className='single-book'>
                         <div className='heading-container'>
                             <div>
                                 <p>{book.title}</p>
                                 <p>{book.authors}</p>
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
+                            </div>
+                            <div className='button-container'>
+                                <button onClick={() => {
+                                    let clicked = false;
+                                    if(clicked === false){
+                                        clicked = true;
+                                        favoriteBook(book);
+                                    }
+                                }}>Favorite</button>
+
                             </div>
                         </div>
                         <div className='content-container'>

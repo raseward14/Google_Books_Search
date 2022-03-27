@@ -1,19 +1,19 @@
 import axios from 'axios';
 
 // get books to read, eventually by user_id
-const getRead = () => {
+const getWantToRead = () => {
     return axios.get('/api/read');
 
 };
 
 // save a new book to read
 // books are title, authors, description, imageLink, infoLink
-const saveRead = (bookInfo) => {
+const saveWantToRead = (bookInfo) => {
     return axios.post('/api/read', bookInfo);
 };
 
-const deleteRead = (bookID) => {
+const deleteWantToRead = (bookID) => {
     return axios.delete('/api/read' + bookID);
 };
 
-export { getRead, saveRead, deleteRead };
+export { getWantToRead, saveWantToRead, deleteWantToRead };

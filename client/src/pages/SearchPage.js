@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 // import BooksList from '../components/BooksList';
 import * as favoritesAPIFunctions from '../utils/FavoriteAPI';
-import * as libraryAPIFunctions from '../utils/LibraryAPI';
-import * as readAPIFunctions from '../utils/ToReadAPI';
+import * as readAPIFunctions from '../utils/ReadAPI';
+import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 
 const SearchPage = () => {
 
@@ -42,27 +42,6 @@ const SearchPage = () => {
         };
     };
 
-    function addToLibrary(book) {
-
-        libraryAPIFunctions.saveLibrary({
-            title: book.volumeInfo.title,
-            authors: book.volumeInfo.authors,
-            description: book.volumeInfo.description,
-            imageLink: book.volumeInfo.imageLinks.thumbnail,
-            infoLink: book.volumeInfo.infoLink
-        })
-
-
-        console.log("added to the library of books you've read")
-    };
-
-    function clickedLibrary(e) {
-        if (!clickedLib) {
-            setClickedLib(true);
-            addToLibrary(e);
-        };
-    };
-
     function addToRead(book) {
 
         readAPIFunctions.saveRead({
@@ -74,13 +53,33 @@ const SearchPage = () => {
         })
 
 
-        console.log('added to need to read list')
+        console.log("added to the library of books you've read")
     };
 
     function clickedRead(e) {
+        if (!clickedLib) {
+            setClickedLib(true);
+            addToRead(e);
+        };
+    };
+
+    function addWantToRead(book) {
+
+        wantToReadAPIFunctions.saveWantToRead({
+            title: book.volumeInfo.title,
+            authors: book.volumeInfo.authors,
+            description: book.volumeInfo.description,
+            imageLink: book.volumeInfo.imageLinks.thumbnail,
+            infoLink: book.volumeInfo.infoLink
+        })
+
+        console.log('added to need to read list')
+    };
+
+    function clickedWantToRead(e) {
         if (!clickedNeed) {
             setClickedNeed(true);
-            addToRead(e);
+            addWantToRead(e);
         };
     };
 
@@ -130,8 +129,8 @@ const SearchPage = () => {
                                 </div>
                                 <div className='button-container'>
                                     <button onClick={() => clickedFavorite(book)}>FAVORITE</button>
-                                    <button onClick={() => clickedLibrary(book)}>ADD TO YOUR LIBRARY</button>
-                                    <button onClick={() => clickedRead(book)}>NEED TO READ</button>
+                                    <button onClick={() => clickedRead(book)}>READ</button>
+                                    <button onClick={() => clickedWantToRead(book)}>WANT TO READ</button>
                                 </div>
                             </div>
                             <div className='content-container'>
