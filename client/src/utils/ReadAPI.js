@@ -11,8 +11,12 @@ const saveRead = (bookInfo) => {
     return axios.post('/api/library', bookInfo);
 };
 
+const updateRead = (bookInfo) => {
+    return axios.put('/api/library', bookInfo)
+}
+
 const deleteRead = (bookID) => {
     return axios.delete('/api/library/' + bookID);
 };
 
-export { getRead, saveRead, deleteRead };
+export { getRead, saveRead, deleteRead, updateRead };

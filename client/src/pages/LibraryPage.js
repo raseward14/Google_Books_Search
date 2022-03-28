@@ -15,6 +15,12 @@ const LibraryPage = () => {
             imageLink: book.imageLink,
             infoLink: book.infoLink
         })
+        .then((book) => {
+            readAPIFunctions.updateRead({
+                id: book.id,
+                favorited: true
+            })
+        })
     };
 
     // function clickedFavorite(book) {
@@ -47,11 +53,7 @@ const LibraryPage = () => {
                             </div>
                             <div className='button-container'>
                                 <button onClick={() => {
-                                    let clicked = false;
-                                    if(clicked === false){
-                                        clicked = true;
                                         favoriteBook(book);
-                                    }
                                 }}>Favorite</button>
                             </div>
                         </div>

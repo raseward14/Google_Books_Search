@@ -24,7 +24,10 @@ const librarySchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
-    // favorited: false,
+    favorited: {
+        type: Boolean,
+        default: false
+    },
     date: Date,
 });
 
