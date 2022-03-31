@@ -39,8 +39,12 @@ module.exports = {
         })
     },
     update: (req, res) => {
-        db.Library.findOneAndUpdate(
-            { _id: req.params.id  }, { $set: { favorited: req.body.favorited }}, { returnNewDocument: true })
+       
+            db.Library.findOneAndUpdate(
+                { _id: req.params.id  }, 
+                { $set: { favorited: req.body.favorited }}, 
+                { returnNewDocument: true }
+            )
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
