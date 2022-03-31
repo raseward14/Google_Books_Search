@@ -11,16 +11,6 @@ module.exports = {
             };
         });
     },
-    findById: (req, res) => {
-        // GET a book I've read
-        db.Library.findById(req.params.id, (err, book) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send(book);
-            };
-        })
-    },
     create: (req, res) => {
         // POST Book I've Read
         const libraryBook = new db.Library();
@@ -38,10 +28,21 @@ module.exports = {
             };
         })
     },
+    findById: (req, res) => {
+        // GET a book I've read
+        db.Library.findById(req.params.id, (err, book) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(book);
+            };
+        })
+    },
     update: (req, res) => {
-        db.Library.findOneAndUpdate({ _id: req.body.id }, req.body)
-        .then((dbModel) => res.json(dbModel))
-        .catch((err) => res.status(422).json(err));
+        db.Library.findOneAndUpdate(
+            { _id: req.params.id  }, { $set: { favorited: req.body.favorited }}, { returnNewDocument: true })
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
     },
     remove: (req, res) => {
         // DELETE a Book I've Read
