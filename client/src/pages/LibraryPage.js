@@ -3,10 +3,11 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 
 const LibraryPage = () => {
-
+    
     const [read, setRead] = useState([]);
     let APIRead;
-
+    
+    // i can favorite books from my library DEV-298
     function favoriteBook(book) {
         favoriteAPIFunctions.saveFavorite({
             title: book.title,
@@ -17,7 +18,6 @@ const LibraryPage = () => {
         })
         .then((book) => {
             readAPIFunctions.updateRead({
-                id: book.id,
                 favorited: true
             })
         })
@@ -37,7 +37,6 @@ const LibraryPage = () => {
         loadRead();
     }, []);
 
-    // i can favorite books from my library DEV-298
 
     return (
         <div>

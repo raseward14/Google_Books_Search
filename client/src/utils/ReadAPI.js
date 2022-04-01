@@ -8,7 +8,7 @@ const getRead = () => {
 // save new book to your library
 // library books are title, authors, description, link, and image
 const saveRead = (bookInfo) => {
-    return axios.post('/api/library', bookInfo);
+    return axios.post(`/api/library/${id}`, bookInfo);
 };
 
 const updateRead = (bookInfo) => {

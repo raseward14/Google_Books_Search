@@ -41,7 +41,6 @@ const favoriteSchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
-    // favorited: true,
     date: Date,
 });
 

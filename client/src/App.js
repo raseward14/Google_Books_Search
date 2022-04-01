@@ -21,7 +21,10 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path='search' element={<SearchPage />} />
           <Route path='read' element={<WantToReadPage />} />
-          <Route path='library' element={<LibraryPage />} />
+          <Route path='library'>
+            <Route index element={<LibraryPage />} />
+            <Route path='/:id'></Route>
+          </Route>
           <Route path='favorites' element={<FavoritesPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
