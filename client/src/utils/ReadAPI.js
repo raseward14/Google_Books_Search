@@ -1,22 +1,27 @@
 import axios from 'axios';
 
-// get your library - eventually by user_id
+// get all your library - eventually by user_id
 const getRead = () => {
     return axios.get('/api/library');
+};
+
+const getReadByID = (id) => {
+    return axios.get(`/api/library/${id}`);
 };
 
 // save new book to your library
 // library books are title, authors, description, link, and image
 const saveRead = (bookInfo) => {
-    return axios.post(`/api/library/${id}`, bookInfo);
+    return axios.post('/api/library', bookInfo);
 };
 
-const updateRead = (bookInfo) => {
-    return axios.put('/api/library', bookInfo)
-}
-
-const deleteRead = (bookID) => {
-    return axios.delete('/api/library/' + bookID);
+// update favorited property
+const updateRead = (id, body) => {
+    return axios.put(`/api/library/${id}`, body);
 };
 
-export { getRead, saveRead, deleteRead, updateRead };
+const deleteRead = (id) => {
+    return axios.delete(`/api/library/${id}`);
+};
+
+export { getRead, getReadByID, saveRead, deleteRead, updateRead };

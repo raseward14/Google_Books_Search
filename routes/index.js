@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const apiRoutes = require('./api');
+const path = require('path');
 
 // test route to see if our api works
 router.get('/', (req, res) => {

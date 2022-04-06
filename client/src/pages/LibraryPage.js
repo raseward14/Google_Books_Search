@@ -8,20 +8,43 @@ const LibraryPage = () => {
     let APIRead;
     
     // i can favorite books from my library DEV-298
+    // function favoriteBook(book) {
+    //     favoriteAPIFunctions.saveFavorite({
+    //         title: book.title,
+    //         authors: book.authors,
+    //         description: book.description,
+    //         imageLink: book.imageLink,
+    //         infoLink: book.infoLink
+    //     })
+    //     .then((book) => {
+    //         readAPIFunctions.updateRead(
+    //             { id: book.id }, 
+    //             { favorited: true }
+    //         )
+    //     })
+    // };
+
+    // DEV-298
     function favoriteBook(book) {
-        favoriteAPIFunctions.saveFavorite({
-            title: book.title,
-            authors: book.authors,
-            description: book.description,
-            imageLink: book.imageLink,
-            infoLink: book.infoLink
+         readAPIFunctions.getReadByID(book._id)
+         .then((response) => {
+            console.log(response.data.favorited)
+            if(response.data.favorited === true) {
+                readAPIFunctions.updateRead(book._id, { "favorited": "false" })
+                .then((response) => {
+                    console.log(response.data.favorited)
+                })
+            } else {
+                readAPIFunctions.updateRead(book._id, { "favorited": "true" })
+                .then((response) => {
+                    console.log(response.data.favorited)
+                })
+            }
+         })
+        .then((response) => {
+            // post it to the favorites page
         })
-        .then((book) => {
-            readAPIFunctions.updateRead({
-                favorited: true
-            })
-        })
-    };
+    }
 
     // function clickedFavorite(book) {
     //     favoriteBook(book);
@@ -30,6 +53,7 @@ const LibraryPage = () => {
     async function loadRead() {
         let result = await readAPIFunctions.getRead();
         APIRead = result.data;
+        console.log(APIRead)
         setRead(APIRead);
     };
 
