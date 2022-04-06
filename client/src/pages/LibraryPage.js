@@ -24,6 +24,12 @@ const LibraryPage = () => {
     //     })
     // };
 
+    // function to change the color of the button if favorited is true
+    // filter through books after page load, if favorited is true, add a class to set background color to gold
+    function highlight() {
+
+    }
+
     // DEV-298
     function favoriteBook(book) {
          readAPIFunctions.getReadByID(book._id)
@@ -33,17 +39,16 @@ const LibraryPage = () => {
                 readAPIFunctions.updateRead(book._id, { "favorited": "false" })
                 .then((response) => {
                     console.log(response.data.favorited)
+                    // delete favorite, un-highlight button
                 })
             } else {
                 readAPIFunctions.updateRead(book._id, { "favorited": "true" })
                 .then((response) => {
                     console.log(response.data.favorited)
+                    // post favorite if not already favorited, highlight button
                 })
             }
          })
-        .then((response) => {
-            // post it to the favorites page
-        })
     }
 
     // function clickedFavorite(book) {
