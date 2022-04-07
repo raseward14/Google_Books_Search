@@ -3,10 +3,10 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 
 const LibraryPage = () => {
-    
+
     const [read, setRead] = useState([]);
     let APIRead;
-    
+
     // i can favorite books from my library DEV-298
     // function favoriteBook(book) {
     //     favoriteAPIFunctions.saveFavorite({
@@ -32,23 +32,23 @@ const LibraryPage = () => {
 
     // DEV-298
     function favoriteBook(book) {
-         readAPIFunctions.getReadByID(book._id)
-         .then((response) => {
-            console.log(response.data.favorited)
-            if(response.data.favorited === true) {
-                readAPIFunctions.updateRead(book._id, { "favorited": "false" })
-                .then((response) => {
-                    console.log(response.data.favorited)
-                    // delete favorite, un-highlight button
-                })
-            } else {
-                readAPIFunctions.updateRead(book._id, { "favorited": "true" })
-                .then((response) => {
-                    console.log(response.data.favorited)
-                    // post favorite if not already favorited, highlight button
-                })
-            }
-         })
+        readAPIFunctions.getReadByID(book._id)
+            .then((response) => {
+                console.log(response.data.favorited)
+                if (response.data.favorited === true) {
+                    readAPIFunctions.updateRead(book._id, { "favorited": "false" })
+                        .then((response) => {
+                            console.log(response.data.favorited)
+                            // delete favorite, un-highlight button
+                        })
+                } else {
+                    readAPIFunctions.updateRead(book._id, { "favorited": "true" })
+                        .then((response) => {
+                            console.log(response.data.favorited)
+                            // post favorite if not already favorited, highlight button
+                        })
+                }
+            })
     }
 
     // function clickedFavorite(book) {
@@ -80,9 +80,14 @@ const LibraryPage = () => {
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='button-container'>
-                                <button onClick={() => {
+                                {book.favorited === true ?
+                                    <button style={{ "background-color": "red" }} onClick={() => {
                                         favoriteBook(book);
-                                }}>Favorite</button>
+                                    }}>un-favorite</button>
+                                    : <button onClick={() => {
+                                        favoriteBook(book);
+                                    }}>Favorite</button>
+                                }
                             </div>
                         </div>
                         <div className='content-container'>
