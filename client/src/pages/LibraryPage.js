@@ -31,7 +31,7 @@ const LibraryPage = () => {
     }
 
     // DEV-298
-    function favoriteBook(book) {
+    function favoriteBook(book, index) {
         readAPIFunctions.getReadByID(book._id)
             .then((response) => {
                 console.log(response.data.favorited)
@@ -40,12 +40,23 @@ const LibraryPage = () => {
                         .then((response) => {
                             console.log(response.data.favorited)
                             // delete favorite, un-highlight button
+                            // set state
+                            // copy old array
+                            let newArr = [...read];
+                            newArr[index] = response.data;
+                            setRead(newArr);
                         })
                 } else {
                     readAPIFunctions.updateRead(book._id, { "favorited": "true" })
                         .then((response) => {
                             console.log(response.data.favorited)
                             // post favorite if not already favorited, highlight button
+                            // set state
+                            // copying old array
+                            let newArr = [...read]; 
+                             // replacing the index with the new, response book
+                            newArr[index] = response.data;
+                            setRead(newArr);
                         })
                 }
             })
@@ -71,7 +82,7 @@ const LibraryPage = () => {
         <div>
             <p>Library of books I've read.</p>
             <div>
-                {read.map((book) => (
+                {read.map((book, index) => (
                     <div key={book.id} className='single-book'>
                         <div className='heading-container'>
                             <div>
@@ -82,10 +93,10 @@ const LibraryPage = () => {
                             <div className='button-container'>
                                 {book.favorited === true ?
                                     <button style={{ "background-color": "red" }} onClick={() => {
-                                        favoriteBook(book);
+                                        favoriteBook(book, index);
                                     }}>un-favorite</button>
                                     : <button onClick={() => {
-                                        favoriteBook(book);
+                                        favoriteBook(book, index);
                                     }}>Favorite</button>
                                 }
                             </div>
