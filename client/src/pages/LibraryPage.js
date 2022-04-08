@@ -25,7 +25,14 @@ const LibraryPage = () => {
     // };
 
     async function unFavoriteBook(book, index) {
-        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "false" })
+        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "false" });
+        let newArr = [...read];
+        newArr[index] = response.data;
+        setRead(newArr);
+    }
+
+    async function favoriteBookTwo(book, index) {
+        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "true" });
         let newArr = [...read];
         newArr[index] = response.data;
         setRead(newArr);
@@ -97,7 +104,7 @@ const LibraryPage = () => {
                                         unFavoriteBook(book, index);
                                     }}>un-favorite</button>
                                     : <button onClick={() => {
-                                        favoriteBook(book, index);
+                                        favoriteBookTwo(book, index);
                                     }}>Favorite</button>
                                 }
                             </div>
