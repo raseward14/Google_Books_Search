@@ -24,10 +24,11 @@ const LibraryPage = () => {
     //     })
     // };
 
-    // function to change the color of the button if favorited is true
-    // filter through books after page load, if favorited is true, add a class to set background color to gold
-    function highlight() {
-
+    async function unFavoriteBook(book, index) {
+        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "false" })
+        let newArr = [...read];
+        newArr[index] = response.data;
+        setRead(newArr);
     }
 
     // DEV-298
@@ -93,7 +94,7 @@ const LibraryPage = () => {
                             <div className='button-container'>
                                 {book.favorited === true ?
                                     <button style={{ "background-color": "red" }} onClick={() => {
-                                        favoriteBook(book, index);
+                                        unFavoriteBook(book, index);
                                     }}>un-favorite</button>
                                     : <button onClick={() => {
                                         favoriteBook(book, index);
