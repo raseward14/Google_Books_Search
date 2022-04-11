@@ -39,7 +39,6 @@ module.exports = {
         })
     },
     update: (req, res) => {
-       
             db.Library.findOneAndUpdate(
                 { _id: req.params.id  }, 
                 { $set: { favorited: req.body.favorited }}, 

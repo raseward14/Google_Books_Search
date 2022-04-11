@@ -16,8 +16,8 @@ const saveFavorite = (bookInfo) => {
     return axios.post('/api/favorite', bookInfo);
 };
 
-const deleteFavorite = (bookID) => {
-    return axios.delete('/api/favorite/' + bookID);
+const deleteFavorite = (id) => {
+    return axios.delete(`/api/favorite/${id}`);
 };
 
 export { getFavorites, saveFavorite, deleteFavorite };

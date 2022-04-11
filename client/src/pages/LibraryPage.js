@@ -8,7 +8,7 @@ const LibraryPage = () => {
     let APIRead;
 
     // i can favorite books from my library DEV-298
-    // function favoriteBook(book) {
+    // function postFavorite(book) {
     //     favoriteAPIFunctions.saveFavorite({
     //         title: book.title,
     //         authors: book.authors,
@@ -24,55 +24,46 @@ const LibraryPage = () => {
     //     })
     // };
 
+    async function deleteFromFavorites(book) {
+        console.log(book._id)
+        let response = await favoriteAPIFunctions.deleteFavorite(book._id);
+    }
+
     async function unFavoriteBook(book, index) {
         let response = await readAPIFunctions.updateRead(book._id, { "favorited": "false" });
         let newArr = [...read];
         newArr[index] = response.data;
         setRead(newArr);
+        // now delete it from the favorites
+        console.log('unfavorited')
+        deleteFromFavorites(book)
     }
 
-    async function favoriteBookTwo(book, index) {
+    async function postFavorite(book) {
+        let response = await favoriteAPIFunctions.saveFavorite({
+            title: book.title,
+            authors: book.authors,
+            description: book.description,
+            imageLink: book.imageLink,
+            infoLink: book.infoLink,
+        })
+        // IF its not already in favorites
+        // if .title === .title of the book we are favoriting
+        // 'oops! looks like a book with this title has already been favorited!'
+        // click here to keep both
+        // click here to replace that book with this one
+
+    };
+
+
+    async function favoriteBook(book, index) {
         let response = await readAPIFunctions.updateRead(book._id, { "favorited": "true" });
         let newArr = [...read];
         newArr[index] = response.data;
         setRead(newArr);
+        // POST to favorites 
+        postFavorite(book);
     }
-
-    // DEV-298
-    function favoriteBook(book, index) {
-        readAPIFunctions.getReadByID(book._id)
-            .then((response) => {
-                console.log(response.data.favorited)
-                if (response.data.favorited === true) {
-                    readAPIFunctions.updateRead(book._id, { "favorited": "false" })
-                        .then((response) => {
-                            console.log(response.data.favorited)
-                            // delete favorite, un-highlight button
-                            // set state
-                            // copy old array
-                            let newArr = [...read];
-                            newArr[index] = response.data;
-                            setRead(newArr);
-                        })
-                } else {
-                    readAPIFunctions.updateRead(book._id, { "favorited": "true" })
-                        .then((response) => {
-                            console.log(response.data.favorited)
-                            // post favorite if not already favorited, highlight button
-                            // set state
-                            // copying old array
-                            let newArr = [...read]; 
-                             // replacing the index with the new, response book
-                            newArr[index] = response.data;
-                            setRead(newArr);
-                        })
-                }
-            })
-    }
-
-    // function clickedFavorite(book) {
-    //     favoriteBook(book);
-    // };
 
     async function loadRead() {
         let result = await readAPIFunctions.getRead();
@@ -104,7 +95,7 @@ const LibraryPage = () => {
                                         unFavoriteBook(book, index);
                                     }}>un-favorite</button>
                                     : <button onClick={() => {
-                                        favoriteBookTwo(book, index);
+                                        favoriteBook(book, index);
                                     }}>Favorite</button>
                                 }
                             </div>
