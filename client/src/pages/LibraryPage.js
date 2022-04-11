@@ -7,26 +7,13 @@ const LibraryPage = () => {
     const [read, setRead] = useState([]);
     let APIRead;
 
-    // i can favorite books from my library DEV-298
-    // function postFavorite(book) {
-    //     favoriteAPIFunctions.saveFavorite({
-    //         title: book.title,
-    //         authors: book.authors,
-    //         description: book.description,
-    //         imageLink: book.imageLink,
-    //         infoLink: book.infoLink
-    //     })
-    //     .then((book) => {
-    //         readAPIFunctions.updateRead(
-    //             { id: book.id }, 
-    //             { favorited: true }
-    //         )
-    //     })
-    // };
-
     async function deleteFromFavorites(book) {
-        console.log(book._id)
-        let response = await favoriteAPIFunctions.deleteFavorite(book._id);
+        let result = await favoriteAPIFunctions.getFavorites();
+        let APIFavorites = result.data
+        let suspects = APIFavorites.filter(favorite => favorite.title === book.title)
+        suspects.map(suspect => {
+            favoriteAPIFunctions.deleteFavorite(suspect._id);
+        })
     }
 
     async function unFavoriteBook(book, index) {
@@ -52,7 +39,6 @@ const LibraryPage = () => {
         // 'oops! looks like a book with this title has already been favorited!'
         // click here to keep both
         // click here to replace that book with this one
-
     };
 
 
