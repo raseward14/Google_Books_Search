@@ -13,8 +13,8 @@ const LibraryPage = () => {
         let suspects = APIFavorites.filter(favorite => favorite.title === book.title)
         suspects.map(suspect => {
             favoriteAPIFunctions.deleteFavorite(suspect._id);
-        })
-    }
+        });
+    };
 
     async function unFavoriteBook(book, index) {
         let response = await readAPIFunctions.updateRead(book._id, { "favorited": "false" });
@@ -22,9 +22,18 @@ const LibraryPage = () => {
         newArr[index] = response.data;
         setRead(newArr);
         // now delete it from the favorites
-        console.log('unfavorited')
-        deleteFromFavorites(book)
-    }
+        console.log('unfavorited');
+        deleteFromFavorites(book);
+    };
+
+    async function removeFromRead(book, index) {
+        await readAPIFunctions.deleteRead(book._id);
+        console.log(read);
+        let newArr = read.splice(index, 1);
+        console.log(newArr);
+        // setRead(newArr)
+        deleteFromFavorites(book);
+    };
 
     async function postFavorite(book) {
         let response = await favoriteAPIFunctions.saveFavorite({
@@ -33,7 +42,7 @@ const LibraryPage = () => {
             description: book.description,
             imageLink: book.imageLink,
             infoLink: book.infoLink,
-        })
+        });
         // IF its not already in favorites
         // if .title === .title of the book we are favoriting
         // 'oops! looks like a book with this title has already been favorited!'
@@ -49,7 +58,7 @@ const LibraryPage = () => {
         setRead(newArr);
         // POST to favorites 
         postFavorite(book);
-    }
+    };
 
     async function loadRead() {
         let result = await readAPIFunctions.getRead();
@@ -84,6 +93,11 @@ const LibraryPage = () => {
                                         favoriteBook(book, index);
                                     }}>Favorite</button>
                                 }
+                                <button
+                                    onClick={() => {
+                                        removeFromRead(book, index);
+                                    }}
+                                >Remove</button>
                             </div>
                         </div>
                         <div className='content-container'>
