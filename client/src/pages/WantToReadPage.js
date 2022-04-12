@@ -6,6 +6,11 @@ const WantToReadPage = () => {
     const [want, setWant] = useState([]);
     let APIWant;
 
+    async function removeFromWantToRead(book) {
+        await wantToReadAPIFunctions.deleteWantToRead(book._id);
+        setWant(want.filter(item => item._id !== book._id));
+    };
+
     async function loadWant() {
         let result = await wantToReadAPIFunctions.getWantToRead();
         APIWant = result.data;
@@ -33,6 +38,11 @@ const WantToReadPage = () => {
                             <div className='button-container'>
                                 <button>In progress</button>
                                 <button>Completed!</button>
+                                <button
+                                    onClick={() => {
+                                        removeFromWantToRead(book);
+                                    }}
+                                >Remove</button>
                             </div>
                         </div>
                         <div className='content-container'>
