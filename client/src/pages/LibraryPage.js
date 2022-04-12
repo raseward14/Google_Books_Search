@@ -26,12 +26,9 @@ const LibraryPage = () => {
         deleteFromFavorites(book);
     };
 
-    async function removeFromRead(book, index) {
+    async function removeFromRead(book) {
         await readAPIFunctions.deleteRead(book._id);
-        console.log(read);
-        let newArr = read.splice(index, 1);
-        console.log(newArr);
-        // setRead(newArr)
+        setRead(read.filter(read => read._id !== book._id))
         deleteFromFavorites(book);
     };
 
@@ -95,7 +92,7 @@ const LibraryPage = () => {
                                 }
                                 <button
                                     onClick={() => {
-                                        removeFromRead(book, index);
+                                        removeFromRead(book);
                                     }}
                                 >Remove</button>
                             </div>
