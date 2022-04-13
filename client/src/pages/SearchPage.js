@@ -12,7 +12,7 @@ const SearchPage = () => {
 
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
-    // const [color, setColor] = useState('grey');
+    let APIRead;
 
     // 2jdwvaw favorite book
     function favoriteBook(book) {
@@ -95,6 +95,23 @@ const SearchPage = () => {
         };
     };
 
+    // async function loadRead() {
+    //     console.log(APIRead);
+    //     APIRead.map(book => book.read = "true");
+    // };
+    
+    // NOT WORKING YET
+    // const loadHistory = async () => {
+    //     const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+    //     let result = await readAPIFunctions.getRead();
+    //     APIRead = result.data;
+    //     let readBooks = yourBooks.filter((book) => result.includes(book))
+    //     console.log(readBooks);
+    //     setBooks(yourBooks);
+    //     console.log(yourBooks)
+    // };
+
+
     const loadHistory = async () => {
         const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
         setBooks(yourBooks);
@@ -102,7 +119,8 @@ const SearchPage = () => {
     };
 
     useEffect(() => {
-        loadHistory()
+        loadHistory();
+        // loadRead();
     }, [])
 
     return (
