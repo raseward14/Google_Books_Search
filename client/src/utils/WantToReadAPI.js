@@ -12,8 +12,8 @@ const saveWantToRead = (bookInfo) => {
     return axios.post('/api/read', bookInfo);
 };
 
-const deleteWantToRead = (bookID) => {
-    return axios.delete('/api/read' + bookID);
+const deleteWantToRead = (id) => {
+    return axios.delete(`/api/read/${id}`);
 };
 
 export { getWantToRead, saveWantToRead, deleteWantToRead };

@@ -12,6 +12,7 @@ const SearchPage = () => {
 
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
+    // const [color, setColor] = useState('grey');
 
     // 2jdwvaw favorite book
     function favoriteBook(book) {
@@ -43,7 +44,6 @@ const SearchPage = () => {
     };
 
     function addToRead(book) {
-
         readAPIFunctions.saveRead({
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
@@ -51,8 +51,6 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink
         })
-
-
         console.log("added to the library of books you've read")
     };
 
@@ -64,7 +62,6 @@ const SearchPage = () => {
     };
 
     function addWantToRead(book) {
-
         wantToReadAPIFunctions.saveWantToRead({
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
@@ -72,7 +69,6 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink
         })
-
         console.log('added to need to read list')
     };
 
@@ -129,7 +125,10 @@ const SearchPage = () => {
                                 </div>
                                 <div className='button-container'>
                                     {/* <button onClick={() => clickedFavorite(book)}>FAVORITE</button> */}
-                                    <button onClick={() => clickedRead(book)}>READ</button>
+                                    <button
+                                        onClick={() => {
+                                            clickedRead(book)
+                                        }}>READ</button>
                                     <button onClick={() => clickedWantToRead(book)}>WANT TO READ</button>
                                 </div>
                             </div>
