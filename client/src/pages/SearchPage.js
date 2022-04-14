@@ -99,17 +99,43 @@ const SearchPage = () => {
     //     console.log(APIRead);
     //     APIRead.map(book => book.read = "true");
     // };
+
+    function checkIfRead(yourBooks, APIBooks) {
+        let readBooks = [];
+        yourBooks.forEach((yourBook) => {
+            APIBooks.forEach((read) => {
+                console.log(yourBook.volumeInfo.title, read.title);
+                if(read.title === yourBook.volumeInfo.title) {
+                    readBooks.push(yourBook);
+                } else {
+                    return;
+                };
+            });
+        });
+        console.log(readBooks);
+    };
     
     // NOT WORKING YET
-    // const loadHistory = async () => {
-    //     const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-    //     let result = await readAPIFunctions.getRead();
-    //     APIRead = result.data;
-    //     let readBooks = yourBooks.filter((book) => result.includes(book))
-    //     console.log(readBooks);
-    //     setBooks(yourBooks);
-    //     console.log(yourBooks)
-    // };
+    const loadHistory2 = async () => {
+        const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+        console.log(yourBooks)
+        let result = await readAPIFunctions.getRead();
+        APIRead = result.data;
+        console.log(APIRead);
+        // let readBooks = []
+        // yourBooks.forEach((yourBook) => {
+        //     APIRead.forEach((read) => {
+        //         console.log(yourBook.volumeInfo.title, read.title)
+        //         if(read.title === yourBook.volumeInfo.title) {
+        //             readBooks.push(yourBook)
+        //         } else {
+        //             return
+        //         }
+        //     })
+        // })
+        checkIfRead(yourBooks, APIRead)
+        setBooks(yourBooks);
+    };
 
 
     const loadHistory = async () => {
@@ -119,7 +145,7 @@ const SearchPage = () => {
     };
 
     useEffect(() => {
-        loadHistory();
+        loadHistory2(); 
         // loadRead();
     }, [])
 
