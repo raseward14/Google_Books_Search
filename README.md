@@ -12,3 +12,5 @@ React based Google Books search app, utilizing React components, Node, Express, 
 * [CodingDeft Fetch and Display Data from API in React js](https://www.codingdeft.com/posts/react-fetch-data-api/)
 * [freeCodeCamp How To Use Axios with React.js](https://www.freecodecamp.org/news/how-to-use-axios-with-react/#how-to-make-a-put-request)
 * [stackOverflow](https://stackoverflow.com/questions/55987953/how-do-i-update-states-onchange-in-an-array-of-object-in-react-hooks)
+* [techozu for of loop](https://techozu.com/exit-foreach-loop-javascript/#:~:text=Officially%2C%20there%20is%20no%20proper,consider%20using%20a%20traditional%20loop.)
+* [w3schools Javascript properties](https://www.w3schools.com/js/js_object_properties.asp)
