@@ -11,6 +11,7 @@ const readSchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
+    // want: true,
     date: Date,
 });
 
@@ -28,6 +29,7 @@ const librarySchema = new Schema({
         type: Boolean,
         default: false
     },
+    // read: true,
     date: Date,
 });
 

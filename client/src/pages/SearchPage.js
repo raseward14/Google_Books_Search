@@ -5,44 +5,42 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 
 const SearchPage = () => {
-
-    const [clickedFav, setClickedFav] = useState(false);
-    const [clickedLib, setClickedLib] = useState(false);
-    const [clickedNeed, setClickedNeed] = useState(false);
-
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
-    let APIRead;
+    let searchedBooks = [];
 
     // 2jdwvaw favorite book
-    function favoriteBook(book) {
-        // favoritesController.create({
-        //     title: books.title,
-        //     description: books.description,
-        //     authors: books.authors,
-        //     date: books.date
-        // })
-        // .then(() => {
-        //     console.log('delete this book now!')
-        // })
+    // function favoriteBook(book) {
 
-        favoritesAPIFunctions.saveFavorite({
-            title: book.volumeInfo.title,
-            authors: book.volumeInfo.authors,
-            description: book.volumeInfo.description,
-            imageLink: book.volumeInfo.imageLinks.thumbnail,
-            infoLink: book.volumeInfo.infoLink
+    //     favoritesAPIFunctions.saveFavorite({
+    //         title: book.volumeInfo.title,
+    //         authors: book.volumeInfo.authors,
+    //         description: book.volumeInfo.description,
+    //         imageLink: book.volumeInfo.imageLinks.thumbnail,
+    //         infoLink: book.volumeInfo.infoLink
+    //     })
+    // };
+
+    // not favoriting from here yet
+    // function clickedFavorite(book) {
+    //     if (!clickedFav) {
+    //         setClickedFav(true);
+    //         favoriteBook(book);
+    //     };
+    // };
+
+    // DELETE read
+    function deleteFromRead(book) {
+        let result = readAPIFunctions.getRead();
+        let readResults = result.data;
+        let suspects = readResults.filter(read => read.title === book.volumeInfo.title)
+        suspects.map(suspect => {
+            readAPIFunctions.deleteRead(suspect._id)
         })
-        // then remove from search page
+        console.log('deleted from read books')
     };
 
-    function clickedFavorite(book) {
-        if (!clickedFav) {
-            setClickedFav(true);
-            favoriteBook(book);
-        };
-    };
-
+    // POST read
     function addToRead(book) {
         readAPIFunctions.saveRead({
             title: book.volumeInfo.title,
@@ -51,16 +49,38 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink
         })
-        console.log("added to the library of books you've read")
+        console.log("added to books you've read")
     };
 
-    function clickedRead(e) {
-        if (!clickedLib) {
-            setClickedLib(true);
-            addToRead(e);
-        };
+    // flip .read, if true post to read, if false, delete all matching titles from read, replace newArray index with new book and setBooks - ternary operator will handle the button change
+    function clickedRead(book, index) {
+        if(book.read === true) {
+            book.read = false;
+            let newArr = [...books];
+            newArr[index] = book;
+            setBooks(newArr);
+            deleteFromRead(book)
+        } else {
+            book.read = true;
+            let newArr = [...books];
+            newArr[index] = book;
+            setBooks(newArr);
+            addToRead(book);
+        }
     };
 
+    // DELETE want
+    function deleteFromWant(book) {
+        let result = wantToReadAPIFunctions.getWantToRead();
+        let wantResult = result.data;
+        let suspects = wantResult.filter(want => want.title === book.volumeInfo.title);
+        suspects.map(suspect => {
+            wantToReadAPIFunctions.deleteWantToRead(suspect._id);
+        });
+        console.log('deleted from want list')
+    };
+
+    // POST want
     function addWantToRead(book) {
         wantToReadAPIFunctions.saveWantToRead({
             title: book.volumeInfo.title,
@@ -69,13 +89,23 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink
         })
-        console.log('added to need to read list')
+        console.log('added to want list')
     };
 
-    function clickedWantToRead(e) {
-        if (!clickedNeed) {
-            setClickedNeed(true);
-            addWantToRead(e);
+    // flip .want, if true post to want, if false, delete all matching titles from want, replace newArray index with new book and setBooks - ternary operator will handle the button change
+    function clickedWantToRead(book, index) {
+        if(book.want === true) {
+            book.want = false;
+            let newArr = [...books];
+            newArr[index] = book;
+            setBooks(newArr);
+            deleteFromWant(book);
+        } else {
+            book.want = true;
+            let newArr = [...books];
+            newArr[index] = book;
+            setBooks(newArr);
+            addWantToRead(book);
         };
     };
 
@@ -91,62 +121,62 @@ const SearchPage = () => {
         const callResult = async () => {
             const booksArray = await result;
             setBooks(booksArray);
-            localStorage.setItem('lastBookSearch', JSON.stringify(booksArray))
+            localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
         };
     };
 
-    // async function loadRead() {
-    //     console.log(APIRead);
-    //     APIRead.map(book => book.read = "true");
-    // };
-
-    function checkIfRead(yourBooks, APIBooks) {
-        let readBooks = [];
-        yourBooks.forEach((yourBook) => {
-            APIBooks.forEach((read) => {
-                console.log(yourBook.volumeInfo.title, read.title);
-                if(read.title === yourBook.volumeInfo.title) {
-                    readBooks.push(yourBook);
+    // check if posted to read, add property book.read = true
+    // if true, break looping through reads, move to next searchedBook
+    function checkIfRead(arr1, arr2) {
+        arr1.forEach((book) => {
+            for(let obj of arr2) {
+                if(obj.title === book.volumeInfo.title) {
+                    book.read = true;
+                    break;
                 } else {
-                    return;
+                    book.read = false;
                 };
-            });
+            };
         });
-        console.log(readBooks);
-    };
-    
-    // NOT WORKING YET
-    const loadHistory2 = async () => {
-        const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        console.log(yourBooks)
-        let result = await readAPIFunctions.getRead();
-        APIRead = result.data;
-        console.log(APIRead);
-        // let readBooks = []
-        // yourBooks.forEach((yourBook) => {
-        //     APIRead.forEach((read) => {
-        //         console.log(yourBook.volumeInfo.title, read.title)
-        //         if(read.title === yourBook.volumeInfo.title) {
-        //             readBooks.push(yourBook)
-        //         } else {
-        //             return
-        //         }
-        //     })
-        // })
-        checkIfRead(yourBooks, APIRead)
-        setBooks(yourBooks);
+        console.log(searchedBooks);
     };
 
+    // check if posted to want, add property book.want = true
+    // if true, break looping through wants, move to the next searchedBook
+    function checkIfWant(arr1, arr2) {
+        arr1.forEach((book) => {
+            for(let obj of arr2) {
+                if(obj.title === book.volumeInfo.title) {
+                    book.want = true;
+                    break;
+                } else {
+                    book.want = false;
+                };
+            };
+        });
+        console.log(searchedBooks);
+    };
 
+    // pull search results from local storage for global searchedBooks array
+    // get read from API
+    // call function to add .read if a searched book is included in read
+    // get want from API
+    // call function to add .want if a searched book is included in want
+    // setBooks with the searchedBooks containing updated properties on page load
     const loadHistory = async () => {
-        const yourBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        setBooks(yourBooks);
-        console.log(yourBooks)
+        searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+        let read = await readAPIFunctions.getRead();
+        let APIRead = read.data;
+        checkIfRead(searchedBooks, APIRead);
+        let want = await wantToReadAPIFunctions.getWantToRead();
+        let APIWant = want.data;
+        checkIfWant(searchedBooks, APIWant);
+        setBooks(searchedBooks);
     };
 
+    // on page load, call loadHistory to load prior search, and add .read, .want properties 
     useEffect(() => {
-        loadHistory2(); 
-        // loadRead();
+        loadHistory();
     }, [])
 
     return (
@@ -159,7 +189,7 @@ const SearchPage = () => {
             <button onClick={handleSubmit}>Submit</button>
             {books.length > 0 && (
                 <div>
-                    {books.map((book) => (
+                    {books.map((book, index) => (
                         <div key={book.id} className='single-book'>
                             <div className='heading-container'>
                                 <div>
@@ -169,11 +199,23 @@ const SearchPage = () => {
                                 </div>
                                 <div className='button-container'>
                                     {/* <button onClick={() => clickedFavorite(book)}>FAVORITE</button> */}
-                                    <button
-                                        onClick={() => {
-                                            clickedRead(book)
-                                        }}>READ</button>
-                                    <button onClick={() => clickedWantToRead(book)}>WANT TO READ</button>
+                                    {book.read === true ?
+                                        <button
+                                            style={{ "background-color": "green" }}
+                                            onClick={() => {
+                                                clickedRead(book, index)
+                                            }}>ALREADY READ</button>
+                                        : <button
+                                            onClick={() => {
+                                                clickedRead(book, index)
+                                            }}>NOT READ</button>
+                                    }
+                                    {book.want === true ?
+                                        <button
+                                            style={{ "background-color": "red" }}
+                                            onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
+                                        : <button onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
+                                    }
                                 </div>
                             </div>
                             <div className='content-container'>
