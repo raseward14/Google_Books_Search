@@ -14,3 +14,4 @@ React based Google Books search app, utilizing React components, Node, Express, 
 * [stackOverflow](https://stackoverflow.com/questions/55987953/how-do-i-update-states-onchange-in-an-array-of-object-in-react-hooks)
 * [techozu for of loop](https://techozu.com/exit-foreach-loop-javascript/#:~:text=Officially%2C%20there%20is%20no%20proper,consider%20using%20a%20traditional%20loop.)
 * [w3schools Javascript properties](https://www.w3schools.com/js/js_object_properties.asp)
+* [Dmitri Palutin How to Compare Objects in Javascript](https://dmitripavlutin.com/how-to-compare-objects-in-javascript/)
