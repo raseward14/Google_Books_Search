@@ -8,6 +8,9 @@ const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     let searchedBooks = [];
+    let APIRead = [];
+    let APIWant = [];
+    let newSearchArray = [];
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -119,9 +122,11 @@ const SearchPage = () => {
             });
         // this function prints the booksArray
         const callResult = async () => {
-            const booksArray = await result;
-            setBooks(booksArray);
-            localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
+            newSearchArray = await result;
+            checkIfRead(newSearchArray, APIRead);
+            checkIfWant(newSearchArray, APIWant);
+            setBooks(newSearchArray);
+            localStorage.setItem('lastBookSearch', JSON.stringify(newSearchArray));
         };
     };
 
@@ -166,10 +171,10 @@ const SearchPage = () => {
     const loadHistory = async () => {
         searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
         let read = await readAPIFunctions.getRead();
-        let APIRead = read.data;
+        APIRead = read.data;
         checkIfRead(searchedBooks, APIRead);
         let want = await wantToReadAPIFunctions.getWantToRead();
-        let APIWant = want.data;
+        APIWant = want.data;
         checkIfWant(searchedBooks, APIWant);
         setBooks(searchedBooks);
     };
