@@ -33,8 +33,8 @@ const SearchPage = () => {
     // };
 
     // DELETE read
-    function deleteFromRead(book) {
-        let result = readAPIFunctions.getRead();
+    async function deleteFromRead(book) {
+        let result = await readAPIFunctions.getRead();
         let readResults = result.data;
         let suspects = readResults.filter(read => read.title === book.volumeInfo.title)
         suspects.map(suspect => {
@@ -57,15 +57,17 @@ const SearchPage = () => {
 
     // flip .read, if true post to read, if false, delete all matching titles from read, replace newArray index with new book and setBooks - ternary operator will handle the button change
     function clickedRead(book, index) {
-        if(book.read === true) {
+        if (book.read === true) {
             book.read = false;
             let newArr = [...books];
+            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.read to false, then setBooks to the new array
             newArr[index] = book;
             setBooks(newArr);
             deleteFromRead(book)
         } else {
             book.read = true;
             let newArr = [...books];
+            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to true, then setBooks to the new array
             newArr[index] = book;
             setBooks(newArr);
             addToRead(book);
@@ -73,8 +75,8 @@ const SearchPage = () => {
     };
 
     // DELETE want
-    function deleteFromWant(book) {
-        let result = wantToReadAPIFunctions.getWantToRead();
+    async function deleteFromWant(book) {
+        let result = await wantToReadAPIFunctions.getWantToRead();
         let wantResult = result.data;
         let suspects = wantResult.filter(want => want.title === book.volumeInfo.title);
         suspects.map(suspect => {
@@ -97,15 +99,17 @@ const SearchPage = () => {
 
     // flip .want, if true post to want, if false, delete all matching titles from want, replace newArray index with new book and setBooks - ternary operator will handle the button change
     function clickedWantToRead(book, index) {
-        if(book.want === true) {
+        if (book.want === true) {
             book.want = false;
             let newArr = [...books];
+            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to false, then setBooks to the new array
             newArr[index] = book;
             setBooks(newArr);
             deleteFromWant(book);
         } else {
             book.want = true;
             let newArr = [...books];
+            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to true, then setBooks to the new array
             newArr[index] = book;
             setBooks(newArr);
             addWantToRead(book);
@@ -134,8 +138,8 @@ const SearchPage = () => {
     // if true, break looping through reads, move to next searchedBook
     function checkIfRead(arr1, arr2) {
         arr1.forEach((book) => {
-            for(let obj of arr2) {
-                if(obj.title === book.volumeInfo.title) {
+            for (let obj of arr2) {
+                if (obj.title === book.volumeInfo.title) {
                     book.read = true;
                     break;
                 } else {
@@ -150,8 +154,8 @@ const SearchPage = () => {
     // if true, break looping through wants, move to the next searchedBook
     function checkIfWant(arr1, arr2) {
         arr1.forEach((book) => {
-            for(let obj of arr2) {
-                if(obj.title === book.volumeInfo.title) {
+            for (let obj of arr2) {
+                if (obj.title === book.volumeInfo.title) {
                     book.want = true;
                     break;
                 } else {
