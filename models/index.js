@@ -11,7 +11,7 @@ const readSchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
-    // want: true,
+    isbn13: Number,
     date: Date,
 });
 
@@ -29,7 +29,7 @@ const librarySchema = new Schema({
         type: Boolean,
         default: false
     },
-    // read: true,
+    isbn13: Number,
     date: Date,
 });
 

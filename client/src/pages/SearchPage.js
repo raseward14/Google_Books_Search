@@ -61,6 +61,7 @@ const SearchPage = () => {
             book.read = false;
             let newArr = [...books];
             // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.read to false, then setBooks to the new array
+            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
             deleteFromRead(book)
@@ -68,6 +69,7 @@ const SearchPage = () => {
             book.read = true;
             let newArr = [...books];
             // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to true, then setBooks to the new array
+            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
             addToRead(book);
@@ -86,13 +88,17 @@ const SearchPage = () => {
     };
 
     // POST want
-    function addWantToRead(book) {
-        wantToReadAPIFunctions.saveWantToRead({
+    async function addWantToRead(book) {
+        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
+        let thisIsbn13 = isbn13Array[0].identifier
+
+        await wantToReadAPIFunctions.saveWantToRead({
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
-            infoLink: book.volumeInfo.infoLink
+            infoLink: book.volumeInfo.infoLink,
+            isbn13: thisIsbn13
         })
         console.log('added to want list')
     };
@@ -103,6 +109,7 @@ const SearchPage = () => {
             book.want = false;
             let newArr = [...books];
             // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to false, then setBooks to the new array
+            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
             deleteFromWant(book);
@@ -110,6 +117,7 @@ const SearchPage = () => {
             book.want = true;
             let newArr = [...books];
             // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to true, then setBooks to the new array
+            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
             addWantToRead(book);
@@ -155,6 +163,7 @@ const SearchPage = () => {
     function checkIfWant(arr1, arr2) {
         arr1.forEach((book) => {
             for (let obj of arr2) {
+                // if obj.isbn === book.volumeInfo.industryIdentifiers[1].identifier
                 if (obj.title === book.volumeInfo.title) {
                     book.want = true;
                     break;
@@ -182,6 +191,12 @@ const SearchPage = () => {
         checkIfWant(searchedBooks, APIWant);
         setBooks(searchedBooks);
     };
+
+    function consoleLogIsbn(book) {
+        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
+        let isbn13 = isbn13Array[0].identifier
+        console.log(isbn13)
+    }
 
     // on page load, call loadHistory to load prior search, and add .read, .want properties 
     useEffect(() => {
@@ -223,8 +238,12 @@ const SearchPage = () => {
                                         <button
                                             style={{ "background-color": "red" }}
                                             onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
-                                        : <button onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
+                                        : <button 
+                                            onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
                                     }
+                                    <button
+                                    onClick={() => consoleLogIsbn(book)}
+                                    >isbn</button>
                                 </div>
                             </div>
                             <div className='content-container'>
@@ -235,6 +254,8 @@ const SearchPage = () => {
                     ))}
                 </div>
             )}
+            <button>back</button>
+            <button>next</button>
         </div>
     );
 };
