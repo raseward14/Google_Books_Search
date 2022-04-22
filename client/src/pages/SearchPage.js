@@ -76,14 +76,18 @@ const SearchPage = () => {
         }
     };
 
-    // DELETE want
-    async function deleteFromWant(book) {
-        console.log(book)
-
+    
+    async function deleteFromWant2(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
         let thisIsbn13 = isbn13Array[0].identifier
+        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(thisIsbn13)
+       let wantResult = result.data;
+       console.log(wantResult);
+    };
 
 
+    // DELETE want
+    async function deleteFromWant(book) {
         let result = await wantToReadAPIFunctions.getWantToRead();
         let wantResult = result.data;
         let suspects = wantResult.filter(want => want.title === book.volumeInfo.title);
@@ -116,7 +120,7 @@ const SearchPage = () => {
             let newArr = [...books];
             newArr[index] = book;
             setBooks(newArr);
-            deleteFromWant(book);
+            deleteFromWant2(book);
         } else {
             book.want = true;
             let newArr = [...books];

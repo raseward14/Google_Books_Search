@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-// get books to read, eventually by user_id
+// get all books to read
 const getWantToRead = () => {
     return axios.get('/api/read');
+};
 
+const getWantToReadByIsbn13 = (isbn13) => {
+    return axios.get('/api/read', isbn13);
 };
 
 // save a new book to read
@@ -16,4 +19,4 @@ const deleteWantToRead = (id) => {
     return axios.delete(`/api/read/${id}`);
 };
 
-export { getWantToRead, saveWantToRead, deleteWantToRead };
+export { getWantToRead, saveWantToRead, deleteWantToRead, getWantToReadByIsbn13 };

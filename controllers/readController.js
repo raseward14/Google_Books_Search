@@ -1,6 +1,16 @@
 const db = require('../models')
 
 module.exports = {
+    findByIsbn: (req, res) => {
+        // GET To Read Books by isbn13
+        db.Read.find({ isbn13: req.body.isbn13}, (err, book) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(book);
+            };
+        });
+    },
     findAll: (req, res) => {
         // GET To Read Books List
         db.Read.find((err, books) => {
