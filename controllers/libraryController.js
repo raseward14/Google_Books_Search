@@ -19,6 +19,7 @@ module.exports = {
         libraryBook.description = req.body.description;
         libraryBook.imageLink = req.body.imageLink;
         libraryBook.infoLink = req.body.infoLink;
+        libraryBook.isbn13 = req.body.isbn13;
         libraryBook.date = Date.now();
         libraryBook.save(req.body, (err) => {
             if (err) {

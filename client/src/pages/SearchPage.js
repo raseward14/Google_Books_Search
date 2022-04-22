@@ -78,6 +78,12 @@ const SearchPage = () => {
 
     // DELETE want
     async function deleteFromWant(book) {
+        console.log(book)
+
+        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
+        let thisIsbn13 = isbn13Array[0].identifier
+
+
         let result = await wantToReadAPIFunctions.getWantToRead();
         let wantResult = result.data;
         let suspects = wantResult.filter(want => want.title === book.volumeInfo.title);
@@ -108,16 +114,12 @@ const SearchPage = () => {
         if (book.want === true) {
             book.want = false;
             let newArr = [...books];
-            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to false, then setBooks to the new array
-            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
             deleteFromWant(book);
         } else {
             book.want = true;
             let newArr = [...books];
-            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to true, then setBooks to the new array
-            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
             addWantToRead(book);
@@ -147,6 +149,7 @@ const SearchPage = () => {
     function checkIfRead(arr1, arr2) {
         arr1.forEach((book) => {
             for (let obj of arr2) {
+                // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
                 if (obj.title === book.volumeInfo.title) {
                     book.read = true;
                     break;
@@ -163,7 +166,7 @@ const SearchPage = () => {
     function checkIfWant(arr1, arr2) {
         arr1.forEach((book) => {
             for (let obj of arr2) {
-                // if obj.isbn === book.volumeInfo.industryIdentifiers[1].identifier
+                // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
                 if (obj.title === book.volumeInfo.title) {
                     book.want = true;
                     break;
