@@ -80,7 +80,8 @@ const SearchPage = () => {
     async function deleteFromWant2(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
         let thisIsbn13 = isbn13Array[0].identifier
-        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(thisIsbn13)
+        console.log(typeof thisIsbn13, thisIsbn13)
+        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13({ isbn13: thisIsbn13 })
        let wantResult = result.data;
        console.log(wantResult);
     };

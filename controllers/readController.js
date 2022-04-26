@@ -3,10 +3,11 @@ const db = require('../models')
 module.exports = {
     findByIsbn: (req, res) => {
         // GET To Read Books by isbn13
-        db.Read.find({ isbn13: req.body.isbn13}, (err, book) => {
+        db.Read.find(req.body.isbn13, (err, book) => {
             if (err) {
                 res.send(err);
             } else {
+                console.log(req)
                 res.send(book);
             };
         });
