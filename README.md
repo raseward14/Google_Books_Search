@@ -16,3 +16,6 @@ React based Google Books search app, utilizing React components, Node, Express, 
 * [techozu for of loop](https://techozu.com/exit-foreach-loop-javascript/#:~:text=Officially%2C%20there%20is%20no%20proper,consider%20using%20a%20traditional%20loop.)
 * [w3schools Javascript properties](https://www.w3schools.com/js/js_object_properties.asp)
 * [Dmitri Palutin How to Compare Objects in Javascript](https://dmitripavlutin.com/how-to-compare-objects-in-javascript/)
+* [StackAbuse Get Query Strings and Parameters in Express.js](https://stackabuse.com/get-query-strings-and-parameters-in-express-js/)
+* [MongoDB Docs Queries](https://mongodb.github.io/node-mongodb-native/markdown-docs/queries.html)
+* [bezkoder Node.js, Express & MongoDb: Build a CRUD Rest Api Example](https://www.bezkoder.com/node-express-mongodb-crud-rest-api/)
