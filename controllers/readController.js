@@ -3,18 +3,20 @@ const db = require('../models')
 module.exports = {
     findByIsbn: (req, res) => {
         // GET To Read Books by isbn13
-        db.Read.find(req.body.isbn13, (err, book) => {
+        db.Read.find({ isbn13: req.query.isbn13 }, (err, book) => {
             if (err) {
                 res.send(err);
             } else {
-                console.log(req)
                 res.send(book);
             };
         });
     },
     findAll: (req, res) => {
         // GET To Read Books List
-        db.Read.find((err, books) => {
+        let thisIsbn13 = req.query.isbn13
+        console.log(req.query.isbn13)
+        let condition = thisIsbn13 ? {isbn13: thisIsbn13} : {}
+        db.Read.find(condition, (err, books) => {
             if (err) {
                 res.send(err);
             } else {

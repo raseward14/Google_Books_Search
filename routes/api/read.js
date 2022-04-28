@@ -9,7 +9,6 @@ router.use((req, res, next) => {
 // routes that end in /read (http://localhost:8000/api/read)
 router.route('/')
     .get(readController.findAll)
-    .get(readController.findByIsbn)
     .post(readController.create)
 
 // routes that end in /read/:id (http://localhost:8000/api/read/:id)
