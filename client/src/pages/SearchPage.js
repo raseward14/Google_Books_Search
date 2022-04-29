@@ -33,25 +33,13 @@ const SearchPage = () => {
     // };
 
     // DELETE read -> use db query to GET by isbn13 before deleting
-    async function deleteFromRead2(book) {
+    async function deleteFromRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
         console.log(thisIsbn13)
         let result = await readAPIFunctions.getReadByIsbn13(thisIsbn13);
         let readResult = result.data;
-        console.log(readResult)
-        // readAPIFunctions.deleteRead(readResult[0]._id);
-    };
-
-    // DELETE read 
-    async function deleteFromRead(book) {
-        let result = await readAPIFunctions.getRead();
-        let readResults = result.data;
-        let suspects = readResults.filter(read => read.title === book.volumeInfo.title)
-        suspects.map(suspect => {
-            readAPIFunctions.deleteRead(suspect._id)
-        })
-        console.log('deleted from read books')
+        readAPIFunctions.deleteRead(readResult[0]._id);
     };
 
     // POST read
@@ -77,7 +65,7 @@ const SearchPage = () => {
             let newArr = [...books];
             newArr[index] = book;
             setBooks(newArr);
-            deleteFromRead2(book)
+            deleteFromRead(book)
         } else {
             book.read = true;
             let newArr = [...books];
