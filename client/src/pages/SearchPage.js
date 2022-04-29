@@ -32,7 +32,18 @@ const SearchPage = () => {
     //     };
     // };
 
-    // DELETE read
+    // DELETE read -> use db query to GET by isbn13 before deleting
+    async function deleteFromRead2(book) {
+        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
+        let thisIsbn13 = isbn13Array[0].identifier;
+        console.log(thisIsbn13)
+        let result = await readAPIFunctions.getReadByIsbn13(thisIsbn13);
+        let readResult = result.data;
+        console.log(readResult)
+        // readAPIFunctions.deleteRead(readResult[0]._id);
+    };
+
+    // DELETE read 
     async function deleteFromRead(book) {
         let result = await readAPIFunctions.getRead();
         let readResults = result.data;
@@ -45,12 +56,16 @@ const SearchPage = () => {
 
     // POST read
     function addToRead(book) {
+        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
+        let thisIsbn13 = isbn13Array[0].identifier
+
         readAPIFunctions.saveRead({
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
-            infoLink: book.volumeInfo.infoLink
+            infoLink: book.volumeInfo.infoLink,
+            isbn13: thisIsbn13
         })
         console.log("added to books you've read")
     };
@@ -60,26 +75,22 @@ const SearchPage = () => {
         if (book.read === true) {
             book.read = false;
             let newArr = [...books];
-            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.read to false, then setBooks to the new array
-            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
-            deleteFromRead(book)
+            deleteFromRead2(book)
         } else {
             book.read = true;
             let newArr = [...books];
-            // map through these, for each book, if the book.volumeInfo.title equals the book.volumeInfo.title of the book we clicked, set book.want to true, then setBooks to the new array
-            // this will mark every book with a matching title on click
             newArr[index] = book;
             setBooks(newArr);
             addToRead(book);
         }
     };
 
-    // Delete want -> uses db query to GET by isbn13 before deleting
+    // DELETE want -> uses db query to GET by isbn13 before deleting
     async function deleteFromWant(book) {
-        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
-        let thisIsbn13 = isbn13Array[0].identifier
+        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
+        let thisIsbn13 = isbn13Array[0].identifier;
         let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(thisIsbn13)
        let wantResult = result.data;
        wantToReadAPIFunctions.deleteWantToRead(wantResult[0]._id)

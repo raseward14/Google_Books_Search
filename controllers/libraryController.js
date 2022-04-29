@@ -3,7 +3,9 @@ const db = require('../models');
 module.exports = {
     findAll: (req, res) => {
         // GET books I've Read Shelf
-        db.Library.find((err, books) => {
+        let thisIsbn13 = req.query.isbn13
+        let condition = thisIsbn13 ? {isbn13: thisIsbn13} : {}
+        db.Library.find(condition, (err, books) => {
             if (err) {
                 res.send(err);
             } else {

@@ -5,6 +5,7 @@ module.exports = {
         // GET To Read Books List
         let thisIsbn13 = req.query.isbn13
         let condition = thisIsbn13 ? {isbn13: thisIsbn13} : {}
+        console.log(condition)
         db.Read.find(condition, (err, books) => {
             if (err) {
                 res.send(err);

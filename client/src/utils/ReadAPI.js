@@ -5,6 +5,12 @@ const getRead = () => {
     return axios.get('/api/library');
 };
 
+// GET library book by isbn13
+const getReadByIsbn13 = (isbn13) => {
+    console.log(isbn13)
+    return axios.get(`/api/library/?isbn13=${isbn13}`);
+}
+
 const getReadByID = (id) => {
     return axios.get(`/api/library/${id}`);
 };
@@ -24,4 +30,4 @@ const deleteRead = (id) => {
     return axios.delete(`/api/library/${id}`);
 };
 
-export { getRead, getReadByID, saveRead, deleteRead, updateRead };
+export { getRead, getReadByID, saveRead, deleteRead, updateRead, getReadByIsbn13 };
