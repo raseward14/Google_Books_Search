@@ -7,6 +7,8 @@ import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
+    const [startIndex, setStartIndex] = useState(0);
+    const [maxResults, setMaxResults] = useState(10);
     let searchedBooks = [];
     let APIRead = [];
     let APIWant = [];
@@ -117,9 +119,13 @@ const SearchPage = () => {
         };
     };
 
+    function paginate() {
+
+    }
+
     const handleSubmit = () => {
         // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
-        const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
+        const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
             .then((response) => response.json())
             .then((books) => {
                 callResult();
@@ -222,7 +228,7 @@ const SearchPage = () => {
                                             style={{ "background-color": "green" }}
                                             onClick={() => {
                                                 clickedRead(book, index)
-                                            }}>ALREADY READ</button>
+                                            }}>HAVE READ</button>
                                         : <button
                                             onClick={() => {
                                                 clickedRead(book, index)
@@ -233,11 +239,11 @@ const SearchPage = () => {
                                             style={{ "background-color": "red" }}
                                             onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
                                         : <button 
-                                            onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
+                                            onClick={() => clickedWantToRead(book, index)}>ADD TO WANT</button>
                                     }
-                                    <button
+                                    {/* <button
                                     onClick={() => consoleLogIsbn(book)}
-                                    >isbn</button>
+                                    >isbn</button> */}
                                 </div>
                             </div>
                             <div className='content-container'>
@@ -248,8 +254,28 @@ const SearchPage = () => {
                     ))}
                 </div>
             )}
-            <button>back</button>
-            <button>next</button>
+            <button
+            onClick={() => {
+                if(startIndex >= 10) {
+                    let newStart = startIndex - 10;
+                    let newMax = maxResults - 10;
+                    setStartIndex(newStart);
+                    setMaxResults(newMax);
+                    handleSubmit();
+                } else {
+                    return
+                }
+            }}
+            >back</button>
+            <button
+            onClick={() => {
+                let newStart = startIndex + 10;
+                let newMax = maxResults + 10;
+                setStartIndex(newStart);
+                setMaxResults(newMax);
+                handleSubmit();
+            }}
+            >next</button>
         </div>
     );
 };

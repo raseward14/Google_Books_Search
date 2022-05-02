@@ -4,8 +4,8 @@ module.exports = {
     findAll: (req, res) => {
         // GET books I've Read Shelf
         let thisIsbn13 = req.query.isbn13
-        let condition = thisIsbn13 ? {isbn13: thisIsbn13} : {}
-        db.Library.find(condition, (err, books) => {
+        let query = thisIsbn13 ? {isbn13: thisIsbn13} : {}
+        db.Library.find(query, (err, books) => {
             if (err) {
                 res.send(err);
             } else {
