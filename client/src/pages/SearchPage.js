@@ -147,8 +147,9 @@ const SearchPage = () => {
         arr1.forEach((book) => {
             for (let obj of arr2) {
                 // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
-                if (obj.title === book.volumeInfo.title) {
+                if (obj.title === book?.volumeInfo?.title) {
                     book.read = true;
+                    console.log('here')
                     break;
                 } else {
                     book.read = false;
@@ -163,9 +164,11 @@ const SearchPage = () => {
     function checkIfWant(arr1, arr2) {
         arr1.forEach((book) => {
             for (let obj of arr2) {
-                // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
+                // we need to get the isbn13 of the searched book, industry identifiers is an array, two objects each with two properties
+                // if obj.isbn13 === book?.volumeInfo?.industryIdentifiers[1].identifier
                 if (obj.title === book.volumeInfo.title) {
                     book.want = true;
+                    console.log(obj, book)
                     break;
                 } else {
                     book.want = false;

@@ -7,7 +7,6 @@ const getWantToRead = () => {
 
 // get book, query by isbn13
 const getWantToReadByIsbn13 = (isbn13) => {
-    console.log(isbn13);
     return axios.get(`/api/read/?isbn13=${isbn13}`);
 };
 
