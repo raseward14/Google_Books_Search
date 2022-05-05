@@ -149,7 +149,7 @@ const SearchPage = () => {
                 // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
                 if (obj.title === book?.volumeInfo?.title) {
                     book.read = true;
-                    console.log('here')
+                    console.log('read books: ', obj, book)
                     break;
                 } else {
                     book.read = false;
@@ -168,7 +168,7 @@ const SearchPage = () => {
                 // if obj.isbn13 === book?.volumeInfo?.industryIdentifiers[1].identifier
                 if (obj.title === book.volumeInfo.title) {
                     book.want = true;
-                    console.log(obj, book)
+                    console.log('want: ', obj, book)
                     break;
                 } else {
                     book.want = false;
