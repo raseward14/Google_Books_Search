@@ -9,10 +9,8 @@ const SearchPage = () => {
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
     const [maxResults, setMaxResults] = useState(10);
-    let searchedBooks = [];
-    let APIRead = [];
-    let APIWant = [];
-    let newSearchArray = [];
+    // let searchedBooks = [];
+    // let newSearchArray = [];
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -82,8 +80,8 @@ const SearchPage = () => {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
         let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(thisIsbn13)
-       let wantResult = result.data;
-       wantToReadAPIFunctions.deleteWantToRead(wantResult[0]._id)
+        let wantResult = result.data;
+        wantToReadAPIFunctions.deleteWantToRead(wantResult[0]._id)
     };
 
     // POST want
@@ -122,24 +120,50 @@ const SearchPage = () => {
     function paginate() {
 
     }
+    // DEV-305
+    // const handleSubmit = () => {
+    //     // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
+    //     const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
+    //         .then((response) => response.json())
+    //         .then((books) => {
+    //             callResult();
+    //             return books.items;
+    //         });
+    //     // this function prints the booksArray
+    //     const callResult = async () => {
+    //         const newSearchArray = await result;
 
-    const handleSubmit = () => {
-        // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
-        const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
-            .then((response) => response.json())
-            .then((books) => {
-                callResult();
-                return books.items;
-            });
-        // this function prints the booksArray
-        const callResult = async () => {
-            newSearchArray = await result;
-            checkIfRead(newSearchArray, APIRead);
-            checkIfWant(newSearchArray, APIWant);
-            setBooks(newSearchArray);
-            localStorage.setItem('lastBookSearch', JSON.stringify(newSearchArray));
-        };
-    };
+    //         const read = await readAPIFunctions.getRead();
+    //         const APIRead = read.data;
+    //         checkIfRead(newSearchArray, APIRead);
+
+    //         const want = await wantToReadAPIFunctions.getWantToRead();
+    //         const APIWant = want.data;
+    //         checkIfWant(newSearchArray, APIWant);
+
+    //         setBooks(newSearchArray);
+    //         localStorage.setItem('lastBookSearch', JSON.stringify(newSearchArray));
+    //         handleSubmitRefactored()
+    //     };
+    // };
+
+    async function handleSubmit() {
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
+        const books = await response.json();
+        let booksArray = books.items;
+
+        const read = await readAPIFunctions.getRead();
+        const APIRead = read.data;
+        checkIfRead(booksArray, APIRead);
+
+        const want = await wantToReadAPIFunctions.getWantToRead();
+        const APIWant = want.data;
+        checkIfWant(booksArray, APIWant);
+
+        setBooks(booksArray);
+        localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
+
+    }
 
     // check if posted to read, add property book.read = true
     // if true, break looping through reads, move to next searchedBook
@@ -149,14 +173,13 @@ const SearchPage = () => {
                 // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
                 if (obj.title === book?.volumeInfo?.title) {
                     book.read = true;
-                    console.log('here')
+                    console.log('read books: ', obj, book)
                     break;
                 } else {
                     book.read = false;
                 };
             };
         });
-        console.log(searchedBooks);
     };
 
     // check if posted to want, add property book.want = true
@@ -166,16 +189,18 @@ const SearchPage = () => {
             for (let obj of arr2) {
                 // we need to get the isbn13 of the searched book, industry identifiers is an array, two objects each with two properties
                 // if obj.isbn13 === book?.volumeInfo?.industryIdentifiers[1].identifier
+                let isbn13Array = book?.volumeInfo?.industryIdentifiers
+                console.log(isbn13Array);
+                let searchedIsbn13 = isbn13Array.filter(identifier => identifier.length === 13)
                 if (obj.title === book.volumeInfo.title) {
                     book.want = true;
-                    console.log(obj, book)
+                    console.log('want: ', obj, book)
                     break;
                 } else {
                     book.want = false;
                 };
             };
         });
-        console.log(searchedBooks);
     };
 
     // pull search results from local storage for global searchedBooks array
@@ -185,21 +210,23 @@ const SearchPage = () => {
     // call function to add .want if a searched book is included in want
     // setBooks with the searchedBooks containing updated properties on page load
     const loadHistory = async () => {
-        searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        let read = await readAPIFunctions.getRead();
-        APIRead = read.data;
+        const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+        const read = await readAPIFunctions.getRead();
+        const APIRead = read.data;
         checkIfRead(searchedBooks, APIRead);
-        let want = await wantToReadAPIFunctions.getWantToRead();
-        APIWant = want.data;
+        const want = await wantToReadAPIFunctions.getWantToRead();
+        const APIWant = want.data;
         checkIfWant(searchedBooks, APIWant);
         setBooks(searchedBooks);
+        console.log('APIRead: ', APIRead);
+        console.log('APIWant: ', APIWant);
     };
 
-    function consoleLogIsbn(book) {
-        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
-        let isbn13 = isbn13Array[0].identifier
-        console.log(isbn13)
-    }
+    // function consoleLogIsbn(book) {
+    //     let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
+    //     let isbn13 = isbn13Array[0].identifier
+    //     console.log(isbn13)
+    // }
 
     // on page load, call loadHistory to load prior search, and add .read, .want properties 
     useEffect(() => {
@@ -241,7 +268,7 @@ const SearchPage = () => {
                                         <button
                                             style={{ "background-color": "red" }}
                                             onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
-                                        : <button 
+                                        : <button
                                             onClick={() => clickedWantToRead(book, index)}>ADD TO WANT</button>
                                     }
                                     {/* <button
@@ -258,26 +285,26 @@ const SearchPage = () => {
                 </div>
             )}
             <button
-            onClick={() => {
-                if(startIndex >= 10) {
-                    let newStart = startIndex - 10;
-                    let newMax = maxResults - 10;
+                onClick={() => {
+                    if (startIndex >= 10) {
+                        let newStart = startIndex - 10;
+                        let newMax = maxResults - 10;
+                        setStartIndex(newStart);
+                        setMaxResults(newMax);
+                        handleSubmit();
+                    } else {
+                        return
+                    }
+                }}
+            >back</button>
+            <button
+                onClick={() => {
+                    let newStart = startIndex + 10;
+                    let newMax = maxResults + 10;
                     setStartIndex(newStart);
                     setMaxResults(newMax);
                     handleSubmit();
-                } else {
-                    return
-                }
-            }}
-            >back</button>
-            <button
-            onClick={() => {
-                let newStart = startIndex + 10;
-                let newMax = maxResults + 10;
-                setStartIndex(newStart);
-                setMaxResults(newMax);
-                handleSubmit();
-            }}
+                }}
             >next</button>
         </div>
     );
