@@ -120,7 +120,7 @@ const SearchPage = () => {
     function paginate() {
 
     }
-    // DEV-305
+    // DEV-305 
     // const handleSubmit = () => {
     //     // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
     //     const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
@@ -190,14 +190,19 @@ const SearchPage = () => {
                 // we need to get the isbn13 of the searched book, industry identifiers is an array, two objects each with two properties
                 // if obj.isbn13 === book?.volumeInfo?.industryIdentifiers[1].identifier
                 let isbn13Array = book?.volumeInfo?.industryIdentifiers
-                console.log(isbn13Array);
-                let searchedIsbn13 = isbn13Array.filter(identifier => identifier.length === 13)
-                if (obj.title === book.volumeInfo.title) {
-                    book.want = true;
-                    console.log('want: ', obj, book)
-                    break;
+                // looks like some books do not have isbn13's
+                if(isbn13Array !== undefined) {
+                    const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13')
+                    const isbn13Value = searchedIsbn13[0].identifier;
+                    if (obj.isbn13 === isbn13Value) {
+                        book.want = true;
+                        console.log('want: ', obj, book)
+                        break;
+                    } else {
+                        book.want = false;
+                    };
                 } else {
-                    book.want = false;
+                    return;
                 };
             };
         });
