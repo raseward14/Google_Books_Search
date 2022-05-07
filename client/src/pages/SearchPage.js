@@ -170,14 +170,26 @@ const SearchPage = () => {
     function checkIfRead(arr1, arr2) {
         arr1.forEach((book) => {
             for (let obj of arr2) {
+                // get isbn13 of searched book, industry identifiers is an array on some books
                 // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
-                if (obj.title === book?.volumeInfo?.title) {
-                    book.read = true;
-                    console.log('read books: ', obj, book)
-                    break;
+                let isbn13Array = book?.volumeInfo?.industryIdentifiers
+                // account for books that do not have isbn13s
+                if(isbn13Array !== undefined) {
+                    // grab the object containing isbn13, not isbn10
+                    const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13');
+                    // take the identifier property out of the object
+                    const isbn13Value = searchedIsbn13[0].identifier;
+                    if (obj.isbn13 === isbn13Value) {
+                        book.read = true;
+                        console.log('read books: ', obj, book)
+                        break;
+                    } else {
+                        book.read = false;
+                    };
+
                 } else {
-                    book.read = false;
-                };
+
+                }
             };
         });
     };
@@ -192,7 +204,9 @@ const SearchPage = () => {
                 let isbn13Array = book?.volumeInfo?.industryIdentifiers
                 // looks like some books do not have isbn13's
                 if(isbn13Array !== undefined) {
+                    // grab the object containing the isbn13, not isbn10
                     const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13')
+                    // take the identifier property out of the object
                     const isbn13Value = searchedIsbn13[0].identifier;
                     if (obj.isbn13 === isbn13Value) {
                         book.want = true;
