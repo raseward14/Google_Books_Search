@@ -120,6 +120,66 @@ const SearchPage = () => {
     function paginate() {
 
     }
+    
+    
+    // check if posted to read, add property book.read = true
+    // if true, break looping through reads, move to next searchedBook
+    function checkIfRead(arr1, arr2) {
+        arr1.forEach((book) => {
+            for (let obj of arr2) {
+                // get isbn13 of searched book, industry identifiers is an array on some books
+                // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
+                let isbn13Array = book?.volumeInfo?.industryIdentifiers
+                // account for books that do not have isbn13s
+                console.log('isbn13 Array: ', isbn13Array)
+                if(isbn13Array !== undefined) {
+                    // grab the object containing isbn13, not isbn10
+                    const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13');
+                    // take the identifier property out of the object
+                    console.log('searched isbn13: ', searchedIsbn13, 'read isbn13: ', obj.isbn13);
+                    const isbn13Value = searchedIsbn13[0]?.identifier;
+                    if ((obj.isbn13 === isbn13Value) && isbn13Value !== undefined) {
+                        book.read = true;
+                        console.log('read books: ', obj, book)
+                        break;
+                    } else {
+                        book.read = false;
+                    };
+                } else {
+                    return;
+                };
+            };
+        });
+    };
+    
+    // check if posted to want, add property book.want = true
+    // if true, break looping through wants, move to the next searchedBook
+    function checkIfWant(arr1, arr2) {
+        arr1.forEach((book) => {
+            for (let obj of arr2) {
+                // we need to get the isbn13 of the searched book, industry identifiers is an array, two objects each with two properties
+                // if obj.isbn13 === book?.volumeInfo?.industryIdentifiers[1].identifier
+                let isbn13Array = book?.volumeInfo?.industryIdentifiers
+                // looks like some books do not have isbn13's
+                if(isbn13Array !== undefined) {
+                    // grab the object containing the isbn13, not isbn10
+                    const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13')
+                    // take the identifier property out of the object
+                    const isbn13Value = searchedIsbn13[0].identifier;
+                    if (obj.isbn13 === isbn13Value) {
+                        book.want = true;
+                        console.log('want: ', obj, book)
+                        break;
+                    } else {
+                        book.want = false;
+                    };
+                } else {
+                    return;
+                };
+            };
+        });
+    };
+    
     // DEV-305 
     // const handleSubmit = () => {
     //     // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
@@ -162,64 +222,6 @@ const SearchPage = () => {
 
         setBooks(booksArray);
         localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
-
-    }
-
-    // check if posted to read, add property book.read = true
-    // if true, break looping through reads, move to next searchedBook
-    function checkIfRead(arr1, arr2) {
-        arr1.forEach((book) => {
-            for (let obj of arr2) {
-                // get isbn13 of searched book, industry identifiers is an array on some books
-                // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
-                let isbn13Array = book?.volumeInfo?.industryIdentifiers
-                // account for books that do not have isbn13s
-                if(isbn13Array !== undefined) {
-                    // grab the object containing isbn13, not isbn10
-                    const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13');
-                    // take the identifier property out of the object
-                    const isbn13Value = searchedIsbn13[0].identifier;
-                    if (obj.isbn13 === isbn13Value) {
-                        book.read = true;
-                        console.log('read books: ', obj, book)
-                        break;
-                    } else {
-                        book.read = false;
-                    };
-
-                } else {
-
-                }
-            };
-        });
-    };
-
-    // check if posted to want, add property book.want = true
-    // if true, break looping through wants, move to the next searchedBook
-    function checkIfWant(arr1, arr2) {
-        arr1.forEach((book) => {
-            for (let obj of arr2) {
-                // we need to get the isbn13 of the searched book, industry identifiers is an array, two objects each with two properties
-                // if obj.isbn13 === book?.volumeInfo?.industryIdentifiers[1].identifier
-                let isbn13Array = book?.volumeInfo?.industryIdentifiers
-                // looks like some books do not have isbn13's
-                if(isbn13Array !== undefined) {
-                    // grab the object containing the isbn13, not isbn10
-                    const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13')
-                    // take the identifier property out of the object
-                    const isbn13Value = searchedIsbn13[0].identifier;
-                    if (obj.isbn13 === isbn13Value) {
-                        book.want = true;
-                        console.log('want: ', obj, book)
-                        break;
-                    } else {
-                        book.want = false;
-                    };
-                } else {
-                    return;
-                };
-            };
-        });
     };
 
     // pull search results from local storage for global searchedBooks array
