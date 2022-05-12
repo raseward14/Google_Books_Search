@@ -131,16 +131,14 @@ const SearchPage = () => {
                 // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
                 let isbn13Array = book?.volumeInfo?.industryIdentifiers
                 // account for books that do not have isbn13s
-                console.log('isbn13 Array: ', isbn13Array)
                 if(isbn13Array !== undefined) {
                     // grab the object containing isbn13, not isbn10
                     const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13');
                     // take the identifier property out of the object
-                    console.log('searched isbn13: ', searchedIsbn13, 'read isbn13: ', obj.isbn13);
                     const isbn13Value = searchedIsbn13[0]?.identifier;
-                    if ((obj.isbn13 === isbn13Value) && isbn13Value !== undefined) {
+                    if (obj.isbn13 === isbn13Value) {
                         book.read = true;
-                        console.log('read books: ', obj, book)
+                        console.log('read book: ', obj, book)
                         break;
                     } else {
                         book.read = false;
@@ -165,10 +163,10 @@ const SearchPage = () => {
                     // grab the object containing the isbn13, not isbn10
                     const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13')
                     // take the identifier property out of the object
-                    const isbn13Value = searchedIsbn13[0].identifier;
+                    const isbn13Value = searchedIsbn13[0]?.identifier;
                     if (obj.isbn13 === isbn13Value) {
                         book.want = true;
-                        console.log('want: ', obj, book)
+                        console.log('want to read book: ', obj, book)
                         break;
                     } else {
                         book.want = false;
