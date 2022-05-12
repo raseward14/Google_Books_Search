@@ -9,8 +9,6 @@ const SearchPage = () => {
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
     const [maxResults, setMaxResults] = useState(10);
-    // let searchedBooks = [];
-    // let newSearchArray = [];
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -207,6 +205,7 @@ const SearchPage = () => {
 
     async function handleSubmit() {
         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
+        console.log(startIndex, maxResults)
         const books = await response.json();
         let booksArray = books.items;
 
@@ -246,6 +245,10 @@ const SearchPage = () => {
     //     let isbn13 = isbn13Array[0].identifier
     //     console.log(isbn13)
     // }
+
+    // useEffect(() => {
+    //     handleSubmit()
+    // }, [startIndex, maxResults])
 
     // on page load, call loadHistory to load prior search, and add .read, .want properties 
     useEffect(() => {
@@ -320,6 +323,8 @@ const SearchPage = () => {
                 onClick={() => {
                     let newStart = startIndex + 10;
                     let newMax = maxResults + 10;
+                    // at the point this button is clicked, newStart is 10, newMax is 20, perfect, however, in handleSubmit, the state has not been updated yet, so the values are still 0 and 10
+                    console.log(newStart, newMax)
                     setStartIndex(newStart);
                     setMaxResults(newMax);
                     handleSubmit();
