@@ -116,6 +116,9 @@ const SearchPage = () => {
     };
 
     function paginate() {
+        // we only store 10 books returned from the api call in local storage, need to save the search term somehow to use when clicking next and back
+
+        // if i set a search term by firing handleSubmit, paginate just tacks on additional results because I believe the max result is working, but start index does not appear to be working
 
     }
     
@@ -205,7 +208,7 @@ const SearchPage = () => {
 
     async function handleSubmit() {
         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
-        console.log(startIndex, maxResults)
+        console.log(startIndex, maxResults, search)
         const books = await response.json();
         let booksArray = books.items;
 
@@ -246,9 +249,13 @@ const SearchPage = () => {
     //     console.log(isbn13)
     // }
 
-    // useEffect(() => {
-    //     handleSubmit()
-    // }, [startIndex, maxResults])
+    useEffect(() => {
+        if(search !== '') {
+            handleSubmit()
+        } else {
+            return;
+        };
+    }, [startIndex, maxResults])
 
     // on page load, call loadHistory to load prior search, and add .read, .want properties 
     useEffect(() => {
