@@ -27,7 +27,7 @@ const WantToReadPage = () => {
             <p>Books I want to read</p>
             <div>
                 {want.map((book) => (
-                    <div key={book.id} className='single-book'>
+                    <div key={book._id} className='single-book'>
                         <div className='heading-container'>
                             <div>
                                 <p>{book?.title}</p>

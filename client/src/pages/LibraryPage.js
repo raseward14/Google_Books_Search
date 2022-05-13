@@ -74,7 +74,7 @@ const LibraryPage = () => {
             <p>Library of books I've read.</p>
             <div>
                 {read.map((book, index) => (
-                    <div key={book.id} className='single-book'>
+                    <div key={book._id} className='single-book'>
                         <div className='heading-container'>
                             <div>
                                 <p>{book.title}</p>
@@ -83,7 +83,7 @@ const LibraryPage = () => {
                             </div>
                             <div className='button-container'>
                                 {book.favorited === true ?
-                                    <button style={{ "background-color": "red" }} onClick={() => {
+                                    <button style={{ "backgroundColor": "red" }} onClick={() => {
                                         unFavoriteBook(book, index);
                                     }}>un-favorite</button>
                                     : <button onClick={() => {

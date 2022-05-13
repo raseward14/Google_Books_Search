@@ -266,7 +266,7 @@ const SearchPage = () => {
             {books.length > 0 && (
                 <div>
                     {books.map((book, index) => (
-                        <div key={book.id} className='single-book'>
+                        <div key={book._id} className='single-book'>
                             <div className='heading-container'>
                                 <div>
                                     <p>{book.volumeInfo?.title}</p>
@@ -277,7 +277,7 @@ const SearchPage = () => {
                                     {/* <button onClick={() => clickedFavorite(book)}>FAVORITE</button> */}
                                     {book.read === true ?
                                         <button
-                                            style={{ "background-color": "green" }}
+                                            style={{ "backgroundColor": "green" }}
                                             onClick={() => {
                                                 clickedRead(book, index)
                                             }}>HAVE READ</button>
@@ -288,7 +288,7 @@ const SearchPage = () => {
                                     }
                                     {book.want === true ?
                                         <button
-                                            style={{ "background-color": "red" }}
+                                            style={{ "backgroundColor": "red" }}
                                             onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
                                         : <button
                                             onClick={() => clickedWantToRead(book, index)}>ADD TO WANT</button>
