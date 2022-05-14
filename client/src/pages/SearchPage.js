@@ -8,7 +8,6 @@ const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
-    const [maxResults, setMaxResults] = useState(10);
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -115,14 +114,8 @@ const SearchPage = () => {
         };
     };
 
-    function paginate() {
-        // we only store 10 books returned from the api call in local storage, need to save the search term somehow to use when clicking next and back
 
-        // if i set a search term by firing handleSubmit, paginate just tacks on additional results because I believe the max result is working, but start index does not appear to be working
 
-    }
-    
-    
     // check if posted to read, add property book.read = true
     // if true, break looping through reads, move to next searchedBook
     function checkIfRead(arr1, arr2) {
@@ -132,7 +125,7 @@ const SearchPage = () => {
                 // if obj.isbn13 === book.volumeInfo.industryIdentifiers[1].identifier
                 let isbn13Array = book?.volumeInfo?.industryIdentifiers
                 // account for books that do not have isbn13s
-                if(isbn13Array !== undefined) {
+                if (isbn13Array !== undefined) {
                     // grab the object containing isbn13, not isbn10
                     const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13');
                     // take the identifier property out of the object
@@ -150,7 +143,7 @@ const SearchPage = () => {
             };
         });
     };
-    
+
     // check if posted to want, add property book.want = true
     // if true, break looping through wants, move to the next searchedBook
     function checkIfWant(arr1, arr2) {
@@ -160,7 +153,7 @@ const SearchPage = () => {
                 // if obj.isbn13 === book?.volumeInfo?.industryIdentifiers[1].identifier
                 let isbn13Array = book?.volumeInfo?.industryIdentifiers
                 // looks like some books do not have isbn13's
-                if(isbn13Array !== undefined) {
+                if (isbn13Array !== undefined) {
                     // grab the object containing the isbn13, not isbn10
                     const searchedIsbn13 = (isbn13Array || []).filter(isbn => isbn.type === 'ISBN_13')
                     // take the identifier property out of the object
@@ -178,7 +171,7 @@ const SearchPage = () => {
             };
         });
     };
-    
+
     // DEV-305 
     // const handleSubmit = () => {
     //     // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
@@ -205,10 +198,12 @@ const SearchPage = () => {
     //         handleSubmitRefactored()
     //     };
     // };
+    async function paginate(newStart) {
+        // we only store 10 books returned from the api call in local storage, need to save the search term somehow to use when clicking next and back
 
-    async function handleSubmit() {
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)
-        console.log(startIndex, maxResults, search)
+        // if i set a search term by firing handleSubmit, paginate just tacks on additional results because I believe the max result is working, but start index does not appear to be working 
+
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${newStart}`)
         const books = await response.json();
         let booksArray = books.items;
 
@@ -221,6 +216,25 @@ const SearchPage = () => {
         checkIfWant(booksArray, APIWant);
 
         setBooks(booksArray);
+        // set the last search term
+        localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
+    };
+
+    async function handleSubmit() {
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
+        const books = await response.json();
+        let booksArray = books.items;
+
+        const read = await readAPIFunctions.getRead();
+        const APIRead = read.data;
+        checkIfRead(booksArray, APIRead);
+
+        const want = await wantToReadAPIFunctions.getWantToRead();
+        const APIWant = want.data;
+        checkIfWant(booksArray, APIWant);
+
+        setBooks(booksArray);
+        // set the last search term
         localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
     };
 
@@ -241,6 +255,7 @@ const SearchPage = () => {
         setBooks(searchedBooks);
         console.log('APIRead: ', APIRead);
         console.log('APIWant: ', APIWant);
+        console.log('searched books: ', searchedBooks);
     };
 
     // function consoleLogIsbn(book) {
@@ -250,12 +265,12 @@ const SearchPage = () => {
     // }
 
     useEffect(() => {
-        if(search !== '') {
+        if (search !== '') {
             handleSubmit()
         } else {
             return;
         };
-    }, [startIndex, maxResults])
+    }, [startIndex])
 
     // on page load, call loadHistory to load prior search, and add .read, .want properties 
     useEffect(() => {
@@ -317,10 +332,8 @@ const SearchPage = () => {
                 onClick={() => {
                     if (startIndex >= 10) {
                         let newStart = startIndex - 10;
-                        let newMax = maxResults - 10;
                         setStartIndex(newStart);
-                        setMaxResults(newMax);
-                        handleSubmit();
+                        paginate(newStart);
                     } else {
                         return
                     }
@@ -329,12 +342,10 @@ const SearchPage = () => {
             <button
                 onClick={() => {
                     let newStart = startIndex + 10;
-                    let newMax = maxResults + 10;
                     // at the point this button is clicked, newStart is 10, newMax is 20, perfect, however, in handleSubmit, the state has not been updated yet, so the values are still 0 and 10
-                    console.log(newStart, newMax)
+                    console.log(newStart, )
                     setStartIndex(newStart);
-                    setMaxResults(newMax);
-                    handleSubmit();
+                    paginate(newStart);
                 }}
             >next</button>
         </div>
