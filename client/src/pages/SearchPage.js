@@ -198,30 +198,9 @@ const SearchPage = () => {
     //         handleSubmitRefactored()
     //     };
     // };
-    async function paginate(newStart) {
-        // we only store 10 books returned from the api call in local storage, need to save the search term somehow to use when clicking next and back
-
-        // if i set a search term by firing handleSubmit, paginate just tacks on additional results because I believe the max result is working, but start index does not appear to be working 
-
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${newStart}`)
-        const books = await response.json();
-        let booksArray = books.items;
-
-        const read = await readAPIFunctions.getRead();
-        const APIRead = read.data;
-        checkIfRead(booksArray, APIRead);
-
-        const want = await wantToReadAPIFunctions.getWantToRead();
-        const APIWant = want.data;
-        checkIfWant(booksArray, APIWant);
-
-        setBooks(booksArray);
-        // set the last search term
-        localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
-    };
 
     async function handleSubmit() {
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}`)
         const books = await response.json();
         let booksArray = books.items;
 
@@ -333,7 +312,6 @@ const SearchPage = () => {
                     if (startIndex >= 10) {
                         let newStart = startIndex - 10;
                         setStartIndex(newStart);
-                        paginate(newStart);
                     } else {
                         return
                     }
@@ -345,7 +323,6 @@ const SearchPage = () => {
                     // at the point this button is clicked, newStart is 10, newMax is 20, perfect, however, in handleSubmit, the state has not been updated yet, so the values are still 0 and 10
                     console.log(newStart, )
                     setStartIndex(newStart);
-                    paginate(newStart);
                 }}
             >next</button>
         </div>
