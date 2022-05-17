@@ -7,24 +7,37 @@ const WantToReadPage = () => {
     const [want, setWant] = useState([]);
     let APIWant;
 
-    async function addToRead(book) {
-        console.log(book.title);
-        console.log(book.authors);
-        console.log(book.description);
-        console.log(book.imageLink);
-        console.log(book.infoLink);
-        console.log(book.isbn13);
+    const deleteFromRead = (book) => {
 
+    }
+
+    async function addToRead(book) {
         readAPIFunctions.saveRead({
-                title: book.title,
-                authors: book.authors,
-                description: book.description,
-                imageLink: book.imageLink,
-                infoLink: book.infoLink,
-                isbn13: book.isbn13
+            title: book.title,
+            authors: book.authors,
+            description: book.description,
+            imageLink: book.imageLink,
+            infoLink: book.infoLink,
+            isbn13: book.isbn13
         });
         console.log('added to read books!')
-    }
+    };
+
+    async function clickedRead(book, index) {
+        if (book.read === true) {
+            book.read = false
+            let newArr = [...want];
+            newArr[index] = book;
+            setWant(newArr);
+            deleteFromRead(book);
+        } else {
+            book.read = true;
+            let newArr = [...want];
+            newArr[index] = book;
+            setWant(newArr);
+            addToRead(book);
+        };
+    };
 
     async function removeFromWantToRead(book) {
         await wantToReadAPIFunctions.deleteWantToRead(book._id);
@@ -46,7 +59,7 @@ const WantToReadPage = () => {
         <div>
             <p>Books I want to read</p>
             <div>
-                {want.map((book) => (
+                {want.map((book, index) => (
                     <div key={book._id} className='single-book'>
                         <div className='heading-container'>
                             <div>
@@ -57,11 +70,19 @@ const WantToReadPage = () => {
                             </div>
                             <div className='button-container'>
                                 <button>In progress</button>
-                                <button
-                                    onClick={() => {
-                                        addToRead(book);
-                                    }}
-                                >Completed!</button>
+                                {book.read === true ?
+                                    <button
+                                    style={{ 'background-color': 'green' }}
+                                        onClick={() => {
+                                            clickedRead(book, index);
+                                        }}
+                                    >Completed!</button> :
+                                    <button
+                                        onClick={() => {
+                                            clickedRead(book, index);
+                                        }}
+                                    >Still Reading.</button>
+                                }
                                 <button
                                     onClick={() => {
                                         removeFromWantToRead(book);
