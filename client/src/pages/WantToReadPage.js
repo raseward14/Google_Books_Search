@@ -7,9 +7,11 @@ const WantToReadPage = () => {
     const [want, setWant] = useState([]);
     let APIWant;
 
-    const deleteFromRead = (book) => {
-
-    }
+    const deleteFromRead = async (book) => {
+        let readBook = await readAPIFunctions.getReadByIsbn13(book.isbn13);
+        const readBookID = readBook.data[0]._id;
+        readAPIFunctions.deleteRead(readBookID);
+    };
 
     async function addToRead(book) {
         readAPIFunctions.saveRead({
@@ -72,7 +74,7 @@ const WantToReadPage = () => {
                                 <button>In progress</button>
                                 {book.read === true ?
                                     <button
-                                    style={{ 'background-color': 'green' }}
+                                    style={{ 'backgroundColor': 'green' }}
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
