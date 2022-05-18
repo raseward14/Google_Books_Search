@@ -24,7 +24,7 @@ const FavoritesPage = () => {
                 {favorites.length > 0 && (
                     <div>
                         {favorites.map((favorite) => (
-                            <div key={favorite.id} className='single-book'>
+                            <div key={favorite._id} className='single-book'>
                                 <div className='heading-container'>
                                     <div>
                                         <p>{favorite.title}</p>
