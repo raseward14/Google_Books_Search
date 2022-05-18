@@ -224,6 +224,8 @@ const SearchPage = () => {
     // call function to add .want if a searched book is included in want
     // setBooks with the searchedBooks containing updated properties on page load
     const loadHistory = async () => {
+        const lastTermSearched = await JSON.parse(localStorage.getItem('lastSearchTerm'));
+        setSearch(lastTermSearched);
         const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
         const read = await readAPIFunctions.getRead();
         const APIRead = read.data;
