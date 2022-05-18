@@ -83,7 +83,7 @@ const LibraryPage = () => {
                             </div>
                             <div className='button-container'>
                                 {book.favorited === true ?
-                                    <button style={{ "backgroundColor": "red" }} onClick={() => {
+                                    <button style={{ "backgroundColor": "green" }} onClick={() => {
                                         unFavoriteBook(book, index);
                                     }}>un-favorite</button>
                                     : <button onClick={() => {

@@ -14,7 +14,7 @@ const WantToReadPage = () => {
     };
 
     async function addToRead(book) {
-        readAPIFunctions.saveRead({
+        await readAPIFunctions.saveRead({
             title: book.title,
             authors: book.authors,
             description: book.description,
@@ -23,6 +23,7 @@ const WantToReadPage = () => {
             isbn13: book.isbn13
         });
         console.log('added to read books!')
+        removeFromWantToRead(book);
     };
 
     async function clickedRead(book, index) {
@@ -83,7 +84,7 @@ const WantToReadPage = () => {
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
-                                    >Still Reading.</button>
+                                    >Check to Complete</button>
                                 }
                                 <button
                                     onClick={() => {

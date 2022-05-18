@@ -215,7 +215,6 @@ const SearchPage = () => {
         setBooks(booksArray);
         // set the last search term
         localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
-        localStorage.setItem('lastSearchTerm', JSON.stringify(search ));
     };
 
     // pull search results from local storage for global searchedBooks array
@@ -263,7 +262,8 @@ const SearchPage = () => {
             <input placeholder='Search'
                 onChange={(event) => {
                     setSearch(event.target.value);
-                    
+                    // set the search term on change
+                    localStorage.setItem('lastSearchTerm', JSON.stringify(event.target.value));
                 }} />
             <button onClick={handleSubmit}>Submit</button>
             {books.length > 0 && (
@@ -291,7 +291,7 @@ const SearchPage = () => {
                                     }
                                     {book.want === true ?
                                         <button
-                                            style={{ "backgroundColor": "red" }}
+                                            style={{ "backgroundColor": "green" }}
                                             onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
                                         : <button
                                             onClick={() => clickedWantToRead(book, index)}>ADD TO WANT</button>
@@ -322,7 +322,6 @@ const SearchPage = () => {
             <button
                 onClick={() => {
                     let newStart = startIndex + 10;
-                    // at the point this button is clicked, newStart is 10, newMax is 20, perfect, however, in handleSubmit, the state has not been updated yet, so the values are still 0 and 10
                     console.log(newStart, )
                     setStartIndex(newStart);
                 }}
