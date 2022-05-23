@@ -211,10 +211,13 @@ const SearchPage = () => {
         const want = await wantToReadAPIFunctions.getWantToRead();
         const APIWant = want.data;
         checkIfWant(booksArray, APIWant);
-
+        
         setBooks(booksArray);
         // set the last search term
         localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
+        // set the search term on click -> submit
+        localStorage.setItem('lastSearchTerm', JSON.stringify(search));
+        console.log(search);
     };
 
     // pull search results from local storage for global searchedBooks array
@@ -264,8 +267,6 @@ const SearchPage = () => {
             <input placeholder='Search'
                 onChange={(event) => {
                     setSearch(event.target.value);
-                    // set the search term on change
-                    localStorage.setItem('lastSearchTerm', JSON.stringify(event.target.value));
                 }} />
             <button onClick={handleSubmit}>Submit</button>
             {books.length > 0 && (
