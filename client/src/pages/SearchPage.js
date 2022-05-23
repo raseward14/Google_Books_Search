@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import * as favoritesAPIFunctions from '../utils/FavoriteAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookBookmark, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 
 const SearchPage = () => {
     const [search, setSearch] = useState('');
@@ -213,11 +216,10 @@ const SearchPage = () => {
         checkIfWant(booksArray, APIWant);
         
         setBooks(booksArray);
-        // set the last search term
+        // set the last array of results
         localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
         // set the search term on click -> submit
         localStorage.setItem('lastSearchTerm', JSON.stringify(search));
-        console.log(search);
     };
 
     // pull search results from local storage for global searchedBooks array
@@ -269,6 +271,14 @@ const SearchPage = () => {
                     setSearch(event.target.value);
                 }} />
             <button onClick={handleSubmit}>Submit</button>
+            <div className='single-book-header'>
+                <div className='heading-container-header'>
+                    <div className='button-container'>
+                        <p>Read Books</p>
+                        <p>Want to Read</p>
+                    </div>
+                </div>
+            </div>
             {books.length > 0 && (
                 <div>
                     {books.map((book, index) => (
@@ -286,7 +296,9 @@ const SearchPage = () => {
                                             style={{ "backgroundColor": "green" }}
                                             onClick={() => {
                                                 clickedRead(book, index)
-                                            }}>HAVE READ</button>
+                                            }}>HAVE READ
+                                            <FontAwesomeIcon icon={faSquareCheck} />
+                                            </button>
                                         : <button
                                             onClick={() => {
                                                 clickedRead(book, index)
@@ -295,7 +307,9 @@ const SearchPage = () => {
                                     {book.want === true ?
                                         <button
                                             style={{ "backgroundColor": "green" }}
-                                            onClick={() => clickedWantToRead(book, index)}>WANT TO READ</button>
+                                            onClick={() => clickedWantToRead(book, index)}>WANT TO READ
+                                            <FontAwesomeIcon icon={faBookBookmark} />
+                                            </button>
                                         : <button
                                             onClick={() => clickedWantToRead(book, index)}>ADD TO WANT</button>
                                     }
