@@ -5,7 +5,7 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookBookmark, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
+import { faBookBookmark, faSquareCheck, faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 const SearchPage = () => {
     const [search, setSearch] = useState('');
@@ -273,10 +273,8 @@ const SearchPage = () => {
             <button onClick={handleSubmit}>Submit</button>
             <div className='single-book-header'>
                 <div className='heading-container-header'>
-                    <div className='button-container'>
                         <p>Read Books</p>
                         <p>Want to Read</p>
-                    </div>
                 </div>
             </div>
             {books.length > 0 && (
@@ -296,22 +294,36 @@ const SearchPage = () => {
                                             style={{ "backgroundColor": "green" }}
                                             onClick={() => {
                                                 clickedRead(book, index)
-                                            }}>HAVE READ
-                                            <FontAwesomeIcon icon={faSquareCheck} />
+                                            }}>
+                                            <FontAwesomeIcon 
+                                            icon={faSquareCheck} 
+                                            className='fa-2x'
+                                            />
                                             </button>
                                         : <button
                                             onClick={() => {
                                                 clickedRead(book, index)
-                                            }}>NOT READ</button>
+                                            }}>
+                                            <FontAwesomeIcon
+                                            icon={faQuestion}
+                                            className='fa-2x'
+                                            />
+                                            </button>
                                     }
                                     {book.want === true ?
                                         <button
                                             style={{ "backgroundColor": "green" }}
-                                            onClick={() => clickedWantToRead(book, index)}>WANT TO READ
-                                            <FontAwesomeIcon icon={faBookBookmark} />
+                                            onClick={() => clickedWantToRead(book, index)}>
+                                            <FontAwesomeIcon 
+                                            icon={faBookBookmark}
+                                            className='fa-2x' />
                                             </button>
                                         : <button
-                                            onClick={() => clickedWantToRead(book, index)}>ADD TO WANT</button>
+                                            onClick={() => clickedWantToRead(book, index)}>
+                                            <FontAwesomeIcon 
+                                            icon={faBook} 
+                                            className='fa-2x' />
+                                            </button>
                                     }
                                     {/* <button
                                     onClick={() => consoleLogIsbn(book)}
