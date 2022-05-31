@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faBook, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 const WantToReadPage = () => {
 
@@ -79,25 +82,41 @@ const WantToReadPage = () => {
 
                             </div>
                             <div className='button-container'>
-                                <button>In progress</button>
+                                <button>
+                                    <FontAwesomeIcon
+                                    icon={faBook}
+                                    className='fa-2x' />
+                                </button>
                                 {book.read === true ?
                                     <button
                                     style={{ 'backgroundColor': 'green' }}
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
-                                    >Completed!</button> :
+                                    >
+                                        <FontAwesomeIcon
+                                        icon={faCircleCheck}
+                                        clasName='fa-2x' />
+                                    </button> :
                                     <button
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
-                                    >Check to Complete</button>
+                                    >
+                                        <FontAwesomeIcon
+                                        icon={faCircleCheck}
+                                        clasName='fa-2x' />
+                                    </button>
                                 }
                                 <button
                                     onClick={() => {
                                         removeFromWantToRead(book);
                                     }}
-                                >Remove</button>
+                                >
+                                    <FontAwesomeIcon 
+                                    icon={faTrashCan}
+                                    className='fa-2x' />
+                                </button>
                             </div>
                         </div>
                         <div className='content-container'>

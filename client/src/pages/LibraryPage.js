@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 // fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const LibraryPage = () => {
 
@@ -90,18 +92,31 @@ const LibraryPage = () => {
                             </div>
                             <div className='button-container'>
                                 {book.favorited === true ?
-                                    <button style={{ "backgroundColor": "green" }} onClick={() => {
+                                    <button style={{ "backgroundColor": "yellow" }} onClick={() => {
                                         unFavoriteBook(book, index);
-                                    }}>un-favorite</button>
-                                    : <button onClick={() => {
+                                    }}>
+                                        <FontAwesomeIcon 
+                                        icon={faStar}
+                                        className='fa-2x' />
+                                    </button>
+                                    : <button 
+                                    onClick={() => {
                                         favoriteBook(book, index);
-                                    }}>Favorite</button>
+                                    }}>
+                                        <FontAwesomeIcon 
+                                        icon={faStar}
+                                        className='fa-2x' />
+                                    </button>
                                 }
                                 <button
                                     onClick={() => {
                                         removeFromRead(book);
                                     }}
-                                >Remove</button>
+                                >
+                                    <FontAwesomeIcon 
+                                    icon={faTrashCan}
+                                    className='fa-2x' />
+                                </button>
                             </div>
                         </div>
                         <div className='content-container'>
