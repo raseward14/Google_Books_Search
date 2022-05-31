@@ -61,6 +61,13 @@ const WantToReadPage = () => {
     return (
         <div>
             <p>Books I want to read</p>
+            <div className='single-book-header'>
+                <div className='heading-container-header'>
+                    <p>In Progress</p>
+                    <p>Complete</p>
+                    <p>Remove</p>
+                </div>
+            </div>
             <div>
                 {want.map((book, index) => (
                     <div key={book._id} className='single-book'>

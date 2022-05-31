@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
+// fontawesome
 
 const LibraryPage = () => {
 
@@ -72,6 +73,12 @@ const LibraryPage = () => {
     return (
         <div>
             <p>Library of books I've read.</p>
+            <div className='single-book-header'>
+                <div className='heading-container-header'>
+                    <p>Favorite</p>
+                    <p>Remove</p>
+                </div>
+            </div>
             <div>
                 {read.map((book, index) => (
                     <div key={book._id} className='single-book'>

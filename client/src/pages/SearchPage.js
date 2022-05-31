@@ -214,7 +214,7 @@ const SearchPage = () => {
         const want = await wantToReadAPIFunctions.getWantToRead();
         const APIWant = want.data;
         checkIfWant(booksArray, APIWant);
-        
+
         setBooks(booksArray);
         // set the last array of results
         localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
@@ -273,8 +273,8 @@ const SearchPage = () => {
             <button onClick={handleSubmit}>Submit</button>
             <div className='single-book-header'>
                 <div className='heading-container-header'>
-                        <p>Read Books</p>
-                        <p>Want to Read</p>
+                    <p>Read Books</p>
+                    <p>Want to Read</p>
                 </div>
             </div>
             {books.length > 0 && (
@@ -295,35 +295,35 @@ const SearchPage = () => {
                                             onClick={() => {
                                                 clickedRead(book, index)
                                             }}>
-                                            <FontAwesomeIcon 
-                                            icon={faSquareCheck} 
-                                            className='fa-2x'
+                                            <FontAwesomeIcon
+                                                icon={faSquareCheck}
+                                                className='fa-2x'
                                             />
-                                            </button>
+                                        </button>
                                         : <button
                                             onClick={() => {
                                                 clickedRead(book, index)
                                             }}>
                                             <FontAwesomeIcon
-                                            icon={faQuestion}
-                                            className='fa-2x'
+                                                icon={faQuestion}
+                                                className='fa-2x'
                                             />
-                                            </button>
+                                        </button>
                                     }
                                     {book.want === true ?
                                         <button
                                             style={{ "backgroundColor": "green" }}
                                             onClick={() => clickedWantToRead(book, index)}>
-                                            <FontAwesomeIcon 
-                                            icon={faBookBookmark}
-                                            className='fa-2x' />
-                                            </button>
+                                            <FontAwesomeIcon
+                                                icon={faBookBookmark}
+                                                className='fa-2x' />
+                                        </button>
                                         : <button
                                             onClick={() => clickedWantToRead(book, index)}>
-                                            <FontAwesomeIcon 
-                                            icon={faBook} 
-                                            className='fa-2x' />
-                                            </button>
+                                            <FontAwesomeIcon
+                                                icon={faBook}
+                                                className='fa-2x' />
+                                        </button>
                                     }
                                     {/* <button
                                     onClick={() => consoleLogIsbn(book)}
@@ -351,7 +351,7 @@ const SearchPage = () => {
             <button
                 onClick={() => {
                     let newStart = startIndex + 10;
-                    console.log(newStart, )
+                    console.log(newStart,)
                     setStartIndex(newStart);
                 }}
             >next</button>
