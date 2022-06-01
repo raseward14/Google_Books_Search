@@ -11,6 +11,10 @@ const readSchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
+    inProgress: {
+        type: Boolean,
+        default: false
+    },
     isbn13: String,
     date: Date,
 });

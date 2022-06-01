@@ -3,7 +3,7 @@ import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faBook, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faBook, faCircleCheck, faBookOpen } from '@fortawesome/free-solid-svg-icons';
 
 const WantToReadPage = () => {
 
@@ -15,6 +15,41 @@ const WantToReadPage = () => {
         const readBookID = readBook.data[0]._id;
         readAPIFunctions.deleteRead(readBookID);
     };
+
+    async function setInProgressToTrue(book) {
+        
+    }
+    
+    async function setInProgressToFalse(book) {
+        console.log(book);
+        console.log(book._id);
+        if(book.inProgress === true) {
+            await wantToReadAPIFunctions.updateWantToRead(book._id, {
+                inProgress: false
+            })
+        } else {
+            await wantToReadAPIFunctions.updateWantToRead(book._id, {
+                inProgress: true
+            })
+        }
+    }
+
+    function clickedInProgress(index, book) {
+        if(book.inProgress === true) {
+            book.inProgress = false;
+            let newArr = [...want];
+            newArr[index] = book;
+            setWant(newArr)
+            setInProgressToFalse(book)
+        } else {
+            book.inProgress = true;
+            let newArr = [...want];
+            newArr[index] = book;
+            setWant(newArr);
+            // setInProgressToTrue(book)
+            setInProgressToFalse(book);
+        }
+    }
 
     async function addToRead(book) {
         await readAPIFunctions.saveRead({
@@ -82,21 +117,39 @@ const WantToReadPage = () => {
 
                             </div>
                             <div className='button-container'>
-                                <button>
-                                    <FontAwesomeIcon
-                                    icon={faBook}
-                                    className='fa-2x' />
-                                </button>
+                                {book.inProgress === true ?
+                                    <button
+                                    style={{'backgroundColor': 'green'}}
+                                    onClick={() => {
+                                        clickedInProgress(book, index)
+                                    }}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faBookOpen}
+                                            className='fa-2x' />
+                                    </button>
+                                    :
+                                    <button
+                                    onClick={() => {
+                                        clickedInProgress(book, index)
+                                    }}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faBook}
+                                            className='fa-2x' />
+                                    </button>
+
+                                }
                                 {book.read === true ?
                                     <button
-                                    style={{ 'backgroundColor': 'green' }}
+                                        style={{ 'backgroundColor': 'green' }}
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
                                     >
                                         <FontAwesomeIcon
-                                        icon={faCircleCheck}
-                                        clasName='fa-2x' />
+                                            icon={faCircleCheck}
+                                            clasName='fa-2x' />
                                     </button> :
                                     <button
                                         onClick={() => {
@@ -104,8 +157,8 @@ const WantToReadPage = () => {
                                         }}
                                     >
                                         <FontAwesomeIcon
-                                        icon={faCircleCheck}
-                                        clasName='fa-2x' />
+                                            icon={faCircleCheck}
+                                            clasName='fa-2x' />
                                     </button>
                                 }
                                 <button
@@ -113,9 +166,9 @@ const WantToReadPage = () => {
                                         removeFromWantToRead(book);
                                     }}
                                 >
-                                    <FontAwesomeIcon 
-                                    icon={faTrashCan}
-                                    className='fa-2x' />
+                                    <FontAwesomeIcon
+                                        icon={faTrashCan}
+                                        className='fa-2x' />
                                 </button>
                             </div>
                         </div>
