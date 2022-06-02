@@ -95,6 +95,7 @@ const SearchPage = () => {
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink,
+            inProgress: false,
             isbn13: thisIsbn13
         })
         console.log('added to want list')

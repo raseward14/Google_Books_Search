@@ -17,25 +17,22 @@ const WantToReadPage = () => {
     };
 
     async function setInProgressToTrue(book) {
-        
-    }
-    
+        console.log('book in progress: ', book)
+        await wantToReadAPIFunctions.updateWantToRead(book._id, {
+            inProgress: true
+        });
+    };
+
     async function setInProgressToFalse(book) {
-        console.log(book);
-        console.log(book._id);
-        if(book.inProgress === true) {
+        console.log('book not in progress: ', book);
             await wantToReadAPIFunctions.updateWantToRead(book._id, {
                 inProgress: false
-            })
-        } else {
-            await wantToReadAPIFunctions.updateWantToRead(book._id, {
-                inProgress: true
-            })
-        }
-    }
+            });
+    };
 
-    function clickedInProgress(index, book) {
-        if(book.inProgress === true) {
+    function clickedInProgress(book, index) {
+        console.log(book)
+        if (book.inProgress === true) {
             book.inProgress = false;
             let newArr = [...want];
             newArr[index] = book;
@@ -46,8 +43,7 @@ const WantToReadPage = () => {
             let newArr = [...want];
             newArr[index] = book;
             setWant(newArr);
-            // setInProgressToTrue(book)
-            setInProgressToFalse(book);
+            setInProgressToTrue(book)
         }
     }
 
@@ -119,10 +115,10 @@ const WantToReadPage = () => {
                             <div className='button-container'>
                                 {book.inProgress === true ?
                                     <button
-                                    style={{'backgroundColor': 'green'}}
-                                    onClick={() => {
-                                        clickedInProgress(book, index)
-                                    }}
+                                        style={{ 'backgroundColor': 'green' }}
+                                        onClick={() => {
+                                            clickedInProgress(book, index)
+                                        }}
                                     >
                                         <FontAwesomeIcon
                                             icon={faBookOpen}
@@ -130,9 +126,9 @@ const WantToReadPage = () => {
                                     </button>
                                     :
                                     <button
-                                    onClick={() => {
-                                        clickedInProgress(book, index)
-                                    }}
+                                        onClick={() => {
+                                            clickedInProgress(book, index)
+                                        }}
                                     >
                                         <FontAwesomeIcon
                                             icon={faBook}
