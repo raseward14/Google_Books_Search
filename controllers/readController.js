@@ -51,6 +51,19 @@ module.exports = {
                 res.send(book);
             };
         });
-
+    },
+    update: (req, res) => {
+        console.log(req.params.id)
+        console.log(req.body)
+        // PUT a Book in progress
+        db.Read.updateOne(req.params.id,
+            
+            (err, book) => {
+            if(err) {
+                res.send(err);
+            } else {
+                res.send(book);
+            };
+        });
     }
 }

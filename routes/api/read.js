@@ -15,5 +15,6 @@ router.route('/')
 router.route('/:id')
     .get(readController.findById)
     .delete(readController.remove)
+    .put(readController.update)
 
 module.exports = router;
