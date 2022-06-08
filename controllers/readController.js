@@ -4,7 +4,7 @@ module.exports = {
     findAll: (req, res) => {
         // GET To Read Books List
         let thisIsbn13 = req.query.isbn13
-        let query = thisIsbn13 ? {isbn13: thisIsbn13} : {}
+        let query = thisIsbn13 ? { isbn13: thisIsbn13 } : {}
         console.log(query)
         db.Read.find(query, (err, books) => {
             if (err) {
@@ -53,17 +53,18 @@ module.exports = {
         });
     },
     update: (req, res) => {
-        console.log(req.params.id)
-        console.log(req.body)
         // PUT a Book in progress
-        db.Read.updateOne(req.params.id,
-            
+        // params pulls from the URL - specifies which document to retrieve
+        // body pulls the object, or data that needs to be sent to the db
+        db.Read.updateOne(
+            { _id: req.params.id },
+            { $set: { inProgress: req.body.inProgress } },
             (err, book) => {
-            if(err) {
-                res.send(err);
-            } else {
-                res.send(book);
-            };
-        });
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.send(book);
+                };
+            });
     }
 }
