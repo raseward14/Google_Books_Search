@@ -53,9 +53,9 @@ module.exports = {
         });
     },
     update: (req, res) => {
-        console.log(req.params.id)
-        console.log(req.body.inProgress)
         // PUT a Book in progress
+        // params pulls from the URL - specifies which document to retrieve
+        // body pulls the object, or data that needs to be sent to the db
         db.Read.updateOne(
             { _id: req.params.id },
             { $set: { inProgress: req.body.inProgress } },
