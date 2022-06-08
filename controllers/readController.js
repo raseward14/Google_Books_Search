@@ -4,7 +4,7 @@ module.exports = {
     findAll: (req, res) => {
         // GET To Read Books List
         let thisIsbn13 = req.query.isbn13
-        let query = thisIsbn13 ? {isbn13: thisIsbn13} : {}
+        let query = thisIsbn13 ? { isbn13: thisIsbn13 } : {}
         console.log(query)
         db.Read.find(query, (err, books) => {
             if (err) {
@@ -54,16 +54,17 @@ module.exports = {
     },
     update: (req, res) => {
         console.log(req.params.id)
-        console.log(req.body)
+        console.log(req.body.inProgress)
         // PUT a Book in progress
-        db.Read.updateOne(req.params.id,
-            
+        db.Read.updateOne(
+            { _id: req.params.id },
+            { $set: { inProgress: req.body.inProgress } },
             (err, book) => {
-            if(err) {
-                res.send(err);
-            } else {
-                res.send(book);
-            };
-        });
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.send(book);
+                };
+            });
     }
 }

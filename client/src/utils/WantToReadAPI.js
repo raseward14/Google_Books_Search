@@ -21,7 +21,7 @@ const deleteWantToRead = (id) => {
 };
 
 const updateWantToRead = (id, body) => {
-    return axios.put(`/api.read/${id}`, body)
+    return axios.put(`/api/read/${id}`, body)
 }
 
 export { getWantToRead, saveWantToRead, deleteWantToRead, getWantToReadByIsbn13, updateWantToRead };
