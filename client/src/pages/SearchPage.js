@@ -36,7 +36,6 @@ const SearchPage = () => {
     async function deleteFromRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        console.log(thisIsbn13)
         let result = await readAPIFunctions.getReadByIsbn13(thisIsbn13);
         let readResult = result.data;
         readAPIFunctions.deleteRead(readResult[0]._id);
@@ -44,8 +43,8 @@ const SearchPage = () => {
 
     // POST read
     function addToRead(book) {
-        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
-        let thisIsbn13 = isbn13Array[0].identifier
+        let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
+        let thisIsbn13 = isbn13Array[0].identifier;
 
         readAPIFunctions.saveRead({
             title: book.volumeInfo.title,
@@ -54,8 +53,8 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink,
             isbn13: thisIsbn13
-        })
-        console.log("added to books you've read")
+        });
+        console.log("added to books you've read");
     };
 
     // flip .read, if true post to read, if false, delete all matching titles from read, replace newArray index with new book and setBooks - ternary operator will handle the button change
@@ -72,7 +71,7 @@ const SearchPage = () => {
             newArr[index] = book;
             setBooks(newArr);
             addToRead(book);
-        }
+        };
     };
 
     // DELETE want -> uses db query to GET by isbn13 before deleting
@@ -117,8 +116,6 @@ const SearchPage = () => {
             addWantToRead(book);
         };
     };
-
-
 
     // check if posted to read, add property book.read = true
     // if true, break looping through reads, move to next searchedBook

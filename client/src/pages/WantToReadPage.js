@@ -3,7 +3,7 @@ import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faBook, faCircleCheck, faBookOpen } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faBook, faCheck, faBookOpen } from '@fortawesome/free-solid-svg-icons';
 
 const WantToReadPage = () => {
 
@@ -144,8 +144,8 @@ const WantToReadPage = () => {
                                         }}
                                     >
                                         <FontAwesomeIcon
-                                            icon={faCircleCheck}
-                                            clasName='fa-2x' />
+                                            icon={faCheck}
+                                            className='fa-2x' />
                                     </button> :
                                     <button
                                         onClick={() => {
@@ -153,8 +153,8 @@ const WantToReadPage = () => {
                                         }}
                                     >
                                         <FontAwesomeIcon
-                                            icon={faCircleCheck}
-                                            clasName='fa-2x' />
+                                            icon={faCheck}
+                                            className='fa-2x' />
                                     </button>
                                 }
                                 <button
