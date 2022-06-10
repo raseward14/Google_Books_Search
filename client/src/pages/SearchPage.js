@@ -5,7 +5,7 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookBookmark, faSquareCheck, faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
 const SearchPage = () => {
     const [search, setSearch] = useState('');
@@ -270,6 +270,13 @@ const SearchPage = () => {
                 }} />
             <button onClick={handleSubmit}>Submit</button>
             <div className='single-book-header'>
+                <FontAwesomeIcon
+                    icon={faThumbtack}
+                    className='pin'
+                    onClick={() => {
+                        
+                    }}
+                />
                 <div className='heading-container-header'>
                     <p>Read Books</p>
                     <p>Want to Read</p>

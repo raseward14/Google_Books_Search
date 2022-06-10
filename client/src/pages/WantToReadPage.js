@@ -3,7 +3,7 @@ import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faBook, faCheck, faBookOpen } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faBook, faCheck, faBookOpen, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
 const WantToReadPage = () => {
 
@@ -96,6 +96,13 @@ const WantToReadPage = () => {
         <div>
             <p>Books I want to read</p>
             <div className='single-book-header'>
+            <FontAwesomeIcon
+                    icon={faThumbtack}
+                    className='pin'
+                    onClick={() => {
+                        
+                    }}
+                />
                 <div className='heading-container-header'>
                     <p>In Progress</p>
                     <p>Complete</p>
