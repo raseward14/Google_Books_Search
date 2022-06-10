@@ -3,7 +3,7 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
 const LibraryPage = () => {
 
@@ -76,6 +76,13 @@ const LibraryPage = () => {
         <div>
             <p>Library of books I've read.</p>
             <div className='single-book-header'>
+            <FontAwesomeIcon
+                    icon={faThumbtack}
+                    className='pin'
+                    onClick={() => {
+                        
+                    }}
+                />
                 <div className='heading-container-header'>
                     <p>Favorite</p>
                     <p>Remove</p>
