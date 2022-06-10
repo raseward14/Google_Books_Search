@@ -84,6 +84,7 @@
 .register input {
   margin-bottom: 10px;
   border-radius: 5px;
-  width: 100%;
-  line-height: 10px;
+  width: 95%;
+  line-height: 3;
+  padding-left: 15px;
 }
