@@ -21,3 +21,4 @@ React based Google Books search app, utilizing React components, Node, Express, 
 * [bezkoder Node.js, Express & MongoDb: Build a CRUD Rest Api Example](https://www.bezkoder.com/node-express-mongodb-crud-rest-api/)
 * [MongoDB Docs Update Operators](https://www.mongodb.com/docs/manual/reference/operator/update/#std-label-update-operators)
 * [MongoDB Docs UpdateOne Method](https://www.mongodb.com/docs/manual/reference/method/db.collection.updateOne/#mongodb-method-db.collection.updateOne)
+* [CSS-TRICKS A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
