@@ -1,5 +1,14 @@
 import React from 'react';
-const HomePage = () => {
+import { useRef, useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
+//
+const user_regex = /^[][]{3,23}/;
+//
+const pwd_regex = /^(?=.*[])(?=.*[])(?=.*[])(?=.*[]).{8,24}$/;
+
+const RegisterPage = () => {
     return (
         <>
             <h2>Welcome</h2>
@@ -27,4 +36,4 @@ const HomePage = () => {
         </>
     );
 };
-export default HomePage;
+export default RegisterPage;

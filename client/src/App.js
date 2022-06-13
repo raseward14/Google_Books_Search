@@ -1,5 +1,5 @@
 import Layout from './components/Layout/layout';
-import HomePage from './pages/HomePage';
+import RegisterPage from './pages/RegisterPage';
 import SearchPage from './pages/SearchPage';
 import WantToReadPage from './pages/WantToReadPage';
 import LibraryPage from './pages/LibraryPage';
@@ -18,7 +18,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<RegisterPage />} />
           <Route path='search' element={<SearchPage />} />
           <Route path='read' element={<WantToReadPage />} />
           <Route path='library' element={<LibraryPage />} />
