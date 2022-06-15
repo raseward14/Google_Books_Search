@@ -93,3 +93,9 @@
   line-height: 3;
   padding-left: 15px;
 }
+
+.register button {
+  width: 100%;
+  border-radius: 5px;
+  line-height: 2;
+}
