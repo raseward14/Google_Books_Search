@@ -114,7 +114,8 @@ const RegisterPage = () => {
                     <label htmlFor=''>
                         Password:
                     </label><br />
-                    <input></input><br />
+                    <input 
+                    /><br />
                     <label htmlFor=''>
                         Confirm Password:
                     </label><br />
