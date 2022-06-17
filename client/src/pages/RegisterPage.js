@@ -79,6 +79,7 @@ const RegisterPage = () => {
     // where we put in requirements that our registration form needs, have a screenreader read those
     // onFocus -> if user input field has focus, setting this boolean to true
     // onBlur, when user leaves this field, we're setting this boolean to false
+    // 14:02
     return (
         <>
             <h2>Welcome</h2>
