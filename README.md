@@ -23,3 +23,4 @@ React based Google Books search app, utilizing React components, Node, Express, 
 * [MongoDB Docs UpdateOne Method](https://www.mongodb.com/docs/manual/reference/method/db.collection.updateOne/#mongodb-method-db.collection.updateOne)
 * [CSS-TRICKS A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 * [FontAwesome](https://fontawesome.com/icons/thumbtack?s=solid)
+* [MDN Aria-live](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa21naWFSbzh6UFVGVV9NMG5fR1VVZ2VHSGJYd3xBQ3Jtc0trU1JQUzg4cXRXRW9yUWNYSVBYN1lkYWRrRlFNWlhhMnZDWWIzUFBmMGpNR09QS203Z3lqUlkyZFhSc18zU09rN3JiVXlMaVJ0bElIMzdrcjBzbnZzVE9idm8xdGQ1N0xGLUVycUVJaE1OV25mLTlTcw&q=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FAccessibility%2FARIA%2FAttributes%2Faria-live&v=brcHK3P6ChQ)
