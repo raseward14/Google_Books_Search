@@ -118,7 +118,8 @@ const RegisterPage = () => {
                     <label htmlFor=''>
                         Confirm Password:
                     </label><br />
-                    <input></input><br />
+                    <input 
+                    /><br />
                     <button>Sign Up</button>
                     <p>Already Registered?</p>
                     <a>Sign In</a>
