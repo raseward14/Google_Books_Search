@@ -111,10 +111,11 @@ const RegisterPage = () => {
                         onFocus={() => setUserFocus(true)}
                         onBlur={() => setUserFocus(false)}
                     /><br />
-                    <label htmlFor=''>
+                    <label htmlFor='password'>
                         Password:
                     </label><br />
                     <input 
+                        id='password'
                     /><br />
                     <label htmlFor=''>
                         Confirm Password:
