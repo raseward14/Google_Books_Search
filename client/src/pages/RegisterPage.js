@@ -37,7 +37,7 @@ const RegisterPage = () => {
     // will have to reference the userRef below on that input field
     useEffect(() => {
         userRef.current.focus();
-    },[])
+    }, [])
 
     // applied to the userName, where we validate the userName
     useEffect(() => {
@@ -45,7 +45,7 @@ const RegisterPage = () => {
         console.log(result);
         console.log(user);
         setValidName(result);
-    },[user])
+    }, [user])
 
     // to make sure the password and matching password are always in sync
     // runs any time the pwd state || matchPwd state is updated
@@ -62,14 +62,23 @@ const RegisterPage = () => {
         const match = pwd === matchPwd
         // set a valid match to T || F
         setValidMatch(match);
-    },[pwd, matchPwd])
+    }, [pwd, matchPwd])
 
     // for error message, any time user changes information, state of one of these 3
     // then we clear out the error message bc user has read err message
     useEffect(() => {
         setErrMsg('');
-    },[user, pwd, matchPwd])
+    }, [user, pwd, matchPwd])
 
+
+    // label element has htmlFor attribute that needs to match ID of the input
+    // autocomplete set to off, dont want to see previous values suggested for this field
+    // useRef={userRef} allows us to set focus in this input on page load
+    // aria-invalid set to true when component loads - ternary so if we do have a valid user name that has passed validation, this will be set to false - allows screen reader announce whether this input field needs adjusted before the form is submitted
+    // aria-describeby lets us provide another element that describes the input field so a screenreader will read the label first, what type of input the label is addressing, then it will read aria-invalid, whether it has a valid input or not, then will jump to aria describeby 
+    // where we put in requirements that our registration form needs, have a screenreader read those
+    // onFocus -> if user input field has focus, setting this boolean to true
+    // onBlur, when user leaves this field, we're setting this boolean to false
     return (
         <>
             <h2>Welcome</h2>
@@ -82,18 +91,38 @@ const RegisterPage = () => {
             <p>
                 Add your Favorites from the <em>Read List</em> to the <em>Favorites</em> list.
             </p>
-            <div className='register'>
+            <section className='register'>
+                <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 <h2>Register</h2>
-                <span>Username:</span><br />
-                <input></input><br />
-                <span>Password:</span><br />
-                <input></input><br />
-                <span>Confirm Password:</span><br />
-                <input></input><br />
-                <button>Sign Up</button>
-                <p>Already Registered?</p>
-                <a>Sign In</a>
-            </div>
+                <form>
+                    <label htmlFor='username'>
+                        Username:
+                    </label><br />
+                    <input
+                        type='text'
+                        id='username'
+                        ref={userRef}
+                        autoComplete='off'
+                        onChange={(e) => setUser(e.target.value)}
+                        required
+                        aria-invalild={validName ? 'false' : 'true'}
+                        aria-describeby='uidnote'
+                        onFocus={() => setUserFocus(true)}
+                        onBlur={() => setUserFocus(false)}
+                    /><br />
+                    <label htmlFor=''>
+                        Password:
+                    </label><br />
+                    <input></input><br />
+                    <label htmlFor=''>
+                        Confirm Password:
+                    </label><br />
+                    <input></input><br />
+                    <button>Sign Up</button>
+                    <p>Already Registered?</p>
+                    <a>Sign In</a>
+                </form>
+            </section>
         </>
     );
 };
