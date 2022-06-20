@@ -98,6 +98,12 @@ const RegisterPage = () => {
                 <form>
                     <label htmlFor='username'>
                         Username:
+                        <span className={validName ? 'valid' : 'hide'}>
+                            <FontAwesomeIcon icon={faCheck} />
+                        </span>
+                        <span className={validName || !user ? 'hide' : 'invalid'}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </span>
                     </label><br />
                     <input
                         type='text'
@@ -111,16 +117,42 @@ const RegisterPage = () => {
                         onFocus={() => setUserFocus(true)}
                         onBlur={() => setUserFocus(false)}
                     /><br />
+                    <p id='uidnote' className={userFocus && user && !validName ? 'instructions' : 'offscreen'}>
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        4 to 24 characters.<br />
+                        Must begin with a letter.<br />
+                        Letters, numbers, underscores, hyphens allowed.
+                    </p>
+
+
                     <label htmlFor='password'>
                         Password:
+                        <span className={validPwd ? 'valid' : 'hide'}>
+                            <FontAwesomeIcon icon={faCheck} />
+                        </span>
+                        <span className={validPwd || !pwd ? 'hide' : 'invalid'}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </span>
                     </label><br />
-                    <input 
+                    <input
+                        type='password'
                         id='password'
+                        onChange={(e) => setPwd(e.target.value)}
+                        required
+                        aria-invalid={validPwd ? 'false' : 'true'}
+                        aria-describeby='pwdnote'
+                        onFocus={() => setPwdFocus(true)}
+                        onBlur={() => setPwdFocus(false)}
                     /><br />
+                    <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'}>
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                    </p>
+
+
                     <label htmlFor=''>
                         Confirm Password:
                     </label><br />
-                    <input 
+                    <input
                     /><br />
                     <button>Sign Up</button>
                     <p>Already Registered?</p>
