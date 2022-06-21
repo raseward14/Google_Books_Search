@@ -79,7 +79,7 @@ const RegisterPage = () => {
     // where we put in requirements that our registration form needs, have a screenreader read those
     // onFocus -> if user input field has focus, setting this boolean to true
     // onBlur, when user leaves this field, we're setting this boolean to false
-    // 14:02
+    // 18:41
     return (
         <>
             <h2>Welcome</h2>
@@ -146,14 +146,32 @@ const RegisterPage = () => {
                     /><br />
                     <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'}>
                         <FontAwesomeIcon icon={faInfoCircle} />
+                        8 to 24 characters. <br />
+                        Must include uppercase and lowercase letters, a number and a special character.<br />
+                        Allowed special characters: <span aria-label='exclamation mark'>!</span><span aria-label='at symbol'>@</span><span aria-label='hashtag'>#</span><span aria-label='dollar sign'>$</span><span aria-label='percent'>%</span>
                     </p>
 
 
-                    <label htmlFor=''>
+                    <label htmlFor='confirm_pwd'>
                         Confirm Password:
+                        <span className={validMatch && matchPwd ? 'valid' : 'hide'}>
+                            <FontAwesomeIcon icon={faCheck} />
+                        </span>
+                        <span className={validMatch || !matchPwd ? 'hide' : 'invalid'}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </span>
                     </label><br />
                     <input
+                        type='password'
+                        id='confirm_pwd'
+                        required
+                        onChange={(e) => setValidPwd(e.target.value)}
+                        aria-invalid={validMatch ? 'false' : 'true'}
+                        aria-describeby='confirm_note'
+                        onFocus={() => setMatchFocus(true)}
+                        onBlue={() => setMatchFocus(false)}
                     /><br />
+                    <p id='confirm_note'></p>
                     <button>Sign Up</button>
                     <p>Already Registered?</p>
                     <a>Sign In</a>

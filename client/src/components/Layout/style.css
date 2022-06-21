@@ -88,15 +88,15 @@
 
 .register input {
   margin-bottom: 5px;
-  border-radius: 5px;
+  border-radius: 7px;
   width: 95%;
-  line-height: 3;
+  line-height: 1.95;
   padding-left: 15px;
 }
 
 .register button {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 7px;
   line-height: 2;
 }
 
