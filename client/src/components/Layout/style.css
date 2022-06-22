@@ -137,3 +137,7 @@
   color: red;
   margin-left: 0.25rem;
 }
+
+.line {
+  display: inline-block;
+}
