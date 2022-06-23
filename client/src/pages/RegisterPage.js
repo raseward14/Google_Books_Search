@@ -84,8 +84,8 @@ const RegisterPage = () => {
         console.log(user, pwd)
         setSuccess(true);
         try {
-
-        } catch {
+            userAPIFunctions.saveUser({ userName: user, password: pwd})
+        } catch(err) {
 
         }
     }

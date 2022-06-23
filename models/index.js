@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+// User Model Schema
+const userSchema = new Schema({
+    userName: String,
+    password: String
+});
+
 // Read Model Schema
 const readSchema = new Schema({
     title: String,
@@ -54,8 +60,9 @@ const favoriteSchema = new Schema({
 const Read = mongoose.model('Read', readSchema);
 const Library = mongoose.model('Library', librarySchema);
 const Favorite = mongoose.model('Favorite', favoriteSchema);
+const User = mongoose.model('User', userSchema)
 
 // Exporting model objects
 module.exports = {
-    Read, Library, Favorite
+    Read, Library, Favorite, User
 };
