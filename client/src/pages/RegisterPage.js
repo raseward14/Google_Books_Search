@@ -82,11 +82,21 @@ const RegisterPage = () => {
             return;
         }
         console.log(user, pwd)
-        setSuccess(true);
         try {
-            registerAPIFunctions.saveUser({ userName: user, password: pwd})
+            const response = await registerAPIFunctions.saveUser({ userName: user, password: pwd})
+            console.log(response.data);
+            // console.log(response.accessToken)
+            setSuccess(true);
+            // clear input fields out of registration form - set state back to empty strings
         } catch(err) {
-
+            if(!err?.response) {
+                setErrMsg('No Server Response')
+            } else if (err.response?.status === 409) {
+                setErrMsg('Username Taken')
+            } else {
+                setErrMsg('Registration Failed')
+            }
+            errRef.current.focus();
         }
     }
 
