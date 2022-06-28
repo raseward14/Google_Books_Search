@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-import * as userAPIFunctions from '../utils/UserAPI'; 
+import * as registerAPIFunctions from '../utils/RegisterAPI'; 
 
 //
 const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
@@ -84,7 +84,7 @@ const RegisterPage = () => {
         console.log(user, pwd)
         setSuccess(true);
         try {
-            userAPIFunctions.saveUser({ userName: user, password: pwd})
+            registerAPIFunctions.saveUser({ userName: user, password: pwd})
         } catch(err) {
 
         }

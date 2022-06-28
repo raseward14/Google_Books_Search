@@ -6,11 +6,12 @@ module.exports = {
         const newUser = new db.User
         newUser.userName = req.body.userName;
         newUser.password = req.body.password;
+        console.log(req.body, req.body.password)
         newUser.save((err) => {
             if(err) {
                 res.send(err);
             } else {
-                res.json({ message: 'User registered: ', newUser});
+                res.json({ message: 'User registered: ', newUser });
             };
         });
     }
