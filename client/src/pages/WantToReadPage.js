@@ -8,6 +8,7 @@ import { faTrashCan, faBook, faCheck, faBookOpen, faThumbtack } from '@fortaweso
 const WantToReadPage = () => {
 
     const [want, setWant] = useState([]);
+    const [pinned, setPinned] = useState(false);
     let APIWant;
 
     const deleteFromRead = async (book) => {
@@ -98,9 +99,13 @@ const WantToReadPage = () => {
             <div className='single-book-header'>
             <FontAwesomeIcon
                     icon={faThumbtack}
-                    className='pin'
+                    className={pinned ? 'pinned' : 'not-pinned'}
                     onClick={() => {
-                        
+                        if(pinned === false) {
+                            setPinned(true);
+                        } else {
+                            setPinned(false);
+                        }
                     }}
                 />
                 <div className='heading-container-header'>

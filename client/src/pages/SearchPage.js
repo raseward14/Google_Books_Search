@@ -12,6 +12,8 @@ const SearchPage = () => {
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
 
+    const [pinned, setPinned] = useState(false);
+
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
 
@@ -275,9 +277,13 @@ const SearchPage = () => {
             <div className='single-book-header'>
                 <FontAwesomeIcon
                     icon={faThumbtack}
-                    className='pin fa-duotone'
+                    className={pinned ? 'pinned' : 'not-pinned'}
                     onClick={() => {
-                        
+                        if(pinned === false) {
+                            setPinned(true)
+                        } else {
+                            setPinned(false)
+                        }
                     }}
                 />
                 <div className='heading-container-header'>

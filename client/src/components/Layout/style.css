@@ -42,9 +42,18 @@
   border: 1px black solid;
 }
 
-.pin {
+.pinned {
+  color: limegreen;
   display: flex;
   justify-self: flex-start;
+
+}
+
+.not-pinned {
+  color: red;
+  display: flex;
+  justify-self: flex-start;
+
 }
 
 .heading-container-header p {

@@ -8,6 +8,7 @@ import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-ico
 const LibraryPage = () => {
 
     const [read, setRead] = useState([]);
+    const [pinned, setPinned] = useState(false);
     let APIRead;
 
     async function deleteFromFavorites(book) {
@@ -78,9 +79,13 @@ const LibraryPage = () => {
             <div className='single-book-header'>
             <FontAwesomeIcon
                     icon={faThumbtack}
-                    className='pin'
+                    className={pinned ? 'pinned' : 'not-pinned'}
                     onClick={() => {
-                        
+                        if(pinned === false) {
+                            setPinned(true);
+                        } else {
+                            setPinned(false)
+                        };
                     }}
                 />
                 <div className='heading-container-header'>
