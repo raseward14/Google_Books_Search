@@ -75,7 +75,7 @@ const LibraryPage = () => {
 
     return (
         <div>
-            <p>Library of books I've read.</p>
+            <h3>Library of books I've read.</h3>
             <div className='single-book-header'>
             <FontAwesomeIcon
                     icon={faThumbtack}

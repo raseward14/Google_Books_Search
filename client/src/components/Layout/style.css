@@ -33,6 +33,10 @@
   text-align: left;
 }
 
+.sticky {
+  position: sticky;
+}
+
 .heading-container-header {
   display: flex;
   flex-direction: row;
@@ -42,18 +46,17 @@
   border: 1px black solid;
 }
 
+
 .pinned {
   color: limegreen;
   display: flex;
   justify-self: flex-start;
-
 }
 
 .not-pinned {
   color: red;
   display: flex;
   justify-self: flex-start;
-
 }
 
 .heading-container-header p {

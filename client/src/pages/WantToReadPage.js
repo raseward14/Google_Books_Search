@@ -95,7 +95,7 @@ const WantToReadPage = () => {
 
     return (
         <div>
-            <p>Books I want to read</p>
+            <h3>Books I want to read</h3>
             <div className='single-book-header'>
             <FontAwesomeIcon
                     icon={faThumbtack}

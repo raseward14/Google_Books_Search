@@ -265,7 +265,7 @@ const SearchPage = () => {
 
     return (
         <div>
-            <p>Search</p>
+            <h3>Search</h3>
             <input placeholder='Search'
                 onChange={(event) => {
                     setSearch(event.target.value);
