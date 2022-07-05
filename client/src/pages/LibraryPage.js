@@ -76,7 +76,7 @@ const LibraryPage = () => {
     return (
         <div>
             <h3>Library of books I've read.</h3>
-            <div className='single-book-header'>
+            <div className={pinned ? 'single-book-header sticky' : 'single-book-header' }>
             <FontAwesomeIcon
                     icon={faThumbtack}
                     className={pinned ? 'pinned' : 'not-pinned'}

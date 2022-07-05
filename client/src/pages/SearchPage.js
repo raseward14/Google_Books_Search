@@ -271,10 +271,7 @@ const SearchPage = () => {
                     setSearch(event.target.value);
                 }} />
             <button onClick={handleSubmit}>Submit</button>
-            {/* <div style={{'position': 'fixed'}}>
-
-            </div> */}
-            <div className='single-book-header'>
+            <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
                     icon={faThumbtack}
                     className={pinned ? 'pinned' : 'not-pinned'}

@@ -26,9 +26,9 @@ const WantToReadPage = () => {
 
     async function setInProgressToFalse(book) {
         console.log('book not in progress: ', book);
-            await wantToReadAPIFunctions.updateWantToRead(book._id, {
-                inProgress: false
-            });
+        await wantToReadAPIFunctions.updateWantToRead(book._id, {
+            inProgress: false
+        });
     };
 
     function clickedInProgress(book, index) {
@@ -96,12 +96,12 @@ const WantToReadPage = () => {
     return (
         <div>
             <h3>Books I want to read</h3>
-            <div className='single-book-header'>
-            <FontAwesomeIcon
+            <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
+                <FontAwesomeIcon
                     icon={faThumbtack}
                     className={pinned ? 'pinned' : 'not-pinned'}
                     onClick={() => {
-                        if(pinned === false) {
+                        if (pinned === false) {
                             setPinned(true);
                         } else {
                             setPinned(false);
