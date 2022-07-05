@@ -4,9 +4,9 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 
 import * as registerAPIFunctions from '../utils/RegisterAPI'; 
 
-//
+
 const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
-//
+
 const pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const RegisterPage = () => {
