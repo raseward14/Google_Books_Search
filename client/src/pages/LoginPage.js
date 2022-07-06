@@ -30,8 +30,8 @@ const LoginPage = () => {
         <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
         <h1>Sign In</h1>
         <form>
-            <label htmlFor=''></label>
-            <input />
+            <label htmlFor='username'>Username:</label>
+            <input id='username' />
             <label htmlFor=''></label>
             <input />
         </form>
