@@ -175,7 +175,7 @@ const SearchPage = () => {
         });
     };
 
-    // DEV-305 
+    // DEV-305    
     // const handleSubmit = () => {
     // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 
     //     const result = fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}&maxResults=${maxResults}`)

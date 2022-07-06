@@ -5,6 +5,7 @@ import WantToReadPage from './pages/WantToReadPage';
 import LibraryPage from './pages/LibraryPage';
 import FavoritesPage from './pages/FavoritesPage';
 import NotFoundPage from './pages/NotFoundPage';
+import LoginPage from './pages/LoginPage';
 
 import {
   BrowserRouter as Router,
