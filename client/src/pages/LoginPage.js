@@ -24,17 +24,45 @@ const LoginPage = () => {
         setErrMsg('');
     }, [user, pwd]);
 
-    // 
+    // by default, for form submit reloads the page, so e.preventDefault() prevents that from occurring
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    }
+
+
     return (
         <section>
         <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
         <h1>Sign In</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor='username'>Username:</label>
-            <input id='username' />
-            <label htmlFor=''></label>
-            <input />
+            <input 
+                type='text' 
+                id='username'
+                ref={userRef} 
+                autoComplete='of'
+                onChange={(e) => setUser(e.target.value)}
+                value={user}
+                required
+            />
+            <label htmlFor='password'>Password:</label>
+            <input
+                type='password'
+                id='password'
+                onChange={(e) => setPwd(e.target.value)}
+                value={pwd}
+                required
+            />
+            <button>Sign In</button>
         </form>
+        <p>
+            Need an Account?<br />
+            <span className='line'>
+                {/*put router link here, the link below is a placeholder*/}
+                <a href='#'>Sign Up</a>
+            </span>
+
+        </p>
         </section>
     )
 
