@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
     // set focus on first input when the component loads
@@ -27,45 +28,61 @@ const LoginPage = () => {
     // by default, for form submit reloads the page, so e.preventDefault() prevents that from occurring
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // implement axios, and global state for auth - store authentication
+        console.log(user, pwd);
+        setUser('');
+        setPwd('');
+        setSuccess(true);
     }
 
 
     return (
-        <section>
-        <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
-        <h1>Sign In</h1>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor='username'>Username:</label>
-            <input 
-                type='text' 
-                id='username'
-                ref={userRef} 
-                autoComplete='of'
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
-                required
-            />
-            <label htmlFor='password'>Password:</label>
-            <input
-                type='password'
-                id='password'
-                onChange={(e) => setPwd(e.target.value)}
-                value={pwd}
-                required
-            />
-            <button>Sign In</button>
-        </form>
-        <p>
-            Need an Account?<br />
-            <span className='line'>
-                {/*put router link here, the link below is a placeholder*/}
-                <a href='#'>Sign Up</a>
-            </span>
 
-        </p>
-        </section>
+        <>
+            {success ? (
+                <section>
+                    <h1>You are logged in!</h1><br />
+                    <p>
+                        <a href='#'>Go to Home</a>
+                    </p>
+                </section>
+            ) : (
+                <section>
+                    <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
+                    <h1>Sign In</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor='username'>Username:</label>
+                        <input
+                            type='text'
+                            id='username'
+                            ref={userRef}
+                            autoComplete='of'
+                            onChange={(e) => setUser(e.target.value)}
+                            value={user}
+                            required
+                        />
+                        <label htmlFor='password'>Password:</label>
+                        <input
+                            type='password'
+                            id='password'
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                            required
+                        />
+                        <button>Sign In</button>
+                    </form>
+                    <p>
+                        Need an Account?<br />
+                        <span className='line'>
+                            {/*put router link here, the link below is a placeholder*/}
+                            {/*<a href='#'>Sign Up</a>*/}
+                            <Link to='/'>Sign Up</Link>
+                        </span>
+                    </p>
+                </section>
+            )}
+        </>
     )
-
 };
 
 export default LoginPage;

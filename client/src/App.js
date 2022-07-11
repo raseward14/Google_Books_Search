@@ -24,6 +24,7 @@ function App() {
           <Route path='read' element={<WantToReadPage />} />
           <Route path='library' element={<LibraryPage />} />
           <Route path='favorites' element={<FavoritesPage />} />
+          <Route path='login' element={<LoginPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>

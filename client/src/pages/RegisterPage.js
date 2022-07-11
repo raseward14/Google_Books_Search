@@ -4,6 +4,8 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 
 import * as registerAPIFunctions from '../utils/RegisterAPI'; 
 
+import { Link } from 'react-router-dom';
+
 
 const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
 
@@ -117,7 +119,8 @@ const RegisterPage = () => {
                     <h1>Success!</h1>
                     <p>
                         {/*placeholder link, should be turned into react router link*/}
-                        <a href='#'>Sign In</a>
+                        {/*<a href='#'>Sign In</a>*/}
+                        <Link to='login'>Sign In</Link>
                     </p>
                 </section>
             ) : (
@@ -210,7 +213,8 @@ const RegisterPage = () => {
                             Already Registered?<br />
                             <span className='line'>
                                 {/*put router link here*/}
-                                <a href='#'>Sign In</a>
+                                {/*<a href='#'>Sign In</a>*/}
+                                <Link to='login'>Sign In</Link>
                             </span>
                         </p>
                     </form>
