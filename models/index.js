@@ -3,8 +3,15 @@ const { Schema } = mongoose;
 
 // User Model Schema
 const userSchema = new Schema({
-    userName: String,
-    password: String
+    userName: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
 });
 
 // Read Model Schema

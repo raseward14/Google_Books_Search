@@ -5,16 +5,7 @@ module.exports = {
     create: async (req, res) => {
         // POST a User to (http://localhost:8000/api/register)
         const { userName, password } = req.body;
-        if(!userName || !password) return res.status(400).json({ 'message': 'Username and password are required.'})
-        // check for duplicate userNames - not working
-            //  const duplicate = db.User.find((err, users) => {
-            //     if(err) {
-            //         res.send(err);
-            //     } else {
-            //         res.send(users)
-            //     }
-            //    });
-            //     console.log(duplicate);
+        if (!userName || !password) return res.status(400).json({ 'message': 'Username and password are required.' })
         try {
             // encrypt the password
             const hashedPwd = await bcrypt.hash(password, 10);
@@ -23,20 +14,19 @@ module.exports = {
             newUser.userName = userName;
             newUser.password = hashedPwd;
             newUser.save((err) => {
-                if(err) {
-                    res.send(err);
+                if (err) {
+                    res.status(400).json({ 'message': 'Username taken.' });
                 } else {
-                    res.json({ message: 'User registered: ', newUser });
+                    res.json({ 'success': `New user ${userName} created!` });
                 };
             });
-            res.status(201).json({ 'success': `New user ${userName} created!`});
-        } catch(err) {
+        } catch (err) {
             res.status(500).json({ 'message': err.message });
         }
     },
     findAll: (req, res) => {
         db.User.find((err, users) => {
-            if(err) {
+            if (err) {
                 res.send(err);
             } else {
                 res.send(users);
