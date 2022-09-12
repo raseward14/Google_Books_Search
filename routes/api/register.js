@@ -7,6 +7,8 @@ router.use((req, res, next) => {
     next();
 })
 // routes that end in /register (http://localhost:8000/api/register)
-router.route('/').post(registerController.create)
+router.route('/')
+    .post(registerController.create)
+    .get(registerController.findAll)
 
 module.exports = router
