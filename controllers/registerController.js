@@ -1,23 +1,20 @@
 const db = require('../models');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     create: async (req, res) => {
         // POST a User to (http://localhost:8000/api/register)
         const { userName, password } = req.body;
         if(!userName || !password) return res.status(400).json({ 'message': 'Username and password are required.'})
-        // check for duplicate userNames
-        try {
-             const duplicate = db.User.find((err, users) => {
-                if(err) {
-                    res.send(err);
-                } else {
-                    res.send(users)
-                }
-               });
-                console.log(duplicate);
-        } catch (err) {
-            res.status(409).json({ 'message': 'Username taken'})
-        }
+        // check for duplicate userNames - not working
+            //  const duplicate = db.User.find((err, users) => {
+            //     if(err) {
+            //         res.send(err);
+            //     } else {
+            //         res.send(users)
+            //     }
+            //    });
+            //     console.log(duplicate);
         try {
             // encrypt the password
             const hashedPwd = await bcrypt.hash(password, 10);
