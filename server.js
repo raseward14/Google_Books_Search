@@ -2,12 +2,16 @@ const express = require('express');
 const app = express();
 // mongoose schema model
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 // routes
 const routes = require('./routes');
 
-// middleware
+// built-in middleware handles urlencoded form data
 app.use(express.urlencoded({extended: true}));
+// built-in middleware for JSON
 app.use(express.json());
+// built-in middleware for cookies
+app.use(cookieParser());
 
 // routes
 app.get('/hello', (req, res) => res.send('Hello!'));
