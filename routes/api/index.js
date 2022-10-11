@@ -6,6 +6,7 @@ const readRoutes = require('./read');
 const registerRoutes = require('./register');
 const authRoutes = require('./auth');
 
+
 // middleware to use for all requests
 router.use((req, res, next) => {
     // makes sure we got to the next routes and don't stop here
