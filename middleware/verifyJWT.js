@@ -10,9 +10,9 @@ const verifyJWT = (req, res, next) => {
         token, 
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
-            if(err) return res.status(403); // forbidden, received token, but something isnt right, tampered with
+            if(err) return res.sendStatus(403); // forbidden, received token, but something isnt right, tampered with
+            req.user = decoded.userName;
             console.log('req user: ', req.user)
-            req.userName = decoded.user;
             next();
         }
     );
