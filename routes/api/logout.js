@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const authController = require('../../controllers/authController');
+const logoutController = require('../../controllers/logoutController');
 
 // middleware to use with all requests
 router.use((req, res, next) => {
@@ -8,6 +8,6 @@ router.use((req, res, next) => {
 })
 // routes that end in /auth
 router.route('/')
-    .post(authController.handleLogin)
+    .get(logoutController.handleLogout);
 
 module.exports = router;

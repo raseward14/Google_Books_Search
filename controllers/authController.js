@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 module.exports = {
-    create: async (req, res) => {
+    handleLogin: async (req, res) => {
         // POST a User to (http://localhost:8000/api/auth)
         const { userName, password } = req.body;
         if (!userName || !password) return res.status(400).json({ 'message': 'Username and password are required.' })
