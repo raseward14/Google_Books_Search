@@ -15,7 +15,7 @@ module.exports = {
         try {
             db.User.find(async (err, users) => {
                 if (err) res.send(err);
-                const foundUser = db.User.find(person => person.refreshToken === refreshToken);
+                const foundUser = users.find(person => person.refreshToken === refreshToken);
                 
                 // if there is no user, throw a forbidden error
                 if(!foundUser) return res.sendStatus(403) // forbidden
