@@ -7,7 +7,7 @@ module.exports = {
     handleLogin: async (req, res) => {
         // POST a User to (http://localhost:8000/api/auth)
         const { userName, password } = req.body;
-        if (!userName || !password) return res.status(400).json({ 'message': 'Username and password are required.' })
+        if (!userName || !password) return res.sendStatus(400).json({ 'message': 'Username and password are required.' })
         try {
             // check to see if the user exists
             db.User.find(async (err, users) => {
@@ -29,11 +29,11 @@ module.exports = {
                             process.env.REFRESH_TOKEN_SECRET,
                             { expiresIn: '1d' }
                         );
-    
+
                         // add the current user & their refresh token to the db
                         const myQuery = { userName: foundUser.userName }
-                        const updatedValues = { $set: {refreshToken: refreshToken} };
-    
+                        const updatedValues = { $set: { refreshToken: refreshToken } };
+
                         db.User.updateOne(myQuery, updatedValues, (err, res) => {
                             if (err) throw err;
                             console.log('1 document updated');

@@ -2,6 +2,9 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 
+import axios from '../api/axios';
+const LOGIN_URL = '/auth';
+
 const LoginPage = () => {
     // if we successfully authenticate when we log in, we will set our new Auth state, and store it in the global context
     const { setAuth } = useContext(AuthContext);
@@ -32,37 +35,35 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // implement axios, and global state for auth - store authentication
-
-
-        // try {
-        //     const response = await axios.post(LOGIN_URL, 
-        //         JSON.stringify({user, pwd}),
-        //         {
-        //             headers: { 'Content-type': 'application/json'},
-        //             withCredentials: true
-        //         }
-        //     )
-        //     console.log(JSON.stringify(response?.data));
-        //     const accessToken = response?.data?.accessToken;
-        //     const roles = response?.data?.roles;
-        // setAuth({ user, pwd, roles, accessToken });
+        try {
+            const response = await axios.post(LOGIN_URL, 
+                JSON.stringify({ userName: user, password: pwd}),
+                {
+                    headers: { 'Content-type': 'application/json'},
+                    withCredentials: true
+                }
+            )
+            console.log(JSON.stringify(response?.data));
+            const accessToken = response?.data?.accessToken;
+            // const roles = response?.data?.roles;
+            // we would add roles to this if we had them
+            setAuth({ user, pwd, accessToken });
             setUser('');
             setPwd('');
             setSuccess(true);
-        // } catch (err) {
-        //     if(!err?.response) {
-        //         setErrMsg('No Server Response');
-        //     } else if (err?.response?.status === 400) {
-        //         setErrMsg('Missing Username or Password');
-        //     } else if (err.response?.status === 401) {
-        //         setErrMsg('Unauthorized');
-        //     } else {
-        //         setErrMsg('Login Failed');
-        //     }
-        //     errRef.current.focus();
-        // }
+        } catch (err) {
+            if(!err?.response) {
+                setErrMsg('No Server Response');
+            } else if (err?.response?.status === 400) {
+                setErrMsg('Missing Username or Password');
+            } else if (err.response?.status === 401) {
+                setErrMsg('Unauthorized');
+            } else {
+                setErrMsg('Login Failed');
+            }
+            errRef.current.focus();
+        }
     }
-
 
     return (
 

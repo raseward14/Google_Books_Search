@@ -2,10 +2,15 @@ const express = require('express');
 const app = express();
 // mongoose schema model
 const mongoose = require('mongoose');
+const cors = require('cors');
+const corsOptions = require('./config/corsOptions');
 const cookieParser = require('cookie-parser');
-// routes
-const routes = require('./routes');
+const credentials = require('./middleware/credentials');
 
+// handle options credentials check - before CORS! and fetch cookies credentials requirement
+app.use(credentials);
+// once we've created cors options, we pass them in here
+app.use(cors(corsOptions));
 // built-in middleware handles urlencoded form data
 app.use(express.urlencoded({extended: true}));
 // built-in middleware for JSON
@@ -14,14 +19,17 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
+const routes = require('./routes');
+// all of our routes will be prefixed with /api
+app.use(routes);
+
+// routes
 app.get('/hello', (req, res) => res.send('Hello!'));
 // post name as JSON BODY and get 'Hello Richard!'
 app.post('/hello', (req, res) => res.send(`Hello ${req.body.name}!`));
 // get name as URL PARAMS and get 'Hello Richard!'
 app.get('/hello/:name', (req, res) => res.send(`Hello ${req.params.name}`));
 
-// all of our routes will be prefixed with /api
-app.use(routes);
 
 mongoose.connect('mongodb://localhost:27017/google-books-search', {
     useNewUrlParser: true,
