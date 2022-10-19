@@ -6,6 +6,8 @@ const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
+// routes
+const routes = require('./routes');
 
 // handle options credentials check - before CORS! and fetch cookies credentials requirement
 app.use(credentials);
@@ -18,8 +20,6 @@ app.use(express.json());
 // built-in middleware for cookies
 app.use(cookieParser());
 
-// routes
-const routes = require('./routes');
 // all of our routes will be prefixed with /api
 app.use(routes);
 

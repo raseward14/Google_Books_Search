@@ -43,7 +43,7 @@ const LoginPage = () => {
                     withCredentials: true
                 }
             )
-            console.log(JSON.stringify(response?.data));
+            console.log('response data: ', JSON.stringify(response?.data));
             const accessToken = response?.data?.accessToken;
             // const roles = response?.data?.roles;
             // we would add roles to this if we had them
