@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
+import * as authAPIFunctions from '../utils/AuthAPI';
 
-import axios from '../api/axios';
-const LOGIN_URL = '/auth';
+// import axios from '../api/axios';
+// const LOGIN_URL = '/auth';
 
 const LoginPage = () => {
     // if we successfully authenticate when we log in, we will set our new Auth state, and store it in the global context
@@ -36,13 +37,20 @@ const LoginPage = () => {
         e.preventDefault();
         // implement axios, and global state for auth - store authentication
         try {
-            const response = await axios.post(LOGIN_URL, 
-                JSON.stringify({ userName: user, password: pwd}),
-                {
-                    headers: { 'Content-type': 'application/json'},
-                    withCredentials: true
-                }
-            )
+
+            // const response = await axios.post(LOGIN_URL, 
+            //     JSON.stringify({ userName: user, password: pwd}),
+            //     {
+            //         headers: { 'Content-type': 'application/json'},
+            //         withCredentials: true
+            //     }
+            // )
+
+            let response = await authAPIFunctions.postLogin({
+                userName: user,
+                password: pwd
+            })
+
             console.log('response data: ', JSON.stringify(response?.data));
             const accessToken = response?.data?.accessToken;
             // const roles = response?.data?.roles;
