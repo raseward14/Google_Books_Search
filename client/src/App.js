@@ -8,7 +8,6 @@ import NotFoundPage from './pages/NotFoundPage';
 import LoginPage from './pages/LoginPage';
 
 import {
-  BrowserRouter as Router,
   Routes,
   Route
 } from 'react-router-dom'
@@ -16,19 +15,22 @@ import {
 function App() {
 
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<RegisterPage />} />
-          <Route path='search' element={<SearchPage />} />
-          <Route path='read' element={<WantToReadPage />} />
-          <Route path='library' element={<LibraryPage />} />
-          <Route path='favorites' element={<FavoritesPage />} />
-          <Route path='login' element={<LoginPage />} />
-          <Route path='*' element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        {/* public routes */}
+        <Route index element={<RegisterPage />} />
+        <Route path='login' element={<LoginPage />} />
+
+        {/* we want to protect these routes */}
+        <Route path='search' element={<SearchPage />} />
+        <Route path='read' element={<WantToReadPage />} />
+        <Route path='library' element={<LibraryPage />} />
+        <Route path='favorites' element={<FavoritesPage />} />
+
+        {/* catch all */}
+        <Route path='*' element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
 

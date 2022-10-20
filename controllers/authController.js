@@ -19,6 +19,7 @@ module.exports = {
                     const match = await bcrypt.compare(password, foundUser.password)
 
                     if (match) {
+                        console.log('match!', foundUser.userName)
                         const accessToken = jwt.sign(
                             { "userName": foundUser.userName },
                             process.env.ACCESS_TOKEN_SECRET,
