@@ -6,6 +6,7 @@ import LibraryPage from './pages/LibraryPage';
 import FavoritesPage from './pages/FavoritesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import LoginPage from './pages/LoginPage';
+import RequireAuth from './components/RequireAuth';
 
 import {
   Routes,
@@ -22,10 +23,12 @@ function App() {
         <Route path='login' element={<LoginPage />} />
 
         {/* we want to protect these routes */}
-        <Route path='search' element={<SearchPage />} />
-        <Route path='read' element={<WantToReadPage />} />
-        <Route path='library' element={<LibraryPage />} />
-        <Route path='favorites' element={<FavoritesPage />} />
+        <Route element={<RequireAuth />}>
+          <Route path='search' element={<SearchPage />} />
+          <Route path='read' element={<WantToReadPage />} />
+          <Route path='library' element={<LibraryPage />} />
+          <Route path='favorites' element={<FavoritesPage />} />
+        </Route>
 
         {/* catch all */}
         <Route path='*' element={<NotFoundPage />} />

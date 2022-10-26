@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
-import * as registerAPIFunctions from '../utils/RegisterAPI'; 
+import Logout from '../components/logoutButton';
+import useAuth from '../hooks/useAuth';
+import * as registerAPIFunctions from '../utils/RegisterAPI';
 
 import { Link } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ const RegisterPage = () => {
     const userRef = useRef();
     // if we get an error, put focus on that so it can be announced by a screenreader for accessibility purposes
     const errRef = useRef();
+    const { auth } = useAuth();
 
     // user state, tied to user input
     const [user, setUser] = useState('');
@@ -40,7 +42,7 @@ const RegisterPage = () => {
     // sets the focus when the component loads, nothing in dependency array, loads once
     // will have to reference the userRef below on that input field
     useEffect(() => {
-        userRef.current.focus();
+        auth?.user ? setUserFocus(false) : userRef.current.focus();
     }, [])
 
     // applied to the userName, where we validate the userName
@@ -85,13 +87,13 @@ const RegisterPage = () => {
         }
         console.log(user, pwd)
         try {
-            const response = await registerAPIFunctions.saveUser({ userName: user, password: pwd})
+            const response = await registerAPIFunctions.saveUser({ userName: user, password: pwd })
             console.log(response.data);
             // console.log(response.accessToken)
             setSuccess(true);
             // clear input fields out of registration form - set state back to empty strings
-        } catch(err) {
-            if(!err?.response) {
+        } catch (err) {
+            if (!err?.response) {
                 setErrMsg('No Server Response')
             } else if (err.response?.status === 409) {
                 setErrMsg('Username Taken')
@@ -103,125 +105,120 @@ const RegisterPage = () => {
     }
 
     return (
-        <>
-            <h2>Welcome</h2>
-            <p>
-                Search for a book, then save it! Add books you'd like to read to the <em>Want to Read</em> list, and books you've already read to the <em>Read list</em>.
-            </p>
-            <p>
-                Move books you've already read from the <em>Want to Read List</em>, to the <em>Read List</em>.
-            </p>
-            <p>
-                Add your Favorites from the <em>Read List</em> to the <em>Favorites</em> list.
-            </p>
-            {success ? (
+            auth?.user 
+            ? (
                 <section>
-                    <h1>Success!</h1>
+
+                    <h2>Welcome</h2>
                     <p>
-                        {/*placeholder link, should be turned into react router link*/}
-                        {/*<a href='#'>Sign In</a>*/}
-                        <Link to='login'>Sign In</Link>
+                        Search for a book, then save it! Add books you'd like to read to the <em>Want to Read</em> list, and books you've already read to the <em>Read list</em>.
                     </p>
-                </section>
+                    <p>
+                        Move books you've already read from the <em>Want to Read List</em>, to the <em>Read List</em>.
+                    </p>
+                    <p>
+                        Add your Favorites from the <em>Read List</em> to the <em>Favorites</em> list.
+                    </p>
+                    <Logout  />
+                </section >
             ) : (
-                <section className='register'>
-                    <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h2>Register</h2>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor='username'>
-                            Username:
-                            <span className={validName ? 'valid' : 'hide'}>
-                                <FontAwesomeIcon icon={faCheck} />
-                            </span>
-                            <span className={validName || !user ? 'hide' : 'invalid'}>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </span>
-                        </label><br />
-                        <input
-                            type='text'
-                            id='username'
-                            ref={userRef}
-                            autoComplete='off'
-                            onChange={(e) => setUser(e.target.value)}
-                            required
-                            aria-invalild={validName ? 'false' : 'true'}
-                            aria-describeby='uidnote'
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-                        /><br />
-                        <p id='uidnote' className={userFocus && user && !validName ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            4 to 24 characters.<br />
-                            Must begin with a letter.<br />
-                            Letters, numbers, underscores, hyphens allowed.
-                        </p>
+                    <section className='register'>
+                        <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                        <h2>Register</h2>
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor='username'>
+                                Username:
+                                <span className={validName ? 'valid' : 'hide'}>
+                                    <FontAwesomeIcon icon={faCheck} />
+                                </span>
+                                <span className={validName || !user ? 'hide' : 'invalid'}>
+                                    <FontAwesomeIcon icon={faTimes} />
+                                </span>
+                            </label><br />
+                            <input
+                                type='text'
+                                id='username'
+                                ref={userRef}
+                                autoComplete='off'
+                                onChange={(e) => setUser(e.target.value)}
+                                required
+                                aria-invalild={validName ? 'false' : 'true'}
+                                aria-describeby='uidnote'
+                                onFocus={() => setUserFocus(true)}
+                                onBlur={() => setUserFocus(false)}
+                            /><br />
+                            <p id='uidnote' className={userFocus && user && !validName ? 'instructions' : 'offscreen'}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                4 to 24 characters.<br />
+                                Must begin with a letter.<br />
+                                Letters, numbers, underscores, hyphens allowed.
+                            </p>
 
 
-                        <label htmlFor='password'>
-                            Password:
-                            <span className={validPwd ? 'valid' : 'hide'}>
-                                <FontAwesomeIcon icon={faCheck} />
-                            </span>
-                            <span className={validPwd || !pwd ? 'hide' : 'invalid'}>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </span>
-                        </label><br />
-                        <input
-                            type='password'
-                            id='password'
-                            onChange={(e) => setPwd(e.target.value)}
-                            required
-                            aria-invalid={validPwd ? 'false' : 'true'}
-                            aria-describeby='pwdnote'
-                            onFocus={() => setPwdFocus(true)}
-                            onBlur={() => setPwdFocus(false)}
-                        /><br />
-                        <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            8 to 24 characters. <br />
-                            Must include uppercase and lowercase letters, a number and a special character.<br />
-                            Allowed special characters: <span aria-label='exclamation mark'>!</span><span aria-label='at symbol'>@</span><span aria-label='hashtag'>#</span><span aria-label='dollar sign'>$</span><span aria-label='percent'>%</span>
-                        </p>
+                            <label htmlFor='password'>
+                                Password:
+                                <span className={validPwd ? 'valid' : 'hide'}>
+                                    <FontAwesomeIcon icon={faCheck} />
+                                </span>
+                                <span className={validPwd || !pwd ? 'hide' : 'invalid'}>
+                                    <FontAwesomeIcon icon={faTimes} />
+                                </span>
+                            </label><br />
+                            <input
+                                type='password'
+                                id='password'
+                                onChange={(e) => setPwd(e.target.value)}
+                                required
+                                aria-invalid={validPwd ? 'false' : 'true'}
+                                aria-describeby='pwdnote'
+                                onFocus={() => setPwdFocus(true)}
+                                onBlur={() => setPwdFocus(false)}
+                            /><br />
+                            <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                8 to 24 characters. <br />
+                                Must include uppercase and lowercase letters, a number and a special character.<br />
+                                Allowed special characters: <span aria-label='exclamation mark'>!</span><span aria-label='at symbol'>@</span><span aria-label='hashtag'>#</span><span aria-label='dollar sign'>$</span><span aria-label='percent'>%</span>
+                            </p>
 
 
-                        <label htmlFor='confirm_pwd'>
-                            Confirm Password:
-                            <span className={validMatch && matchPwd ? 'valid' : 'hide'}>
-                                <FontAwesomeIcon icon={faCheck} />
-                            </span>
-                            <span className={validMatch || !matchPwd ? 'hide' : 'invalid'}>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </span>
-                        </label><br />
-                        <input
-                            type='password'
-                            id='confirm_pwd'
-                            required
-                            onChange={(e) => setMatchPwd(e.target.value)}
-                            aria-invalid={validMatch ? 'false' : 'true'}
-                            aria-describeby='confirm_note'
-                            onFocus={() => setMatchFocus(true)}
-                            onBlue={() => setMatchFocus(false)}
-                        /><br />
-                        <p id='confirm_note' className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Must match the first password input field
-                        </p>
+                            <label htmlFor='confirm_pwd'>
+                                Confirm Password:
+                                <span className={validMatch && matchPwd ? 'valid' : 'hide'}>
+                                    <FontAwesomeIcon icon={faCheck} />
+                                </span>
+                                <span className={validMatch || !matchPwd ? 'hide' : 'invalid'}>
+                                    <FontAwesomeIcon icon={faTimes} />
+                                </span>
+                            </label><br />
+                            <input
+                                type='password'
+                                id='confirm_pwd'
+                                required
+                                onChange={(e) => setMatchPwd(e.target.value)}
+                                aria-invalid={validMatch ? 'false' : 'true'}
+                                aria-describeby='confirm_note'
+                                onFocus={() => setMatchFocus(true)}
+                                onBlue={() => setMatchFocus(false)}
+                            /><br />
+                            <p id='confirm_note' className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                Must match the first password input field
+                            </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
-                        <p>
-                            Already Registered?<br />
-                            <span className='line'>
-                                {/*put router link here*/}
-                                {/*<a href='#'>Sign In</a>*/}
-                                <Link to='login'>Sign In</Link>
-                            </span>
-                        </p>
-                    </form>
-                </section>
+                            <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                            <p>
+                                Already Registered?<br />
+                                <span className='line'>
+                                    {/*put router link here*/}
+                                    {/*<a href='#'>Sign In</a>*/}
+                                    <Link to='login'>Sign In</Link>
+                                </span>
+                            </p>
+                        </form>
+                    </section>
             )
-            }
-        </>
     );
 };
+            
 export default RegisterPage;
