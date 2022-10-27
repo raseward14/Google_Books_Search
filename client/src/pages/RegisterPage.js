@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import Logout from '../components/logoutButton';
 import useAuth from '../hooks/useAuth';
 import * as registerAPIFunctions from '../utils/RegisterAPI';
 
@@ -76,6 +75,23 @@ const RegisterPage = () => {
         setErrMsg('');
     }, [user, pwd, matchPwd])
 
+    const logout = async (e) => {
+        e.preventDefault();
+        console.log('clicked')
+        try {
+            const response = await registerAPIFunctions.logout()
+            console.log(response.data)
+        } catch (err) {
+            if(!err.response) {
+                setErrMsg('No server response');
+            } else if(err?.response) {
+                console.log(err.response)
+            } else {
+                console.log('You logged out!')
+            }
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
@@ -119,7 +135,7 @@ const RegisterPage = () => {
                     <p>
                         Add your Favorites from the <em>Read List</em> to the <em>Favorites</em> list.
                     </p>
-                    <Logout  />
+                    <button onClick={logout}>Logout</button>
                 </section >
             ) : (
                     <section className='register'>

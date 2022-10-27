@@ -34,6 +34,7 @@ module.exports = {
                         // add the current user & their refresh token to the db
                         const myQuery = { userName: foundUser.userName }
                         const updatedValues = { $set: { refreshToken: refreshToken } };
+                        console.log(refreshToken)
 
                         db.User.updateOne(myQuery, updatedValues, (err, res) => {
                             if (err) throw err;

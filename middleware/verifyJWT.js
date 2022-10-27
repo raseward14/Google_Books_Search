@@ -6,14 +6,19 @@ const verifyJWT = (req, res, next) => {
     if(!authHeader) return res.status(401); // unauthorized
     console.log(authHeader); // Bearer token
     const token = authHeader.split(' ')[1];
+    console.log(token);
     jwt.verify(
         token, 
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
-            if(err) return res.sendStatus(403); // forbidden, received token, but something isnt right, tampered with
-            req.user = decoded.userName;
-            console.log('req user: ', req.user)
-            next();
+            if(err) {
+                console.log(err)
+                return res.sendStatus(403); // forbidden, received token, but something isnt right, tampered with
+            } else {
+                req.user = decoded.userName;
+                console.log('req user: ', req.user)
+                next();
+            }
         }
     );
 }

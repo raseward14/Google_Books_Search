@@ -36,6 +36,7 @@ module.exports = {
                             { expiresIn: '30s' }
                         );
                         res.json({ accessToken });
+                        console.log(foundUser.userName)
                     }
                 );
             })

@@ -4,4 +4,8 @@ const saveUser = (userInfo) => {
     return axios.post('/api/register', userInfo)
 };
 
-export { saveUser };
+const logout = () => {
+    return axios.get('/api/logout')
+};
+
+export { saveUser, logout };

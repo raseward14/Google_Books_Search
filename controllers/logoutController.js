@@ -5,7 +5,7 @@ require('dotenv').config();
 module.exports = {
     handleLogout: async (req, res) => {
         // clientside also needs to delete the accessToken - needs to be done in memory of client application, cannot be done on the back end, zero it out, or set it to blank. we can take care of the refresh token here though
-
+        console.log(req.cookies)
         // look at cookies, where the refresh token should be
         const cookies = req.cookies;
         // check to see if we have cookies, if so, do we have cookies.jwt
