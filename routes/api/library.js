@@ -5,7 +5,7 @@ const verifyJWT = require('../../middleware/verifyJWT');
 //routes that end in api/library
 router.route('/')
     .post(verifyJWT, libraryController.create)
-    .get(libraryController.findAll);
+    .get(verifyJWT, libraryController.findAll);
     
 // routes that end in api/library/:id
 router.route('/:id')

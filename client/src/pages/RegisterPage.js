@@ -76,7 +76,6 @@ const RegisterPage = () => {
     }, [user, pwd, matchPwd])
 
     const logout = async (e) => {
-        e.preventDefault();
         console.log('clicked')
         try {
             const response = await registerAPIFunctions.logout()

@@ -1,8 +1,13 @@
 import axios from 'axios';
+let accessToken = sessionStorage.getItem('accessToken')
 
 // get all your library - eventually by user_id
 const getRead = () => {
-    return axios.get('/api/library');
+    return axios.get('/api/library', {
+        headers: {
+            Authorization: 'Bearer ' + accessToken
+        }
+    });
 };
 
 // GET library book by isbn13
