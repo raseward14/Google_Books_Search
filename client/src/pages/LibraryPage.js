@@ -5,6 +5,8 @@ import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
+
+
 const LibraryPage = () => {
 
     const [read, setRead] = useState([]);
