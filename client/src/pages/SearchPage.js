@@ -11,8 +11,8 @@ const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
-
     const [pinned, setPinned] = useState(false);
+    const accessToken = sessionStorage.getItem('accessToken');
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -38,7 +38,7 @@ const SearchPage = () => {
     async function deleteFromRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        let result = await readAPIFunctions.getReadByIsbn13(thisIsbn13);
+        let result = await readAPIFunctions.getReadByIsbn13(thisIsbn13, accessToken);
         let readResult = result.data;
         readAPIFunctions.deleteRead(readResult[0]._id);
     };
@@ -80,7 +80,7 @@ const SearchPage = () => {
     async function deleteFromWant(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(thisIsbn13)
+        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(thisIsbn13, accessToken)
         let wantResult = result.data;
         wantToReadAPIFunctions.deleteWantToRead(wantResult[0]._id)
     };
@@ -98,7 +98,7 @@ const SearchPage = () => {
             infoLink: book.volumeInfo.infoLink,
             inProgress: false,
             isbn13: thisIsbn13
-        })
+        }, accessToken)
         console.log('added to want list')
     };
 
@@ -207,11 +207,11 @@ const SearchPage = () => {
         const books = await response.json();
         let booksArray = books.items;
 
-        const read = await readAPIFunctions.getRead();
+        const read = await readAPIFunctions.getRead(accessToken);
         const APIRead = read.data;
         checkIfRead(booksArray, APIRead);
 
-        const want = await wantToReadAPIFunctions.getWantToRead();
+        const want = await wantToReadAPIFunctions.getWantToRead(accessToken);
         const APIWant = want.data;
         checkIfWant(booksArray, APIWant);
 
@@ -232,10 +232,10 @@ const SearchPage = () => {
         const lastTermSearched = await JSON.parse(localStorage.getItem('lastSearchTerm'));
         setSearch(lastTermSearched);
         const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        const read = await readAPIFunctions.getRead();
+        const read = await readAPIFunctions.getRead(accessToken);
         const APIRead = read.data;
         checkIfRead(searchedBooks, APIRead);
-        const want = await wantToReadAPIFunctions.getWantToRead();
+        const want = await wantToReadAPIFunctions.getWantToRead(accessToken);
         const APIWant = want.data;
         checkIfWant(searchedBooks, APIWant);
         setBooks(searchedBooks);

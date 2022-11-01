@@ -4,10 +4,11 @@ import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 const FavoritesPage = () => {
 
     const [favorites, setFavorites] = useState([]);
+    let accessToken = sessionStorage.getItem('accessToken');
     let APIFavorites;
 
     async function loadFavorites() {
-        let result = await favoriteAPIFunctions.getFavorites();
+        let result = await favoriteAPIFunctions.getFavorites(accessToken);
         APIFavorites = result.data;
         console.log(APIFavorites)
         setFavorites(APIFavorites);

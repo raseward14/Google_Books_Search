@@ -11,19 +11,20 @@ const LibraryPage = () => {
 
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
+    let accessToken = sessionStorage.getItem('accessToken');
     let APIRead;
 
     async function deleteFromFavorites(book) {
-        let result = await favoriteAPIFunctions.getFavorites();
+        let result = await favoriteAPIFunctions.getFavorites(accessToken);
         let APIFavorites = result.data
         let suspects = APIFavorites.filter(favorite => favorite.title === book.title)
         suspects.map(suspect => {
-            favoriteAPIFunctions.deleteFavorite(suspect._id);
+            favoriteAPIFunctions.deleteFavorite(suspect._id, accessToken);
         });
     };
 
     async function unFavoriteBook(book, index) {
-        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "false" });
+        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "false" }, accessToken);
         let newArr = [...read];
         newArr[index] = response.data;
         setRead(newArr);
@@ -33,7 +34,7 @@ const LibraryPage = () => {
     };
 
     async function removeFromRead(book) {
-        await readAPIFunctions.deleteRead(book._id);
+        await readAPIFunctions.deleteRead(book._id, accessToken);
         setRead(read.filter(read => read._id !== book._id))
         deleteFromFavorites(book);
     };
@@ -45,7 +46,7 @@ const LibraryPage = () => {
             description: book.description,
             imageLink: book.imageLink,
             infoLink: book.infoLink,
-        });
+        }, accessToken);
         // IF its not already in favorites
         // if .title === .title of the book we are favoriting
         // 'oops! looks like a book with this title has already been favorited!'
@@ -55,7 +56,7 @@ const LibraryPage = () => {
 
 
     async function favoriteBook(book, index) {
-        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "true" });
+        let response = await readAPIFunctions.updateRead(book._id, { "favorited": "true" }, accessToken);
         let newArr = [...read];
         newArr[index] = response.data;
         setRead(newArr);
@@ -64,7 +65,7 @@ const LibraryPage = () => {
     };
 
     async function loadRead() {
-        let result = await readAPIFunctions.getRead();
+        let result = await readAPIFunctions.getRead(accessToken);
         APIRead = result.data;
         console.log(APIRead)
         setRead(APIRead);

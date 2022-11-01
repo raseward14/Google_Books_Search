@@ -9,26 +9,27 @@ const WantToReadPage = () => {
 
     const [want, setWant] = useState([]);
     const [pinned, setPinned] = useState(false);
+    let accessToken = sessionStorage.getItem('accessToken')
     let APIWant;
 
     const deleteFromRead = async (book) => {
-        let readBook = await readAPIFunctions.getReadByIsbn13(book.isbn13);
+        let readBook = await readAPIFunctions.getReadByIsbn13(book.isbn13, accessToken);
         const readBookID = readBook.data[0]._id;
-        readAPIFunctions.deleteRead(readBookID);
+        readAPIFunctions.deleteRead(readBookID, accessToken);
     };
 
     async function setInProgressToTrue(book) {
         console.log('book in progress: ', book)
         await wantToReadAPIFunctions.updateWantToRead(book._id, {
             inProgress: true
-        });
+        }, accessToken);
     };
 
     async function setInProgressToFalse(book) {
         console.log('book not in progress: ', book);
         await wantToReadAPIFunctions.updateWantToRead(book._id, {
             inProgress: false
-        });
+        }, accessToken);
     };
 
     function clickedInProgress(book, index) {
@@ -56,7 +57,7 @@ const WantToReadPage = () => {
             imageLink: book.imageLink,
             infoLink: book.infoLink,
             isbn13: book.isbn13
-        });
+        }, accessToken);
         console.log('added to read books!')
         removeFromWantToRead(book);
     };
@@ -78,12 +79,12 @@ const WantToReadPage = () => {
     };
 
     async function removeFromWantToRead(book) {
-        await wantToReadAPIFunctions.deleteWantToRead(book._id);
+        await wantToReadAPIFunctions.deleteWantToRead(book._id, accessToken);
         setWant(want.filter(item => item._id !== book._id));
     };
 
     async function loadWant() {
-        let result = await wantToReadAPIFunctions.getWantToRead();
+        let result = await wantToReadAPIFunctions.getWantToRead(accessToken);
         APIWant = result.data;
         console.log(APIWant)
         setWant(APIWant);
