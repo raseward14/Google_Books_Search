@@ -13,10 +13,10 @@ const useRefreshToken = () => {
             console.log(response.data.accessToken);
             return { ...prev, accessToken: response.data.accessToken }
         });
-        // will call this function when our initial request fails, when our accessToken expires, will refresh, get a new token
+        // will call this function when our initial request fails, when our accessToken expires, will refresh, get a new token, then will retry the request
         return response.data.accessToken;
     }
-    return <div></div>
+    return refresh;
 };
 
 export default useRefreshToken;
