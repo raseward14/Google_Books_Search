@@ -56,7 +56,7 @@ const SearchPage = () => {
             infoLink: book.volumeInfo.infoLink,
             isbn13: thisIsbn13
         }, accessToken);
-        console.log("added to books you've read");
+        console.log("added to books you've read!");
     };
 
     // flip .read, if true post to read, if false, delete all matching titles from read, replace newArray index with new book and setBooks - ternary operator will handle the button change

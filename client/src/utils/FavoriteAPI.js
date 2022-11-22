@@ -3,7 +3,7 @@ import axios from 'axios';
 // get all favorites by user_id
 // const getFavorites = (userID) => {
 //     return axios.get('/api/favorite?user_id=' + userID);
-// };
+// }; 
 const getFavorites = (accessToken) => {
         return axios.get('/api/favorite', {
             headers: {
