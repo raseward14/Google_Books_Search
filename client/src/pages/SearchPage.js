@@ -55,7 +55,7 @@ const SearchPage = () => {
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink,
             isbn13: thisIsbn13
-        });
+        }, accessToken);
         console.log("added to books you've read");
     };
 

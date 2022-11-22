@@ -33,7 +33,7 @@ const saveRead = (bookInfo, accessToken) => {
     return axios.post('/api/library', bookInfo, {
         headers: {
             Authorization: 'Bearer ' + accessToken
-        }
+        },
     });
 };
 
