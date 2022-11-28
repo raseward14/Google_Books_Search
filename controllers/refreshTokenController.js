@@ -4,6 +4,7 @@ require('dotenv').config();
 
 module.exports = {
     handleRefreshToken: async (req, res) => {
+        // GET refresh token (http://localhost:8000/api/refresh)
         // look at cookies, where the refresh token should be
         const cookies = req.cookies;
         // check to see if we have cookies, if so, do we have cookies.jwt

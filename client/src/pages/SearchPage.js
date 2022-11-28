@@ -7,12 +7,16 @@ import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
+import useRefreshToken from '../hooks/useRefreshToken';
+
 const SearchPage = () => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
     const [pinned, setPinned] = useState(false);
     const accessToken = sessionStorage.getItem('accessToken');
+
+    const refresh = useRefreshToken();
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -270,6 +274,9 @@ const SearchPage = () => {
                 onChange={(event) => {
                     setSearch(event.target.value);
                 }} />
+
+<button onClick={() => refresh()}>Refresh</button>
+
             <button onClick={handleSubmit}>Submit</button>
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
