@@ -10,13 +10,10 @@ const useRefreshToken = () => {
         // const response = await axios.get('/refresh', {
         //     withCredentials: true
         // });
-        const response = refreshTokenAPIFunctions.getRefreshToken();
+        const response = await refreshTokenAPIFunctions.getRefreshToken();
         setAuth(prev => {
             console.log(JSON.stringify(prev));
-
-            // response = 401 Unauthorized -> cannot read property of undefined, reading 'accessToken'
-            // console.log(response.data.accessToken);
-            console.log(response);
+            console.log(response.data.accessToken);
 
             return { ...prev, accessToken: response.data.accessToken }
         });

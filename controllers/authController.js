@@ -41,7 +41,8 @@ module.exports = {
                             console.log('1 document updated');
                         })
 
-                        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+                        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+                        // sameSite: 'None', -> removed this
                         // store in memory - not secure in localStorage - 30s lifespan
                         res.json({ accessToken });
                     } else {
