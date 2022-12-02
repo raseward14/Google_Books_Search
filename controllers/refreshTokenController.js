@@ -36,7 +36,7 @@ module.exports = {
                             process.env.ACCESS_TOKEN_SECRET,
                             { expiresIn: '30s' }
                         );
-                        res.json({ 'refreshToken': refreshToken, accessToken });
+                        res.json({ accessToken });
                         console.log(foundUser.userName)
                     }
                 );
