@@ -41,14 +41,6 @@ const LoginPage = () => {
         // implement axios, and global state for auth - store authentication
         try {
 
-            // const response = await axios.post(LOGIN_URL, 
-            //     JSON.stringify({ userName: user, password: pwd}),
-            //     {
-            //         headers: { 'Content-type': 'application/json'},
-            //         withCredentials: true
-            //     }
-            // )
-
             let response = await authAPIFunctions.postLogin({
                 userName: user,
                 password: pwd

@@ -4,8 +4,10 @@ import axios from 'axios';
 const getWantToRead = (accessToken) => {
     return axios.get('/api/read', {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
@@ -13,8 +15,10 @@ const getWantToRead = (accessToken) => {
 const getWantToReadByIsbn13 = (isbn13, accessToken) => {
     return axios.get(`/api/read/?isbn13=${isbn13}`, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
@@ -23,24 +27,30 @@ const getWantToReadByIsbn13 = (isbn13, accessToken) => {
 const saveWantToRead = (bookInfo, accessToken) => {
     return axios.post('/api/read', bookInfo, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
 const deleteWantToRead = (id, accessToken) => {
     return axios.delete(`/api/read/${id}`, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
 const updateWantToRead = (id, body, accessToken) => {
     return axios.put(`/api/read/${id}`, body, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     })
 }
 

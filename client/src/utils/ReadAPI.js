@@ -4,8 +4,10 @@ import axios from 'axios';
 const getRead = (accessToken) => {
     return axios.get('/api/library', {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        }, 
+        withCredentials: true
     });
 };
 
@@ -14,16 +16,20 @@ const getReadByIsbn13 = (isbn13, accessToken) => {
     console.log(isbn13)
     return axios.get(`/api/library/?isbn13=${isbn13}`, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 }
 
 const getReadByID = (id, accessToken) => {
     return axios.get(`/api/library/${id}`, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
@@ -32,8 +38,10 @@ const getReadByID = (id, accessToken) => {
 const saveRead = (bookInfo, accessToken) => {
     return axios.post('/api/library', bookInfo, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
         },
+        withCredentials: true
     });
 };
 
@@ -41,16 +49,20 @@ const saveRead = (bookInfo, accessToken) => {
 const updateRead = (id, body, accessToken) => {
     return axios.put(`/api/library/${id}`, body, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
 const deleteRead = (id, accessToken) => {
     return axios.delete(`/api/library/${id}`, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 

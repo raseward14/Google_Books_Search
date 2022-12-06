@@ -12,19 +12,7 @@ const postLogin = (userInfo) => {
                 }
               };
 
-        return axios.post('/api/auth', userInfo, axiosConfig);
-
-        // {
-        //         headers: { 'Content-type': 'application/json' },
-        //         withCrecentials: true,
-        //         credentials: 'include'
-        // })
-
-        // { 
-        //     headers: { 'Content-type': 'application/json' }, 
-        //     withCredentials: true
-        // }
-        
+        return axios.post('/api/auth', userInfo, axiosConfig);        
 };
     
 export { postLogin };

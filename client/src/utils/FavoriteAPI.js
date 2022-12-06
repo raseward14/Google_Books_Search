@@ -7,8 +7,10 @@ import axios from 'axios';
 const getFavorites = (accessToken) => {
         return axios.get('/api/favorite', {
             headers: {
-                Authorization: 'Bearer ' + accessToken
-            }
+                Authorization: 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
         });
 };
     
@@ -19,16 +21,20 @@ const getFavorites = (accessToken) => {
 const saveFavorite = (bookInfo, accessToken) => {
     return axios.post('/api/favorite', bookInfo, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
 const deleteFavorite = (id, accessToken) => {
     return axios.delete(`/api/favorite/${id}`, {
         headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
     });
 };
 
