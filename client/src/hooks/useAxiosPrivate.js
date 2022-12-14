@@ -15,7 +15,10 @@ const useAxiosPrivate = () => {
                     config.headers['Authorization'] = `Bearer ${auth?.newAccessToken}`;
                 }
                 return config
-            }, (error) => Promise.reject(error)
+            }, (error) => {
+                console.log('test', config.headers['Authorization'])
+                Promise.reject(error)
+            }
         );
         
         const responseIntercept = axiosPrivate.interceptors.response.use(
