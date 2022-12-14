@@ -16,7 +16,6 @@ const useAxiosPrivate = () => {
                 }
                 return config
             }, (error) => {
-                console.log('test', config.headers['Authorization'])
                 Promise.reject(error)
             }
         );
@@ -42,7 +41,7 @@ const useAxiosPrivate = () => {
 
     }, [auth, refresh])
 
-    return axiosPrivate
+    return axiosPrivate;
 }
 
 export default useAxiosPrivate;
