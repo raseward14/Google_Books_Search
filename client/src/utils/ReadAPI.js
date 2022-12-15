@@ -1,11 +1,23 @@
 import axios from 'axios';
+// following here
+const customAxios = axios.create({
+    baseURL: 'http://localhost:8000',
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true
+})
+const requestHandler = request => {
+    let accessToken = sessionStorage.getItem('accessToken');
+
+    request.headers.Authorization = `Bearer ${accessToken}`
+    return request
+}
 
 // get all your library - eventually by user_id
 const getRead = (accessToken) => {
     return axios.get('/api/library', {
         headers: {
             Authorization: 'Bearer ' + accessToken,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         }, 
         withCredentials: true
     });
