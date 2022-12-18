@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 // get all favorites by user_id
 // const getFavorites = (userID) => {
@@ -13,7 +13,6 @@ const getFavorites = (axiosPrivate, accessToken) => {
             withCredentials: true
         });
 };
-    
 
 // save a new favorite
 // favorites are title, authors, image, link, description

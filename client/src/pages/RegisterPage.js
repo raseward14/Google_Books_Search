@@ -79,6 +79,9 @@ const RegisterPage = () => {
         console.log('clicked')
         try {
             const response = await registerAPIFunctions.logout()
+            sessionStorage.clear();
+            auth.user = null;
+            window.location.reload(false);
             console.log(response.data)
         } catch (err) {
             if(!err.response) {
@@ -157,7 +160,7 @@ const RegisterPage = () => {
                                 autoComplete='off'
                                 onChange={(e) => setUser(e.target.value)}
                                 required
-                                aria-invalild={validName ? 'false' : 'true'}
+                                aria-invalid={validName ? 'false' : 'true'}
                                 aria-describeby='uidnote'
                                 onFocus={() => setUserFocus(true)}
                                 onBlur={() => setUserFocus(false)}
@@ -214,7 +217,7 @@ const RegisterPage = () => {
                                 aria-invalid={validMatch ? 'false' : 'true'}
                                 aria-describeby='confirm_note'
                                 onFocus={() => setMatchFocus(true)}
-                                onBlue={() => setMatchFocus(false)}
+                                onBlur={() => setMatchFocus(false)}
                             /><br />
                             <p id='confirm_note' className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
                                 <FontAwesomeIcon icon={faInfoCircle} />
