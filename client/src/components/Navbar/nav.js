@@ -34,22 +34,22 @@ const NavBar = () => {
     return (
         auth?.user
             ? (
-                <ul className='navlinks'>
-                    <Link to='/' active className='navlink'>Home</Link>
-                    <Link to='search' className='navlink'>Browse</Link>
-                    <Link to='read' className='navlink'>Want to Read</Link>
-                    <Link to='library' className='navlink'>Read</Link>
-                    <Link to='favorites' className='navlink'>Favorites</Link>
-                    <Link to='/' onClick={logout} className='navlink'>Logout</Link>
+                <ul className='navlinks nav'>
+                    <Link to='/' active className='navlink' style={{color: 'blue'}}>Home</Link><br />
+                    <Link to='search' className='navlink' style={{color: 'green'}}>Browse</Link><br />
+                    <Link to='read' className='navlink' style={{color: '#63F82C'}}>Want to Read</Link><br />
+                    <Link to='library' className='navlink' style={{color: '#63F82C'}}>Read</Link><br />
+                    <Link to='favorites' className='navlink' style={{color: '#63F82C'}}>Favorites</Link><br />
+                    <Link to='/' onClick={logout} className='navlink' style={{color: 'silver'}}>Logout</Link><br />
                 </ul>
 
             ) : (
-                <ul className='navlinks'>
-                    <Link to='/' active className='navlink'>Home</Link>
-                    <Link to='search' className='navlink'>Browse</Link>
-                    <Link to='read' className='navlink'>Want to Read</Link>
-                    <Link to='library' className='navlink'>Read</Link>
-                    <Link to='favorites' className='navlink'>Favorites</Link>
+                <ul className='navlinks nav'>
+                    <Link to='/' active className='navlink' style={{color: 'blue'}}>Home</Link><br />
+                    <Link to='search' className='navlink' style={{color: 'green'}}>Browse</Link><br />
+                    <Link to='read' className='navlink' style={{color: '#63F82C'}}>Want to Read</Link><br />
+                    <Link to='library' className='navlink' style={{color: '#63F82C'}}>Read</Link><br />
+                    <Link to='favorites' className='navlink' style={{color: '#63F82C'}}>Favorites</Link><br />
                 </ul>
             )
     );

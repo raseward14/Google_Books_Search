@@ -8,11 +8,15 @@ import './style.css'
 
 const Layout = ({ search, setSearch }) => {
     return (
-        <div className='App'>
-            <Header title='Blurb Books' />
-            <NavBar />
-            <Outlet />
-            <Footer />
+        <div>
+            <div className='sidebar'>
+                <NavBar />
+            </div>
+            <div className='App'>
+                <Header title='Blurb Books' />
+                <Outlet />
+                <Footer />
+            </div>
         </div>
     );
 };

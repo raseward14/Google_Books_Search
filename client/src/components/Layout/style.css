@@ -4,7 +4,21 @@
   text-align: center;
   width: 80%;
   margin: auto;
+  margin-left: 20%;
+  margin-top: -100vh;
 }
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: 100vh;
+  background-color: black;
+  position: sticky;
+  top: 0px;
+}
+
+
 
 /*SearchPage css*/
 .single-book {
