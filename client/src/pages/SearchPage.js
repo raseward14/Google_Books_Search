@@ -209,23 +209,28 @@ const SearchPage = () => {
     // };
 
     async function handleSubmit() {
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}`)
-        const books = await response.json();
-        let booksArray = books.items;
-
-        const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
-        const APIRead = read.data;
-        checkIfRead(booksArray, APIRead);
-
-        const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
-        const APIWant = want.data;
-        checkIfWant(booksArray, APIWant);
-
-        setBooks(booksArray);
-        // set the last array of results
-        localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
-        // set the search term on click -> submit
-        localStorage.setItem('lastSearchTerm', JSON.stringify(search));
+        try {
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}`)
+            const books = await response.json();
+            let booksArray = books.items;
+    
+            const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
+            const APIRead = read.data;
+            checkIfRead(booksArray, APIRead);
+    
+            const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
+            const APIWant = want.data;
+            checkIfWant(booksArray, APIWant);
+    
+            setBooks(booksArray);
+            // set the last array of results
+            localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
+            // set the search term on click -> submit
+            localStorage.setItem('lastSearchTerm', JSON.stringify(search));
+        } catch (err) {
+            console.error(err)
+            navigate('/login', { state: { from: location}, replace: true })
+        }
     };
 
     // pull search results from local storage for global searchedBooks array
