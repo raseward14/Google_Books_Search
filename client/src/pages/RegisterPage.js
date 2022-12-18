@@ -110,6 +110,8 @@ const RegisterPage = () => {
             // console.log(response.accessToken)
             setSuccess(true);
             // clear input fields out of registration form - set state back to empty strings
+            setUser('');
+            setPwd('');
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response')

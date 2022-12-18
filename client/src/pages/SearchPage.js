@@ -7,6 +7,7 @@ import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SearchPage = () => {
     const [search, setSearch] = useState('');
@@ -15,6 +16,9 @@ const SearchPage = () => {
     const [pinned, setPinned] = useState(false);
     const accessToken = sessionStorage.getItem('accessToken');
     const axiosPrivate = useAxiosPrivate();
+    //navigates to login, and then back to this location
+    const navigate = useNavigate();
+    const location = useLocation();
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -231,19 +235,24 @@ const SearchPage = () => {
     // call function to add .want if a searched book is included in want
     // setBooks with the searchedBooks containing updated properties on page load
     const loadHistory = async () => {
-        const lastTermSearched = await JSON.parse(localStorage.getItem('lastSearchTerm'));
-        setSearch(lastTermSearched);
-        const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
-        const APIRead = read.data;
-        checkIfRead(searchedBooks, APIRead);
-        const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
-        const APIWant = want.data;
-        checkIfWant(searchedBooks, APIWant);
-        setBooks(searchedBooks);
-        console.log('APIRead: ', APIRead);
-        console.log('APIWant: ', APIWant);
-        console.log('searched books: ', searchedBooks);
+        try {
+            const lastTermSearched = await JSON.parse(localStorage.getItem('lastSearchTerm'));
+            setSearch(lastTermSearched);
+            const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
+            const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
+            const APIRead = read.data;
+            checkIfRead(searchedBooks, APIRead);
+            const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
+            const APIWant = want.data;
+            checkIfWant(searchedBooks, APIWant);
+            setBooks(searchedBooks);
+            console.log('APIRead: ', APIRead);
+            console.log('APIWant: ', APIWant);
+            console.log('searched books: ', searchedBooks);
+        } catch (err) {
+            console.error(err)
+            navigate('/login', { state: { from: location}, replace: true })
+        }
     };
 
     // function consoleLogIsbn(book) {

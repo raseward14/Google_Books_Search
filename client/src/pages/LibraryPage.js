@@ -5,8 +5,7 @@ import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-
-
+import { useNavigate, useLocation} from "react-router-dom"
 
 const LibraryPage = () => {
 
@@ -15,6 +14,9 @@ const LibraryPage = () => {
     let accessToken = sessionStorage.getItem('accessToken');
     let APIRead;
     const axiosPrivate = useAxiosPrivate();
+    // navigate to login, and then back to this location
+    const navigate = useNavigate();
+    const location = useLocation();
 
     async function deleteFromFavorites(book) {
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken);
@@ -67,10 +69,15 @@ const LibraryPage = () => {
     };
 
     async function loadRead() {
-        let result = await readAPIFunctions.getRead(axiosPrivate, accessToken);
-        APIRead = result.data;
-        console.log(APIRead)
-        setRead(APIRead);
+        try {
+            let result = await readAPIFunctions.getRead(axiosPrivate, accessToken);
+            APIRead = result.data;
+            console.log(APIRead)
+            setRead(APIRead);
+        } catch (err) {
+            console.error(err)
+            navigate('/login', { state: { from: location }, replace: true })
+        }
     };
 
     useEffect(() => {

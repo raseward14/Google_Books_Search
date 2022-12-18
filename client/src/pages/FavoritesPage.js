@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const FavoritesPage = () => {
@@ -9,13 +10,19 @@ const FavoritesPage = () => {
     let accessToken = sessionStorage.getItem('accessToken');
     let APIFavorites;
     const axiosPrivate = useAxiosPrivate();
-
+    const navigate = useNavigate();
+    const location = useLocation();
 
     async function loadFavorites() {
-        let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken);
-        APIFavorites = result.data;
-        console.log(APIFavorites)
-        setFavorites(APIFavorites);
+        try {
+            let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken);
+            APIFavorites = result.data;
+            console.log(APIFavorites)
+            setFavorites(APIFavorites);
+        } catch(err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true })
+        }
     };
 
     useEffect(() => {
