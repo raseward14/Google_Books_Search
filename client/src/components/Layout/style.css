@@ -19,6 +19,14 @@
   top: 0px;
 }
 
+.footer {
+  position: sticky;
+  bottom: 0px;
+  color: white;
+  margin-left: 30px;
+  margin-top: 150px;
+}
+
 
 
 /*SearchPage css*/

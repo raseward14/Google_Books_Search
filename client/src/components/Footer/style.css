@@ -1,7 +1,7 @@
 #footer {
-    /* position: absolute; */
-    /* width: 100%; */
+    position: sticky;
+    bottom: 0px;
     height: 2.5rem;
-    bottom: 0;
     margin: auto;
+    color: grey;
 }

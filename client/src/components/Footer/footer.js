@@ -3,9 +3,7 @@ import './style.css'
 
 const Footer = () => {
     return (
-        <div >
-        <footer id='footer'>Copyright 2021</footer>
-        </div>
+        <footer>Copyright Richard Seward 2022</footer>
     );
 };
 

@@ -15,6 +15,8 @@ const Layout = ({ search, setSearch }) => {
             <div className='App'>
                 <Header title='Blurb Books' />
                 <Outlet />
+            </div>
+            <div className='footer'>
                 <Footer />
             </div>
         </div>
