@@ -4,6 +4,8 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faBook, faCheck, faBookOpen, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+
 
 const WantToReadPage = () => {
 
@@ -11,23 +13,25 @@ const WantToReadPage = () => {
     const [pinned, setPinned] = useState(false);
     let accessToken = sessionStorage.getItem('accessToken')
     let APIWant;
+    const axiosPrivate = useAxiosPrivate();
+
 
     const deleteFromRead = async (book) => {
-        let readBook = await readAPIFunctions.getReadByIsbn13(book.isbn13, accessToken);
+        let readBook = await readAPIFunctions.getReadByIsbn13(axiosPrivate, book.isbn13, accessToken);
         const readBookID = readBook.data[0]._id;
-        readAPIFunctions.deleteRead(readBookID, accessToken);
+        readAPIFunctions.deleteRead(axiosPrivate, readBookID, accessToken);
     };
 
     async function setInProgressToTrue(book) {
         console.log('book in progress: ', book)
-        await wantToReadAPIFunctions.updateWantToRead(book._id, {
+        await wantToReadAPIFunctions.updateWantToRead(axiosPrivate, book._id, {
             inProgress: true
         }, accessToken);
     };
 
     async function setInProgressToFalse(book) {
         console.log('book not in progress: ', book);
-        await wantToReadAPIFunctions.updateWantToRead(book._id, {
+        await wantToReadAPIFunctions.updateWantToRead(axiosPrivate, book._id, {
             inProgress: false
         }, accessToken);
     };
@@ -50,7 +54,7 @@ const WantToReadPage = () => {
     }
 
     async function addToRead(book) {
-        await readAPIFunctions.saveRead({
+        await readAPIFunctions.saveRead(axiosPrivate, {
             title: book.title,
             authors: book.authors,
             description: book.description,
@@ -79,12 +83,12 @@ const WantToReadPage = () => {
     };
 
     async function removeFromWantToRead(book) {
-        await wantToReadAPIFunctions.deleteWantToRead(book._id, accessToken);
+        await wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, book._id, accessToken);
         setWant(want.filter(item => item._id !== book._id));
     };
 
     async function loadWant() {
-        let result = await wantToReadAPIFunctions.getWantToRead(accessToken);
+        let result = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
         APIWant = result.data;
         console.log(APIWant)
         setWant(APIWant);

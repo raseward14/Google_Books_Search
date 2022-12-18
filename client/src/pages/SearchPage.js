@@ -6,6 +6,7 @@ import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const SearchPage = () => {
     const [search, setSearch] = useState('');
@@ -13,6 +14,7 @@ const SearchPage = () => {
     const [startIndex, setStartIndex] = useState(0);
     const [pinned, setPinned] = useState(false);
     const accessToken = sessionStorage.getItem('accessToken');
+    const axiosPrivate = useAxiosPrivate();
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -38,9 +40,9 @@ const SearchPage = () => {
     async function deleteFromRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        let result = await readAPIFunctions.getReadByIsbn13(thisIsbn13, accessToken);
+        let result = await readAPIFunctions.getReadByIsbn13(axiosPrivate, thisIsbn13, accessToken);
         let readResult = result.data;
-        readAPIFunctions.deleteRead(readResult[0]._id);
+        readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id);
     };
 
     // POST read
@@ -48,7 +50,7 @@ const SearchPage = () => {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
 
-        readAPIFunctions.saveRead({
+        readAPIFunctions.saveRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
@@ -80,7 +82,7 @@ const SearchPage = () => {
     async function deleteFromWant(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(thisIsbn13, accessToken)
+        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(axiosPrivate, thisIsbn13, accessToken)
         let wantResult = result.data;
         wantToReadAPIFunctions.deleteWantToRead(wantResult[0]._id)
     };
@@ -90,7 +92,7 @@ const SearchPage = () => {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
         let thisIsbn13 = isbn13Array[0].identifier
 
-        await wantToReadAPIFunctions.saveWantToRead({
+        await wantToReadAPIFunctions.saveWantToRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
@@ -207,11 +209,11 @@ const SearchPage = () => {
         const books = await response.json();
         let booksArray = books.items;
 
-        const read = await readAPIFunctions.getRead(accessToken);
+        const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
         const APIRead = read.data;
         checkIfRead(booksArray, APIRead);
 
-        const want = await wantToReadAPIFunctions.getWantToRead(accessToken);
+        const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
         const APIWant = want.data;
         checkIfWant(booksArray, APIWant);
 
@@ -232,10 +234,10 @@ const SearchPage = () => {
         const lastTermSearched = await JSON.parse(localStorage.getItem('lastSearchTerm'));
         setSearch(lastTermSearched);
         const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-        const read = await readAPIFunctions.getRead(accessToken);
+        const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
         const APIRead = read.data;
         checkIfRead(searchedBooks, APIRead);
-        const want = await wantToReadAPIFunctions.getWantToRead(accessToken);
+        const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
         const APIWant = want.data;
         checkIfWant(searchedBooks, APIWant);
         setBooks(searchedBooks);

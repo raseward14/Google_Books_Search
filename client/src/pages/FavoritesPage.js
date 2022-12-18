@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+
 
 const FavoritesPage = () => {
 
     const [favorites, setFavorites] = useState([]);
     let accessToken = sessionStorage.getItem('accessToken');
     let APIFavorites;
+    const axiosPrivate = useAxiosPrivate();
+
 
     async function loadFavorites() {
-        let result = await favoriteAPIFunctions.getFavorites(accessToken);
+        let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken);
         APIFavorites = result.data;
         console.log(APIFavorites)
         setFavorites(APIFavorites);
