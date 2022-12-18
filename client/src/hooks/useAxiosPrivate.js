@@ -9,10 +9,10 @@ const useAxiosPrivate = () => {
 
     useEffect(() => {
         
-        const requesetIntercept = axiosPrivate.interceptors.request.use(
+        const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if(!config.headers['Authorization']) {
-                    config.headers['Authorization'] = `Bearer ${auth?.newAccessToken}`;
+                    config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
                 }
                 return config
             }, (error) => {
@@ -25,10 +25,11 @@ const useAxiosPrivate = () => {
             async(error) => {
                 const prevRequest = error?.config;
                 if(error?.response?.status === 403 && !prevRequest?.sent) {
-                    prevRequest.sent = true;
                     const newAccessToken = await refresh();
-                    prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
-                    return axiosPrivate(prevRequest);
+                    return axiosPrivate({
+                        ...prevRequest,
+                        headers: {...prevRequest.headers, Authorization: `Bearer ${newAccessToken}`}
+                    })
                 }
                 return Promise.reject(error);
             }

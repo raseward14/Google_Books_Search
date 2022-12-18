@@ -4,6 +4,7 @@ import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 
 
@@ -13,6 +14,7 @@ const LibraryPage = () => {
     const [pinned, setPinned] = useState(false);
     let accessToken = sessionStorage.getItem('accessToken');
     let APIRead;
+    const axiosPrivate = useAxiosPrivate();
 
     async function deleteFromFavorites(book) {
         let result = await favoriteAPIFunctions.getFavorites(accessToken);
@@ -64,12 +66,26 @@ const LibraryPage = () => {
         postFavorite(book);
     };
 
+    // async function loadRead() {
+    //     let result = await readAPIFunctions.getRead(accessToken);
+    //     APIRead = result.data;
+    //     console.log(APIRead)
+    //     setRead(APIRead);
+    // };
+
     async function loadRead() {
-        let result = await readAPIFunctions.getRead(accessToken);
+        let result = await axiosPrivate.get('/api/library', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        });
         APIRead = result.data;
         console.log(APIRead)
         setRead(APIRead);
     };
+
 
     useEffect(() => {
         loadRead();
