@@ -53,5 +53,14 @@ module.exports = {
         } catch (err) {
             res.status(500).json({ 'message': err.message });
         }
+    },
+    findUser: (req, res) => {
+        db.User.find((err, users) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(users);
+            };
+        });
     }
 }

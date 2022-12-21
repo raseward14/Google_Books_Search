@@ -4,7 +4,7 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import useAuth from '../hooks/useAuth';
 import * as registerAPIFunctions from '../utils/RegisterAPI';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
@@ -36,7 +36,7 @@ const RegisterPage = () => {
     // state for if an error message exists
     const [errMsg, setErrMsg] = useState('');
     // state for if we successfully submit the registration form or not
-    const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     // sets the focus when the component loads, nothing in dependency array, loads once
     // will have to reference the userRef below on that input field
@@ -107,11 +107,14 @@ const RegisterPage = () => {
         try {
             const response = await registerAPIFunctions.saveUser({ userName: user, password: pwd })
             console.log(response.data);
-            // console.log(response.accessToken)
-            setSuccess(true);
             // clear input fields out of registration form - set state back to empty strings
             setUser('');
             setPwd('');
+            // navigates back to the login page
+            window.alert(['Registration Successful!'])
+            setTimeout(() => {
+                navigate('/login')
+            }, 3000);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response')
