@@ -49,6 +49,7 @@ const LoginPage = () => {
             console.log('response data: ', JSON.stringify(response?.data));
             const accessToken = response?.data?.accessToken;
             sessionStorage.setItem('accessToken', accessToken);
+            sessionStorage.setItem('user', user);
             // const roles = response?.data?.roles;
             // we would add roles to this if we had them
             setAuth({ user, pwd, accessToken });

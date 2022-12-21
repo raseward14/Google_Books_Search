@@ -20,7 +20,11 @@ const userSchema = new Schema({
 // Read Model Schema
 const readSchema = new Schema({
     title: String,
-    userID: String,
+    user_id: {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     authors: {
         type: [String],
         default: undefined
@@ -39,7 +43,11 @@ const readSchema = new Schema({
 // Library Model Schema
 const librarySchema = new Schema({
     title: String,
-    userID: String,
+    user_id: {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     authors: {
         type: [String],
         default: undefined
@@ -58,7 +66,11 @@ const librarySchema = new Schema({
 // Favorite Model Schema
 const favoriteSchema = new Schema({
     title: String,
-    userID: String,
+    user_id: {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     authors: {
         type: [String],
         default: undefined
