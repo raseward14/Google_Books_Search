@@ -1,6 +1,6 @@
 .App {
   /* position: relative; */
-  /* min-height: 100vh; */
+  min-height: 100vh;
   text-align: center;
   width: 80%;
   margin: auto;
@@ -21,10 +21,9 @@
 
 .footer {
   position: sticky;
-  bottom: 0px;
+  bottom: 3%;
   color: white;
   margin-left: 30px;
-  margin-top: 150px;
 }
 
 

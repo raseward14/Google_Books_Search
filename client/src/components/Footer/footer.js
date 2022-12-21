@@ -1,9 +1,8 @@
 import React from 'react';
-import './style.css'
 
 const Footer = () => {
     return (
-        <footer>Copyright Richard Seward 2022</footer>
+        <footer>Copyright<br /><br />Richard Seward 2022</footer>
     );
 };
 
