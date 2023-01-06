@@ -20,10 +20,13 @@ module.exports = {
 
                     if (match) {
                         console.log('match!', foundUser.userName)
+                        console.log('found user:', foundUser._id)
+                        const userID = foundUser._id
+
                         const accessToken = jwt.sign(
                             { "userName": foundUser.userName },
                             process.env.ACCESS_TOKEN_SECRET,
-                            { expiresIn: '10s' }
+                            { expiresIn: '30s' }
                         );
                         const refreshToken = jwt.sign(
                             { "userName": foundUser.userName },
@@ -44,7 +47,7 @@ module.exports = {
                         res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
                         // sameSite: 'None', -> removed this
                         // store in memory - not secure in localStorage - 30s lifespan
-                        res.json({ accessToken });
+                        res.json({ accessToken, userID });
                     } else {
                         res.status(401); // unauthorized
                     }

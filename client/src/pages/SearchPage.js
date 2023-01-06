@@ -15,6 +15,7 @@ const SearchPage = () => {
     const [startIndex, setStartIndex] = useState(0);
     const [pinned, setPinned] = useState(false);
     const accessToken = sessionStorage.getItem('accessToken');
+    const userID = sessionStorage.getItem('userID')
     const axiosPrivate = useAxiosPrivate();
     //navigates to login, and then back to this location
     const navigate = useNavigate();
