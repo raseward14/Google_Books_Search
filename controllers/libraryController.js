@@ -17,6 +17,7 @@ module.exports = {
     create: (req, res) => {
         // POST Book I've Read
         const libraryBook = new db.Library();
+        console.log(req.body)
         libraryBook.title = req.body.title;
         libraryBook.authors = req.body.authors;
         libraryBook.description = req.body.description;
@@ -24,6 +25,7 @@ module.exports = {
         libraryBook.infoLink = req.body.infoLink;
         libraryBook.isbn13 = req.body.isbn13;
         libraryBook.date = Date.now();
+        libraryBook.user_id = req.body.user_id
         libraryBook.save(req.body, (err) => {
             if (err) {
                 res.send(err);

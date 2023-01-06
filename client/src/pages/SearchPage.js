@@ -15,7 +15,7 @@ const SearchPage = () => {
     const [startIndex, setStartIndex] = useState(0);
     const [pinned, setPinned] = useState(false);
     const accessToken = sessionStorage.getItem('accessToken');
-    const userID = sessionStorage.getItem('userID')
+    const userID = sessionStorage.getItem('userID');
     const axiosPrivate = useAxiosPrivate();
     //navigates to login, and then back to this location
     const navigate = useNavigate();
@@ -61,7 +61,8 @@ const SearchPage = () => {
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
             infoLink: book.volumeInfo.infoLink,
-            isbn13: thisIsbn13
+            isbn13: thisIsbn13,
+            user_id: userID
         }, accessToken);
         console.log("added to books you've read!");
     };
