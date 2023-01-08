@@ -260,15 +260,11 @@ const SearchPage = () => {
                 const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
                 const APIWant = want.data;
                 checkIfWant(searchedBooks, APIWant);
-                
+
                 setBooks(searchedBooks)
             } else {
                 setBooks([])
             }
-            // setBooks(searchedBooks);
-            // console.log('APIRead: ', APIRead);
-            // console.log('APIWant: ', APIWant);
-            // console.log('searched books: ', searchedBooks);
         } catch (err) {
             console.error(err)
             navigate('/login', { state: { from: location}, replace: true })
