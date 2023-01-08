@@ -33,6 +33,7 @@ module.exports = {
         newRead.imageLink = req.body.imageLink;
         newRead.infoLink = req.body.infoLink;
         newRead.isbn13 = req.body.isbn13;
+        newRead.user_id = req.body.user_id
         newRead.date = Date.now();
         newRead.save((err) => {
             if (err) {

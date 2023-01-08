@@ -29,6 +29,7 @@ module.exports = {
         myFavorite.authors = req.body.authors;
         myFavorite.imageLink = req.body.imageLink;
         myFavorite.infoLink = req.body.infoLink;
+        myFavorite.user_id = req.body.user_id
         myFavorite.date = Date.now();
         myFavorite.save(req.body, (err) => {
             if(err) {

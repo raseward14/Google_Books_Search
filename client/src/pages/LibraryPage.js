@@ -17,6 +17,7 @@ const LibraryPage = () => {
     // navigate to login, and then back to this location
     const navigate = useNavigate();
     const location = useLocation();
+    const userID = sessionStorage.getItem('userID');
 
     async function deleteFromFavorites(book) {
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken);
@@ -50,6 +51,7 @@ const LibraryPage = () => {
             description: book.description,
             imageLink: book.imageLink,
             infoLink: book.infoLink,
+            user_id: userID
         }, accessToken);
         // IF its not already in favorites
         // if .title === .title of the book we are favoriting

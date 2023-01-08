@@ -18,7 +18,7 @@ const WantToReadPage = () => {
     // navigates to login, and then back to this location
     const navigate = useNavigate();
     const location = useLocation();
-
+    const userID = sessionStorage.getItem('userID');
 
     const deleteFromRead = async (book) => {
         let readBook = await readAPIFunctions.getReadByIsbn13(axiosPrivate, book.isbn13, accessToken);
@@ -64,7 +64,8 @@ const WantToReadPage = () => {
             description: book.description,
             imageLink: book.imageLink,
             infoLink: book.infoLink,
-            isbn13: book.isbn13
+            isbn13: book.isbn13,
+            user_id: userID
         }, accessToken);
         console.log('added to read books!')
         removeFromWantToRead(book);

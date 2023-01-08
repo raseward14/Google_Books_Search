@@ -34,7 +34,7 @@ module.exports = {
                             // should set an expiration longer in prod app, 30s is for testing
                             { "userName": decoded.userName },
                             process.env.ACCESS_TOKEN_SECRET,
-                            { expiresIn: '30s' }
+                            { expiresIn: '2h' }
                         );
                         res.json({ accessToken });
                         console.log(foundUser.userName)

@@ -26,12 +26,12 @@ module.exports = {
                         const accessToken = jwt.sign(
                             { "userName": foundUser.userName },
                             process.env.ACCESS_TOKEN_SECRET,
-                            { expiresIn: '30s' }
+                            { expiresIn: '2h' }
                         );
                         const refreshToken = jwt.sign(
                             { "userName": foundUser.userName },
                             process.env.REFRESH_TOKEN_SECRET,
-                            { expiresIn: '15s' }
+                            { expiresIn: '1d' }
                         );
 
                         // add the current user & their refresh token to the db
