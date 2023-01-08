@@ -4,8 +4,8 @@
 // const getFavorites = (userID) => {
 //     return axios.get('/api/favorite?user_id=' + userID);
 // }; 
-const getFavorites = (axiosPrivate, accessToken) => {
-        return axiosPrivate.get('/api/favorite', {
+const getFavorites = (axiosPrivate, accessToken, userID) => {
+        return axiosPrivate.get(`/api/favorite?user_id=${userID}`, {
             headers: {
                 Authorization: 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'

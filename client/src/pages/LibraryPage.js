@@ -72,7 +72,7 @@ const LibraryPage = () => {
 
     async function loadRead() {
         try {
-            let result = await readAPIFunctions.getRead(axiosPrivate, accessToken);
+            let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             APIRead = result.data;
             console.log(APIRead)
             setRead(APIRead);

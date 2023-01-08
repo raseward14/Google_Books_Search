@@ -94,7 +94,7 @@ const WantToReadPage = () => {
 
     async function loadWant() {
         try {
-            let result = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
+            let result = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             APIWant = result.data;
             console.log(APIWant)
             setWant(APIWant);

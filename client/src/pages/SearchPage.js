@@ -217,11 +217,11 @@ const SearchPage = () => {
             const books = await response.json();
             let booksArray = books.items;
     
-            const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
+            const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             const APIRead = read.data;
             checkIfRead(booksArray, APIRead);
     
-            const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
+            const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             const APIWant = want.data;
             checkIfWant(booksArray, APIWant);
     
@@ -247,10 +247,10 @@ const SearchPage = () => {
             const lastTermSearched = await JSON.parse(localStorage.getItem('lastSearchTerm'));
             setSearch(lastTermSearched);
             const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-            const read = await readAPIFunctions.getRead(axiosPrivate, accessToken);
+            const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             const APIRead = read.data;
             checkIfRead(searchedBooks, APIRead);
-            const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken);
+            const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             const APIWant = want.data;
             checkIfWant(searchedBooks, APIWant);
             setBooks(searchedBooks);

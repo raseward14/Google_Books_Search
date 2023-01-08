@@ -12,10 +12,11 @@ const FavoritesPage = () => {
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
+    const userID = sessionStorage.getItem('userID');
 
     async function loadFavorites() {
         try {
-            let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken);
+            let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
             APIFavorites = result.data;
             console.log(APIFavorites)
             setFavorites(APIFavorites);

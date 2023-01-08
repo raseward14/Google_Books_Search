@@ -1,8 +1,8 @@
 // import axios from 'axios';
 
 // get all books to read
-const getWantToRead = (axiosPrivate, accessToken) => {
-    return axiosPrivate.get('/api/read', {
+const getWantToRead = (axiosPrivate, accessToken, userID) => {
+    return axiosPrivate.get(`/api/read?user_id=${userID}`, {
         headers: {
             Authorization: 'Bearer ' + accessToken,
             'Content-Type': 'application/json'

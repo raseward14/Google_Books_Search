@@ -3,7 +3,7 @@ const db = require('../models/index');
 module.exports = {
     findAll: (req, res) => {
         // GET My Reading Recommendations or favorites
-        db.Favorite.find((err, books) => {
+        db.Favorite.find({  user_id: req.query.user_id }, (err, books) => {
             if(err) {
                 res.send(err);
             } else {

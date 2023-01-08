@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // get all your library - eventually by user_id
-const getRead = (axiosPrivate, accessToken) => {
-    return axiosPrivate.get('/api/library', {
+const getRead = (axiosPrivate, accessToken, userID) => {
+    return axiosPrivate.get(`/api/library?user_id=${userID}`, {
         headers: {
             Authorization: 'Bearer ' + accessToken,
             'Content-Type': 'application/json',
