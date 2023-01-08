@@ -227,9 +227,9 @@ const SearchPage = () => {
     
             setBooks(booksArray);
             // set the last array of results
-            localStorage.setItem('lastBookSearch', JSON.stringify(booksArray));
+            localStorage.setItem(`lastBookSearchUserID:${userID}`, JSON.stringify(booksArray));
             // set the search term on click -> submit
-            localStorage.setItem('lastSearchTerm', JSON.stringify(search));
+            localStorage.setItem(`lastSearchTermUserID:${userID}`, JSON.stringify(search));
         } catch (err) {
             console.error(err)
             navigate('/login', { state: { from: location}, replace: true })
@@ -244,19 +244,31 @@ const SearchPage = () => {
     // setBooks with the searchedBooks containing updated properties on page load
     const loadHistory = async () => {
         try {
-            const lastTermSearched = await JSON.parse(localStorage.getItem('lastSearchTerm'));
-            setSearch(lastTermSearched);
-            const searchedBooks = await JSON.parse(localStorage.getItem('lastBookSearch'));
-            const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
-            const APIRead = read.data;
-            checkIfRead(searchedBooks, APIRead);
-            const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
-            const APIWant = want.data;
-            checkIfWant(searchedBooks, APIWant);
-            setBooks(searchedBooks);
-            console.log('APIRead: ', APIRead);
-            console.log('APIWant: ', APIWant);
-            console.log('searched books: ', searchedBooks);
+            const lastTermSearched = await JSON.parse(localStorage.getItem(`lastSearchTermUserID:${userID}`));
+            if(lastTermSearched) {
+                setSearch(lastTermSearched)
+            } else {
+                setSearch('')
+            }
+
+            const searchedBooks = await JSON.parse(localStorage.getItem(`lastBookSearchUserID:${userID}`));
+            if(searchedBooks) {
+                const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
+                const APIRead = read.data;
+                checkIfRead(searchedBooks, APIRead);
+                
+                const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
+                const APIWant = want.data;
+                checkIfWant(searchedBooks, APIWant);
+                
+                setBooks(searchedBooks)
+            } else {
+                setBooks([])
+            }
+            // setBooks(searchedBooks);
+            // console.log('APIRead: ', APIRead);
+            // console.log('APIWant: ', APIWant);
+            // console.log('searched books: ', searchedBooks);
         } catch (err) {
             console.error(err)
             navigate('/login', { state: { from: location}, replace: true })
