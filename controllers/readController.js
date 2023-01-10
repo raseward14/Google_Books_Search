@@ -5,7 +5,7 @@ module.exports = {
         // GET To Read Books List
         let thisIsbn13 = req.query.isbn13
         let query = thisIsbn13 ? { user_id: req.query.user_id, isbn13: thisIsbn13 } : { user_id: req.query.user_id }
-        console.log(query)
+        console.log('QUERY', query)
         db.Read.find(query, (err, books) => {
             if (err) {
                 res.send(err);

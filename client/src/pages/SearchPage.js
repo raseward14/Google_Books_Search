@@ -45,8 +45,9 @@ const SearchPage = () => {
     async function deleteFromRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        let result = await readAPIFunctions.getReadByIsbn13(axiosPrivate, thisIsbn13, accessToken);
+        let result = await readAPIFunctions.getReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
         let readResult = result.data;
+        console.log('book to be removed', result.data)
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id);
     };
 

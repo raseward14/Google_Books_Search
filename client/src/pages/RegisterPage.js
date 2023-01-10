@@ -33,6 +33,8 @@ const RegisterPage = () => {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
+    const [registered, setRegistered] = useState(false);
+
     // state for if an error message exists
     const [errMsg, setErrMsg] = useState('');
     // state for if we successfully submit the registration form or not
@@ -94,6 +96,10 @@ const RegisterPage = () => {
         }
     }
 
+    const backToLogin = () => {
+        navigate('/login')
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
@@ -110,11 +116,12 @@ const RegisterPage = () => {
             // clear input fields out of registration form - set state back to empty strings
             setUser('');
             setPwd('');
+            setMatchPwd('');
             // navigates back to the login page
-            window.alert(['Registration Successful!'])
+            setRegistered(true);
             setTimeout(() => {
-                navigate('/login')
-            }, 3000);
+                backToLogin()
+            }, 2000);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response')
@@ -148,6 +155,7 @@ const RegisterPage = () => {
                     <section className='register'>
                         <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                         <h2>Register</h2>
+                        {registered ? <h4>Successfully Registered!</h4> : <h4></h4>}
                         <form onSubmit={handleSubmit}>
                             <label htmlFor='username'>
                                 Username:

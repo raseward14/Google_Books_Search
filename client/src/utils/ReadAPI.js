@@ -12,9 +12,9 @@ const getRead = (axiosPrivate, accessToken, userID) => {
 };
 
 // GET library book by isbn13
-const getReadByIsbn13 = (axiosPrivate, isbn13, accessToken) => {
+const getReadByIsbn13 = (axiosPrivate, isbn13, accessToken, userID) => {
     console.log(isbn13)
-    return axiosPrivate.get(`/api/library/?isbn13=${isbn13}`, {
+    return axiosPrivate.get(`/api/library/?isbn13=${isbn13}&user_id=${userID}`, {
         headers: {
             Authorization: 'Bearer ' + accessToken,
             'Content-Type': 'application/json'
