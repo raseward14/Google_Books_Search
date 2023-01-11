@@ -78,6 +78,7 @@ const favoriteSchema = new Schema({
     description: String,
     imageLink: String, 
     infoLink: String,
+    isbn13: String,
     date: Date,
 });
 

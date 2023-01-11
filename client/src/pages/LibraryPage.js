@@ -45,12 +45,14 @@ const LibraryPage = () => {
     };
 
     async function postFavorite(book) {
+        console.log('book to be favorited: ', book.isbn13);
         await favoriteAPIFunctions.saveFavorite(axiosPrivate, {
             title: book.title,
             authors: book.authors,
             description: book.description,
             imageLink: book.imageLink,
             infoLink: book.infoLink,
+            isbn13: book.isbn13,
             user_id: userID
         }, accessToken);
         // IF its not already in favorites

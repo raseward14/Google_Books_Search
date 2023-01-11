@@ -4,7 +4,6 @@ module.exports = {
     findAll: (req, res) => {
         // GET books I've Read Shelf
         let thisIsbn13 = req.query.isbn13
-        console.log('ISBN13', thisIsbn13)
         let query = thisIsbn13 ? {  
             $and: [
                 {

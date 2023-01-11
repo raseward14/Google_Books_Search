@@ -14,6 +14,16 @@ const getFavorites = (axiosPrivate, accessToken, userID) => {
         });
 };
 
+const getfavoriteByIsbn13 = (axiosPrivate, isbn13, accessToken, userID) => {
+    return axiosPrivate.get(`/api/favorite/?isbn13=${isbn13}&user_id=${userID}`, {
+        headers: {
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
+    });
+};
+
 // save a new favorite
 // favorites are title, authors, image, link, description
 // date and user_id will be set already
@@ -37,4 +47,4 @@ const deleteFavorite = (axiosPrivate, id, accessToken) => {
     });
 };
 
-export { getFavorites, saveFavorite, deleteFavorite };
+export { getFavorites, saveFavorite, deleteFavorite, getfavoriteByIsbn13 };

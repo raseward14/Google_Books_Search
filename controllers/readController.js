@@ -4,7 +4,16 @@ module.exports = {
     findAll: (req, res) => {
         // GET To Read Books List
         let thisIsbn13 = req.query.isbn13
-        let query = thisIsbn13 ? { user_id: req.query.user_id, isbn13: thisIsbn13 } : { user_id: req.query.user_id }
+        let query = thisIsbn13 ? { 
+            $and: [
+                {
+                    user_id: req.query.user_id
+                },
+                {
+                    isbn13: thisIsbn13 
+                }
+            ]
+        } : { user_id: req.query.user_id }
         console.log('QUERY', query)
         db.Read.find(query, (err, books) => {
             if (err) {
@@ -33,7 +42,7 @@ module.exports = {
         newRead.imageLink = req.body.imageLink;
         newRead.infoLink = req.body.infoLink;
         newRead.isbn13 = req.body.isbn13;
-        newRead.user_id = req.body.user_id
+        newRead.user_id = req.body.user_id;
         newRead.date = Date.now();
         newRead.save((err) => {
             if (err) {

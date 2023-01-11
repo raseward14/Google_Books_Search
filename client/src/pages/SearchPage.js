@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import * as favoritesAPIFunctions from '../utils/FavoriteAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
+import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
@@ -47,8 +48,11 @@ const SearchPage = () => {
         let thisIsbn13 = isbn13Array[0].identifier;
         let result = await readAPIFunctions.getReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
         let readResult = result.data;
-        console.log('book to be removed', result.data)
-        readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id);
+        readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
+        let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
+        let favoriteResultData = favoriteResult.data;
+        console.log('fav data: ', favoriteResultData)
+        favoriteAPIFunctions.deleteFavorite(axiosPrivate, readResult[0]._id, accessToken);
     };
 
     // POST read
@@ -89,9 +93,10 @@ const SearchPage = () => {
     async function deleteFromWant(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(axiosPrivate, thisIsbn13, accessToken)
+        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID)
         let wantResult = result.data;
-        wantToReadAPIFunctions.deleteWantToRead(wantResult[0]._id)
+        console.log(result.data)
+        wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
     };
 
     // POST want
@@ -221,10 +226,13 @@ const SearchPage = () => {
             const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             const APIRead = read.data;
             checkIfRead(booksArray, APIRead);
+            console.log('read books: ', APIRead)
     
             const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             const APIWant = want.data;
             checkIfWant(booksArray, APIWant);
+            console.log('want to read books: ', APIWant)
+
     
             setBooks(booksArray);
             // set the last array of results
@@ -257,10 +265,12 @@ const SearchPage = () => {
                 const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
                 const APIRead = read.data;
                 checkIfRead(searchedBooks, APIRead);
+                console.log('read books: ', APIRead)
                 
                 const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
                 const APIWant = want.data;
                 checkIfWant(searchedBooks, APIWant);
+                console.log('want to read books: ', APIWant)
 
                 setBooks(searchedBooks)
             } else {
