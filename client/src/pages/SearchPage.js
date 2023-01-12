@@ -302,11 +302,15 @@ const SearchPage = () => {
     return (
         <div>
             <h3>Search</h3>
-            <input placeholder='Search'
+            <input 
+                className='search'
+                placeholder='Search'
                 onChange={(event) => {
                     setSearch(event.target.value);
                 }} />
-            <button onClick={handleSubmit}>Submit</button>
+            <button 
+            className='navButton'
+            onClick={handleSubmit}>Submit</button>
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
                     icon={faThumbtack}
