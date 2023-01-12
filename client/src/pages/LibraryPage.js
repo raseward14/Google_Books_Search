@@ -34,7 +34,6 @@ const LibraryPage = () => {
         newArr[index] = response.data;
         setRead(newArr);
         // now delete it from the favorites
-        console.log('unfavorited');
         deleteFromFavorites(book);
     };
 
@@ -45,7 +44,6 @@ const LibraryPage = () => {
     };
 
     async function postFavorite(book) {
-        console.log('book to be favorited: ', book.isbn13);
         await favoriteAPIFunctions.saveFavorite(axiosPrivate, {
             title: book.title,
             authors: book.authors,
@@ -76,10 +74,8 @@ const LibraryPage = () => {
         try {
             let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             APIRead = result.data;
-            console.log(APIRead)
             setRead(APIRead);
         } catch (err) {
-            console.error(err)
             navigate('/login', { state: { from: location }, replace: true })
         }
     };

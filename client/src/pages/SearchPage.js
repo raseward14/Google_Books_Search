@@ -218,6 +218,8 @@ const SearchPage = () => {
 
     async function handleSubmit() {
         try {
+            console.log('search term: ', search)
+            console.log('start Index:', startIndex)
             const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}`)
             const books = await response.json();
             let booksArray = books.items;
@@ -225,13 +227,10 @@ const SearchPage = () => {
             const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             const APIRead = read.data;
             checkIfRead(booksArray, APIRead);
-            console.log('read books: ', APIRead)
     
             const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             const APIWant = want.data;
             checkIfWant(booksArray, APIWant);
-            console.log('want to read books: ', APIWant)
-
     
             setBooks(booksArray);
             // set the last array of results
@@ -387,6 +386,7 @@ const SearchPage = () => {
                 </div>
             )}
             <button
+                className='navButton'
                 onClick={() => {
                     if (startIndex >= 10) {
                         let newStart = startIndex - 10;
@@ -395,14 +395,15 @@ const SearchPage = () => {
                         return
                     }
                 }}
-            >back</button>
+            ><span className='back'>back</span></button>
             <button
+                className='navButton'
                 onClick={() => {
                     let newStart = startIndex + 10;
-                    console.log(newStart,)
+                    console.log(newStart)
                     setStartIndex(newStart);
                 }}
-            >next</button>
+            ><span className='next'>next</span></button>
         </div>
     );
 };
