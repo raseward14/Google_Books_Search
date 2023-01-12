@@ -51,8 +51,7 @@ const SearchPage = () => {
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
         let favoriteResultData = favoriteResult.data;
-        console.log('fav data: ', favoriteResultData)
-        favoriteAPIFunctions.deleteFavorite(axiosPrivate, readResult[0]._id, accessToken);
+        favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
     };
 
     // POST read

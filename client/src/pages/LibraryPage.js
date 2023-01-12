@@ -20,7 +20,7 @@ const LibraryPage = () => {
     const userID = sessionStorage.getItem('userID');
 
     async function deleteFromFavorites(book) {
-        let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken);
+        let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
         let APIFavorites = result.data
         let suspects = APIFavorites.filter(favorite => favorite.title === book.title)
         suspects.map(suspect => {
