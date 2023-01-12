@@ -30,13 +30,14 @@ app.post('/hello', (req, res) => res.send(`Hello ${req.body.name}!`));
 // get name as URL PARAMS and get 'Hello Richard!'
 app.get('/hello/:name', (req, res) => res.send(`Hello ${req.params.name}`));
 
+var port = process.env.PORT || 8000;
 
 mongoose.connect('mongodb://localhost:27017/google-books-search', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 
-app.listen(8000, () => console.log('Listening on port 8000!'));
+app.listen(port, () => console.log('Listening on port 8000!'));
 
 // google books api documentation
 // https://developers.google.com/books/docs/v1/getting_started?csw=1
