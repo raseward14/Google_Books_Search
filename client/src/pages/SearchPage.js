@@ -309,7 +309,7 @@ const SearchPage = () => {
                     setSearch(event.target.value);
                 }} />
             <button 
-            className='navButton'
+            className='submit'
             onClick={handleSubmit}>Submit</button>
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
