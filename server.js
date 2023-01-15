@@ -20,6 +20,11 @@ app.use(express.json());
 // built-in middleware for cookies
 app.use(cookieParser());
 
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+  }
+
 // all of our routes will be prefixed with /api
 app.use(routes);
 
