@@ -1,8 +1,42 @@
 # Google_Books_Search
-React based Google Books search app, utilizing React components, Node, Express, and MongoDB.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Check it out here!
+## Description
+Your virtual bookshelf. The front end is React for a performant user experience, node.js to run JavaScript outside the browser, paired with axios to interact with a custom built RESETful API. NPM is used to easily, and quickly install packages such as concurrently, and cors. The Create React App generator was used to quickly get a React app up and running. Pages are comprised of components, and housed within a layout component that also contains a sidebar component for navigation. React router dom, and Links are used for navigation between pages. Each page routes API requesets through a private axios base URL, that uses interceptors to verify requests authorization headers. If a request fails, a new access token is retrieved from a non-relational, MongoDB database, using a refresh token that is stored upon user authentication.
 
+Access tokens remain valid for 2 hours, while refresh tokens are valid for 1 day. Access tokens are stored on the front-end in session storage, and retrieved on the front end, when sending reqeuests through the private axios base URl. On the back end, upon authentication, if a user is found from the database, jsonwebtoken is used respond with a httpOnly cookies.
+
+A variety of Reach hooks are used throughout the app, including useState and useEffect for page affects, useNavigate and useLocation for automatic navigation, useRef for focus, and useContext for authentication. Fontawesome icons are used in several pages as well.
+
+The back end is powered by node.js and express for RESTAPI routing. Bcrypt is used to salt and hash passwords, if-env is used for local development, and production scripts, while both nodemon and concurrently were used in development.
+
+This app is hosted by Heroku.
+
+**[Check it out here!](https://blurb-books.herokuapp.com/)
+
+## Table of Contents
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#usage)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
+
+## Installation
+1. From GitHub, fork the repository, and run npm install from the root directory. 
+2. Then, from the client directory, run npm install for the front end packages. 
+3. From there, run npm start from the root directory, on your local machine to run the code locally.
+
+## Usage
+Visit on desktop, or mobile. This app is fully responsive.
+
+* **Desktop**  
+![Desktop](client/src/components/Images/google_books_search.png)
+* **Responsive**  
+![Mobile Friendly](client/src/components/Images/google_books_search_mobile.png)
+
+## Credits
+Resources:
 * [Google Books APIs](https://developers.google.com/books/docs/v1/using)
 * [tabnine How to use Delete Function in Router](https://www.tabnine.com/code/javascript/functions/express/Router/delete)
 * [GeeksforGeeks How to make Mongoose multiple collections using Node.js](https://www.geeksforgeeks.org/how-to-make-mongoose-multiple-collections-using-node-js/)
