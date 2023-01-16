@@ -9,3 +9,29 @@
 .navlinks {
     margin-top: 100px;
 }
+
+@media (max-width: 600px) {
+   
+    .navlink {
+        margin-left: -20px;
+        margin-bottom: 10px;
+        display: flex;
+        font-weight: 700;
+        font-size: small;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+  
+}
+
+@media (max-width: 376px) {
+   
+    .navlink {
+        margin-left: -20px;
+        margin-bottom: 10px;
+        display: flex;
+        font-weight: 700;
+        font-size: 10px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+  
+}
