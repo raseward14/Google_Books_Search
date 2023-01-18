@@ -5,6 +5,7 @@ module.exports = {
     create: async (req, res) => {
         // POST a User to (http://localhost:8000/api/register)
         const { userName, password } = req.body;
+        console.log(userName, password)
         if (!userName || !password) return res.status(400).json({ 'message': 'Username and password are required.' })
         try {
             // encrypt the password
@@ -15,6 +16,7 @@ module.exports = {
             newUser.password = hashedPwd;
             newUser.save((err) => {
                 if (err) {
+                    console.log('error', err)
                     res.status(400).json({ 'message': 'Username taken.' });
                 } else {
                     res.json({ 'success': `New user ${userName} created!` });

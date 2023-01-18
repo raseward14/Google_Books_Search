@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import useAuth from '../hooks/useAuth';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import * as registerAPIFunctions from '../utils/RegisterAPI';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -39,6 +40,7 @@ const RegisterPage = () => {
     const [errMsg, setErrMsg] = useState('');
     // state for if we successfully submit the registration form or not
     const navigate = useNavigate();
+    const axiosPrivate = useAxiosPrivate();
 
     // sets the focus when the component loads, nothing in dependency array, loads once
     // will have to reference the userRef below on that input field
@@ -97,7 +99,7 @@ const RegisterPage = () => {
     }
 
     const backToLogin = () => {
-        navigate('/login')
+        navigate('/login');
     }
 
     const handleSubmit = async (e) => {
@@ -112,7 +114,8 @@ const RegisterPage = () => {
         console.log(user, pwd)
         try {
             const response = await registerAPIFunctions.saveUser({ userName: user, password: pwd })
-            console.log(response.data);
+            
+            console.log(response.json);
             // clear input fields out of registration form - set state back to empty strings
             setUser('');
             setPwd('');
@@ -125,7 +128,7 @@ const RegisterPage = () => {
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response')
-            } else if (err.response?.status === 409) {
+            } else if (err.response?.status === 400) {
                 setErrMsg('Username Taken')
             } else {
                 setErrMsg('Registration Failed')
