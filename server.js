@@ -37,7 +37,8 @@ app.get('/hello/:name', (req, res) => res.send(`Hello ${req.params.name}`));
 
 var port = process.env.PORT || 8000;
 
-mongoose.connect('mongodb://localhost:27017/google-books-search', {
+// updating for heroku process.env.MONGODB_URI ||
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/google-books-search', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
