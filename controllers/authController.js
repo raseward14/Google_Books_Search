@@ -26,12 +26,12 @@ module.exports = {
 
                         const accessToken = jwt.sign(
                             { "userName": foundUser.userName },
-                            process.env.ACCESS_TOKEN_SECRET,
+                            process.env.REACT_APP_ACCESS_TOKEN_SECRET,
                             { expiresIn: '2h' }
                         );
                         const refreshToken = jwt.sign(
                             { "userName": foundUser.userName },
-                            process.env.REFRESH_TOKEN_SECRET,
+                            process.env.REACT_APP_REFRESH_TOKEN_SECRET,
                             { expiresIn: '1d' }
                         );
 
