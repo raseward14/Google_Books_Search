@@ -9,7 +9,7 @@ const verifyJWT = (req, res, next) => {
     console.log(token);
     jwt.verify(
         token, 
-        process.env.ACCESS_TOKEN_SECRET,
+        process.env.REACT_APP_ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if(err) {
                 console.log(err)
