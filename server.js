@@ -1,5 +1,4 @@
 const express = require('express');
-// require('dotenv').config();
 const app = express();
 // mongoose schema model
 const mongoose = require('mongoose');
