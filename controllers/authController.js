@@ -21,6 +21,7 @@ module.exports = {
                     if (match) {
                         console.log('match!', foundUser.userName)
                         console.log('found user:', foundUser._id)
+                        console.log('the big secret:', process.env.ACCESS_TOKEN_SECRET)
                         const userID = foundUser._id
 
                         const accessToken = jwt.sign(
@@ -37,14 +38,14 @@ module.exports = {
                         // add the current user & their refresh token to the db
                         const myQuery = { userName: foundUser.userName }
                         const updatedValues = { $set: { refreshToken: refreshToken } };
-                        console.log(refreshToken)
+                        console.log('refresh token: ', refreshToken)
 
                         db.User.updateOne(myQuery, updatedValues, (err, res) => {
                             if (err) throw err;
                             console.log('1 document updated');
                         })
 
-                        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+                        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: 'None' });
                         // sameSite: 'None', -> removed this
                         // store in memory - not secure in localStorage - 30s lifespan
                         res.json({ accessToken, userID });
