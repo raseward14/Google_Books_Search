@@ -1,5 +1,5 @@
 const allowedOrigins = [
-    'https://www.productionDomain.com',
+    'https://blurb-books.herokuapp.com/',
     'http://localhost:3000',
     'http://127.0.0.1:5500'
 ];
