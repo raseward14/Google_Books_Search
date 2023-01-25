@@ -41,7 +41,7 @@ module.exports = {
                         const updatedValues = { $set: { refreshToken: refreshToken } };
                         console.log('refresh token: ', refreshToken)
 
-                        await db.User.updateOne(myQuery, updatedValues, (err, res) => {
+                        db.User.updateOne(myQuery, updatedValues, (err, res) => {
                             if (err) throw err;
                             console.log('1 document updated');
                         })
