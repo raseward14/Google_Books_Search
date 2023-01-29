@@ -23,7 +23,7 @@ app.use(cookieParser());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
-    console.log('production environment variable for HOST .env file: ', process.env.HOST)
+    console.log('production env port: ', process.env.PORT)
   }
 
 // all of our routes will be prefixed with /api
@@ -44,7 +44,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/google-bo
     useUnifiedTopology: true,
 });
 
-app.listen(port, () => console.log('Listening on port 8000!'));
+app.listen(port, () => console.log(`Listening on port ${port}!`));
 
 // google books api documentation
 // https://developers.google.com/books/docs/v1/getting_started?csw=1
