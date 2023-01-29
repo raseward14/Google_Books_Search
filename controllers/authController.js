@@ -6,7 +6,6 @@ require('dotenv').config();
 module.exports = {
     handleLogin: async (req, res) => {
         // POST a User to (http://localhost:8000/api/auth)
-        console.log('entire request header: ', req.header(HOST));
         const { userName, password } = req.body;
         if (!userName || !password) return res.sendStatus(400).json({ 'message': 'Username and password are required.' })
         try {
