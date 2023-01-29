@@ -41,7 +41,7 @@ const LoginPage = () => {
         // implement axios, and global state for auth - store authentication
         try {
 
-            let response = await authAPIFunctions.postLogin({
+            const response = await authAPIFunctions.postLogin({
                 userName: user,
                 password: pwd
             })
