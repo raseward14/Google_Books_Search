@@ -23,6 +23,7 @@ app.use(cookieParser());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
+    console.log('production environment variable for HOST: ', process.env.production.HOST)
   }
 
 // all of our routes will be prefixed with /api
