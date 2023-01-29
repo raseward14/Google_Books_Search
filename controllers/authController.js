@@ -12,7 +12,7 @@ module.exports = {
             // check to see if the user exists
             db.User.find(async (err, users) => {
                 if (err) {
-                    res.send(err);
+                    res.send({'message': 'db.user.find isnt working'}, err);
                 } else {
                     console.log('users', users)
                     const foundUser = users.find(person => person.userName === userName)
