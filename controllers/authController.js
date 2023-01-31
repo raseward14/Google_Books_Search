@@ -7,6 +7,7 @@ module.exports = {
     handleLogin: async (req, res) => {
         // POST a User to (http://localhost:8000/api/auth)
         const { userName, password } = req.body;
+        console.log(req)
         if (!userName || !password) return res.sendStatus(400).json({ 'message': 'Username and password are required.' })
         try {
             // check to see if the user exists
