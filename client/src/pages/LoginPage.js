@@ -50,11 +50,9 @@ const LoginPage = () => {
             const userName = response?.data?.foundUser?.userName;
             let match = response?.data?.match
             if(match) {
-                match = 'true'
-                setErrMsg(userName, match)
+                setErrMsg(`${userName} true`)
             } else {
-                match = 'false'
-                setErrMsg(userName, match)
+                setErrMsg(`${userName} false`)
             }
             
 
