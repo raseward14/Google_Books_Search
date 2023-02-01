@@ -15,7 +15,6 @@ module.exports = {
                 if (err) {
                     res.send({'message': 'db.user.find isnt working'}, err);
                 } else {
-                    console.log('users', users)
                     const foundUser = users.find(person => person.userName === userName)
                     if (!foundUser) return res.status(401).send({ 'message': 'Unauthorized' }) // Unauthorized - if we dont find the user
                     const match = await bcrypt.compare(password, foundUser.password)

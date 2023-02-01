@@ -6,13 +6,16 @@ require('dotenv').config();
 module.exports = {
     handleLogin: async(req, res) => {
         const { userName, password } = req.body
+        if (!userName || !password) return res.sendStatus(400).json({ 'message': 'Username and password are required.'})
         try {
             db.User.find(async (err, users) => {
                 if(err) { 
                     res.send({ 'message': 'db.user.find isnt working'}, err);
                 } else {
-                    const foundUser = users.find(person => person.userName === userName)
-                    res.json({ foundUser })
+                    const foundUser = users.find(person => person.userName === userName);
+                    if (!foundUser) return res.status(400).send({ 'message': 'Unauthorized' }) // Unauthorized if we dont find the user
+                    const match = await bcrypt.compare(password, foundUser.password)
+                    res.json({ foundUser, match })
                 }
             })
         } catch(err) {
