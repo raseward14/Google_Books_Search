@@ -46,22 +46,30 @@ const LoginPage = () => {
                 password: pwd
             })
 
-            console.log('entire rsesponse', response);
-            console.log('response data: ', JSON.stringify(response?.data));
-            console.log('received from API, session storage, userID: ', response?.data?.userID);
-            console.log('received from API, session storage, access token: ', response?.data?.accessToken)
-            const userID = response?.data?.userID
-            const accessToken = response?.data?.accessToken;
-            sessionStorage.setItem('accessToken', accessToken);
-            sessionStorage.setItem('userID', userID)
+            console.log(response)
+            setErrMsg(response?.data?.foundUser?.userName)
+
+            // BRING BACK
+            // console.log('entire rsesponse', response);
+            // console.log('response data: ', JSON.stringify(response?.data));
+            // console.log('received from API, session storage, userID: ', response?.data?.userID);
+            // console.log('received from API, session storage, access token: ', response?.data?.accessToken)
+
+            // BRING BACK
+            // const userID = response?.data?.userID
+            // const accessToken = response?.data?.accessToken;
+            // sessionStorage.setItem('accessToken', accessToken);
+            // sessionStorage.setItem('userID', userID)
 
             // const roles = response?.data?.roles;
             // we would add roles to this if we had them
-            setAuth({ user, pwd, accessToken });
-            setUser('');
-            setPwd('');
+
+            // BRING BACK
+            // setAuth({ user, pwd, accessToken });
+            // setUser('');
+            // setPwd('');
             // form is filled out, we want to navigate away - replaces the success page
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
