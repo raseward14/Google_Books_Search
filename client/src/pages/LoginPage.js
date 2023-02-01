@@ -48,8 +48,15 @@ const LoginPage = () => {
 
             console.log(response)
             const userName = response?.data?.foundUser?.userName;
-            const match = response?.data?.match
-            setErrMsg(userName, match)
+            let match = response?.data?.match
+            if(match) {
+                match = 'true'
+                setErrMsg(userName, match)
+            } else {
+                match = 'false'
+                setErrMsg(userName, match)
+            }
+            
 
             // BRING BACK
             // console.log('entire rsesponse', response);
