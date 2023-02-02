@@ -13,11 +13,7 @@ const postLogin = (userInfo) => {
                 }
               };
 
-        //BRING BACK
         return axios.post('/api/auth', userInfo, axiosConfig);
-
-        // return axios.post('/api/auth', userInfo);        
-
 };
     
 export { postLogin };

@@ -44,34 +44,18 @@ const LoginPage = () => {
             const response = await authAPIFunctions.postLogin({
                 userName: user,
                 password: pwd
-            })
+            })  
 
-            // console.log(response)
-            // const userName = response?.data?.foundUser?.userName;
-            // let match = response?.data?.match
-            // if(match) {
-            //     setErrMsg(`${userName} true`)
-            // } else {
-            //     setErrMsg(`${userName} false`)
-            // }
-            
-
-            // BRING BACK
             console.log('entire rsesponse', response);
             console.log('response data: ', JSON.stringify(response?.data));
             console.log('received from API, session storage, userID: ', response?.data?.userID);
             console.log('received from API, session storage, access token: ', response?.data?.accessToken)
 
-            // BRING BACK
             const userID = response?.data?.userID
             const accessToken = response?.data?.accessToken;
             sessionStorage.setItem('accessToken', accessToken);
             sessionStorage.setItem('userID', userID)
 
-            // const roles = response?.data?.roles;
-            // we would add roles to this if we had them
-
-            // BRING BACK
             setAuth({ user, pwd, accessToken });
             setUser('');
             setPwd('');
