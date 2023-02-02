@@ -13,7 +13,7 @@ module.exports = {
             // check to see if the user exists
             db.User.find(async (err, users) => {
                 if (err) {
-                    res.send({'message': 'db.user.find isnt working'}, err);
+                    res.send({'message': 'db.User.find isnt working'}, err);
                 } else {
                     const foundUser = users.find(person => person.userName === userName)
                     if (!foundUser) return res.status(401).send({ 'message': 'Unauthorized' }) // Unauthorized - if we dont find the user
@@ -29,13 +29,11 @@ module.exports = {
                             { "userName": foundUser.userName },
                             process.env.REACT_APP_ACCESS_TOKEN_SECRET,
                             { expiresIn: '2h' },
-                            console.log('access token signed')
                         );
                         const refreshToken = jwt.sign(
                             { "userName": foundUser.userName },
                             process.env.REACT_APP_REFRESH_TOKEN_SECRET,
                             { expiresIn: '1d' },
-                            console.log('refresh token signed')
                         );
 
                         // add the current user & their refresh token to the db

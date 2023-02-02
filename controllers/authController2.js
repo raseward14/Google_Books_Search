@@ -10,7 +10,7 @@ module.exports = {
         try {
             db.User.find(async (err, users) => {
                 if(err) { 
-                    res.send({ 'message': 'db.user.find isnt working'}, err);
+                    res.send({ 'message': 'db.User.find isnt working'}, err);
                 } else {
                     const foundUser = users.find(person => person.userName === userName);
                     if (!foundUser) return res.status(400).send({ 'message': 'Unauthorized' }) // Unauthorized if we dont find the user
