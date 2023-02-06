@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.css';
 import useAuth from '../../hooks/useAuth';
 import * as registerAPIFunctions from '../../utils/RegisterAPI';
-import Footer from '../Footer/footer';
+
 
 const NavBar = () => {
     const { auth } = useAuth();

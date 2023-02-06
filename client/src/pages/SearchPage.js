@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 // import BooksList from '../components/BooksList';
-import * as favoritesAPIFunctions from '../utils/FavoriteAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
@@ -9,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from 'react-router-dom';
+import listCount from '../components/ListCount';
 
 const SearchPage = () => {
     const [search, setSearch] = useState('');
@@ -264,12 +264,17 @@ const SearchPage = () => {
                 const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
                 const APIRead = read.data;
                 checkIfRead(searchedBooks, APIRead);
+                console.log('searched books: ' ,searchedBooks)
                 console.log('read books: ', APIRead)
+                console.log('read books array: ', APIRead.length)
+                listCount(APIRead.length)
                 
                 const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
                 const APIWant = want.data;
                 checkIfWant(searchedBooks, APIWant);
                 console.log('want to read books: ', APIWant)
+                console.log('want to read books array: ', APIWant.length)
+
 
                 setBooks(searchedBooks)
             } else {
@@ -286,6 +291,11 @@ const SearchPage = () => {
     //     let isbn13 = isbn13Array[0].identifier
     //     console.log(isbn13)
     // }
+
+    // useEffect to load book count on page load, and any time want, read, or fav changes
+    useEffect(() => {
+
+    }, [])
 
     useEffect(() => {
         if (search !== '') {
@@ -332,14 +342,14 @@ const SearchPage = () => {
             {books.length > 0 && (
                 <div>
                     {books.map((book, index) => (
-                        <div key={book._id} className='single-book'>
+                        <div key={index} className='single-book'>
                             <div className='heading-container'>
                                 <div>
                                     <p>{book.volumeInfo?.title}</p>
                                     <p>{book.volumeInfo?.authors}</p>
                                     <a href={book.volumeInfo?.infoLink} className='book-link'>Buy me!</a>
                                 </div>
-                                <div className='button-container'>
+                                <div key={index} className='button-container'>
                                     {/* <button onClick={() => clickedFavorite(book)}>FAVORITE</button> */}
                                     {book.read === true ?
                                         <button
