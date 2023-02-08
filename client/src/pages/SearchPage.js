@@ -8,14 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from 'react-router-dom';
-import listCount from '../components/ListCount';
 
-const SearchPage = () => {
+const SearchPage = ({ appReadCount, appWantCount }) => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
     const [pinned, setPinned] = useState(false);
     const [submit, setSubmit] = useState(false);
+
+    const [readCount, setReadCount] = useState(0);
+    const [wantCount, setWantCount] = useState(0);
+
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
     const axiosPrivate = useAxiosPrivate();
@@ -53,10 +56,12 @@ const SearchPage = () => {
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
         let favoriteResultData = favoriteResult.data;
         favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
+        let rCount = await readCount - 1;
+        setReadCount(rCount);
     };
 
     // POST read
-    function addToRead(book) {
+    async function addToRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
 
@@ -69,6 +74,8 @@ const SearchPage = () => {
             isbn13: thisIsbn13,
             user_id: userID
         }, accessToken);
+        let rCount = await readCount + 1;
+        setReadCount(rCount);
         console.log("added to books you've read!");
     };
 
@@ -97,6 +104,8 @@ const SearchPage = () => {
         let wantResult = result.data;
         console.log(result.data)
         wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
+        let wCount = await wantCount - 1;
+        setWantCount(wCount)
     };
 
     // POST want
@@ -114,6 +123,8 @@ const SearchPage = () => {
             isbn13: thisIsbn13,
             user_id: userID
         }, accessToken)
+        let wCount = await wantCount + 1;
+        setWantCount(wCount);
         console.log('added to want list')
     };
 
@@ -264,17 +275,16 @@ const SearchPage = () => {
                 const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
                 const APIRead = read.data;
                 checkIfRead(searchedBooks, APIRead);
-                console.log('searched books: ' ,searchedBooks)
-                console.log('read books: ', APIRead)
                 console.log('read books array: ', APIRead.length)
-                listCount(APIRead.length)
+                let rCount =  await APIRead.length
+                setReadCount(rCount);
                 
                 const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
                 const APIWant = want.data;
                 checkIfWant(searchedBooks, APIWant);
-                console.log('want to read books: ', APIWant)
                 console.log('want to read books array: ', APIWant.length)
-
+                let wCount = await APIWant.length
+                setWantCount(wCount);
 
                 setBooks(searchedBooks)
             } else {
@@ -294,8 +304,12 @@ const SearchPage = () => {
 
     // useEffect to load book count on page load, and any time want, read, or fav changes
     useEffect(() => {
-
-    }, [])
+        appReadCount(readCount)
+    }, [readCount])
+    
+    useEffect(() => {
+        appWantCount(wantCount)
+    }, [wantCount])
 
     useEffect(() => {
         if (search !== '') {

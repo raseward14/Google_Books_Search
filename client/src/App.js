@@ -13,7 +13,29 @@ import {
   Route
 } from 'react-router-dom'
 
+import React, { useEffect, useState } from 'react';
+
 function App() {
+  const [appReadCount, setAppReadCount] = useState(0);
+  const [appWantCount, setAppWantCount] = useState(0);
+  const [appFavCount, setAppFavCount] = useState(0);
+
+  const callRead = (value) => {
+    setAppReadCount(value)
+  };
+
+  const callWant = (value) => {
+    setAppWantCount(value)
+  };
+
+  useEffect(() => {
+    console.log('app read count from useEffect', appReadCount)
+  }, [appReadCount])
+
+  useEffect(() => {
+    console.log('app want count from useEffect', appWantCount)
+
+  }, [appWantCount])
 
   return (
     <Routes>
@@ -24,7 +46,9 @@ function App() {
 
         {/* we want to protect these routes */}
         <Route element={<RequireAuth />}>
-          <Route path='search' element={<SearchPage />} />
+          <Route path='search' element={<SearchPage
+            appReadCount={callRead}
+            appWantCount={callWant} />} />
           <Route path='read' element={<WantToReadPage />} />
           <Route path='library' element={<LibraryPage />} />
           <Route path='favorites' element={<FavoritesPage />} />

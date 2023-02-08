@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // the Header, Nav, and Footer will all be constant within app
 import NavBar from '../Navbar/nav';
 import Header from '../header';
@@ -6,7 +6,8 @@ import Footer from '../Footer/footer';
 import { Outlet } from 'react-router-dom';
 import './style.css'
 
-const Layout = ({ search, setSearch }) => {
+const Layout = () => {
+    
     return (
         <div>
             <div className='sidebar'>
