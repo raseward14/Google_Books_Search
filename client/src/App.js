@@ -28,14 +28,21 @@ function App() {
     setAppWantCount(value)
   };
 
+  const callFav = (value) => {
+    setAppFavCount(value)
+  };
+
   useEffect(() => {
     console.log('app read count from useEffect', appReadCount)
-  }, [appReadCount])
+  }, [appReadCount]);
 
   useEffect(() => {
     console.log('app want count from useEffect', appWantCount)
+  }, [appWantCount]);
 
-  }, [appWantCount])
+  useEffect(() => {
+    console.log('app fav count from useEffect: ', appFavCount)
+  }, [appFavCount]);
 
   return (
     <Routes>
@@ -48,7 +55,8 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path='search' element={<SearchPage
             appReadCount={callRead}
-            appWantCount={callWant} />} />
+            appWantCount={callWant}
+            appFavCount={callFav} />} />
           <Route path='read' element={<WantToReadPage />} />
           <Route path='library' element={<LibraryPage />} />
           <Route path='favorites' element={<FavoritesPage />} />

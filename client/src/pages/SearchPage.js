@@ -9,7 +9,7 @@ import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const SearchPage = ({ appReadCount, appWantCount }) => {
+const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
@@ -18,6 +18,7 @@ const SearchPage = ({ appReadCount, appWantCount }) => {
 
     const [readCount, setReadCount] = useState(0);
     const [wantCount, setWantCount] = useState(0);
+    const [favCount, setFavCount] = useState(0);
 
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
@@ -286,6 +287,11 @@ const SearchPage = ({ appReadCount, appWantCount }) => {
                 let wCount = await APIWant.length
                 setWantCount(wCount);
 
+                const fav = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID)
+                let fCount = await fav.data.length
+                setFavCount(fCount);
+
+
                 setBooks(searchedBooks)
             } else {
                 setBooks([])
@@ -310,6 +316,10 @@ const SearchPage = ({ appReadCount, appWantCount }) => {
     useEffect(() => {
         appWantCount(wantCount)
     }, [wantCount])
+
+    useEffect(() => {
+        appFavCount(favCount)
+    }, [favCount])
 
     useEffect(() => {
         if (search !== '') {
