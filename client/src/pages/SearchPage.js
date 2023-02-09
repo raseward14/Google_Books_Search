@@ -55,9 +55,11 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let readResult = result.data;
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
-        let favoriteResultData = favoriteResult.data;
-        favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
-        let rCount = await readCount - 1;
+        if(favoriteResult.length) {
+            let favoriteResultData = favoriteResult.data;
+            favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
+        }
+        let rCount = await (readCount - 1);
         setReadCount(rCount);
     };
 
@@ -290,7 +292,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 const fav = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID)
                 let fCount = await fav.data.length
                 setFavCount(fCount);
-
 
                 setBooks(searchedBooks)
             } else {

@@ -6,12 +6,26 @@ import Footer from '../Footer/footer';
 import { Outlet } from 'react-router-dom';
 import './style.css'
 
-const Layout = () => {
+const Layout = ({ fCount, rCount, wCount }) => {
+    useEffect(() => {
+        console.log('navBar want count: ', wCount)
+    }, [wCount])
+
+    useEffect(() => {
+        console.log('navBar rCount ', rCount)
+    }, [rCount])
     
+    useEffect(() => {
+        console.log('navBar fav count ', fCount)
+    }, [fCount])
+
     return (
         <div>
             <div className='sidebar'>
-                <NavBar />
+                <NavBar
+                fCount={fCount}
+                rCount={rCount}
+                wCount={wCount} />
             </div>
             <div className='App'>
                 <Header title='Blurb Books' />
