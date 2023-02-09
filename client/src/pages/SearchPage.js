@@ -77,7 +77,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             isbn13: thisIsbn13,
             user_id: userID
         }, accessToken);
-        let rCount = await readCount + 1;
+        let rCount = await (readCount + 1);
         setReadCount(rCount);
         console.log("added to books you've read!");
     };
@@ -107,7 +107,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let wantResult = result.data;
         console.log(result.data)
         wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
-        let wCount = await wantCount - 1;
+        let wCount = await (wantCount - 1);
         setWantCount(wCount)
     };
 
@@ -126,7 +126,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             isbn13: thisIsbn13,
             user_id: userID
         }, accessToken)
-        let wCount = await wantCount + 1;
+        let wCount = await (wantCount + 1);
         setWantCount(wCount);
         console.log('added to want list')
     };
