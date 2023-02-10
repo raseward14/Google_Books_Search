@@ -2,7 +2,7 @@
   /* position: relative; */
   min-height: 100vh;
   text-align: center;
-  width: 80%;
+  width: 78%;
   margin: auto;
   margin-left: 20%;
   margin-top: -100vh;
@@ -107,7 +107,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 22%;
   height: 100vh;
   background-color: black;
   position: sticky;

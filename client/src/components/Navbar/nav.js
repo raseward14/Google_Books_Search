@@ -32,19 +32,19 @@ const NavBar = ({ fCount, rCount, wCount }) => {
         auth?.user
             ? (
                 <ul className='navlinks'>
-                    <Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link><br />
-                    <Link to='search' className='navlink' style={{ color: '#2DF4FB' }}>Browse</Link><br />
-                    <Link to='read' className='navlink' style={{ color: '#63F82C' }}>Want to Read {wCount}</Link><br />
-                    <Link to='library' className='navlink' style={{ color: '#63F82C' }}>Read {rCount}</Link><br />
-                    <Link to='favorites' className='navlink' style={{ color: '#63F82C' }}>Favorites {fCount}</Link><br />
+                    <Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link><br /><br />
+                    <Link to='search' className='navlink' style={{ color: '#2DF4FB' }}>Browse</Link><br /><br />
+                    <Link to='read' className='navlink' style={{ color: '#63F82C' }}>Want to Read</Link><span className='count'>{wCount}</span><br /><br />
+                    <Link to='library' className='navlink' style={{ color: '#63F82C' }}>Read</Link><span className='count'>{rCount}</span><br /><br />
+                    <Link to='favorites' className='navlink' style={{ color: '#63F82C' }}>Favorites</Link><span className='count'>{fCount}</span><br /><br />
                     <Link to='/' onClick={logout} className='navlink' style={{ color: '#E61AF9' }}>Logout</Link><br />
                 </ul>
             ) : (
                 <ul className='navlinks'>
-                    <Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link><br />
-                    <Link to='search' className='navlink' style={{ color: '#2DF4FB' }}>Browse</Link><br />
-                    <Link to='read' className='navlink' style={{ color: '#63F82C' }}>Want to Read</Link><br />
-                    <Link to='library' className='navlink' style={{ color: '#63F82C' }}>Read</Link><br />
+                    <Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link><br /><br />
+                    <Link to='search' className='navlink' style={{ color: '#2DF4FB' }}>Browse</Link><br /><br />
+                    <Link to='read' className='navlink' style={{ color: '#63F82C' }}>Want to Read</Link><br /><br />
+                    <Link to='library' className='navlink' style={{ color: '#63F82C' }}>Read</Link><br /><br />
                     <Link to='favorites' className='navlink' style={{ color: '#63F82C' }}>Favorites</Link><br />
                 </ul>
             )
