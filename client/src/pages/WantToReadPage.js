@@ -29,6 +29,9 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
         let readBook = await readAPIFunctions.getReadByIsbn13(axiosPrivate, book.isbn13, accessToken);
         const readBookID = readBook.data[0]._id;
         readAPIFunctions.deleteRead(axiosPrivate, readBookID, accessToken);
+        let rCount = await (readCount - 1)
+        setReadCount(rCount)
+
     };
 
     async function setInProgressToTrue(book) {
@@ -95,6 +98,8 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
     async function removeFromWantToRead(book) {
         await wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, book._id, accessToken);
         setWant(want.filter(item => item._id !== book._id));
+        let wCount = await (wantCount - 1)
+        setWantCount(wCount)
     };
 
     async function loadRead() {
