@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
+import * as readAPIFunctions from '../utils/ReadAPI';
+import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
 
 
-const FavoritesPage = () => {
+const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
+
+    const [readCount, setReadCount] = useState(0);
+    const [wantCount, setWantCount] = useState(0);
+    const [favCount, setFavCount] = useState(0);
 
     const [favorites, setFavorites] = useState([]);
     let accessToken = sessionStorage.getItem('accessToken');
@@ -14,11 +20,25 @@ const FavoritesPage = () => {
     const location = useLocation();
     const userID = sessionStorage.getItem('userID');
 
+    async function loadRead() {
+        let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
+        let rCount = result.data.length;
+        setReadCount(rCount)
+        
+    }
+
+    async function loadWant() {
+        let result = await wantAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
+        let wCount = result.data.length;
+        setWantCount(wCount);
+    }
+
     async function loadFavorites() {
         try {
             let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
             APIFavorites = result.data;
-            console.log(APIFavorites)
+            let fCount = result.data.length;
+            setFavCount(fCount);
             setFavorites(APIFavorites);
         } catch(err) {
             console.error(err);
@@ -27,7 +47,21 @@ const FavoritesPage = () => {
     };
 
     useEffect(() => {
-        loadFavorites()
+        appReadCount(readCount)
+    }, [readCount]);
+
+    useEffect(() => {
+        appWantCount(wantCount)
+    }, [wantCount]);
+
+    useEffect(() => {
+        appFavCount(favCount)
+    }, [favCount]);
+
+    useEffect(() => {
+        loadWant();
+        loadRead();
+        loadFavorites();
     }, [])
 
     return (

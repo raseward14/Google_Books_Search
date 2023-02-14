@@ -55,6 +55,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let readResult = result.data;
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
+        console.log('FAVORITE? ', favoriteResult)
         if(favoriteResult.length) {
             let favoriteResultData = favoriteResult.data;
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
@@ -105,10 +106,12 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let thisIsbn13 = isbn13Array[0].identifier;
         let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID)
         let wantResult = result.data;
-        console.log(result.data)
-        wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
-        let wCount = await (wantCount - 1);
-        setWantCount(wCount)
+        console.log('want result:', wantResult.length)
+        if(wantResult.length > 0) {
+            wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
+            let wCount = await (wantCount - 1);
+            setWantCount(wCount)
+        }
     };
 
     // POST want
@@ -278,6 +281,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
                 const APIRead = read.data;
                 checkIfRead(searchedBooks, APIRead);
+                console.log('read books: ', APIRead)
                 console.log('read books array: ', APIRead.length)
                 let rCount =  await APIRead.length
                 setReadCount(rCount);

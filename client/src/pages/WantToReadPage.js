@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
+import * as favAPIFunctions from '../utils/FavoriteAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faBook, faCheck, faBookOpen, faThumbtack } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +9,11 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
 
 
-const WantToReadPage = () => {
+const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
+
+    const [favCount, setFavCount] = useState(0);
+    const [wantCount, setWantCount] = useState(0);
+    const [readCount, setReadCount] = useState(0);
 
     const [want, setWant] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -92,11 +97,26 @@ const WantToReadPage = () => {
         setWant(want.filter(item => item._id !== book._id));
     };
 
+    async function loadRead() {
+        let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
+        let APIRead = result.data;
+        let rCount = APIRead.length;
+        setReadCount(rCount); 
+    }
+
+    async function loadFav() {
+        let result = await favAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
+        let APIFav = result.data;
+        let fCount = APIFav.length;
+        setFavCount(fCount);
+    }
+
     async function loadWant() {
         try {
             let result = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             APIWant = result.data;
-            console.log(APIWant)
+            let wCount = await APIWant.length
+            setWantCount(wCount)
             setWant(APIWant);
         } catch (err) {
             console.error(err);
@@ -105,6 +125,20 @@ const WantToReadPage = () => {
     };
 
     useEffect(() => {
+        appReadCount(readCount)
+    }, [readCount]);
+
+    useEffect(() => {
+        appFavCount(favCount)
+    }, [favCount]);
+
+    useEffect(() => {
+        appWantCount(wantCount)
+    }, [wantCount]);
+
+    useEffect(() => {
+            loadRead();
+            loadFav();
             loadWant();
     }, []);
 

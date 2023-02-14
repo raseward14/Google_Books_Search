@@ -60,9 +60,18 @@ function App() {
             appReadCount={callRead}
             appWantCount={callWant}
             appFavCount={callFav} />} />
-          <Route path='read' element={<WantToReadPage />} />
-          <Route path='library' element={<LibraryPage />} />
-          <Route path='favorites' element={<FavoritesPage />} />
+          <Route path='read' element={<WantToReadPage
+            appReadCount={callRead}
+            appFavCount={callFav}
+            appWantCount={callWant} />} />
+          <Route path='library' element={<LibraryPage
+            appReadCount={callRead}
+            appWantCount={callWant}
+            appFavCount={callFav} />} />
+          <Route path='favorites' element={<FavoritesPage
+            appReadCount={callRead}
+            appWantCount={callWant}
+            appFavCount={callFav} />} />
         </Route>
 
         {/* catch all */}
