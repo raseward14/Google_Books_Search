@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
+import * as wantAPIFunctions from '../utils/WantToReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation} from "react-router-dom"
 
-const LibraryPage = () => {
+const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -19,6 +20,11 @@ const LibraryPage = () => {
     const location = useLocation();
     const userID = sessionStorage.getItem('userID');
 
+    // sidebar state variables
+    const [readCount, setReadCount] = useState();
+    const [wantCount, setWantCount] = useState();
+    const [favCount, setFavCount] = useState();
+
     async function deleteFromFavorites(book) {
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
         let APIFavorites = result.data
@@ -26,6 +32,8 @@ const LibraryPage = () => {
         suspects.map(suspect => {
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, suspect._id, accessToken);
         });
+        let fCount = await (favCount - 1);
+        setFavCount(fCount);
     };
 
     async function unFavoriteBook(book, index) {
@@ -40,6 +48,8 @@ const LibraryPage = () => {
     async function removeFromRead(book) {
         await readAPIFunctions.deleteRead(axiosPrivate, book._id, accessToken);
         setRead(read.filter(read => read._id !== book._id))
+        let rCount = await (readCount - 1);
+        setReadCount(rCount)
         deleteFromFavorites(book);
     };
 
@@ -58,6 +68,8 @@ const LibraryPage = () => {
         // 'oops! looks like a book with this title has already been favorited!'
         // click here to keep both
         // click here to replace that book with this one
+        let fCount = await (favCount + 1);
+        setFavCount(fCount)
     };
 
 
@@ -70,17 +82,47 @@ const LibraryPage = () => {
         postFavorite(book);
     };
 
+    async function loadFav() {
+        // on page load, set fav count
+        let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
+        let fCount = result.data.length;
+        setFavCount(fCount);
+    }
+
+    async function loadWant() {
+        // on page load, set want count
+        let result = await wantAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
+        let wCount = result.data.length;
+        setWantCount(wCount);
+    };
+
     async function loadRead() {
         try {
             let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             APIRead = result.data;
             setRead(APIRead);
+            let rCount = APIRead.length;
+            setReadCount(rCount);
         } catch (err) {
             navigate('/login', { state: { from: location }, replace: true })
         }
     };
 
     useEffect(() => {
+        appFavCount(favCount)
+    }, [favCount]);
+
+    useEffect(() => {
+        appWantCount(wantCount)
+    }, [wantCount]);
+
+    useEffect(() => {
+        appReadCount(readCount)
+    }, [readCount]);
+
+    useEffect(() => {
+        loadFav();
+        loadWant();
         loadRead();
     }, []);
 
