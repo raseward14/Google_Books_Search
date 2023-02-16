@@ -46,11 +46,6 @@ const LoginPage = () => {
                 password: pwd
             })  
 
-            console.log('entire rsesponse', response);
-            console.log('response data: ', JSON.stringify(response?.data));
-            console.log('received from API, session storage, userID: ', response?.data?.userID);
-            console.log('received from API, session storage, access token: ', response?.data?.accessToken)
-
             const userID = response?.data?.userID
             const accessToken = response?.data?.accessToken;
             sessionStorage.setItem('accessToken', accessToken);

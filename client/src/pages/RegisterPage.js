@@ -4,15 +4,18 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import useAuth from '../hooks/useAuth';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import * as registerAPIFunctions from '../utils/RegisterAPI';
+import * as readAPIFunctions from '../utils/ReadAPI';
+import * as favAPIFunctions from '../utils/FavoriteAPI';
+import * as wantAPIFunctions from '../utils/WantToReadAPI';
 
 import { Link, useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
 
 const pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const RegisterPage = () => {
+const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // allows us to set focus on user input when component loads
     const userRef = useRef();
     // if we get an error, put focus on that so it can be announced by a screenreader for accessibility purposes
@@ -41,6 +44,26 @@ const RegisterPage = () => {
     // state for if we successfully submit the registration form or not
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
+
+    // if an auth?.user exists, then set the value of these
+    useEffect(async() => {
+        if(auth?.user) {
+            let accessToken = await sessionStorage.getItem('accessToken');
+            let userID = await sessionStorage.getItem('userID');
+
+            const APIRead = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
+            let rCount = APIRead.data.length
+            appReadCount(rCount)
+
+            const APIWant = await wantAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
+            let wCount = APIWant.data.length
+            appWantCount(wCount)
+
+            const APIFav = await favAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
+            let fCount = APIFav.data.length
+            appFavCount(fCount)
+        }
+    })
 
     // sets the focus when the component loads, nothing in dependency array, loads once
     // will have to reference the userRef below on that input field

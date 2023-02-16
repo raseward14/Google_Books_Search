@@ -55,11 +55,14 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let readResult = result.data;
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
-        if(favoriteResult.length) {
+        if(favoriteResult.data.length) {
             let favoriteResultData = favoriteResult.data;
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
+            let fCount = await (favCount - 1)
+            setFavCount(fCount);
         }
         let rCount = await (readCount - 1);
+        console.log('rcount: ', rCount)
         setReadCount(rCount);
     };
 

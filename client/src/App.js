@@ -51,7 +51,10 @@ function App() {
         rCount={appReadCount}
         wCount={appWantCount} />}>
         {/* public routes */}
-        <Route index element={<RegisterPage />} />
+        <Route index element={<RegisterPage
+          appReadCount={callRead}
+          appFavCount={callFav}
+          appWantCount={callWant} />} />
         <Route path='login' element={<LoginPage />} />
 
         {/* we want to protect these routes */}
