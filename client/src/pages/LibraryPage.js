@@ -32,8 +32,12 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         suspects.map(suspect => {
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, suspect._id, accessToken);
         });
-        let fCount = await (favCount - 1);
-        setFavCount(fCount);
+        if(favCount > 0) {
+            let fCount = await (favCount - 1);
+            setFavCount(fCount);
+        } else {
+            return
+        }
     };
 
     async function unFavoriteBook(book, index) {
