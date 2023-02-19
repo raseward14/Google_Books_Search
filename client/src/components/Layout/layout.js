@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 // the Header, Nav, and Footer will all be constant within app
 import NavBar from '../Navbar/nav';
 import Header from '../header';
@@ -7,6 +7,9 @@ import { Outlet } from 'react-router-dom';
 import './style.css'
 
 const Layout = ({ fCount, rCount, wCount }) => {
+    const CountContext = React.createContext()
+    const value = useContext(CountContext)
+
     useEffect(() => {
         console.log('navBar want count: ', wCount)
     }, [wCount])
@@ -14,7 +17,7 @@ const Layout = ({ fCount, rCount, wCount }) => {
     useEffect(() => {
         console.log('navBar rCount ', rCount)
     }, [rCount])
-    
+
     useEffect(() => {
         console.log('navBar fav count ', fCount)
     }, [fCount])
@@ -23,9 +26,10 @@ const Layout = ({ fCount, rCount, wCount }) => {
         <div>
             <div className='sidebar'>
                 <NavBar
-                fCount={fCount}
-                rCount={rCount}
-                wCount={wCount} />
+                    tCount={value}
+                    fCount={fCount}
+                    rCount={rCount}
+                    wCount={wCount} />
             </div>
             <div className='App'>
                 <Header title='Blurb Books' />

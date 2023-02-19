@@ -4,7 +4,7 @@ import './style.css';
 import useAuth from '../../hooks/useAuth';
 import * as registerAPIFunctions from '../../utils/RegisterAPI';
 
-const NavBar = ({ fCount, rCount, wCount }) => {
+const NavBar = ({ fCount, rCount, wCount, tCount }) => {
     const { auth } = useAuth();
     // state for if an error message exists
     const [errMsg, setErrMsg] = useState('');
@@ -32,7 +32,7 @@ const NavBar = ({ fCount, rCount, wCount }) => {
         auth?.user
             ? (
                 <ul className='navlinks'>
-                    <Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link><br /><br />
+                    <Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link><span className='count'></span><br /><br />
                     <Link to='search' className='navlink' style={{ color: '#2DF4FB' }}>Browse</Link><br /><br />
                     <Link to='read' className='navlink' style={{ color: '#63F82C' }}>Want to Read</Link><span className='count'>{wCount}</span><br /><br />
                     <Link to='library' className='navlink' style={{ color: '#63F82C' }}>Read</Link><span className='count'>{rCount}</span><br /><br />

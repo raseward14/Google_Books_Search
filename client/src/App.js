@@ -20,8 +20,12 @@ function App() {
   const [appWantCount, setAppWantCount] = useState(0);
   const [appFavCount, setAppFavCount] = useState(0);
 
+  const CountContext = React.createContext()
+
   const callRead = (value) => {
-    setAppReadCount(value)
+    // if(value !== appReadCount) {
+      setAppReadCount(value)
+    // }
   };
 
   const callWant = (value) => {
@@ -45,42 +49,45 @@ function App() {
   }, [appFavCount]);
 
   return (
-    <Routes>
-      <Route path='/' element={<Layout
-        fCount={appFavCount}
-        rCount={appReadCount}
-        wCount={appWantCount} />}>
-        {/* public routes */}
-        <Route index element={<RegisterPage
-          appReadCount={callRead}
-          appFavCount={callFav}
-          appWantCount={callWant} />} />
-        <Route path='login' element={<LoginPage />} />
-
-        {/* we want to protect these routes */}
-        <Route element={<RequireAuth />}>
-          <Route path='search' element={<SearchPage
-            appReadCount={callRead}
-            appWantCount={callWant}
-            appFavCount={callFav} />} />
-          <Route path='read' element={<WantToReadPage
+    <CountContext.Provider value={42}>
+      <Routes>
+        <Route path='/' element={<Layout
+          fCount={appFavCount}
+          rCount={appReadCount}
+          wCount={appWantCount} />}>
+          {/* public routes */}
+          <Route index element={<RegisterPage
+            CountContext
             appReadCount={callRead}
             appFavCount={callFav}
             appWantCount={callWant} />} />
-          <Route path='library' element={<LibraryPage
-            appReadCount={callRead}
-            appWantCount={callWant}
-            appFavCount={callFav} />} />
-          <Route path='favorites' element={<FavoritesPage
-            appReadCount={callRead}
-            appWantCount={callWant}
-            appFavCount={callFav} />} />
-        </Route>
+          <Route path='login' element={<LoginPage />} />
 
-        {/* catch all */}
-        <Route path='*' element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+          {/* we want to protect these routes */}
+          <Route element={<RequireAuth />}>
+            <Route path='search' element={<SearchPage
+              appReadCount={callRead}
+              appWantCount={callWant}
+              appFavCount={callFav} />} />
+            <Route path='read' element={<WantToReadPage
+              appReadCount={callRead}
+              appFavCount={callFav}
+              appWantCount={callWant} />} />
+            <Route path='library' element={<LibraryPage
+              appReadCount={callRead}
+              appWantCount={callWant}
+              appFavCount={callFav} />} />
+            <Route path='favorites' element={<FavoritesPage
+              appReadCount={callRead}
+              appWantCount={callWant}
+              appFavCount={callFav} />} />
+          </Route>
+
+          {/* catch all */}
+          <Route path='*' element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </CountContext.Provider>
   );
 }
 

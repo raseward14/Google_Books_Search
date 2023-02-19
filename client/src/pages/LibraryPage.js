@@ -10,20 +10,24 @@ import { useNavigate, useLocation} from "react-router-dom"
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
+    // sidebar state variables
+    const [readCount, setReadCount] = useState(0);
+    const [wantCount, setWantCount] = useState(0);
+    const [favCount, setFavCount] = useState(0);
+
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
-    let accessToken = sessionStorage.getItem('accessToken');
     let APIRead;
+
+    // retrieve userID and accessToken from sessionStorage - retrieve baseURL for private API endpoints
+    let accessToken = sessionStorage.getItem('accessToken');
+    const userID = sessionStorage.getItem('userID');
     const axiosPrivate = useAxiosPrivate();
+
     // navigate to login, and then back to this location
     const navigate = useNavigate();
     const location = useLocation();
-    const userID = sessionStorage.getItem('userID');
 
-    // sidebar state variables
-    const [readCount, setReadCount] = useState();
-    const [wantCount, setWantCount] = useState();
-    const [favCount, setFavCount] = useState();
 
     async function deleteFromFavorites(book) {
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
@@ -86,31 +90,36 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         postFavorite(book);
     };
 
-    async function loadFav() {
-        // on page load, set fav count
-        let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
-        let fCount = result.data.length;
-        setFavCount(fCount);
-    }
-
+    
     async function loadWant() {
         // on page load, set want count
         let result = await wantAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
         let wCount = result.data.length;
         setWantCount(wCount);
     };
+    
+    async function loadFav() {
+        // on page load, set fav count
+        let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
+        let fCount = result.data.length;
+        setFavCount(fCount);
+    };
 
     async function loadRead() {
         try {
             let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             APIRead = result.data;
-            setRead(APIRead);
-            let rCount = APIRead.length;
+            let rCount = await APIRead.length;
             setReadCount(rCount);
+            setRead(APIRead);
         } catch (err) {
-            navigate('/login', { state: { from: location }, replace: true })
-        }
+            navigate('/login', { state: { from: location }, replace: true });
+        };
     };
+
+    useEffect(() => {
+        appReadCount(readCount)
+    }, [readCount]);
 
     useEffect(() => {
         appFavCount(favCount)
@@ -119,10 +128,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     useEffect(() => {
         appWantCount(wantCount)
     }, [wantCount]);
-
-    useEffect(() => {
-        appReadCount(readCount)
-    }, [readCount]);
 
     useEffect(() => {
         loadFav();

@@ -11,19 +11,23 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
-    const [favCount, setFavCount] = useState(0);
+    // sidebar state variables
     const [wantCount, setWantCount] = useState(0);
     const [readCount, setReadCount] = useState(0);
+    const [favCount, setFavCount] = useState(0);
 
     const [want, setWant] = useState([]);
     const [pinned, setPinned] = useState(false);
-    let accessToken = sessionStorage.getItem('accessToken')
     let APIWant;
+
+    // retrieve userID and accessToken from sessionStorage - retrieve private baseURL for private API endpoints
+    let accessToken = sessionStorage.getItem('accessToken');
+    const userID = sessionStorage.getItem('userID');
     const axiosPrivate = useAxiosPrivate();
+
     // navigates to login, and then back to this location
     const navigate = useNavigate();
     const location = useLocation();
-    const userID = sessionStorage.getItem('userID');
 
     const deleteFromRead = async (book) => {
         let readBook = await readAPIFunctions.getReadByIsbn13(axiosPrivate, book.isbn13, accessToken);
@@ -109,26 +113,26 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
         let APIRead = result.data;
         let rCount = APIRead.length;
         setReadCount(rCount); 
-    }
+    };
 
     async function loadFav() {
         let result = await favAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
         let APIFav = result.data;
         let fCount = APIFav.length;
         setFavCount(fCount);
-    }
+    };
 
     async function loadWant() {
         try {
             let result = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             APIWant = result.data;
             let wCount = await APIWant.length
-            setWantCount(wCount)
+            setWantCount(wCount);
             setWant(APIWant);
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location}, replace: true });
-        }
+        };
     };
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import useAuth from '../hooks/useAuth';
@@ -16,6 +16,7 @@ const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
 const pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
+
     // allows us to set focus on user input when component loads
     const userRef = useRef();
     // if we get an error, put focus on that so it can be announced by a screenreader for accessibility purposes
