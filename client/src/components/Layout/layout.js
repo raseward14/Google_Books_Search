@@ -7,26 +7,23 @@ import { Outlet } from 'react-router-dom';
 import './style.css'
 
 const Layout = ({ fCount, rCount, wCount }) => {
-    const CountContext = React.createContext()
-    const value = useContext(CountContext)
 
     useEffect(() => {
-        console.log('navBar want count: ', wCount)
+        console.log('layout.js want: ', wCount)
     }, [wCount])
 
     useEffect(() => {
-        console.log('navBar rCount ', rCount)
+        console.log('layout.js read: ', rCount)
     }, [rCount])
 
     useEffect(() => {
-        console.log('navBar fav count ', fCount)
+        console.log('layout.js fav: ', fCount)
     }, [fCount])
 
     return (
         <div>
             <div className='sidebar'>
                 <NavBar
-                    tCount={value}
                     fCount={fCount}
                     rCount={rCount}
                     wCount={wCount} />

@@ -16,40 +16,41 @@ import {
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [appReadCount, setAppReadCount] = useState(0);
-  const [appWantCount, setAppWantCount] = useState(0);
-  const [appFavCount, setAppFavCount] = useState(0);
-
-  const CountContext = React.createContext()
+  const [appReadCount, setAppReadCount] = useState(null);
+  const [appWantCount, setAppWantCount] = useState(null);
+  const [appFavCount, setAppFavCount] = useState(null);
 
   const callRead = (value) => {
-    // if(value !== appReadCount) {
-      setAppReadCount(value)
-    // }
+    if(value !== null && value !== appReadCount) {
+    setAppReadCount(value)
+    }
   };
 
   const callWant = (value) => {
-    setAppWantCount(value)
+    if(value !== null && value !== appWantCount) {
+      setAppWantCount(value)
+    }
   };
 
   const callFav = (value) => {
-    setAppFavCount(value)
+    if(value !== null && value !== appFavCount) {
+      setAppFavCount(value)
+    }
   };
 
   useEffect(() => {
-    console.log('app read count from useEffect', appReadCount)
+    console.log('app.js read: ', appReadCount)
   }, [appReadCount]);
 
   useEffect(() => {
-    console.log('app want count from useEffect', appWantCount)
+    console.log('app.js want: ', appWantCount)
   }, [appWantCount]);
 
   useEffect(() => {
-    console.log('app fav count from useEffect: ', appFavCount)
+    console.log('app.js fav: ', appFavCount)
   }, [appFavCount]);
 
   return (
-    <CountContext.Provider value={42}>
       <Routes>
         <Route path='/' element={<Layout
           fCount={appFavCount}
@@ -57,7 +58,6 @@ function App() {
           wCount={appWantCount} />}>
           {/* public routes */}
           <Route index element={<RegisterPage
-            CountContext
             appReadCount={callRead}
             appFavCount={callFav}
             appWantCount={callWant} />} />
@@ -87,7 +87,6 @@ function App() {
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </CountContext.Provider>
   );
 }
 

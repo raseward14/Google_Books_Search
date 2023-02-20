@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
@@ -24,7 +24,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
         let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
         let rCount = result.data.length;
         setReadCount(rCount)
-        
+
     }
 
     async function loadWant() {
@@ -40,7 +40,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
             let fCount = result.data.length;
             setFavCount(fCount);
             setFavorites(APIFavorites);
-        } catch(err) {
+        } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true })
         }

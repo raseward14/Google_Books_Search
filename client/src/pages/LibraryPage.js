@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
@@ -6,7 +6,7 @@ import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { useNavigate, useLocation} from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -36,7 +36,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         suspects.map(suspect => {
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, suspect._id, accessToken);
         });
-        if(favCount > 0) {
+        if (favCount > 0) {
             let fCount = await (favCount - 1);
             setFavCount(fCount);
         } else {
@@ -90,14 +90,14 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         postFavorite(book);
     };
 
-    
+
     async function loadWant() {
         // on page load, set want count
         let result = await wantAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
         let wCount = result.data.length;
         setWantCount(wCount);
     };
-    
+
     async function loadFav() {
         // on page load, set fav count
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
@@ -139,12 +139,12 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     return (
         <div>
             <h3>Library of books I've read.</h3>
-            <div className={pinned ? 'single-book-header sticky' : 'single-book-header' }>
-            <FontAwesomeIcon
+            <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
+                <FontAwesomeIcon
                     icon={faThumbtack}
                     className={pinned ? 'pinned' : 'not-pinned'}
                     onClick={() => {
-                        if(pinned === false) {
+                        if (pinned === false) {
                             setPinned(true);
                         } else {
                             setPinned(false)
@@ -170,17 +170,17 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     <button style={{ "backgroundColor": "yellow" }} onClick={() => {
                                         unFavoriteBook(book, index);
                                     }}>
-                                        <FontAwesomeIcon 
-                                        icon={faStar}
-                                        className='fa-2x' />
+                                        <FontAwesomeIcon
+                                            icon={faStar}
+                                            className='fa-2x' />
                                     </button>
-                                    : <button 
-                                    onClick={() => {
-                                        favoriteBook(book, index);
-                                    }}>
-                                        <FontAwesomeIcon 
-                                        icon={faStar}
-                                        className='fa-2x' />
+                                    : <button
+                                        onClick={() => {
+                                            favoriteBook(book, index);
+                                        }}>
+                                        <FontAwesomeIcon
+                                            icon={faStar}
+                                            className='fa-2x' />
                                     </button>
                                 }
                                 <button
@@ -188,9 +188,9 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         removeFromRead(book);
                                     }}
                                 >
-                                    <FontAwesomeIcon 
-                                    icon={faTrashCan}
-                                    className='fa-2x' />
+                                    <FontAwesomeIcon
+                                        icon={faTrashCan}
+                                        className='fa-2x' />
                                 </button>
                             </div>
                         </div>

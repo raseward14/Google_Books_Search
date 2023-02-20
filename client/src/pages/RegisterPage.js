@@ -53,16 +53,16 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let userID = await sessionStorage.getItem('userID');
 
             const APIRead = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
-            let rCount = APIRead.data.length
-            appReadCount(rCount)
+            let rCount = APIRead.data.length;
+            appReadCount(rCount);
 
             const APIWant = await wantAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
-            let wCount = APIWant.data.length
-            appWantCount(wCount)
+            let wCount = APIWant.data.length;
+            appWantCount(wCount);
 
             const APIFav = await favAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
-            let fCount = APIFav.data.length
-            appFavCount(fCount)
+            let fCount = APIFav.data.length;
+            appFavCount(fCount);
         }
     })
 
@@ -75,8 +75,6 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // applied to the userName, where we validate the userName
     useEffect(() => {
         const result = user_regex.test(user)
-        console.log(result);
-        console.log(user);
         setValidName(result);
     }, [user])
 

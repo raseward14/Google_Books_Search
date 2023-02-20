@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import BooksList from '../components/BooksList';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
@@ -10,15 +10,17 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
+
     const [search, setSearch] = useState('');
     const [books, setBooks] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
     const [pinned, setPinned] = useState(false);
-    const [submit, setSubmit] = useState(false);
 
+    // navBar count state variables
     const [readCount, setReadCount] = useState(0);
     const [wantCount, setWantCount] = useState(0);
     const [favCount, setFavCount] = useState(0);
+    const didMount = useRef(false);
 
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
@@ -55,15 +57,16 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let readResult = result.data;
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
-        if(favoriteResult.data.length) {
+        if (favoriteResult.data.length) {
             let favoriteResultData = favoriteResult.data;
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
             let fCount = await (favCount - 1)
             setFavCount(fCount);
+            console.log('deleteFromRead favCount: ', favCount)
         }
         let rCount = await (readCount - 1);
-        console.log('rcount: ', rCount)
         setReadCount(rCount);
+        console.log('deleteFromRead', readCount);
     };
 
     // POST read
@@ -82,7 +85,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         }, accessToken);
         let rCount = await (readCount + 1);
         setReadCount(rCount);
-        console.log("added to books you've read!");
+        console.log('addToRead: ', readCount);
     };
 
     // flip .read, if true post to read, if false, delete all matching titles from read, replace newArray index with new book and setBooks - ternary operator will handle the button change
@@ -109,10 +112,11 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID)
         let wantResult = result.data;
         console.log('want result:', wantResult.length)
-        if(wantResult.length > 0) {
+        if (wantResult.length > 0) {
             wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
             let wCount = await (wantCount - 1);
             setWantCount(wCount)
+            console.log('deleteFromWant: ', wantCount)
         }
     };
 
@@ -133,7 +137,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         }, accessToken)
         let wCount = await (wantCount + 1);
         setWantCount(wCount);
-        console.log('added to want list')
+        console.log('addWantToRead: ', wantCount);
     };
 
     // flip .want, if true post to want, if false, delete all matching titles from want, replace newArray index with new book and setBooks - ternary operator will handle the button change
@@ -243,15 +247,15 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}`)
             const books = await response.json();
             let booksArray = books.items;
-    
+
             const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             const APIRead = read.data;
             checkIfRead(booksArray, APIRead);
-    
+
             const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             const APIWant = want.data;
             checkIfWant(booksArray, APIWant);
-    
+
             setBooks(booksArray);
             // set the last array of results
             localStorage.setItem(`lastBookSearchUserID:${userID}`, JSON.stringify(booksArray));
@@ -259,7 +263,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             localStorage.setItem(`lastSearchTermUserID:${userID}`, JSON.stringify(search));
         } catch (err) {
             console.error(err)
-            navigate('/login', { state: { from: location}, replace: true })
+            navigate('/login', { state: { from: location }, replace: true })
         }
     };
 
@@ -272,32 +276,34 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const loadHistory = async () => {
         try {
             const lastTermSearched = await JSON.parse(localStorage.getItem(`lastSearchTermUserID:${userID}`));
-            if(lastTermSearched) {
+            if (lastTermSearched) {
                 setSearch(lastTermSearched)
             } else {
                 setSearch('')
             }
 
             const searchedBooks = await JSON.parse(localStorage.getItem(`lastBookSearchUserID:${userID}`));
-            if(searchedBooks) {
+            if (searchedBooks) {
                 const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
                 const APIRead = read.data;
                 checkIfRead(searchedBooks, APIRead);
-                console.log('read books: ', APIRead)
                 console.log('read books array: ', APIRead.length)
-                let rCount =  await APIRead.length
+                let rCount = await APIRead.length
                 setReadCount(rCount);
-                
+                console.log('searchPage loadHistory readCount: ', readCount)
+
                 const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
                 const APIWant = want.data;
                 checkIfWant(searchedBooks, APIWant);
                 console.log('want to read books array: ', APIWant.length)
                 let wCount = await APIWant.length
                 setWantCount(wCount);
+                console.log('searchPage loadHistory want count:', wantCount)
 
                 const fav = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID)
                 let fCount = await fav.data.length
                 setFavCount(fCount);
+                console.log('searchPage loadHistory favCount: ', favCount);
 
                 setBooks(searchedBooks)
             } else {
@@ -305,7 +311,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             }
         } catch (err) {
             console.error(err)
-            navigate('/login', { state: { from: location}, replace: true })
+            navigate('/login', { state: { from: location }, replace: true })
         }
     };
 
@@ -318,15 +324,15 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // useEffect to load book count on page load, and any time want, read, or fav changes
     useEffect(() => {
         appReadCount(readCount)
-    }, [readCount])
-    
+    }, [readCount]);
+
     useEffect(() => {
         appWantCount(wantCount)
-    }, [wantCount])
+    }, [wantCount]);
 
     useEffect(() => {
         appFavCount(favCount)
-    }, [favCount])
+    }, [favCount]);
 
     useEffect(() => {
         if (search !== '') {
@@ -334,31 +340,31 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         } else {
             return;
         };
-    }, [startIndex])
+    }, [startIndex]);
 
     // on page load, call loadHistory to load prior search, and add .read, .want properties 
     useEffect(() => {
         loadHistory();
-    }, [])
+    }, []);
 
     return (
         <div>
             <h3>Search</h3>
-            <input 
+            <input
                 className='search'
                 placeholder='Search'
                 onChange={(event) => {
                     setSearch(event.target.value);
                 }} />
-            <button 
-            className='submit'
-            onClick={handleSubmit}>Submit</button>
+            <button
+                className='submit'
+                onClick={handleSubmit}>Submit</button>
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
                     icon={faThumbtack}
                     className={pinned ? 'pinned' : 'not-pinned'}
                     onClick={() => {
-                        if(pinned === false) {
+                        if (pinned === false) {
                             setPinned(true)
                         } else {
                             setPinned(false)

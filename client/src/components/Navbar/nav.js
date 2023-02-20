@@ -4,7 +4,7 @@ import './style.css';
 import useAuth from '../../hooks/useAuth';
 import * as registerAPIFunctions from '../../utils/RegisterAPI';
 
-const NavBar = ({ fCount, rCount, wCount, tCount }) => {
+const NavBar = ({ fCount, rCount, wCount }) => {
     const { auth } = useAuth();
     // state for if an error message exists
     const [errMsg, setErrMsg] = useState('');

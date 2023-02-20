@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as wantToReadAPIFunctions from '../utils/WantToReadAPI';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favAPIFunctions from '../utils/FavoriteAPI';
@@ -136,15 +136,15 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
     };
 
     useEffect(() => {
-        appReadCount(readCount)
+            appReadCount(readCount);
     }, [readCount]);
 
     useEffect(() => {
-        appFavCount(favCount)
+            appFavCount(favCount);
     }, [favCount]);
 
     useEffect(() => {
-        appWantCount(wantCount)
+            appWantCount(wantCount)
     }, [wantCount]);
 
     useEffect(() => {
