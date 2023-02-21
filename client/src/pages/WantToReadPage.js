@@ -12,9 +12,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
     // sidebar state variables
-    const [wantCount, setWantCount] = useState(0);
-    const [readCount, setReadCount] = useState(0);
-    const [favCount, setFavCount] = useState(0);
+    const [wantCount, setWantCount] = useState(null);
+    const [readCount, setReadCount] = useState(null);
+    const [favCount, setFavCount] = useState(null);
 
     const [want, setWant] = useState([]);
     const [pinned, setPinned] = useState(false);

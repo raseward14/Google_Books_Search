@@ -17,9 +17,9 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [pinned, setPinned] = useState(false);
 
     // navBar count state variables
-    const [readCount, setReadCount] = useState(0);
-    const [wantCount, setWantCount] = useState(0);
-    const [favCount, setFavCount] = useState(0);
+    const [readCount, setReadCount] = useState(null);
+    const [wantCount, setWantCount] = useState(null);
+    const [favCount, setFavCount] = useState(null);
     const didMount = useRef(false);
 
     const accessToken = sessionStorage.getItem('accessToken');

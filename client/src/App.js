@@ -21,34 +21,43 @@ function App() {
   const [appFavCount, setAppFavCount] = useState(null);
 
   const callRead = (value) => {
+    
     if(value !== null && value !== appReadCount) {
+      console.log('read value: ', value)
+      console.log('appReadCount: ', appReadCount)
     setAppReadCount(value)
     }
   };
 
   const callWant = (value) => {
+    
     if(value !== null && value !== appWantCount) {
+      console.log('want value: ', value)
+      console.log('appWantCount: ', appWantCount)
       setAppWantCount(value)
     }
   };
 
   const callFav = (value) => {
+    
     if(value !== null && value !== appFavCount) {
+      console.log('fav value: ', value)
+      console.log('appFavCount: ', appFavCount)
       setAppFavCount(value)
     }
   };
 
-  useEffect(() => {
-    console.log('app.js read: ', appReadCount)
-  }, [appReadCount]);
+  // useEffect(() => {
+  //   console.log('app.js read: ', appReadCount)
+  // }, [appReadCount]);
 
-  useEffect(() => {
-    console.log('app.js want: ', appWantCount)
-  }, [appWantCount]);
+  // useEffect(() => {
+  //   console.log('app.js want: ', appWantCount)
+  // }, [appWantCount]);
 
-  useEffect(() => {
-    console.log('app.js fav: ', appFavCount)
-  }, [appFavCount]);
+  // useEffect(() => {
+  //   console.log('app.js fav: ', appFavCount)
+  // }, [appFavCount]);
 
   return (
       <Routes>
