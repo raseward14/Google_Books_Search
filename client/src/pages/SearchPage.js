@@ -62,11 +62,9 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
             let fCount = await (favCount - 1)
             setFavCount(fCount);
-            console.log('deleteFromRead favCount: ', favCount)
         }
         let rCount = await (readCount - 1);
         setReadCount(rCount);
-        console.log('deleteFromRead', readCount);
     };
 
     // POST read
@@ -85,7 +83,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         }, accessToken);
         let rCount = await (readCount + 1);
         setReadCount(rCount);
-        console.log('addToRead: ', readCount);
     };
 
     // flip .read, if true post to read, if false, delete all matching titles from read, replace newArray index with new book and setBooks - ternary operator will handle the button change
@@ -116,7 +113,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
             let wCount = await (wantCount - 1);
             setWantCount(wCount)
-            console.log('deleteFromWant: ', wantCount)
         }
     };
 
@@ -137,7 +133,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         }, accessToken)
         let wCount = await (wantCount + 1);
         setWantCount(wCount);
-        console.log('addWantToRead: ', wantCount);
     };
 
     // flip .want, if true post to want, if false, delete all matching titles from want, replace newArray index with new book and setBooks - ternary operator will handle the button change
@@ -287,23 +282,21 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
                 const APIRead = read.data;
                 checkIfRead(searchedBooks, APIRead);
-                console.log('read books array: ', APIRead.length)
                 let rCount = await APIRead.length
                 setReadCount(rCount);
-                console.log('searchPage loadHistory readCount: ', readCount)
+                console.log('searchPage loadHistory readCount: ', rCount)
 
                 const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
                 const APIWant = want.data;
                 checkIfWant(searchedBooks, APIWant);
-                console.log('want to read books array: ', APIWant.length)
                 let wCount = await APIWant.length
                 setWantCount(wCount);
-                console.log('searchPage loadHistory want count:', wantCount)
+                console.log('searchPage loadHistory want count:', wCount)
 
                 const fav = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID)
                 let fCount = await fav.data.length
                 setFavCount(fCount);
-                console.log('searchPage loadHistory favCount: ', favCount);
+                console.log('searchPage loadHistory favCount: ', fCount);
 
                 setBooks(searchedBooks)
             } else {

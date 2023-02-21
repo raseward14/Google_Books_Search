@@ -13,7 +13,7 @@ import {
   Route
 } from 'react-router-dom'
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function App() {
   const [appReadCount, setAppReadCount] = useState(null);
@@ -21,81 +21,60 @@ function App() {
   const [appFavCount, setAppFavCount] = useState(null);
 
   const callRead = (value) => {
-    
-    if(value !== null && value !== appReadCount) {
-      console.log('read value: ', value)
-      console.log('appReadCount: ', appReadCount)
-    setAppReadCount(value)
+    if (value !== null && value !== appReadCount) {
+      setAppReadCount(value);
     }
   };
 
   const callWant = (value) => {
-    
-    if(value !== null && value !== appWantCount) {
-      console.log('want value: ', value)
-      console.log('appWantCount: ', appWantCount)
-      setAppWantCount(value)
+    if (value !== null && value !== appWantCount) {
+      setAppWantCount(value);
     }
   };
 
   const callFav = (value) => {
-    
-    if(value !== null && value !== appFavCount) {
-      console.log('fav value: ', value)
-      console.log('appFavCount: ', appFavCount)
-      setAppFavCount(value)
+    if (value !== null && value !== appFavCount) {
+      setAppFavCount(value);
     }
   };
 
-  // useEffect(() => {
-  //   console.log('app.js read: ', appReadCount)
-  // }, [appReadCount]);
-
-  // useEffect(() => {
-  //   console.log('app.js want: ', appWantCount)
-  // }, [appWantCount]);
-
-  // useEffect(() => {
-  //   console.log('app.js fav: ', appFavCount)
-  // }, [appFavCount]);
-
   return (
-      <Routes>
-        <Route path='/' element={<Layout
-          fCount={appFavCount}
-          rCount={appReadCount}
-          wCount={appWantCount} />}>
-          {/* public routes */}
-          <Route index element={<RegisterPage
+    <Routes>
+      <Route path='/' element={<Layout
+        fCount={appFavCount}
+        rCount={appReadCount}
+        wCount={appWantCount} />}>
+        {/* public routes */}
+        <Route index element={<RegisterPage
+          appReadCount={callRead}
+          appFavCount={callFav}
+          appWantCount={callWant} />} />
+        <Route path='login' element={<LoginPage />} />
+
+        {/* we want to protect these routes */}
+        <Route element={<RequireAuth />}>
+          <Route path='search' element={<SearchPage
+            appReadCount={callRead}
+            appWantCount={callWant}
+            appFavCount={callFav} />} />
+          <Route path='read' element={<WantToReadPage
             appReadCount={callRead}
             appFavCount={callFav}
             appWantCount={callWant} />} />
-          <Route path='login' element={<LoginPage />} />
-
-          {/* we want to protect these routes */}
-          <Route element={<RequireAuth />}>
-            <Route path='search' element={<SearchPage
-              appReadCount={callRead}
-              appWantCount={callWant}
-              appFavCount={callFav} />} />
-            <Route path='read' element={<WantToReadPage
-              appReadCount={callRead}
-              appFavCount={callFav}
-              appWantCount={callWant} />} />
-            <Route path='library' element={<LibraryPage
-              appReadCount={callRead}
-              appWantCount={callWant}
-              appFavCount={callFav} />} />
-            <Route path='favorites' element={<FavoritesPage
-              appReadCount={callRead}
-              appWantCount={callWant}
-              appFavCount={callFav} />} />
-          </Route>
-
-          {/* catch all */}
-          <Route path='*' element={<NotFoundPage />} />
+          <Route path='library' element={<LibraryPage
+            appReadCount={callRead}
+            appWantCount={callWant}
+            appFavCount={callFav} />} />
+          <Route path='favorites' element={<FavoritesPage
+            appReadCount={callRead}
+            appWantCount={callWant}
+            appFavCount={callFav} />} />
         </Route>
-      </Routes>
+
+        {/* catch all */}
+        <Route path='*' element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
 

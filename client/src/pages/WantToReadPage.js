@@ -79,7 +79,6 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
             isbn13: book.isbn13,
             user_id: userID
         }, accessToken);
-        console.log('added to read books!')
         removeFromWantToRead(book);
         let rCount = await (readCount + 1);
         setReadCount(rCount)
