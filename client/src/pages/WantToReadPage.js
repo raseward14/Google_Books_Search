@@ -93,6 +93,8 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
             deleteFromRead(book);
         } else {
             book.read = true;
+            book.want = false;
+            console.log('completed!', book)
             let newArr = [...want];
             newArr[index] = book;
             setWant(newArr);

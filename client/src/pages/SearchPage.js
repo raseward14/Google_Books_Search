@@ -68,9 +68,17 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     };
 
     // POST read
-    async function addToRead(book) {
+    async function addToRead(book, index) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
+
+        if(book.want === true) {
+            book.want = false;
+            let newArr = [...books]
+            newArr[index] = book;
+            setBooks(newArr)
+            deleteFromWant(book)
+        }
 
         readAPIFunctions.saveRead(axiosPrivate, {
             title: book.volumeInfo.title,
@@ -98,7 +106,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let newArr = [...books];
             newArr[index] = book;
             setBooks(newArr);
-            addToRead(book);
+            addToRead(book, index);
         };
     };
 
@@ -120,7 +128,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     async function addWantToRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
         let thisIsbn13 = isbn13Array[0].identifier
-
+        
         await wantToReadAPIFunctions.saveWantToRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
@@ -133,11 +141,13 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         }, accessToken)
         let wCount = await (wantCount + 1);
         setWantCount(wCount);
+
     };
 
     // flip .want, if true post to want, if false, delete all matching titles from want, replace newArray index with new book and setBooks - ternary operator will handle the button change
     function clickedWantToRead(book, index) {
         if (book.want === true) {
+            console.log('clicked want'. book)
             book.want = false;
             let newArr = [...books];
             newArr[index] = book;
