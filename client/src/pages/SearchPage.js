@@ -410,7 +410,12 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                                 icon={faBookBookmark}
                                                 className='fa-2x' />
                                         </button>
-                                        : <button
+                                        : book.read === true ?
+                                            <FontAwesomeIcon
+                                                icon={faBook}
+                                                className='fa-2x' />
+                                        :
+                                        <button
                                             onClick={() => clickedWantToRead(book, index)}>
                                             <FontAwesomeIcon
                                                 icon={faBook}
