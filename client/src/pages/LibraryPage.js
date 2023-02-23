@@ -54,6 +54,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     };
 
     async function removeFromRead(book) {
+        book.read = false;
         await readAPIFunctions.deleteRead(axiosPrivate, book._id, accessToken);
         setRead(read.filter(read => read._id !== book._id))
         let rCount = await (readCount - 1);
