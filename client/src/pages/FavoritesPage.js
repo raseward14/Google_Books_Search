@@ -79,10 +79,14 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                                     </div>
                                 </div>
-                                <div className='content-container'>
+                                <div className='content-container fade shrink'>
                                     <img src={favorite.imageLink} className='book-content' />
                                     <p className='book-content'>{favorite.description}</p>
                                 </div>
+                                <div className='expand'
+                                onClick={() => {
+
+                                }}>Expand</div>
                             </div>
                         ))}
                     </div>

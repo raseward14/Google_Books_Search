@@ -20,7 +20,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [readCount, setReadCount] = useState(null);
     const [wantCount, setWantCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
-    const didMount = useRef(false);
 
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
@@ -72,7 +71,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
 
-        if(book.want === true) {
+        if (book.want === true) {
             book.want = false;
             let newArr = [...books]
             newArr[index] = book;
@@ -128,7 +127,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     async function addWantToRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
         let thisIsbn13 = isbn13Array[0].identifier
-        
+
         await wantToReadAPIFunctions.saveWantToRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
@@ -147,7 +146,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // flip .want, if true post to want, if false, delete all matching titles from want, replace newArray index with new book and setBooks - ternary operator will handle the button change
     function clickedWantToRead(book, index) {
         if (book.want === true) {
-            console.log('clicked want'. book)
+            console.log('clicked want'.book)
             book.want = false;
             let newArr = [...books];
             newArr[index] = book;
@@ -216,6 +215,20 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 };
             };
         });
+    };
+
+    function expandMe(book, index) {
+        if (book.expand) {
+            book.expand = false;
+            let newArr = [...books];
+            newArr[index] = book;
+            setBooks(newArr);
+        } else {
+            book.expand = true;
+            let newArr = [...books];
+            newArr[index] = book;
+            setBooks(newArr);
+        };
     };
 
     // DEV-305    
@@ -424,23 +437,44 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             <FontAwesomeIcon
                                                 icon={faBook}
                                                 className='fa-2x' />
-                                        :
-                                        <button
-                                            onClick={() => clickedWantToRead(book, index)}>
-                                            <FontAwesomeIcon
-                                                icon={faBook}
-                                                className='fa-2x' />
-                                        </button>
+                                            :
+                                            <button
+                                                onClick={() => clickedWantToRead(book, index)}>
+                                                <FontAwesomeIcon
+                                                    icon={faBook}
+                                                    className='fa-2x' />
+                                            </button>
                                     }
                                     {/* <button
                                     onClick={() => consoleLogIsbn(book)}
                                     >isbn</button> */}
                                 </div>
                             </div>
-                            <div className='content-container'>
+                            {book.expand ? 
+                            <div className='content-container' >
                                 <img src={book.volumeInfo?.imageLinks?.thumbnail} className='book-content' />
                                 <p className='book-content'>{book.volumeInfo?.description}</p>
                             </div>
+                            : 
+                            <div className='content-container fade shrink' >
+                                <img src={book.volumeInfo?.imageLinks?.thumbnail} className='book-content' />
+                                <p className='book-content'>{book.volumeInfo?.description}</p>
+                            </div>
+                            }
+                            <div className='expand'
+                                onClick={() => {
+                                    if (book.expand) {
+                                        book.expand = false;
+                                        let newArr = [...books];
+                                        newArr[index] = book;
+                                        setBooks(newArr);
+                                    } else {
+                                        book.expand = true;
+                                        let newArr = [...books];
+                                        newArr[index] = book;
+                                        setBooks(newArr);
+                                    };                            
+                                }}>Expand</div>
                         </div>
                     ))}
                 </div>

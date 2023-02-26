@@ -195,10 +195,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className='content-container'>
+                        <div className='content-container fade shrink'>
                             <img src={book.imageLink} className='book-content' />
                             <p className='book-content'>{book.description}</p>
                         </div>
+                        <div className='expand'>Expand</div>
                     </div>
                 ))}
             </div>
