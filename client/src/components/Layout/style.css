@@ -131,7 +131,7 @@
   padding: 10px;
   height: 200px;
   text-align: left;
-  background: linear-gradient(to top, rgba(255,0,0,0), rgb(169, 184, 212));
+  background: linear-gradient(to top, rgba(255, 0, 0, 0), rgb(163, 239, 96));
   opacity: linear-gradient(to top, 1, 0);
 }
 
@@ -197,6 +197,8 @@
   max-height: 25vh;
   overflow-y: hidden;
   flex-direction: row;
+  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
 }
 
 .book-link {
