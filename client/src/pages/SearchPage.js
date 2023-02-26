@@ -217,20 +217,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         });
     };
 
-    function expandMe(book, index) {
-        if (book.expand) {
-            book.expand = false;
-            let newArr = [...books];
-            newArr[index] = book;
-            setBooks(newArr);
-        } else {
-            book.expand = true;
-            let newArr = [...books];
-            newArr[index] = book;
-            setBooks(newArr);
-        };
-    };
-
     // DEV-305    
     // const handleSubmit = () => {
     // fetch books using search, then convert to JSON, then for the books object, access only the .items property containing book data, and call async function that will wait for this to finish 

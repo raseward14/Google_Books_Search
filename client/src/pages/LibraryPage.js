@@ -195,11 +195,32 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className='content-container fade shrink'>
-                            <img src={book.imageLink} className='book-content' />
-                            <p className='book-content'>{book.description}</p>
-                        </div>
-                        <div className='expand'>Expand</div>
+                        {book.expand ?
+                            <div className='content-container'>
+                                <img src={book.imageLink} className='book-content' />
+                                <p className='book-content'>{book.description}</p>
+                            </div>
+                            :
+                            <div className='content-container fade shrink'>
+                                <img src={book.imageLink} className='book-content' />
+                                <p className='book-content'>{book.description}</p>
+                            </div>
+                        }
+                        <div className='expand'
+                            onClick={() => {
+                                if (book.expand) {
+                                    book.expand = false;
+                                    let newArr = [...read];
+                                    newArr[index] = book;
+                                    setRead(newArr);
+                                } else {
+                                    book.expand = true;
+                                    let newArr = [...read];
+                                    newArr[index] = book;
+                                    setRead(newArr);
+                                }
+                            }}
+                        >Expand</div>
                     </div>
                 ))}
             </div>

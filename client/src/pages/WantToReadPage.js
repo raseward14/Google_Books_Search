@@ -113,7 +113,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
         let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
         let APIRead = result.data;
         let rCount = APIRead.length;
-        setReadCount(rCount); 
+        setReadCount(rCount);
     };
 
     async function loadFav() {
@@ -132,26 +132,26 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
             setWant(APIWant);
         } catch (err) {
             console.error(err);
-            navigate('/login', { state: { from: location}, replace: true });
+            navigate('/login', { state: { from: location }, replace: true });
         };
     };
 
     useEffect(() => {
-            appReadCount(readCount);
+        appReadCount(readCount);
     }, [readCount]);
 
     useEffect(() => {
-            appFavCount(favCount);
+        appFavCount(favCount);
     }, [favCount]);
 
     useEffect(() => {
-            appWantCount(wantCount)
+        appWantCount(wantCount)
     }, [wantCount]);
 
     useEffect(() => {
-            loadRead();
-            loadFav();
-            loadWant();
+        loadRead();
+        loadFav();
+        loadWant();
     }, []);
 
     return (
@@ -241,11 +241,32 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className='content-container fade shrink'>
-                            <img src={book?.imageLink} className='book-content' />
-                            <p className='book-content'>{book?.description}</p>
-                        </div>
-                        <div className='expand'>Expand</div>
+                        {book.expand ?
+                            <div className='content-container'>
+                                <img src={book?.imageLink} className='book-content' />
+                                <p className='book-content'>{book?.description}</p>
+                            </div>
+                            :
+                            <div className='content-container fade shrink'>
+                                <img src={book?.imageLink} className='book-content' />
+                                <p className='book-content'>{book?.description}</p>
+                            </div>
+                        }
+                        <div className='expand'
+                            onClick={() => {
+                                if (book.expand) {
+                                    book.expand = false;
+                                    let newArr = [...want];
+                                    newArr[index] = book;
+                                    setWant(newArr);
+                                } else {
+                                    book.expand = true;
+                                    let newArr = [...want];
+                                    newArr[index] = book
+                                    setWant(newArr);
+                                }
+                            }}
+                        >Expand</div>
                     </div>
                 ))}
             </div>

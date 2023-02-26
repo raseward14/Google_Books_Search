@@ -4,6 +4,7 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 
 
 const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
@@ -40,6 +41,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
             let fCount = result.data.length;
             setFavCount(fCount);
             setFavorites(APIFavorites);
+            console.log('favorites: ', favorites)
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true })
@@ -66,11 +68,9 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
     return (
         <div>
-            <p>Favorites</p>
-            <div>
-                {favorites.length > 0 && (
+            <p>Favorites</p>     
                     <div>
-                        {favorites.map((favorite) => (
+                        {favorites.map((favorite, index) => (
                             <div key={favorite._id} className='single-book'>
                                 <div className='heading-container'>
                                     <div>
@@ -79,20 +79,35 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                                     </div>
                                 </div>
-                                <div className='content-container fade shrink'>
-                                    <img src={favorite.imageLink} className='book-content' />
-                                    <p className='book-content'>{favorite.description}</p>
-                                </div>
+                                {favorite.expand ?
+                                    <div className='content-container'>
+                                        <img src={favorite.imageLink} className='book-content' />
+                                        <p className='book-content'>{favorite.description}</p>
+                                    </div>
+                                    :
+                                    <div className='content-container fade shrink'>
+                                        <img src={favorite.imageLink} className='book-content' />
+                                        <p className='book-content'>{favorite.description}</p>
+                                    </div>
+                                }
                                 <div className='expand'
-                                onClick={() => {
-
-                                }}>Expand</div>
+                                    onClick={() => {
+                                        if (favorite.expand) {
+                                            favorite.expand = false;
+                                            let newArr = [...favorites];
+                                            newArr[index] = favorite;
+                                            setFavorites(newArr);
+                                        } else {
+                                            favorite.expand = true;
+                                            let newArr = [...favorites];
+                                            newArr[index] = favorite;
+                                            setFavorites(newArr)
+                                        }
+                                    }}>Expand</div>
                             </div>
                         ))}
-                    </div>
-                )}
+                    </div>        
             </div>
-        </div>
     );
 };
 
