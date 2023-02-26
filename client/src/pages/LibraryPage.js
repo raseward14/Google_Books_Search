@@ -143,7 +143,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
                     icon={faThumbtack}
-                    className={pinned ? 'pinned' : 'not-pinned'}
+                    className={pinned ? 'pin pinned' : 'pin not-pinned'}
                     onClick={() => {
                         if (pinned === false) {
                             setPinned(true);

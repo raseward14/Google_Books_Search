@@ -163,6 +163,7 @@ img {
   position: sticky;
   top: 20px;
   background-color: aliceblue;
+  z-index: 1;
 }
 
 .heading-container-header {
@@ -172,6 +173,13 @@ img {
   width: 30%;
 }
 
+.pin {
+  cursor: pointer;
+}
+
+.pin:hover {
+  color: gray;  
+}
 
 .pinned {
   color: limegreen;
