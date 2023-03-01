@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from 'react-router-dom';
+// components
+import Toggle from '../components/Toggle/toggle';
 
 const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -352,6 +354,9 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     return (
         <div>
             <h3>Search</h3>
+            <span className='search_toggle'>In Title</span><Toggle /><br/><br/>
+            <span className='search_toggle'>In Author</span><Toggle /><br/><br/>
+            <span className='search_toggle'>Genre</span><Toggle /><br/>
             <input
                 className='search'
                 placeholder='Search'

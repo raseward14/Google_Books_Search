@@ -16,6 +16,11 @@
   border-radius: 13px;
 }
 
+.search_toggle {
+  display: flex;
+  margin-left: 1%;
+}
+
 .submit {
   background-color: black;
   border-radius: 13px;
@@ -213,6 +218,7 @@ img {
   align-items: flex-start;
   overflow-y: hidden;
   flex-direction: row;
+
 }
 
 .fade {
