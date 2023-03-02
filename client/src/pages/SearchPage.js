@@ -370,19 +370,47 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     return (
         <div>
-            <h3>Search</h3>
-            <span className='search_toggle'>In Title</span><Toggle toggle={setIntitle(value)} /><br/><br/>
-            <span className='search_toggle'>In Author</span><Toggle toggle={setInauthor(value)} /><br/><br/>
-            <span className='search_toggle'>Genre</span><Toggle toggle={setSubject(value)} /><br/>
-            <input
-                className='search'
-                placeholder='General Search'
-                onChange={(event) => {
-                    setSearch(event.target.value);
-                }} />
-            <button
-                className='submit'
-                onClick={handleSubmit}>Submit</button>
+            <table>
+                <tr>
+                    <th>
+                        <h3>Search</h3>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <span className='search_toggle'>In Title</span><Toggle toggle={(value) => {
+                            if (value !== undefined) {
+                                setIntitle(value)
+                            }
+                        }} /><br /><br />
+                        <span className='search_toggle'>In Author</span><Toggle toggle={(value) => {
+                            if (value !== undefined) {
+                                setInauthor(value)
+                            }
+                        }} /><br /><br />
+                        <span className='search_toggle'>Genre</span><Toggle toggle={(value) => {
+                            if (value !== undefined) {
+                                setSubject(value)
+                            }
+                        }} /><br />
+                    </td>
+                    <td>
+                        <input
+                            className='search'
+                            placeholder='General Search'
+                            onChange={(event) => {
+                                setSearch(event.target.value);
+                            }} />
+
+                    </td>
+                    <td>
+                        <button
+                            className='submit'
+                            onClick={handleSubmit}>Submit</button>
+                    </td>
+                </tr>
+            </table>
+
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
                     icon={faThumbtack}
@@ -458,16 +486,16 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     >isbn</button> */}
                                 </div>
                             </div>
-                            {book.expand ? 
-                            <div className='content-container' >
-                                <img src={book.volumeInfo?.imageLinks?.thumbnail} className='book-content' />
-                                <p className='book-content'>{book.volumeInfo?.description}</p>
-                            </div>
-                            : 
-                            <div className='content-container fade shrink' >
-                                <img src={book.volumeInfo?.imageLinks?.thumbnail} className='book-content' />
-                                <p className='book-content'>{book.volumeInfo?.description}</p>
-                            </div>
+                            {book.expand ?
+                                <div className='content-container' >
+                                    <img src={book.volumeInfo?.imageLinks?.thumbnail} className='book-content' />
+                                    <p className='book-content'>{book.volumeInfo?.description}</p>
+                                </div>
+                                :
+                                <div className='content-container fade shrink' >
+                                    <img src={book.volumeInfo?.imageLinks?.thumbnail} className='book-content' />
+                                    <p className='book-content'>{book.volumeInfo?.description}</p>
+                                </div>
                             }
                             <div className='expand'
                                 onClick={() => {
@@ -481,7 +509,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         let newArr = [...books];
                                         newArr[index] = book;
                                         setBooks(newArr);
-                                    };                            
+                                    };
                                 }}>Expand</div>
                         </div>
                     ))}
