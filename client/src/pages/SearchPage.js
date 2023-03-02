@@ -30,6 +30,11 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    //search toggles
+    const [intitle, setIntitle] = useState(null);
+    const [subject, setSubject] = useState(null);
+    const [inauthor, setInauthor] = useState(null);
+
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
 
@@ -325,6 +330,18 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     //     console.log(isbn13)
     // }
 
+    useEffect(() => {
+        console.log('inTitle', intitle)
+    }, [intitle]);
+
+    useEffect(() => {
+        console.log('subject', subject)
+    }, [subject]);
+
+    useEffect(() => {
+        console.log('inAuthor', inauthor)
+    }, [inauthor]);
+
     // useEffect to load book count on page load, and any time want, read, or fav changes
     useEffect(() => {
         appReadCount(readCount)
@@ -354,12 +371,12 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     return (
         <div>
             <h3>Search</h3>
-            <span className='search_toggle'>In Title</span><Toggle /><br/><br/>
-            <span className='search_toggle'>In Author</span><Toggle /><br/><br/>
-            <span className='search_toggle'>Genre</span><Toggle /><br/>
+            <span className='search_toggle'>In Title</span><Toggle toggle={setIntitle(value)} /><br/><br/>
+            <span className='search_toggle'>In Author</span><Toggle toggle={setInauthor(value)} /><br/><br/>
+            <span className='search_toggle'>Genre</span><Toggle toggle={setSubject(value)} /><br/>
             <input
                 className='search'
-                placeholder='Search'
+                placeholder='General Search'
                 onChange={(event) => {
                     setSearch(event.target.value);
                 }} />
