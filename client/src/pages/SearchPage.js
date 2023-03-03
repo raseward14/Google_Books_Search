@@ -10,6 +10,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from 'react-router-dom';
 // components
 import Toggle from '../components/Toggle/toggle';
+import Filter from '../components/Filter/filter';
 
 const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -370,8 +371,13 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     return (
         <div>
-                        <h3>Search</h3>
+            <h3>Search</h3>
             <table>
+                <th>
+                    <td>
+                        <Filter />
+                    </td>
+                </th>
                 <tr>
                     <td>
                         <span className='search_toggle'>In Title</span><Toggle toggle={(value) => {
