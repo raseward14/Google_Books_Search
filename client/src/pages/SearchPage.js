@@ -370,12 +370,8 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     return (
         <div>
-            <table>
-                <tr>
-                    <th>
                         <h3>Search</h3>
-                    </th>
-                </tr>
+            <table>
                 <tr>
                     <td>
                         <span className='search_toggle'>In Title</span><Toggle toggle={(value) => {
