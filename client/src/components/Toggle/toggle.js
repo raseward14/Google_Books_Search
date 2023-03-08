@@ -2,28 +2,28 @@ import React, { useState, useEffect } from 'react';
 import './style.css';
 
 const Toggle = ({ toggle }) => {
-    const [genToggle, setGenToggle] = useState(false)
-    
+    const [genToggle, setGenToggle] = useState(false);
+
     const handleClick = async () => {
-        if(genToggle) {
+        if (genToggle) {
             setGenToggle(false);
         } else {
             setGenToggle(true);
-        }
-    }
+        };
+    };
 
-useEffect(() => {
-    toggle(genToggle)
-}, [genToggle])
+    useEffect(() => {
+        toggle(genToggle)
+    }, [genToggle])
 
     return (
         <div>
             <label className="switch">
-                <input 
-                type="checkbox"
-                onClick={handleClick}
-                 />
-                    <span className="slider round"></span>
+                <input
+                    type="checkbox"
+                    onClick={handleClick}
+                />
+                <span className="slider round"></span>
             </label>
         </div>
     )

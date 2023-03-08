@@ -25,6 +25,7 @@ tr, td {
   border-radius: 13px;
 }
 
+/* potentially remove this, if we can use it in the filter component */
 .search_toggle {
   display: flex;
   margin-left: 1%;

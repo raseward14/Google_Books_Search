@@ -36,6 +36,9 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [subject, setSubject] = useState(null);
     const [inauthor, setInauthor] = useState(null);
 
+
+   
+
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
 
