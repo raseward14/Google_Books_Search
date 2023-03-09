@@ -32,12 +32,9 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const location = useLocation();
 
     //search toggles
-    const [intitle, setIntitle] = useState(null);
-    const [subject, setSubject] = useState(null);
-    const [inauthor, setInauthor] = useState(null);
-
-
-   
+    const [intitle, setIntitle] = useState('');
+    const [subject, setSubject] = useState('');
+    const [inauthor, setInauthor] = useState('');
 
     // 2jdwvaw favorite book
     // function favoriteBook(book) {
@@ -259,7 +256,8 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         try {
             console.log('search term: ', search)
             console.log('start Index:', startIndex)
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${startIndex}`)
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search},intitle:${intitle},subject:${subject},inauthor:${inauthor}&startIndex=${startIndex}`)
+
             const books = await response.json();
             let booksArray = books.items;
 
@@ -382,7 +380,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                     </td>
                 </th>
                 <tr>
-                    <td>
+                    {/* <td>
                         <span className='search_toggle'>In Title</span><Toggle toggle={(value) => {
                             if (value !== undefined) {
                                 setIntitle(value)
@@ -398,7 +396,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 setSubject(value)
                             }
                         }} /><br />
-                    </td>
+                    </td> */}
                     <td>
                         <input
                             className='search'

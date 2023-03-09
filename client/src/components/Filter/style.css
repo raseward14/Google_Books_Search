@@ -58,7 +58,6 @@
 }
 
 .input {
-    /* display: none; */
     display: block;
     visibility: hidden;
     padding: 12px;

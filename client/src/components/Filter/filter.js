@@ -38,13 +38,9 @@ const Filter = () => {
         console.log('inTitle: ', intitle);
         console.log('title text: ', titleText);
         if (intitle) {
-            // titleInput.style.display = "block";
             titleInput.style.visibility = "visible";
-
         } else if (intitle !== null) {
-            // titleInput.style.display = "none";
             titleInput.style.visibility = "hidden";
-
             titleInput.value = '';
             setTitleText(null);
         };
@@ -54,13 +50,9 @@ const Filter = () => {
         console.log('subject: ', subject);
         console.log('genre text: ', genreText);
         if (subject) {
-            // genreInput.style.display = "block";
             genreInput.style.visibility = "visible";
-
         } else if (subject !== null) {
-            // genreInput.style.display = "none";
             genreInput.style.visibility = "hidden";
-
             genreInput.value = '';
             setGenreText(null);
         };
@@ -70,13 +62,9 @@ const Filter = () => {
         console.log('inAuthor: ', inauthor)
         console.log('author text: ', authorText)
         if (inauthor) {
-            // authorInput.style.display = "block";
             authorInput.style.visibility = "visible";
-
         } else if (inauthor !== null) {
-            // authorInput.style.display = "none";
             authorInput.style.visibility = "hidden";
-
             authorInput.value = '';
             setAuthorText(null);
         }
