@@ -5,9 +5,20 @@ import Toggle from '../Toggle/toggle';
 import './style.css';
 
 const Filter = () => {
+    // toggle button state
     const [intitle, setIntitle] = useState(null);
     const [subject, setSubject] = useState(null);
     const [inauthor, setInauthor] = useState(null);
+
+    // toggle inputs state
+    const titleInput = document.getElementById('titleInput');
+    const genreInput = document.getElementById('genreInput');
+    const authorInput = document.getElementById('authorInput');
+
+    // toggle input text state
+    const [titleText, setTitleText] = useState(null);
+    const [authorText, setAuthorText] = useState(null);
+    const [genreText, setGenreText] = useState(null);
 
     const modal = document.getElementById("myModal");
 
@@ -21,17 +32,55 @@ const Filter = () => {
         modal.style.display = "none";
     }
 
-    useEffect(() => {
-        console.log('inTitle', intitle)
-    }, [intitle]);
+
 
     useEffect(() => {
-        console.log('subject', subject)
-    }, [subject]);
+        console.log('inTitle: ', intitle);
+        console.log('title text: ', titleText);
+        if (intitle) {
+            // titleInput.style.display = "block";
+            titleInput.style.visibility = "visible";
+
+        } else if (intitle !== null) {
+            // titleInput.style.display = "none";
+            titleInput.style.visibility = "hidden";
+
+            titleInput.value = '';
+            setTitleText(null);
+        };
+    }, [intitle, titleText]);
 
     useEffect(() => {
-        console.log('inAuthor', inauthor)
-    }, [inauthor]);
+        console.log('subject: ', subject);
+        console.log('genre text: ', genreText);
+        if (subject) {
+            // genreInput.style.display = "block";
+            genreInput.style.visibility = "visible";
+
+        } else if (subject !== null) {
+            // genreInput.style.display = "none";
+            genreInput.style.visibility = "hidden";
+
+            genreInput.value = '';
+            setGenreText(null);
+        };
+    }, [subject, genreText]);
+
+    useEffect(() => {
+        console.log('inAuthor: ', inauthor)
+        console.log('author text: ', authorText)
+        if (inauthor) {
+            // authorInput.style.display = "block";
+            authorInput.style.visibility = "visible";
+
+        } else if (inauthor !== null) {
+            // authorInput.style.display = "none";
+            authorInput.style.visibility = "hidden";
+
+            authorInput.value = '';
+            setAuthorText(null);
+        }
+    }, [inauthor, authorText]);
 
     return (
         <div>
@@ -54,20 +103,38 @@ const Filter = () => {
                             if (value !== undefined) {
                                 setIntitle(value)
                             }
-                        }} /><input/><br /><br />
+                        }} /><input
+                            id='titleInput'
+                            className='input'
+                            placeholder='Book Title'
+                            onChange={(event) => {
+                                setTitleText(event.target.value);
+                            }} /><br /><br />
                         <span className='search_toggle'>In Author</span><Toggle toggle={(value) => {
                             if (value !== undefined) {
                                 setInauthor(value)
                             }
-                        }} /><input/><br /><br />
+                        }} /><input
+                            id='authorInput'
+                            className='input'
+                            placeholder='Book Author'
+                            onChange={(event) => {
+                                setAuthorText(event.target.value);
+                            }} /><br /><br />
                         <span className='search_toggle'>Genre</span><Toggle toggle={(value) => {
                             if (value !== undefined) {
                                 setSubject(value)
                             }
-                        }} /><input/><br />
-                        <span 
-                        onClick={closeFilter}
-                        class="close">&times;</span>
+                        }} /><input
+                            id='genreInput'
+                            className='input'
+                            placeholder='Genre'
+                            onChange={(event) => {
+                                setGenreText(event.target.value);
+                            }} /><br />
+                        <span
+                            onClick={closeFilter}
+                            class="close">&times;</span>
                     </td>
                 </tr>
             </table>

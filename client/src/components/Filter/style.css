@@ -11,7 +11,6 @@
 /*testing*/
 .search_toggle {
     display: flex;
-    margin-left: 1%;
 }
 
 .modal {
@@ -33,15 +32,14 @@
  background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
     /* Black w/ opacity */
-    border-radius: 10px;
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 40%;
+    border-radius: 10px;
 }
 
 /* The Close Button */
@@ -57,5 +55,16 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.input {
+    /* display: none; */
+    display: block;
+    visibility: hidden;
+    padding: 12px;
+    font-size: 16px;
+    width: 70%;
+    border-radius: 13px;
+    margin-top: -2%;
 }
 
