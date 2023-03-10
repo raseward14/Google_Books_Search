@@ -389,23 +389,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                     </td>
                 </th>
                 <tr>
-                    {/* <td>
-                        <span className='search_toggle'>In Title</span><Toggle toggle={(value) => {
-                            if (value !== undefined) {
-                                setIntitle(value)
-                            }
-                        }} /><br /><br />
-                        <span className='search_toggle'>In Author</span><Toggle toggle={(value) => {
-                            if (value !== undefined) {
-                                setInauthor(value)
-                            }
-                        }} /><br /><br />
-                        <span className='search_toggle'>Genre</span><Toggle toggle={(value) => {
-                            if (value !== undefined) {
-                                setSubject(value)
-                            }
-                        }} /><br />
-                    </td> */}
                     <td>
                         <input
                             className='search'

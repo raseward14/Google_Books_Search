@@ -25,14 +25,12 @@ const Filter = ({ tText, aText, gText }) => {
     async function openFilter() {
         console.log('clicked filter')
         modal.style.display = "block";
-    }
+    };
 
     async function closeFilter() {
         console.log('closed filter');
         modal.style.display = "none";
-    }
-
-
+    };
 
     useEffect(() => {
         console.log('inTitle: ', intitle);
