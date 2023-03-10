@@ -256,8 +256,8 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         try {
             console.log('search term: ', search)
             console.log('start Index:', startIndex)
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search},intitle:${intitle},subject:${subject},inauthor:${inauthor}&startIndex=${startIndex}`)
-
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search},intitle:"${intitle}",subject:"${subject}",inauthor:"${inauthor}"&startIndex=${startIndex}`)
+            console.log('queried books', response)
             const books = await response.json();
             let booksArray = books.items;
 
@@ -376,7 +376,16 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             <table>
                 <th>
                     <td>
-                        <Filter />
+                        <Filter
+                            tText={(text) => {
+                                setIntitle(text)
+                            }}
+                            aText={(text) => {
+                                setInauthor(text)
+                            }}
+                            gText={(text) => {
+                                setSubject(text)
+                            }} />
                     </td>
                 </th>
                 <tr>

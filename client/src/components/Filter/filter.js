@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Toggle from '../Toggle/toggle';
 import './style.css';
 
-const Filter = () => {
+const Filter = ({ tText, aText, gText }) => {
     // toggle button state
     const [intitle, setIntitle] = useState(null);
     const [subject, setSubject] = useState(null);
@@ -39,10 +39,12 @@ const Filter = () => {
         console.log('title text: ', titleText);
         if (intitle) {
             titleInput.style.visibility = "visible";
+            tText(titleText)
         } else if (intitle !== null) {
             titleInput.style.visibility = "hidden";
             titleInput.value = '';
             setTitleText(null);
+            tText('');
         };
     }, [intitle, titleText]);
 
@@ -51,10 +53,12 @@ const Filter = () => {
         console.log('genre text: ', genreText);
         if (subject) {
             genreInput.style.visibility = "visible";
+            gText(genreText)
         } else if (subject !== null) {
             genreInput.style.visibility = "hidden";
             genreInput.value = '';
             setGenreText(null);
+            gText('');
         };
     }, [subject, genreText]);
 
@@ -63,10 +67,12 @@ const Filter = () => {
         console.log('author text: ', authorText)
         if (inauthor) {
             authorInput.style.visibility = "visible";
+            aText(authorText)
         } else if (inauthor !== null) {
             authorInput.style.visibility = "hidden";
             authorInput.value = '';
             setAuthorText(null);
+            aText('');
         }
     }, [inauthor, authorText]);
 
