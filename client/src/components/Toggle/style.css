@@ -1,9 +1,9 @@
 .switch {
- position: relative;
- width: 60px;
- height: 34px;
- float: left;
- margin-left: 1%;
+    position: relative;
+    width: 60px;
+    height: 34px;
+    float: left;
+    margin-right: 10%;
 }
 
 .switch input {
@@ -36,15 +36,15 @@
     transition: 0.4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: rgb(92, 244, 21);
 }
 
-input:focus + .slider {
+input:focus+.slider {
     box-shadow: 0 0 1px rgb(92, 244, 21);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     -webkit-transform: translatex(26px);
     -ms-transform: translateX(26px);
     transform: translatex(26px);
@@ -57,4 +57,3 @@ input:checked + .slider:before {
 .slider.round::before {
     border-radius: 50%;
 }
-
