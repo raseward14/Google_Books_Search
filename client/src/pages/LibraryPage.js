@@ -28,6 +28,19 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    async function checkIfFav(readArray, favArray) {
+        readArray.forEach(book => {
+            for(let obj of favArray) {
+                if(obj.isbn13 === book.isbn13) {
+                    console.log(obj.isbn13, book.isbn13)
+                    book.favorited = true;
+                    console.log('this book is on the fav list')
+                } else {
+                    book.favorited = false;
+                }
+            }
+        });
+    };
 
     async function deleteFromFavorites(book) {
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
@@ -104,14 +117,20 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
         let fCount = result.data.length;
         setFavCount(fCount);
+        return result.data;
     };
 
     async function loadRead() {
         try {
-            let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
-            APIRead = result.data;
+            let read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
+            APIRead = read.data;
             let rCount = await APIRead.length;
             setReadCount(rCount);
+
+            let APIFav = await loadFav();
+            await checkIfFav(APIRead, APIFav);
+            console.log(APIRead)
+
             setRead(APIRead);
         } catch (err) {
             navigate('/login', { state: { from: location }, replace: true });

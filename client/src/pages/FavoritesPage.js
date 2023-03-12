@@ -4,7 +4,8 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
@@ -20,12 +21,19 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const userID = sessionStorage.getItem('userID');
+    
+    async function deleteFavorite(book) {
+        await favoriteAPIFunctions.deleteFavorite(axiosPrivate, book._id, accessToken);
+        setFavorites(favorites.filter(fav => fav._id !== book._id))
+        let fCount = await (favCount - 1);
+        setFavCount(fCount);
+        await readAPIFunctions.updateRead(axiosPrivate, book._id, { "favorited": "false" }, accessToken);
+    }
 
     async function loadRead() {
         let result = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
         let rCount = result.data.length;
         setReadCount(rCount)
-
     }
 
     async function loadWant() {
@@ -68,46 +76,56 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
     return (
         <div>
-            <p>Favorites</p>     
-                    <div>
-                        {favorites.map((favorite, index) => (
-                            <div key={favorite._id} className='single-book'>
-                                <div className='heading-container'>
-                                    <div>
-                                        <p>{favorite.title}</p>
-                                        <p>{favorite.authors}</p>
-                                        <a href={favorite.infoLink} className='book-link'>Buy me!</a>
-                                    </div>
-                                </div>
-                                {favorite.expand ?
-                                    <div className='content-container'>
-                                        <img src={favorite.imageLink} className='book-content' />
-                                        <p className='book-content'>{favorite.description}</p>
-                                    </div>
-                                    :
-                                    <div className='content-container fade shrink'>
-                                        <img src={favorite.imageLink} className='book-content' />
-                                        <p className='book-content'>{favorite.description}</p>
-                                    </div>
-                                }
-                                <div className='expand'
-                                    onClick={() => {
-                                        if (favorite.expand) {
-                                            favorite.expand = false;
-                                            let newArr = [...favorites];
-                                            newArr[index] = favorite;
-                                            setFavorites(newArr);
-                                        } else {
-                                            favorite.expand = true;
-                                            let newArr = [...favorites];
-                                            newArr[index] = favorite;
-                                            setFavorites(newArr)
-                                        }
-                                    }}>Expand</div>
+            <p>Favorites</p>
+            <div>
+                {favorites.map((favorite, index) => (
+                    <div key={favorite._id} className='single-book'>
+                        <div className='heading-container'>
+                            <div>
+                                <p>{favorite.title}</p>
+                                <p>{favorite.authors}</p>
+                                <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                             </div>
-                        ))}
-                    </div>        
+                            <div className='button-container'>
+                                <button
+                                onClick={() => {
+                                    deleteFavorite(favorite)
+                                }}>
+                                    <FontAwesomeIcon
+                                        icon={faTrashCan}
+                                        className='fa-2x' />
+                                </button>
+                            </div>
+                        </div>
+                        {favorite.expand ?
+                            <div className='content-container'>
+                                <img src={favorite.imageLink} className='book-content' />
+                                <p className='book-content'>{favorite.description}</p>
+                            </div>
+                            :
+                            <div className='content-container fade shrink'>
+                                <img src={favorite.imageLink} className='book-content' />
+                                <p className='book-content'>{favorite.description}</p>
+                            </div>
+                        }
+                        <div className='expand'
+                            onClick={() => {
+                                if (favorite.expand) {
+                                    favorite.expand = false;
+                                    let newArr = [...favorites];
+                                    newArr[index] = favorite;
+                                    setFavorites(newArr);
+                                } else {
+                                    favorite.expand = true;
+                                    let newArr = [...favorites];
+                                    newArr[index] = favorite;
+                                    setFavorites(newArr)
+                                }
+                            }}>Expand</div>
+                    </div>
+                ))}
             </div>
+        </div>
     );
 };
 
