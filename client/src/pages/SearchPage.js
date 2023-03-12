@@ -374,7 +374,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         <div>
             <h3>Search</h3>
             <table>
-                <th>
+                <tr>
                     <td>
                         <Filter
                             tText={(text) => {
@@ -386,9 +386,8 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                             gText={(text) => {
                                 setSubject(text)
                             }} />
+
                     </td>
-                </th>
-                <tr>
                     <td>
                         <input
                             className='search'
