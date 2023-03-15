@@ -27,7 +27,8 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
         setFavorites(favorites.filter(fav => fav._id !== book._id))
         let fCount = await (favCount - 1);
         setFavCount(fCount);
-        await readAPIFunctions.updateRead(axiosPrivate, book._id, { "favorited": "false" }, accessToken);
+        let result = await readAPIFunctions.getReadByIsbn13(axiosPrivate, book.isbn13, accessToken, userID)
+        await readAPIFunctions.updateRead(axiosPrivate, result.data[0]._id, { "favorited": "false" }, accessToken);
     }
 
     async function loadRead() {
