@@ -4,6 +4,7 @@ import './style.css';
 import useAuth from '../../hooks/useAuth';
 import * as registerAPIFunctions from '../../utils/RegisterAPI';
 
+
 const NavBar = ({ fCount, rCount, wCount }) => {
     const { auth } = useAuth();
     // state for if an error message exists
@@ -29,6 +30,7 @@ const NavBar = ({ fCount, rCount, wCount }) => {
     }
 
     return (
+        
         auth?.user
             ? (
                 <ul className='navlinks'>

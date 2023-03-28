@@ -126,7 +126,7 @@ const Filter = ({ tText, aText, gText }) => {
                             }} /><br />
                         <span
                             onClick={closeFilter}
-                            class="close">&times;</span>
+                            className="close">&times;</span>
                     </td>
                 </tr>
             </table>
