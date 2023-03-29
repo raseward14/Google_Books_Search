@@ -5,6 +5,8 @@ import Header from '../header';
 import Footer from '../Footer/footer';
 import { Outlet } from 'react-router-dom';
 import './style.css'
+import Burger from '../Burger/burger';
+
 
 const Layout = ({ fCount, rCount, wCount }) => {
 
@@ -29,7 +31,18 @@ const Layout = ({ fCount, rCount, wCount }) => {
                     wCount={wCount} />
             </div>
             <div className='App'>
-                <Header title='Blurb Books' />
+                <table>
+                    <tbody>
+                        <tr>
+                            <th className='burger'>
+                                <Burger />
+                            </th>
+                            <th>
+                                <Header title='Blurb Books' />
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
                 <Outlet />
             </div>
             <div className='footer'>

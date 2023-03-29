@@ -9,6 +9,10 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.burger {
+  width: 0%;
+}
+
 table {
   width: 100%;
 }
@@ -329,6 +333,17 @@ img {
 
 .line {
   display: inline-block;
+}
+
+@media (max-width: 912px) {
+  .sidebar {
+    visibility: hidden;
+    width: 1%;
+  }
+  .App {
+   margin-left: 0%;
+   width: 100%;
+  }
 }
 
 @media (max-width: 824px) {

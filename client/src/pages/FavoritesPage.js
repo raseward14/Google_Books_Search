@@ -77,7 +77,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
     return (
         <div>
-            <p>Favorites</p>
+            <h3>Favorites</h3>
             <div>
                 {favorites.map((favorite, index) => (
                     <div key={favorite._id} className='single-book'>
