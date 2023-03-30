@@ -65,3 +65,7 @@ Resources:
 * ['setRequestHeader' fails to execute with source code as a header value, axios and react](https://stackoverflow.com/questions/74166648/setrequestheader-fails-to-execute-with-source-code-as-a-header-value-axios-an/74308583#74308583)
 * [React Login Authentication with JWT Access, Refresh Tokens, Cookies and Axios: Dave Gray](https://www.youtube.com/watch?v=nI8PYZNFtac&t=1979s)
 * [W3Docs How to style buttons with CSS](https://www.w3docs.com/snippets/css/how-to-style-buttons-with-css.html)
+* [Animated hamburger menu icons](https://hamburger-react.netlify.app/)
+* [react-burger-menu](https://negomi.github.io/react-burger-menu/)
+* [negomi react-burger-menu](https://github.com/negomi/react-burger-menu)
+* [npm react-burger-menu](https://www.npmjs.com/package/react-burger-menu?activeTab=readme)
