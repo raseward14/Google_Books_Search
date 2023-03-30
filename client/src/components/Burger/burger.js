@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { stack as Menu } from 'react-burger-menu';
 import NavBar from '../Navbar/nav';
-import Hamburger from 'hamburger-react';
+import { Squash as Hamburger } from 'hamburger-react';
 import './style.css'
 
 // make a new context
@@ -28,11 +28,12 @@ const Button = () => {
     const [isOpen, setOpen] = useState(false)
     return (
         <div>
-            <p onClick={ctx.toggleMenu}><Hamburger className='bm-burger-bars' toggled={isOpen} toggle={setOpen}  /></p>
+            <p onClick={ctx.toggleMenu}>
+                <Hamburger className='bm-burger-bars' toggled={isOpen} toggle={setOpen} />
+            </p>
         </div>
     );
-    
-}
+};
 
 // create a navigation component that wraps the burger menu
 const Navigation = () => {
@@ -45,20 +46,17 @@ const Navigation = () => {
             onStateChange={(state) => ctx.stateChangeHandler(state)}>
             <NavBar />
         </Menu>
-
-    )
-}
+    );
+};
 
 // default export here
 const App = () => {
     return (
         <MyProvider>
-            <div>
-                <Button />
-                <Navigation />
-            </div>
+            <Button />
+            <Navigation />
         </MyProvider>
-    )
-}
+    );
+};
 
 export default App;
