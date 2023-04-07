@@ -38,21 +38,36 @@ const NavBar = ({ fCount, rCount, wCount }) => {
                         <tbody>
                             <tr>
                                 <td><Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link></td>
+                            </tr>
+                            <tr>
+                                <td colSpan={2}><div className='line-break' /></td>
                             </tr><br />
                             <tr>
                                 <td><Link to='search' className='navlink' style={{ color: '#2DF4FB' }}>Browse</Link></td>
+                            </tr>
+                            <tr>
+                                <td colSpan={2}><div className='line-break' /></td>
                             </tr><br />
                             <tr>
                                 <td><Link to='read' className='navlink' style={{ color: '#63F82C' }}>Want to Read</Link></td>
-                                <td><span className='count2'>{wCount}</span></td>
+                                <td><span className='count'>{wCount}</span></td>
+                            </tr>
+                            <tr>
+                                <td colSpan={2}><div className='line-break' /></td>
                             </tr><br />
                             <tr>
                                 <td><Link to='library' className='navlink' style={{ color: '#63F82C' }}>Read</Link></td>
                                 <td><span className='count'>{rCount}</span></td>
+                            </tr>
+                            <tr>
+                                <td colSpan={2}><div className='line-break' /></td>
                             </tr><br />
                             <tr>
                                 <td><Link to='favorites' className='navlink' style={{ color: '#63F82C' }}>Favorites</Link></td>
                                 <td><span className='count'>{fCount}</span></td>
+                            </tr>
+                            <tr>
+                                <td colSpan={2}><div className='line-break' /></td>
                             </tr><br />
                             <tr>
                                 <td><Link to='/' onClick={logout} className='navlink' style={{ color: '#E61AF9' }}>Logout</Link></td>
@@ -68,14 +83,26 @@ const NavBar = ({ fCount, rCount, wCount }) => {
                                 <td><Link to='/' active className='navlink' style={{ color: '#2DF4FB' }}>Home</Link></td>
                             </tr>
                             <tr>
+                                <td><div className='line-break' /></td>
+                            </tr><br />
+                            <tr>
                                 <td><Link to='search' className='navlink' style={{ color: '#2DF4FB' }}>Browse</Link></td>
                             </tr>
+                            <tr>
+                                <td><div className='line-break' /></td>
+                            </tr><br />
                             <tr>
                                 <td><Link to='read' className='navlink' style={{ color: '#63F82C' }}>Want to Read</Link></td>
                             </tr>
                             <tr>
+                                <td><div className='line-break' /></td>
+                            </tr><br />
+                            <tr>
                                 <td><Link to='library' className='navlink' style={{ color: '#63F82C' }}>Read</Link></td>
                             </tr>
+                            <tr>
+                                <td><div className='line-break' /></td>
+                            </tr><br />
                             <tr>
                                 <td><Link to='favorites' className='navlink' style={{ color: '#63F82C' }}>Favorites</Link></td>
                             </tr>

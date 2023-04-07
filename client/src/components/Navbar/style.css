@@ -6,22 +6,20 @@
     display: flex;
 }
 
-.navlinks {
-    margin-top: 100px;    
+.line-break {
+    border: 1px solid white;
+    width: 90%;
 }
 
-.count2 {
-    color: white;
-    width: 1%;
-    float: right;
-    margin-right: 25px;
+.navlinks {
+    margin-top: 100px;    
 }
 
 .count {
     color: white;
     width: 1%;
     float: right;
-    margin-right: 25px;
+    margin-right: 30px;
 }
 
 @media (max-width: 593px) {
@@ -35,6 +33,10 @@
     .count {
         color: white;
         margin-right: 25px;
+    }
+
+    .line-break {
+        margin-left: -20px;
     }
 }
 
