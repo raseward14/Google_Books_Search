@@ -35,7 +35,10 @@ const Layout = ({ fCount, rCount, wCount }) => {
                     <tbody>
                         <tr>
                             <th className='burger'>
-                                <Burger />
+                                <Burger
+                                    fCount={fCount}
+                                    rCount={rCount}
+                                    wCount={wCount} />
                             </th>
                             <th>
                                 <Header title='Blurb Books' />

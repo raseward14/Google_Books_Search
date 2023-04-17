@@ -36,7 +36,7 @@ const Button = () => {
 };
 
 // create a navigation component that wraps the burger menu
-const Navigation = () => {
+const Navigation = ({ fCount, rCount, wCount }) => {
     const ctx = useContext(MyContext)
 
     return (
@@ -44,17 +44,23 @@ const Navigation = () => {
             customBurgerIcon={false}
             isOpen={ctx.isMenuOpen}
             onStateChange={(state) => ctx.stateChangeHandler(state)}>
-            <NavBar />
+            <NavBar
+                fCount={fCount}
+                rCount={rCount}
+                wCount={wCount} />
         </Menu>
     );
 };
 
 // default export here
-const App = () => {
+const App = ({ fCount, rCount, wCount }) => {
     return (
         <MyProvider>
             <Button />
-            <Navigation />
+            <Navigation
+                fCount={fCount}
+                rCount={rCount}
+                wCount={wCount} />
         </MyProvider>
     );
 };
