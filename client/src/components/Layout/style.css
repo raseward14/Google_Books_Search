@@ -18,6 +18,23 @@ table {
   z-index: 0;
 }
 
+thead tr th {
+  width: 50%;
+  border: 1px black solid;
+}
+
+tbody tr td {
+  border: 1px solid black;
+}
+
+tbody tr {
+  margin-left: 10%;
+}
+
+.book-card {
+  float: left;
+}
+
 button {
   cursor: pointer;
 }

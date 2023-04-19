@@ -11,6 +11,8 @@ import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import Recommended from '../components/Recommended';
+
 const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
 
 const pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -163,7 +165,6 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
             auth?.user 
             ? (
                 <section>
-
                     <h2>Welcome</h2>
                     <p>
                         Search for a book, then save it! Add books you'd like to read to the <em>Want to Read</em> list, and books you've already read to the <em>Read list</em>.
@@ -174,6 +175,30 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                     <p>
                         Add your Favorites from the <em>Read List</em> to the <em>Favorites</em> list.
                     </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colSpan={1}>Recommended for you!</th>
+                                <th colSpan={1}>test</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+                                <td className='book-card'><Recommended /></td>
+
+                                <td>text</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
                     <button onClick={logout}>Logout</button>
                 </section >
             ) : (
