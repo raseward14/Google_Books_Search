@@ -8,7 +8,7 @@
 
 .line-break {
     border: 1px solid white;
-    width: 90%;
+    width: 93%;
 }
 
 .navlinks {
@@ -17,9 +17,8 @@
 
 .count {
     color: white;
-    width: 1%;
     float: right;
-    margin-right: 30px;
+    margin-right: 100%;
 }
 
 @media (max-width: 593px) {
