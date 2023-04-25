@@ -260,6 +260,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             console.log('queried books', response)
             const books = await response.json();
             let booksArray = books.items;
+            console.log(booksArray)
 
             const read = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
             const APIRead = read.data;
