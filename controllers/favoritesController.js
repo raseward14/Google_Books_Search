@@ -34,7 +34,7 @@ module.exports = {
         })
     },
     create: (req, res) => {
-        console.log('req body isbn13', req.body)
+        console.log('favorite controller receives this: ', req.body)
         // POST a My Reading Recommendation or favorite
         const myFavorite = new db.Favorite();
         myFavorite.title = req.body.title;

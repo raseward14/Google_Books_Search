@@ -35,6 +35,7 @@ module.exports = {
     },
     create: (req, res) => {
         // POST a Book To Read (http://localhost:8000/api/read)
+        console.log('want to read controller receives this: ', req.body)
         const newRead = new db.Read();
         newRead.title = req.body.title;
         newRead.authors = req.body.authors;

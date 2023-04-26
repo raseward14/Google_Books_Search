@@ -114,7 +114,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let rCount = await APIRead.length;
             setReadCount(rCount);
             setRead(APIRead);
-            console.log('already read API: ', APIRead)
         } catch (err) {
             navigate('/login', { state: { from: location }, replace: true });
         };

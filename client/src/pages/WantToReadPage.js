@@ -131,7 +131,6 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
             let wCount = await APIWant.length
             setWantCount(wCount);
             setWant(APIWant);
-            console.log('want to read API: ', APIWant)
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });
