@@ -31,6 +31,7 @@ const readSchema = new Schema({
     },
     description: String,
     imageLink: String, 
+    subject: String,
     infoLink: String,
     inProgress: {
         type: Boolean,
@@ -54,6 +55,7 @@ const librarySchema = new Schema({
     },
     description: String,
     imageLink: String, 
+    subject: String,
     infoLink: String,
     favorited: {
         type: Boolean,
@@ -76,6 +78,7 @@ const favoriteSchema = new Schema({
         default: undefined
     },
     description: String,
+    subject: String,
     imageLink: String, 
     infoLink: String,
     isbn13: String,

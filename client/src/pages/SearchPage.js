@@ -86,12 +86,12 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             setBooks(newArr)
             deleteFromWant(book)
         }
-
         readAPIFunctions.saveRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
+            subject: book.volumeInfo.categories[0],
             infoLink: book.volumeInfo.infoLink,
             isbn13: thisIsbn13,
             user_id: userID
@@ -141,6 +141,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
+            subject: book.volumeInfo.categories[0],
             infoLink: book.volumeInfo.infoLink,
             inProgress: false,
             isbn13: thisIsbn13,

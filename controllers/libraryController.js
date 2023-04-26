@@ -26,12 +26,13 @@ module.exports = {
     create: (req, res) => {
         // POST Book I've Read
         const libraryBook = new db.Library();
-        console.log(req.body)
+        console.log('library controller receives this: ', req.body)
         libraryBook.title = req.body.title;
         libraryBook.authors = req.body.authors;
         libraryBook.description = req.body.description;
         libraryBook.imageLink = req.body.imageLink;
         libraryBook.infoLink = req.body.infoLink;
+        libraryBook.subject = req.body.subject;
         libraryBook.isbn13 = req.body.isbn13;
         libraryBook.date = Date.now();
         libraryBook.user_id = req.body.user_id

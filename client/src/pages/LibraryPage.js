@@ -67,6 +67,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             authors: book.authors,
             description: book.description,
             imageLink: book.imageLink,
+            subject: book.subject,
             infoLink: book.infoLink,
             isbn13: book.isbn13,
             user_id: userID
@@ -113,6 +114,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let rCount = await APIRead.length;
             setReadCount(rCount);
             setRead(APIRead);
+            console.log('already read API: ', APIRead)
         } catch (err) {
             navigate('/login', { state: { from: location }, replace: true });
         };

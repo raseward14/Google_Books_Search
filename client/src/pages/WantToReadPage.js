@@ -75,6 +75,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
             authors: book.authors,
             description: book.description,
             imageLink: book.imageLink,
+            subject: book.subject,
             infoLink: book.infoLink,
             isbn13: book.isbn13,
             user_id: userID
@@ -130,6 +131,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
             let wCount = await APIWant.length
             setWantCount(wCount);
             setWant(APIWant);
+            console.log('want to read API: ', APIWant)
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });

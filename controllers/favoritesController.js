@@ -41,6 +41,7 @@ module.exports = {
         myFavorite.description = req.body.description;
         myFavorite.authors = req.body.authors;
         myFavorite.imageLink = req.body.imageLink;
+        myFavorite.subject = req.body.subject;
         myFavorite.infoLink = req.body.infoLink;
         myFavorite.isbn13 = req.body.isbn13;
         myFavorite.user_id = req.body.user_id;

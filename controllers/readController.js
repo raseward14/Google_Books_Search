@@ -40,6 +40,7 @@ module.exports = {
         newRead.authors = req.body.authors;
         newRead.description = req.body.description;
         newRead.imageLink = req.body.imageLink;
+        newRead.subject = req.body.subject;
         newRead.infoLink = req.body.infoLink;
         newRead.isbn13 = req.body.isbn13;
         newRead.user_id = req.body.user_id;
