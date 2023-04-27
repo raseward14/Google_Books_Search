@@ -35,7 +35,6 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
         readAPIFunctions.deleteRead(axiosPrivate, readBookID, accessToken);
         let rCount = await (readCount - 1)
         setReadCount(rCount)
-
     };
 
     async function setInProgressToTrue(book) {
@@ -128,7 +127,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
         try {
             let result = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
             APIWant = result.data;
-            let wCount = await APIWant.length
+            let wCount = await APIWant.length;
             setWantCount(wCount);
             setWant(APIWant);
         } catch (err) {

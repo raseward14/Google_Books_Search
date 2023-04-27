@@ -184,9 +184,7 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td className='book-card'><Recommended /></td>
-                                <td className='book-card'><Recommended /></td>
-
+                                <td><Recommended /></td>
                                 <td>text</td>
                             </tr>
                         </tbody>
