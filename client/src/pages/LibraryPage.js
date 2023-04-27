@@ -35,7 +35,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         suspects.map(suspect => {
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, suspect._id, accessToken);
         });
-        if (favCount > 0) {
+        console.log('suspects', suspects)
+        if (suspects.length > 0 && favCount > 0) {
             let fCount = await (favCount - 1);
             setFavCount(fCount);
         } else {

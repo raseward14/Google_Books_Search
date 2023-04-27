@@ -29,7 +29,7 @@ const Recommended = () => {
             authorArray.push(favAPI[i].authors[0])
         };
 
-        // right now, I dont store the subject of my favorites
+        // right now, I dont store the subject of my favorites - fixed! should be able to pick back up here next time
         // let subjectArray = [];
         // for (var i=0; i<favAPI.length; ++i) {
         //     subjectArray.push(favAPI[i].)

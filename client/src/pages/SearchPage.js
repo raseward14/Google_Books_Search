@@ -305,6 +305,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 let rCount = await APIRead.length
                 setReadCount(rCount);
                 console.log('searchPage loadHistory readCount: ', rCount)
+                console.log('api read: ', APIRead)
 
                 const want = await wantToReadAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
                 const APIWant = want.data;
@@ -312,6 +313,8 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 let wCount = await APIWant.length
                 setWantCount(wCount);
                 console.log('searchPage loadHistory want count:', wCount)
+                console.log('api want: ', APIWant)
+
 
                 const fav = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID)
                 let fCount = await fav.data.length
