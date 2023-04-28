@@ -3,28 +3,23 @@ import './style.css';
 import * as favoriteAPIFunctions from '../../utils/FavoriteAPI';
 import * as readAPIFunctions from '../../utils/ReadAPI';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+const stringSimilarity = require('string-similarity');
+
 
 const Recommended = () => {
 
     const [subject, setSubject] = useState('');
     const [author, setAuthor] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [read, setRead] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
 
-    const loadRead = async () => {
-        const readBooks = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
-        const readAPI = await readBooks.data;
-        setRead(readAPI);
-    };
-
     const mostUsedInArray = (array) => {
         console.log('I received this array: ', array)
         return array.sort((a, b) =>
-            array.filter(v => v === a).length
-            - array.filter(v => v === b).length
+            array.filter(v => stringSimilarity.compareTwoStrings(v, a) > 0.5).length
+            - array.filter(v => stringSimilarity.compareTwoStrings(v, b) > 0.5).length
         ).pop();
     };
 
@@ -37,7 +32,9 @@ const Recommended = () => {
         let authorArray = [];
         for (var i = 0; i < favAPI.length; ++i) {
             authorArray.push(favAPI[i].authors[0])
-        };
+        }
+
+        console.log('author array', authorArray)
         // call our mostUsedInArray function to find the most used author
         let favAuthor = await mostUsedInArray(authorArray);
         setAuthor(favAuthor);
@@ -79,7 +76,8 @@ const Recommended = () => {
             const suggestionsArray = suggestions.items;
             checkIfRead(suggestionsArray);
             console.log('your suggestions: ', suggestionsArray)
-            // setSuggestions(suggestionsArray)
+            // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
+            // remove the B, and an entire array is returned...
         };
     };
 
@@ -91,21 +89,24 @@ const Recommended = () => {
     // empty dependency array, run once on page load, retrieve favorite API data
     useEffect(() => {
         loadFavorites();
-        loadRead();
     }, []);
 
     return (
         <div>
-            {suggestions.length > 0 && (
-                <div>
-                    {suggestions.map((book, index) =>
-                        <td key={index} className="recommended-box book-card" >
-                            <p style={{ color: "white" }}>{book?.volumeInfo.title}</p>
-                            <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade"></img>
-                        </td>
-                    )}
-                </div>
-            )}
+            {suggestions.length > 0 ?
+                suggestions.length > 0 && (
+                    {
+                        suggestions.map((book, index) =>
+                            <td key={index} className="recommended-box book-card" >
+                                <p style={{ color: "white" }}>{book?.volumeInfo.title}</p>
+                                <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade"></img>
+                            </td>
+                        )
+                    }
+                )
+                :
+                <div>Favorite a few books, to view suggestions here!</div>
+            }
         </div>
     );
 };
