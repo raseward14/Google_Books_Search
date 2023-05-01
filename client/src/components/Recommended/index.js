@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import './style.css';
+// components
+import Modal from "../Mondal";
 import * as favoriteAPIFunctions from '../../utils/FavoriteAPI';
 import * as readAPIFunctions from '../../utils/ReadAPI';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const stringSimilarity = require('string-similarity');
+
 
 
 const Recommended = () => {
@@ -14,6 +17,11 @@ const Recommended = () => {
     const axiosPrivate = useAxiosPrivate();
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
+
+    const openModal = (book, index) => {
+        console.log('book index: ', index)
+        console.log('book: ', book?.volumeInfo)
+    }
 
     const mostUsedInArray = (array) => {
         console.log('I received this array: ', array)
@@ -76,7 +84,7 @@ const Recommended = () => {
             const suggestions = await response.json();
             const suggestionsArray = suggestions.items;
             // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
-            if(suggestionsArray !== undefined) {
+            if (suggestionsArray !== undefined) {
                 checkIfRead(suggestionsArray);
             } else {
 
@@ -98,12 +106,17 @@ const Recommended = () => {
     return (
         <div>
             {suggestions.length > 0 ?
-                <div>
+                <div
+                    className="button">
                     {suggestions.length > 0 && (
                         suggestions.map((book, index) =>
-                            <td key={index} className="recommended-box book-card" >
-                                <p style={{ color: "white" }}>{book?.volumeInfo.title}</p>
-                                <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade"></img>
+                            <td key={index} className="recommended-box book-card">
+                                <div onClick={() => {
+                                    openModal(book, index);
+                                }}>
+                                    <p style={{ color: "white" }}>{book?.volumeInfo.title}</p>
+                                    <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade"></img>
+                                </div>
                             </td>
                         )
                     )}
