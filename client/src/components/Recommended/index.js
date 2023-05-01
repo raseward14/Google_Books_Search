@@ -14,14 +14,24 @@ const Recommended = () => {
     const [subject, setSubject] = useState('');
     const [author, setAuthor] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+    const [modalState, setModalState] = useState(false);
     const axiosPrivate = useAxiosPrivate();
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
 
     const openModal = (book, index) => {
-        const clickedBook = book?.volumeInfo
-        Modal(clickedBook, index)
-    }
+        if (book.modal) {
+            book.modal = false;
+            setModalState(false);
+        } else {
+            book.modal = true;
+            setModalState(true);
+        };
+        const newBook = book;
+        const newArr = [...suggestions];
+        newArr[index] = newBook;
+        setSuggestions('test', newArr);
+    };
 
     const mostUsedInArray = (array) => {
         console.log('I received this array: ', array)
@@ -94,6 +104,10 @@ const Recommended = () => {
         };
     };
 
+    useEffect(() => {
+        console.log('suggestions: ', suggestions)
+    }, [suggestions])
+
     // when author, and subject both have values, call loadSuggestions to send api request
     useEffect(() => {
         loadSuggestions(author, subject);
@@ -121,6 +135,8 @@ const Recommended = () => {
                             </td>
                         )
                     )}
+                    <Modal
+                        modalState={modalState} />
                 </div>
                 :
                 <div>Favorite a few books, to view suggestions here!</div>
