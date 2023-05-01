@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-const Modal = ({ state }) => {
 
-    const [modalState, setModalState] = useState(false);
-    const modal = document.getElementbyID('myModal');
+const Modal = ({ clickedBook, index }) => {
 
-    const toggleModal = () => {
-        if(modalState) {
-            modal.style.display = 'block'
+    const myModal = document.getElementById("myModal");
+
+    const toggleModal = async (clickedBook) => {
+        if(clickedBook.modal) {
+            myModal.style.display = 'block';
         } else {
-            modal.style.display = 'none'
+            myModal.style.display = 'none';
         };
     };
 

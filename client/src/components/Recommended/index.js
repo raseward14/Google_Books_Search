@@ -19,8 +19,8 @@ const Recommended = () => {
     const userID = sessionStorage.getItem('userID');
 
     const openModal = (book, index) => {
-        console.log('book index: ', index)
-        console.log('book: ', book?.volumeInfo)
+        const clickedBook = book?.volumeInfo
+        Modal(clickedBook, index)
     }
 
     const mostUsedInArray = (array) => {
@@ -70,6 +70,7 @@ const Recommended = () => {
                 console.log('already read')
             } else {
                 console.log('not read')
+                book.modal = false;
                 unreadSuggestions.push(book)
             }
         });

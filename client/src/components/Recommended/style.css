@@ -5,6 +5,7 @@
     border-radius: 5px;
     opacity: 1;
     overflow: hidden;
+    margin: 6px;
 }
 
 .button :hover {
