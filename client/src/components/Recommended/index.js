@@ -71,13 +71,17 @@ const Recommended = () => {
 
     const loadSuggestions = async (author, subject) => {
         if (author !== '' && subject !== '') {
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${subject}",inauthor:"${author}"`)
+            // "" to search for exact phrases, enclose in quotations marks - removing from author - that did it - David B Wong now returns books
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${subject}",inauthor:${author}`)
             const suggestions = await response.json();
             const suggestionsArray = suggestions.items;
-            checkIfRead(suggestionsArray);
-            console.log('your suggestions: ', suggestionsArray)
             // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
-            // remove the B, and an entire array is returned...
+            if(suggestionsArray !== undefined) {
+                checkIfRead(suggestionsArray);
+            } else {
+
+            }
+            console.log('your suggestions: ', suggestionsArray)
         };
     };
 
@@ -94,16 +98,16 @@ const Recommended = () => {
     return (
         <div>
             {suggestions.length > 0 ?
-                suggestions.length > 0 && (
-                    {
+                <div>
+                    {suggestions.length > 0 && (
                         suggestions.map((book, index) =>
                             <td key={index} className="recommended-box book-card" >
                                 <p style={{ color: "white" }}>{book?.volumeInfo.title}</p>
                                 <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade"></img>
                             </td>
                         )
-                    }
-                )
+                    )}
+                </div>
                 :
                 <div>Favorite a few books, to view suggestions here!</div>
             }
