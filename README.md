@@ -69,4 +69,4 @@ Resources:
 * [react-burger-menu](https://negomi.github.io/react-burger-menu/)
 * [negomi react-burger-menu](https://github.com/negomi/react-burger-menu)
 * [npm react-burger-menu](https://www.npmjs.com/package/react-burger-menu?activeTab=readme)
-* [npm string-similarity] (https://www.npmjs.com/package/string-similarity)
+* [npm string-similarity](https://www.npmjs.com/package/string-similarity)
