@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './style.css';
 // components
-import Modal from "../Mondal";
+import Modal from "../Modal";
 import * as favoriteAPIFunctions from '../../utils/FavoriteAPI';
 import * as readAPIFunctions from '../../utils/ReadAPI';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -14,22 +14,18 @@ const Recommended = () => {
     const [subject, setSubject] = useState('');
     const [author, setAuthor] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [modalState, setModalState] = useState(false);
+    const [theModal, setTheModal] = useState()
+    const [currentIndex, setCurrentIndex] = useState();
+    const [currentBook, setCurrentBook] = useState();
     const axiosPrivate = useAxiosPrivate();
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
 
     const openModal = (book, index) => {
-        console.log('just clicked this book and index: ', book, index)
-        if(book.modal) {
-            book.modal = false;
-            console.log('false');
-            setModalState(false);
-        } else {
-            book.modal = true;
-            console.log('true');
-            setModalState(true);
-        };
+        book.modal = true;
+        setTheModal(true);
+        setCurrentIndex(index);
+        setCurrentBook(book);
         const newBook = book;
         const newArr = [...suggestions]
         newArr[index] = newBook;
@@ -89,7 +85,7 @@ const Recommended = () => {
         });
         console.log('unread suggestions: ', unreadSuggestions)
         setSuggestions(unreadSuggestions);
-    }
+    };
 
     const loadSuggestions = async (author, subject) => {
         if (author !== '' && subject !== '') {
@@ -107,13 +103,15 @@ const Recommended = () => {
         };
     };
 
-    const modalStateFunction = (value) => {
-        setModalState(value);
-    };
-
-    useEffect(() => {
-        console.log('suggestions: ', suggestions)
-    }, [suggestions])
+    async function updateTheComponent() {
+        const clickedBook = await suggestions[currentIndex];
+        clickedBook['modal'] = false;
+        console.log('made it here', clickedBook)
+        const newArr = await [...suggestions];
+        newArr[currentIndex] = clickedBook;
+        setSuggestions(newArr);
+        setTheModal(false)
+    }
 
     // when author, and subject both have values, call loadSuggestions to send api request
     useEffect(() => {
@@ -143,8 +141,9 @@ const Recommended = () => {
                         )
                     )}
                     <Modal
-                        modalState={modalState}
-                        updateState={modalStateFunction} />
+                        state={theModal}
+                        callbackFunction={updateTheComponent}
+                        book={currentBook} />
                 </div>
                 :
                 <div>Favorite a few books, to view suggestions here!</div>
