@@ -20,17 +20,20 @@ const Recommended = () => {
     const userID = sessionStorage.getItem('userID');
 
     const openModal = (book, index) => {
-        if (book.modal) {
+        console.log('just clicked this book and index: ', book, index)
+        if(book.modal) {
             book.modal = false;
+            console.log('false');
             setModalState(false);
         } else {
             book.modal = true;
+            console.log('true');
             setModalState(true);
         };
         const newBook = book;
-        const newArr = [...suggestions];
+        const newArr = [...suggestions]
         newArr[index] = newBook;
-        setSuggestions('test', newArr);
+        setSuggestions(newArr);
     };
 
     const mostUsedInArray = (array) => {
@@ -104,6 +107,10 @@ const Recommended = () => {
         };
     };
 
+    const modalStateFunction = (value) => {
+        setModalState(value);
+    };
+
     useEffect(() => {
         console.log('suggestions: ', suggestions)
     }, [suggestions])
@@ -136,7 +143,8 @@ const Recommended = () => {
                         )
                     )}
                     <Modal
-                        modalState={modalState} />
+                        modalState={modalState}
+                        updateState={modalStateFunction} />
                 </div>
                 :
                 <div>Favorite a few books, to view suggestions here!</div>
