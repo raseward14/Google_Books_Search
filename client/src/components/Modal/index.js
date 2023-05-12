@@ -29,11 +29,11 @@ const Modal = ({ state, callbackFunction, book }) => {
                     <tr>
                         {book ? (
                             <tr>
-                                <td className="button recommended-box book-card">
+                                <td className="recommended-box book-card">
                                     <p style={{ color: "white" }}>{book.volumeInfo.title}</p>
                                     <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade" />
                                 </td>
-                                <td className="button"><span
+                                <td ><span className="close"
                                     onClick={() => {
                                         closeModal();
                                     }}>&times;</span></td>
@@ -43,6 +43,7 @@ const Modal = ({ state, callbackFunction, book }) => {
                             <tr>
                                 <td><p>Modal Content</p></td>
                                 <td><span
+                                    className="close"
                                     onClick={() => {
                                         closeModal();
                                     }}>&times;</span></td>
