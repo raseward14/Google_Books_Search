@@ -107,7 +107,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let newArr = [...books];
             newArr[index] = book;
             setBooks(newArr);
-            deleteFromRead(book)
+            deleteFromRead(book);
         } else {
             book.read = true;
             let newArr = [...books];

@@ -6,29 +6,23 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
-const ReadButton = (book, { appReadCount }) => {
+const ReadButton = (suggestionsArray, book, index, { appReadCount, suggestionsArrayCallback }) => {
 
     // navBar count state variables
     const [readCount, setReadCount] = useState(null);
-    const [wantCount, setWantCount] = useState(null);
-    const [favCount, setFavCount] = useState(null);
+    const [newSuggestionsArray, setNewSuggestionsArray] = useState([]);
+    const [book, setBook] = useState(book);
 
     // to auth API calls
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
     const axiosPrivate = useAxiosPrivate();
 
-    async function addToRead(book, index) {
+    // add to read books, update count
+    async function addToRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
 
-        if (book.want === true) {
-            book.want = false;
-            let newArr = [...books]
-            newArr[index] = book;
-            setBooks(newArr)
-            deleteFromWant(book)
-        }
         readAPIFunctions.saveRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
@@ -43,9 +37,46 @@ const ReadButton = (book, { appReadCount }) => {
         setReadCount(rCount);
     };
 
+    // remove from the suggestions array - flip .read to true
+    function clickedRead(book, index) {
+        book.read = true;
+        let newArr = [...suggestionsArray];
+        delete newArr[index];
+        setBook(book);
+        setSuggestionsArray(newArr);
+    }
+
+    useEffect(() => {
+        suggestionsArrayCallback(newSuggestionsArray)
+    }, [newSuggestionsArray])
+
+    useEffect(() => {
+        appReadCount(readCount);
+    }, [readCount]);
+
     return (
         <div>
-
+            {book.read === true ?
+                <button
+                    style={{ "backgroundColor": "green" }}
+                    onClick={() => {
+                        clickedRead(book, index)
+                    }}>
+                    <FontAwesomeIcon
+                        icon={faSquareCheck}
+                        className='fa-2x'
+                    />
+                </button>
+                : <button
+                    onClick={() => {
+                        clickedRead(book, index)
+                    }}>
+                    <FontAwesomeIcon
+                        icon={faQuestion}
+                        className='fa-2x'
+                    />
+                </button>
+            }
         </div>
     )
 };

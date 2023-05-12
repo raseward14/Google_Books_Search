@@ -102,17 +102,17 @@ const Recommended = () => {
             } else {
                 console.log('not read')
                 book.modal = false;
-                unreadSuggestions.push(book)
+                unreadSuggestions.push(book);
             };
         });
-        console.log('unread suggestions: ', unreadSuggestions)
+        console.log('unread suggestions: ', unreadSuggestions);
         checkIfWant(unreadSuggestions);
     };
 
     const loadSuggestions = async (author, subject) => {
         if (author !== '' && subject !== '') {
             // "" to search for exact phrases, enclose in quotations marks - removing from author - that did it - David B Wong now returns books
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${subject}",inauthor:${author}`)
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${subject}",inauthor:${author}`);
             const suggestions = await response.json();
             const suggestionsArray = suggestions.items;
             // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
@@ -120,8 +120,8 @@ const Recommended = () => {
                 checkIfRead(suggestionsArray);
             } else {
 
-            }
-            console.log('your suggestions: ', suggestionsArray)
+            };
+            console.log('your suggestions: ', suggestionsArray);
         };
     };
 

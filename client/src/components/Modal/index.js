@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import './style.css'
 
+// importing the buttons
+import ReadButton from "../ReadButton";
+
 const Modal = ({ state, callbackFunction, book }) => {
     const myModal = document.getElementById("myModal");
 
@@ -36,7 +39,18 @@ const Modal = ({ state, callbackFunction, book }) => {
                                 <td ><span className="close"
                                     onClick={() => {
                                         closeModal();
-                                    }}>&times;</span></td>
+                                    }}>&times;</span>
+                                </td>
+                                <td>
+                                    <tr>
+                                        {/* <ReadButton 
+                                        suggestionsArray={}
+                                        book={book}
+                                        index={}
+                                        appReadCount={}
+                                        suggestionsArrayCallback={} /> */}
+                                    </tr>
+                                </td>
                             </tr>
                             // component for adding to read, and adding to want to read
                         )
