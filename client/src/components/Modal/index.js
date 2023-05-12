@@ -38,6 +38,7 @@ const Modal = ({ state, callbackFunction, book }) => {
                                         closeModal();
                                     }}>&times;</span></td>
                             </tr>
+                            // component for adding to read, and adding to want to read
                         )
                             :
                             <tr>

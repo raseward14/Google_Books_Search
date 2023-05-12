@@ -4,6 +4,7 @@ import './style.css';
 import Modal from "../Modal";
 import * as favoriteAPIFunctions from '../../utils/FavoriteAPI';
 import * as readAPIFunctions from '../../utils/ReadAPI';
+import * as wantAPIFunctions from '../../utils/WantToReadAPI';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const stringSimilarity = require('string-similarity');
 
@@ -68,23 +69,44 @@ const Recommended = () => {
         console.log('fav subject: ', favSubject)
     };
 
+    // remove any book that you've already marked as want to read from suggestions
+    const checkIfWant = async (suggestionsArray) => {
+        const wantBooks = await wantAPIFunctions.getWantToRead(axiosPrivate, accessToken, userID);
+        const wantAPI = await wantBooks.data;
+        const wantTitles = await wantAPI.map(book => book.title);
+        let newSuggestions = [];
+        await suggestionsArray.forEach((book) => {
+            console.log('title', book?.volumeInfo.title);
+            if(wantTitles.includes(book?.volumeInfo?.title)) {
+                console.log('already on the want list');
+            } else {
+                console.log('this is a new book')
+                book.modal = false;
+                newSuggestions.push(book)
+            };
+        });
+        console.log('new suggestions: ', newSuggestions)
+        setSuggestions(newSuggestions);
+    }
+
+    // remove any book that you've read already from the suggestions
     const checkIfRead = async (suggestionsArray) => {
         const readBooks = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
         const readAPI = await readBooks.data;
-        const readTitles = await readAPI.map(book => book.title)
+        const readTitles = await readAPI.map(book => book.title);
         let unreadSuggestions = [];
         await suggestionsArray.forEach((book) => {
             console.log('titles', book?.volumeInfo?.title)
             if (readTitles.includes(book?.volumeInfo?.title)) {
-                console.log('already read')
+                console.log('already read');
             } else {
                 console.log('not read')
                 book.modal = false;
                 unreadSuggestions.push(book)
-            }
+            };
         });
         console.log('unread suggestions: ', unreadSuggestions)
-        setSuggestions(unreadSuggestions);
+        checkIfWant(unreadSuggestions);
     };
 
     const loadSuggestions = async (author, subject) => {
