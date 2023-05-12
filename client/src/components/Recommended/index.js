@@ -126,11 +126,10 @@ const Recommended = () => {
     return (
         <div>
             {suggestions.length > 0 ?
-                <div
-                    className="button">
+                <div>
                     {suggestions.length > 0 && (
                         suggestions.map((book, index) =>
-                            <td key={index} className="recommended-box book-card">
+                            <td key={index} className="button recommended-box book-card">
                                 <div onClick={() => {
                                     openModal(book, index);
                                 }}>

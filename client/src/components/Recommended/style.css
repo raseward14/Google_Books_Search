@@ -8,7 +8,6 @@
     margin: 6px;
 }
 
-.button :hover {
-    background-color: black;
+td.button :hover {
     cursor: pointer;
 }

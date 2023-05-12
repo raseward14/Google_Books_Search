@@ -30,12 +30,11 @@ const Modal = ({ state, callbackFunction, book }) => {
                         {book ? (
                             <tr>
                                 <td><p>{book.volumeInfo.title}</p></td>
-                                <td><span
+                                <td className="button"><span
                                     onClick={() => {
                                         closeModal();
                                     }}>&times;</span></td>
                             </tr>
-
                         )
                             :
                             <tr>
@@ -44,10 +43,8 @@ const Modal = ({ state, callbackFunction, book }) => {
                                     onClick={() => {
                                         closeModal();
                                     }}>&times;</span></td>
-
                             </tr>
                         }
-
                     </tr>
                 </tbody>
             </table>
