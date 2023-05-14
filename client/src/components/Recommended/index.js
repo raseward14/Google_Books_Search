@@ -128,7 +128,6 @@ const Recommended = () => {
     async function updateTheComponent() {
         const clickedBook = await suggestions[currentIndex];
         clickedBook['modal'] = false;
-        console.log('made it here', clickedBook)
         const newArr = await [...suggestions];
         newArr[currentIndex] = clickedBook;
         setSuggestions(newArr);
