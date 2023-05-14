@@ -11,7 +11,7 @@ const ReadButton = (suggestionsArray, book, index, { appReadCount, suggestionsAr
     // navBar count state variables
     const [readCount, setReadCount] = useState(null);
     const [newSuggestionsArray, setNewSuggestionsArray] = useState([]);
-    const [book, setBook] = useState(book);
+    const [book, setBook] = useState();
 
     // to auth API calls
     const accessToken = sessionStorage.getItem('accessToken');

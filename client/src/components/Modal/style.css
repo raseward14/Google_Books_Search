@@ -1,2 +1,10 @@
-
+.close2 {
+    color: #aaaaaa;
+    border: 5px solid limegreen;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    margin-bottom: 0px;
+}
 

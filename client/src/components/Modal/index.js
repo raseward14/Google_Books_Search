@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import './style.css'
 
 // importing the buttons
-import ReadButton from "../ReadButton";
+// import ReadButton from "../ReadButton";
 
 const Modal = ({ state, callbackFunction, book }) => {
     const myModal = document.getElementById("myModal");
@@ -36,7 +36,7 @@ const Modal = ({ state, callbackFunction, book }) => {
                                     <p style={{ color: "white" }}>{book.volumeInfo.title}</p>
                                     <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade" />
                                 </td>
-                                <td ><span className="close"
+                                <td ><span className="close2"
                                     onClick={() => {
                                         closeModal();
                                     }}>&times;</span>

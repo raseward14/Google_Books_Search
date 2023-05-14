@@ -20,11 +20,11 @@ table {
 
 thead tr th {
   width: 50%;
-  border: 1px black solid;
+  /* border: 1px black solid; */
 }
 
 tbody tr td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 tbody tr {
