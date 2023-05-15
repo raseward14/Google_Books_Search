@@ -83,12 +83,18 @@ const Modal = ({ state, callbackFunction, book }) => {
         if (clickedBook.read === true) {
             clickedBook.read = false;
             setModalBook({ "read": false });
-            clickedWant(clickedBook);
             // deleteFromRead(clickedBook);
-        } else {
+        } else if (clickedBook.want === false) {
             clickedBook.read = true;
             setModalBook({ "read": true });
             // addToRead(clickedBook);
+        } else {
+            clickedBook.read = true;
+            clickedBook.want = false;
+            setModalBook({
+                "read": true,
+                "want": false
+            })
         };
     };
 
@@ -96,10 +102,12 @@ const Modal = ({ state, callbackFunction, book }) => {
     function clickedWant(clickedBook) {
         if (clickedBook.want) {
             clickedBook.want = false;
+            console.log('want is: ', clickedBook.want)
             setModalBook({ "want": false });
             // deletefromWant(clickedBook)
         } else {
             clickedBook.want = true;
+            console.log('want is: ', clickedBook.want)
             setModalBook({ "want": true });
             // addToWant(clickedBook)
         };
