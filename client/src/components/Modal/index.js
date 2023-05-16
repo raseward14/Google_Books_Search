@@ -159,9 +159,9 @@ const Modal = ({ state, callbackFunction, book }) => {
                                     <p style={{ color: "white" }}>{book.volumeInfo.title}</p>
                                     <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade" />
                                 </td>
-                                <td >
+                                <td className="modal-buttons-container" >
                                     <ReactTooltip id="myTip" />
-                                    <tr>
+                                    <tr className="modal-button">
                                         {modalBook.read === true ?
                                             <button
                                                 data-tooltip-id="myTip"
@@ -189,7 +189,7 @@ suggestionsArrayCallback={} /> */
                                         }
                                     </tr>
 
-                                    <tr>{modalBook.want === true ?
+                                    <tr className="modal-button">{modalBook.want === true ?
                                         <button
                                             data-tooltip-id="myTip"
                                             data-tooltip-content="Remove from want to read list!"
@@ -216,8 +216,7 @@ suggestionsArrayCallback={} /> */
                                     }
                                     </tr>
 
-                                    <tr>
-
+                                    <tr className="modal-button">
                                         <span className="close2"
                                             onClick={() => {
                                                 closeModal();

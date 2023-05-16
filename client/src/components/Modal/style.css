@@ -1,6 +1,5 @@
 .close2 {
     color: #aaaaaa;
-    border: 5px solid limegreen;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -8,3 +7,16 @@
     margin-bottom: 0px;
 }
 
+.modal-buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    align-content: space-between;
+    height: 20vh;
+}
+
+.modal-button {
+
+};
