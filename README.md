@@ -70,3 +70,4 @@ Resources:
 * [negomi react-burger-menu](https://github.com/negomi/react-burger-menu)
 * [npm react-burger-menu](https://www.npmjs.com/package/react-burger-menu?activeTab=readme)
 * [npm string-similarity](https://www.npmjs.com/package/string-similarity)
+* [react-tooltip](https://www.npmjs.com/package/react-tooltip)
