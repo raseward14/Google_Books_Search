@@ -150,7 +150,7 @@ const Modal = ({ state, callbackFunction, book }) => {
 
     return (
         <div id="myModal" className="modal">
-            <table className="modal-content">
+            <table className="book-modal-content">
                 <tbody>
                     <tr>
                         {modalBook ? (
@@ -166,7 +166,10 @@ const Modal = ({ state, callbackFunction, book }) => {
                                             <button
                                                 data-tooltip-id="myTip"
                                                 data-tooltip-content="Remove from your read books!"
-                                                style={{ "backgroundColor": "green" }}
+                                                style={{
+                                                    backgroundColor: "green",
+                                                    width: "3vw"
+                                                }}
                                                 onClick={() => {
                                                     clickedRead(modalBook);
                                                 }}><FontAwesomeIcon icon={faSquareCheck}
@@ -181,7 +184,10 @@ suggestionsArrayCallback={} /> */
                                             <button
                                                 data-tooltip-id="myTip"
                                                 data-tooltip-content="Add to your read books!"
-                                                style={{ "backgroundColor": "revert" }}
+                                                style={{
+                                                    backgroundColor: "revert",
+                                                    width: "3vw"
+                                                }}
                                                 onClick={() => {
                                                     clickedRead(modalBook);
                                                 }}><FontAwesomeIcon icon={faQuestion}
@@ -193,12 +199,15 @@ suggestionsArrayCallback={} /> */
                                         <button
                                             data-tooltip-id="myTip"
                                             data-tooltip-content="Remove from want to read list!"
-                                            style={{ "backgroundColor": "green" }}
+                                            style={{
+                                                backgroundColor: "green",
+                                                width: "3vw"
+                                            }}
                                             onClick={() => {
                                                 clickedWant(modalBook);
                                             }}><FontAwesomeIcon
                                                 icon={faBookBookmark}
-                                                className='fa-2x' /></button>
+                                                className='fa-1x' /></button>
                                         : modalBook.read ?
                                             <FontAwesomeIcon
                                                 icon={faBookBookmark}
@@ -207,7 +216,10 @@ suggestionsArrayCallback={} /> */
                                             <button
                                                 data-tooltip-id="myTip"
                                                 data-tooltip-content="Add to want to read list!"
-                                                style={{ "backgroundColor": "revert" }}
+                                                style={{
+                                                    backgroundColor: "revert",
+                                                    width: "3vw"
+                                                }}
                                                 onClick={() => {
                                                     clickedWant(modalBook);
                                                 }}><FontAwesomeIcon
@@ -217,7 +229,7 @@ suggestionsArrayCallback={} /> */
                                     </tr>
 
                                     <tr className="modal-button">
-                                        <span className="close2"
+                                        <span className="book-modal-close"
                                             onClick={() => {
                                                 closeModal();
                                             }}>&times;</span>
