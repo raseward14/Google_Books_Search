@@ -10,7 +10,7 @@ const stringSimilarity = require('string-similarity');
 
 
 
-const Recommended = ({ WCount }) => {
+const Recommended = ({ WCount, RCount }) => {
 
     const [subject, setSubject] = useState('');
     const [author, setAuthor] = useState('');
@@ -164,7 +164,8 @@ const Recommended = ({ WCount }) => {
                         state={theModal}
                         callbackFunction={updateTheComponent}
                         book={currentBook}
-                        wantCount={WCount} />
+                        wantCount={WCount}
+                        readCount={RCount} />
                 </div>
                 :
                 <div>Favorite a few books, to view suggestions here!</div>

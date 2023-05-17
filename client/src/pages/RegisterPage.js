@@ -47,9 +47,13 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
 
+    const readCallbackCount = (value) => {
+        appReadCount(value);
+    };
+
     const wantCallbackCount = (value) => {
-        appWantCount(value)
-    }
+        appWantCount(value);
+    };
 
     // if an auth?.user exists, then set the value of these
     useEffect(async() => {
@@ -188,7 +192,8 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         <tbody>
                             <tr>
                                 <td><Recommended
-                                WCount={wantCallbackCount} /></td>
+                                WCount={wantCallbackCount}
+                                RCount={readCallbackCount} /></td>
                                 <td>text</td>
                             </tr>
                         </tbody>

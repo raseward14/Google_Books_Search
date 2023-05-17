@@ -13,20 +13,20 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 // api calls - read, want, and axiosPrivate
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import * as readAPIFunctions from '../../utils/ReadAPI';
-import * as wantToReadAPIFunctions from '../../utils/WantToReadAPI';
+import * as wantAPIFunctions from '../../utils/WantToReadAPI';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 // ------------------------------------------------------------------
 
 
-
-const Modal = ({ state, callbackFunction, book, wantCount }) => {
+// parameters in use: wantCount, readCount
+const Modal = ({ state, callbackFunction, book, wantCount, readCount }) => {
     // ---------------------------------------------------
     // navbar count state variables
     const { auth } = useAuth();
-    const [readCount, setReadCount] = useState(null);
+    const [RCount, setRCount] = useState(null);
     const [WCount, setWCount] = useState(null);
     // axiosPrivate, userID, and accessToken for api calls
     const accessToken = sessionStorage.getItem('accessToken');
@@ -47,14 +47,14 @@ const Modal = ({ state, callbackFunction, book, wantCount }) => {
         let result = await readAPIFunctions.getReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
         let readResult = result.data;
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
-        let rCount = await (readCount - 1);
-        setReadCount(rCount);
+        let rCount = await (RCount - 1);
+        setRCount(rCount);
     };
     // POST read
     async function addToRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-
+        console.log('made it here')
         if (book.want === true) {
             book.want = false;
             deleteFromWant(book)
@@ -69,18 +69,18 @@ const Modal = ({ state, callbackFunction, book, wantCount }) => {
             isbn13: thisIsbn13,
             user_id: userID
         }, accessToken);
-        let rCount = await (readCount + 1);
-        setReadCount(rCount);
+        let rCount = await (RCount + 1);
+        setRCount(rCount);
     };
     // DELETE want -> uses db query to GET by isbn13 before deleting
     async function deleteFromWant(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
-        let result = await wantToReadAPIFunctions.getWantToReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID)
+        let result = await wantAPIFunctions.getWantToReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID)
         let wantResult = result.data;
         console.log('want result:', wantResult.length)
         if (wantResult.length > 0) {
-            wantToReadAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
+            wantAPIFunctions.deleteWantToRead(axiosPrivate, wantResult[0]._id, accessToken)
             let wCount = await (WCount - 1);
             setWCount(wCount)
         };
@@ -91,7 +91,7 @@ const Modal = ({ state, callbackFunction, book, wantCount }) => {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13)
         let thisIsbn13 = isbn13Array[0].identifier
 
-        await wantToReadAPIFunctions.saveWantToRead(axiosPrivate, {
+        await wantAPIFunctions.saveWantToRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
@@ -111,11 +111,11 @@ const Modal = ({ state, callbackFunction, book, wantCount }) => {
         if (clickedBook.read === true) {
             clickedBook.read = false;
             setModalBook({ "read": false });
-            // deleteFromRead(clickedBook);
+            deleteFromRead(clickedBook);
         } else if (clickedBook.want === false) {
             clickedBook.read = true;
             setModalBook({ "read": true });
-            // addToRead(clickedBook);
+            addToRead(clickedBook);
         } else {
             clickedBook.read = true;
             clickedBook.want = false;
@@ -123,6 +123,8 @@ const Modal = ({ state, callbackFunction, book, wantCount }) => {
                 "read": true,
                 "want": false
             })
+            addToRead(clickedBook);
+
         };
     };
 
@@ -153,6 +155,10 @@ const Modal = ({ state, callbackFunction, book, wantCount }) => {
     };
 
     useEffect(() => {
+        readCount(RCount);
+    }, [RCount]);
+
+    useEffect(() => {
         wantCount(WCount)
     }, [WCount]);
 
@@ -165,7 +171,9 @@ const Modal = ({ state, callbackFunction, book, wantCount }) => {
             let wCount = APIWant.data.length;
             setWCount(wCount);
 
-
+            const APIRead = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
+            let rCount = APIRead.data.length;
+            setRCount(rCount);
         }
     })
 
