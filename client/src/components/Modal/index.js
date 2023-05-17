@@ -168,7 +168,7 @@ const Modal = ({ state, callbackFunction, book }) => {
                                                 data-tooltip-content="Remove from your read books!"
                                                 style={{
                                                     backgroundColor: "green",
-                                                    width: "3vw"
+                                                    width: "45px"
                                                 }}
                                                 onClick={() => {
                                                     clickedRead(modalBook);
@@ -186,7 +186,7 @@ suggestionsArrayCallback={} /> */
                                                 data-tooltip-content="Add to your read books!"
                                                 style={{
                                                     backgroundColor: "revert",
-                                                    width: "3vw"
+                                                    width: "45px"
                                                 }}
                                                 onClick={() => {
                                                     clickedRead(modalBook);
@@ -201,13 +201,13 @@ suggestionsArrayCallback={} /> */
                                             data-tooltip-content="Remove from want to read list!"
                                             style={{
                                                 backgroundColor: "green",
-                                                width: "3vw"
+                                                width: "45px"
                                             }}
                                             onClick={() => {
                                                 clickedWant(modalBook);
                                             }}><FontAwesomeIcon
                                                 icon={faBookBookmark}
-                                                className='fa-1x' /></button>
+                                                className='fa-2x' /></button>
                                         : modalBook.read ?
                                             <FontAwesomeIcon
                                                 icon={faBookBookmark}
@@ -218,7 +218,7 @@ suggestionsArrayCallback={} /> */
                                                 data-tooltip-content="Add to want to read list!"
                                                 style={{
                                                     backgroundColor: "revert",
-                                                    width: "3vw"
+                                                    width: "45px"
                                                 }}
                                                 onClick={() => {
                                                     clickedWant(modalBook);
