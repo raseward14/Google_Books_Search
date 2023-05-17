@@ -12,6 +12,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Toggle from '../components/Toggle/toggle';
 import Filter from '../components/Filter/filter';
 
+
 const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     const [search, setSearch] = useState('');

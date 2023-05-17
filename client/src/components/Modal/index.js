@@ -162,8 +162,8 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount }) => {
         wantCount(WCount)
     }, [WCount]);
 
-    useEffect(async() => {
-        if(auth?.user) {
+    useEffect(async () => {
+        if (auth?.user) {
             let accessToken = await sessionStorage.getItem('accessToken');
             let userID = await sessionStorage.getItem('userID');
 
@@ -274,7 +274,11 @@ suggestionsArrayCallback={} /> */
                                     </tr>
 
                                     <tr className="modal-button">
-                                        <span className="book-modal-close"
+                                        <ReactTooltip id="closeBookTip" />
+                                        <span
+                                            data-tooltip-id="closeBookTip"
+                                            data-tooltip-content="close"
+                                            className="book-modal-close"
                                             onClick={() => {
                                                 closeModal();
                                             }}>&times;</span>
@@ -286,11 +290,15 @@ suggestionsArrayCallback={} /> */
                             :
                             <tr>
                                 <td><p>Modal Content</p></td>
-                                <td><span
-                                    className="close"
-                                    onClick={() => {
-                                        closeModal();
-                                    }}>&times;</span></td>
+                                <td
+                                    data-tooltip-id="closeBookTip"
+                                    data-tooltip-content="close"
+                                >
+                                    <span
+                                        className="close"
+                                        onClick={() => {
+                                            closeModal();
+                                        }}>&times;</span></td>
                             </tr>
                         }
                     </tr>

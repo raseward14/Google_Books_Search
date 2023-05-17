@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react';
 import Toggle from '../Toggle/toggle';
 import './style.css';
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
 
 const Filter = ({ tText, aText, gText }) => {
     // toggle button state
@@ -78,7 +81,10 @@ const Filter = ({ tText, aText, gText }) => {
         <div>
             <table>
                 <th>
+                <ReactTooltip id="filterTip" />
                     <td
+                    data-tooltip-id="filterTip"
+                    data-tooltip-content="Filter your search results!"
                         onClick={openFilter}
                         id="button"
                         className="filter">
@@ -124,7 +130,12 @@ const Filter = ({ tText, aText, gText }) => {
                             onChange={(event) => {
                                 setGenreText(event.target.value);
                             }} /><br />
+                                            <ReactTooltip id="filterCloseTip" />
+
                         <span
+                                            data-tooltip-id="filterCloseTip"
+                                            data-tooltip-content="close"
+                        
                             onClick={closeFilter}
                             className="close">&times;</span>
                     </td>
