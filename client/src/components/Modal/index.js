@@ -11,7 +11,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 // --------------------------------------------------------------------
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookBookmark, faSquareCheck, faBook, faQuestion, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { faBookBookmark, faSquareCheck, faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
 // api calls - read, want, and axiosPrivate
 import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';

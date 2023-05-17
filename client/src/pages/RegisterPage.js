@@ -186,7 +186,7 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         <thead>
                             <tr>
                                 <th colSpan={1}>Recommended for you!</th>
-                                <th colSpan={1}>test</th>
+                                <th colSpan={1}></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,7 +194,7 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <td><Recommended
                                 WCount={wantCallbackCount}
                                 RCount={readCallbackCount} /></td>
-                                <td>text</td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
