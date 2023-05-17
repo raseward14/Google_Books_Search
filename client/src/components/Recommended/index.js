@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import './style.css';
 // components
+// tooltip
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import Modal from "../Modal";
 import * as favoriteAPIFunctions from '../../utils/FavoriteAPI';
 import * as readAPIFunctions from '../../utils/ReadAPI';
 import * as wantAPIFunctions from '../../utils/WantToReadAPI';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const stringSimilarity = require('string-similarity');
-
-
 
 const Recommended = ({ WCount, RCount }) => {
 
@@ -146,11 +147,17 @@ const Recommended = ({ WCount, RCount }) => {
 
     return (
         <div>
+            <ReactTooltip id="bookTip" />
             {suggestions.length > 0 ?
                 <div>
                     {suggestions.length > 0 && (
                         suggestions.map((book, index) =>
-                            <td key={index} className="button recommended-box book-card">
+                            <td 
+                            data-tooltip-id="bookTip"
+                            data-tooltip-content="Click to add to a list!"
+        
+                            key={index} 
+                            className="button recommended-box book-card">
                                 <div onClick={() => {
                                     openModal(book, index);
                                 }}>

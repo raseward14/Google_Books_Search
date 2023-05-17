@@ -11,7 +11,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 // components
 import Toggle from '../components/Toggle/toggle';
 import Filter from '../components/Filter/filter';
-
+// tooltip
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -410,9 +412,12 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                     </td>
                 </tr>
             </table>
+            <ReactTooltip id="pinTip" />
 
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
+                    data-tooltip-id="pinTip"
+                    data-tooltip-content="Pin this header!"
                     icon={faThumbtack}
                     className={pinned ? 'pin pinned' : 'pin not-pinned'}
                     onClick={() => {

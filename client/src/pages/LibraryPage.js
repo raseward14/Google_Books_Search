@@ -6,7 +6,11 @@ import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom";
+// tooltip
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -142,8 +146,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     return (
         <div>
             <h3>Library of books I've read.</h3>
+            <ReactTooltip id="pinTip" />
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
+                    data-tooltip-id="pinTip"
+                    data-tooltip-content="Pin this header!"
                     icon={faThumbtack}
                     className={pinned ? 'pin pinned' : 'pin not-pinned'}
                     onClick={() => {

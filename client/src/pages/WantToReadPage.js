@@ -8,6 +8,11 @@ import { faTrashCan, faBook, faCheck, faBookOpen, faThumbtack } from '@fortaweso
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
 
+// tooltip
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
+
 
 const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
@@ -157,8 +162,13 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
     return (
         <div>
             <h3>Books I want to read</h3>
+            <ReactTooltip id="pinTip" />
+
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
+                    data-tooltip-id="pinTip"
+                    data-tooltip-content="Pin this header!"
+
                     icon={faThumbtack}
                     className={pinned ? 'pin pinned' : 'pin not-pinned'}
                     onClick={() => {
