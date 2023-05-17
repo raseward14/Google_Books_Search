@@ -9,7 +9,6 @@ import * as favAPIFunctions from '../utils/FavoriteAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
 
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import Recommended from '../components/Recommended';
 
@@ -47,6 +46,10 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // state for if we successfully submit the registration form or not
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
+
+    const wantCallbackCount = (value) => {
+        appWantCount(value)
+    }
 
     // if an auth?.user exists, then set the value of these
     useEffect(async() => {
@@ -184,7 +187,8 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><Recommended /></td>
+                                <td><Recommended
+                                WCount={wantCallbackCount} /></td>
                                 <td>text</td>
                             </tr>
                         </tbody>
