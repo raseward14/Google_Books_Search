@@ -23,6 +23,18 @@ const Recommended = ({ WCount, RCount }) => {
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
 
+    const removeFromSuggestions = () => {
+        let newArr = [...suggestions];
+        newArr.splice(currentIndex, 1);
+        setSuggestions(newArr);
+    };
+
+    const addToSuggestions = async (book) => {
+        let newArr = await [...suggestions];
+        newArr.splice(currentIndex, 0, book )
+        setSuggestions(newArr);
+    };
+
     const openModal = (book, index) => {
         book.modal = true;
         setTheModal(true);
@@ -172,7 +184,12 @@ const Recommended = ({ WCount, RCount }) => {
                         callbackFunction={updateTheComponent}
                         book={currentBook}
                         wantCount={WCount}
-                        readCount={RCount} />
+                        readCount={RCount}
+                        reAddBook={addToSuggestions}
+                        removeBook={removeFromSuggestions}
+                        // we'll need a callback function to handle re-adding books
+                        // we'll need another callback function to handle removing books
+                        />
                 </div>
                 :
                 <div>Favorite a few books, to view suggestions here!</div>

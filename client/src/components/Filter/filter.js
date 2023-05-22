@@ -81,10 +81,10 @@ const Filter = ({ tText, aText, gText }) => {
         <div>
             <table>
                 <th>
-                <ReactTooltip id="filterTip" />
+                    <ReactTooltip id="filterTip" />
                     <td
-                    data-tooltip-id="filterTip"
-                    data-tooltip-content="Filter your search results!"
+                        data-tooltip-id="filterTip"
+                        data-tooltip-content="Filter your search results!"
                         onClick={openFilter}
                         id="button"
                         className="filter">
@@ -130,12 +130,11 @@ const Filter = ({ tText, aText, gText }) => {
                             onChange={(event) => {
                                 setGenreText(event.target.value);
                             }} /><br />
-                                            <ReactTooltip id="filterCloseTip" />
+                        <ReactTooltip id="filterCloseTip" />
 
                         <span
-                                            data-tooltip-id="filterCloseTip"
-                                            data-tooltip-content="close"
-                        
+                            data-tooltip-id="filterCloseTip"
+                            data-tooltip-content="close"
                             onClick={closeFilter}
                             className="close">&times;</span>
                     </td>

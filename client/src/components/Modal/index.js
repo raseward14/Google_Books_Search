@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './style.css'
-// ------------------------------------------------
 // CSS file for react tooltip
 import 'react-tooltip/dist/react-tooltip.css'
-// --------------------------------------------------
-
-// importing the buttons
-// import ReadButton from "../ReadButton";
-
-// --------------------------------------------------------------------
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
@@ -18,12 +11,9 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import * as readAPIFunctions from '../../utils/ReadAPI';
 import * as wantAPIFunctions from '../../utils/WantToReadAPI';
 import { Tooltip as ReactTooltip } from "react-tooltip";
-// ------------------------------------------------------------------
 
-
-// parameters in use: wantCount, readCount
-const Modal = ({ state, callbackFunction, book, wantCount, readCount }) => {
-    // ---------------------------------------------------
+// receive the current index
+const Modal = ({ state, callbackFunction, book, wantCount, readCount, reAddBook, removeBook }) => {
     // navbar count state variables
     const { auth } = useAuth();
     const [RCount, setRCount] = useState(null);
@@ -35,11 +25,9 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount }) => {
     // book state variable to handle button color changes onClick
     // this needs to be whatever the book prop is - going to set in a useEffect
     const [modalBook, setModalBook] = useState();
-    // -----------------------------------------------------
 
     const myModal = document.getElementById("myModal");
 
-    // -----------------------------------------
     // DELETE read -> use db query to GET by isbn13 before deleting
     async function deleteFromRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
@@ -109,33 +97,42 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount }) => {
     // flip .read, if true post to read, if false, delete all matching titles from read, will need to set a book state variable - ternary operator will handle the button change
     function clickedRead(clickedBook) {
         if (clickedBook.read === true) {
+            // we need to add this book back to the suggestions array using its index - callback function - addBackToSuggestions
+            reAddBook(clickedBook);
             clickedBook.read = false;
             setModalBook({ "read": false });
             deleteFromRead(clickedBook);
         } else if (clickedBook.want === false) {
+            // we need to remove this book from the suggestions array using its index - callback function - removeFromSuggestions
+            removeBook(clickedBook);
             clickedBook.read = true;
             setModalBook({ "read": true });
             addToRead(clickedBook);
         } else {
             clickedBook.read = true;
+            // we need to remove this book from the suggestions array using its index - callback - removeFromSuggestions
+            removeBook(clickedBook);
             clickedBook.want = false;
             setModalBook({
                 "read": true,
                 "want": false
             })
             addToRead(clickedBook);
-
         };
     };
 
     // flip .want
     function clickedWant(clickedBook) {
         if (clickedBook.want) {
+            // we need to re-add this book to the suggestions array using its index - callback - addToSuggestions
+            reAddBook(clickedBook);
             clickedBook.want = false;
             console.log('want is: ', clickedBook.want)
             setModalBook({ "want": false });
             deleteFromWant(clickedBook)
         } else {
+            // we need to remove from the suggestions array using its index - callback - removeFromSuggestions
+            removeBook(clickedBook);
             clickedBook.want = true;
             console.log('want is: ', clickedBook.want)
             setModalBook({ "want": true });
@@ -175,7 +172,7 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount }) => {
             let rCount = APIRead.data.length;
             setRCount(rCount);
         }
-    })
+    });
 
     useEffect(() => {
         setModalBook(book);
@@ -219,12 +216,6 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount }) => {
                                                     clickedRead(modalBook);
                                                 }}><FontAwesomeIcon icon={faSquareCheck}
                                                     className='fa-2x' /></button>
-                                            /* <ReadButton 
-suggestionsArray={}
-book={book}
-index={}
-appReadCount={}
-suggestionsArrayCallback={} /> */
                                             :
                                             <button
                                                 data-tooltip-id="myTip"
