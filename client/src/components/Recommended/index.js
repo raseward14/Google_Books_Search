@@ -13,10 +13,12 @@ const stringSimilarity = require('string-similarity');
 
 const Recommended = ({ WCount, RCount }) => {
 
+    const [subjectArray, setSubjectArray] = useState([]);
     const [subject, setSubject] = useState('');
+    const [authorArray, setAuthorArray] = useState([]);
     const [author, setAuthor] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [theModal, setTheModal] = useState()
+    const [theModal, setTheModal] = useState();
     const [currentIndex, setCurrentIndex] = useState();
     const [currentBook, setCurrentBook] = useState();
     const axiosPrivate = useAxiosPrivate();
@@ -63,9 +65,11 @@ const Recommended = ({ WCount, RCount }) => {
         let authorArray = [];
         for (var i = 0; i < favAPI.length; ++i) {
             authorArray.push(favAPI[i].authors[0])
-        }
-
-        console.log('author array', authorArray)
+        };
+        console.log('authorArray: ', authorArray);
+        // remove the duplicates from the array
+        let uniqueAuthorArray = [...new Set(authorArray)]
+        setAuthorArray(uniqueAuthorArray);
         // call our mostUsedInArray function to find the most used author
         let favAuthor = await mostUsedInArray(authorArray);
         setAuthor(favAuthor);
@@ -76,6 +80,10 @@ const Recommended = ({ WCount, RCount }) => {
         for (var i = 0; i < favAPI.length; ++i) {
             subjectArray.push(favAPI[i].subject)
         };
+        console.log('subjectArray: ', subjectArray);
+        // remove the duplicates from the array
+        let uniqueSubjectArray = [...new Set(subjectArray)];
+        setSubjectArray(uniqueSubjectArray);
         // call our mostUsedinArray function to find the most used subject
         let favSubject = await mostUsedInArray(subjectArray);
         setSubject(favSubject);
@@ -100,7 +108,7 @@ const Recommended = ({ WCount, RCount }) => {
         });
         console.log('new suggestions: ', newSuggestions)
         setSuggestions(newSuggestions);
-    }
+    };
 
     // remove any book that you've read already from the suggestions
     const checkIfRead = async (suggestionsArray) => {
@@ -145,7 +153,19 @@ const Recommended = ({ WCount, RCount }) => {
         newArr[currentIndex] = clickedBook;
         setSuggestions(newArr);
         setTheModal(false)
-    }
+    };
+
+    // any time our suggestions changes, check how many we have, if less than 9 - we need more books
+    // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
+    // concat those results onto the current suggestions, and only show the first 9
+
+    useEffect(() => {
+        console.log('unique subject array', subjectArray);
+    }, [subjectArray]);
+
+    useEffect(() => {
+        console.log('unique author array: ', authorArray);
+    }, [authorArray]);
 
     // when author, and subject both have values, call loadSuggestions to send api request
     useEffect(() => {
