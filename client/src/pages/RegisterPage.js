@@ -93,9 +93,9 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
         // begin by testing the new pwd against our pwd_regex -> true or false 
         const result = pwd_regex.test(pwd);
         // log the result -> true or false
-        console.log(result);
+        // console.log(result);
         // log the pwd
-        console.log(pwd);
+        // console.log(pwd);
         // result will be T || F -> setValidPwd to T || F
         setValidPwd(result);
         // for the match, set to pwd === matchPwd -> will result in T || F

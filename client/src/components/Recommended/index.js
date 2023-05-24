@@ -13,9 +13,9 @@ const stringSimilarity = require('string-similarity');
 
 const Recommended = ({ WCount, RCount }) => {
 
-    const [subjectArray, setSubjectArray] = useState([]);
+    const [uniqueUnusedSubjectArray, setUniqueUnusedSubjectArray] = useState([]);
     const [subject, setSubject] = useState('');
-    const [authorArray, setAuthorArray] = useState([]);
+    const [uniqueUnusedAuthorArray, setUniqueUnusedAuthorArray] = useState([]);
     const [author, setAuthor] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [theModal, setTheModal] = useState();
@@ -49,7 +49,7 @@ const Recommended = ({ WCount, RCount }) => {
     };
 
     const mostUsedInArray = (array) => {
-        console.log('I received this array: ', array)
+        // console.log('I received this array: ', array)
         return array.sort((a, b) =>
             array.filter(v => stringSimilarity.compareTwoStrings(v, a) > 0.5).length
             - array.filter(v => stringSimilarity.compareTwoStrings(v, b) > 0.5).length
@@ -67,13 +67,17 @@ const Recommended = ({ WCount, RCount }) => {
             authorArray.push(favAPI[i].authors[0])
         };
         console.log('authorArray: ', authorArray);
-        // remove the duplicates from the array
+        // remove the duplicates from the array 
         let uniqueAuthorArray = [...new Set(authorArray)]
-        setAuthorArray(uniqueAuthorArray);
+        console.log('uniqueAuthorArray: ', uniqueAuthorArray)
         // call our mostUsedInArray function to find the most used author
         let favAuthor = await mostUsedInArray(authorArray);
         setAuthor(favAuthor);
         console.log('fav author: ', favAuthor)
+        // we should also remove the current author used in the original search - filter
+        let unusedUniqueAuthorArray = await uniqueAuthorArray.filter(uniqueAuthor => uniqueAuthor !== favAuthor)
+        console.log('unique unused author array: ', unusedUniqueAuthorArray)
+        setUniqueUnusedAuthorArray(unusedUniqueAuthorArray);
 
         // right now, I dont store the subject of my favorites - fixed! should be able to pick back up here next time
         let subjectArray = [];
@@ -81,13 +85,16 @@ const Recommended = ({ WCount, RCount }) => {
             subjectArray.push(favAPI[i].subject)
         };
         console.log('subjectArray: ', subjectArray);
-        // remove the duplicates from the array
+        // remove the duplicates from the array 
         let uniqueSubjectArray = [...new Set(subjectArray)];
-        setSubjectArray(uniqueSubjectArray);
         // call our mostUsedinArray function to find the most used subject
         let favSubject = await mostUsedInArray(subjectArray);
         setSubject(favSubject);
-        console.log('fav subject: ', favSubject)
+        console.log('fav subject: ', favSubject);
+
+        // we should also remove the current subject already used in the original search - filter
+        let unusedUniqueSubjectArray = await uniqueSubjectArray.filter(uniqueSubject => uniqueSubject !== favSubject)
+        setUniqueUnusedSubjectArray(unusedUniqueSubjectArray);
     };
 
     // remove any book that you've already marked as want to read from suggestions
@@ -97,11 +104,11 @@ const Recommended = ({ WCount, RCount }) => {
         const wantTitles = await wantAPI.map(book => book.title);
         let newSuggestions = [];
         await suggestionsArray.forEach((book) => {
-            console.log('title', book?.volumeInfo.title);
+            // console.log('title', book?.volumeInfo.title);
             if(wantTitles.includes(book?.volumeInfo?.title)) {
-                console.log('already on the want list');
+                // console.log('already on the want list');
             } else {
-                console.log('this is a new book')
+                // console.log('this is a new book')
                 book.modal = false;
                 newSuggestions.push(book)
             };
@@ -117,16 +124,16 @@ const Recommended = ({ WCount, RCount }) => {
         const readTitles = await readAPI.map(book => book.title);
         let unreadSuggestions = [];
         await suggestionsArray.forEach((book) => {
-            console.log('titles', book?.volumeInfo?.title)
+            // console.log('titles', book?.volumeInfo?.title)
             if (readTitles.includes(book?.volumeInfo?.title)) {
-                console.log('already read');
+                // console.log('already read');
             } else {
-                console.log('not read')
+                // console.log('not read')
                 book.modal = false;
                 unreadSuggestions.push(book);
             };
         });
-        console.log('unread suggestions: ', unreadSuggestions);
+        // console.log('unread suggestions: ', unreadSuggestions);
         checkIfWant(unreadSuggestions);
     };
 
@@ -139,10 +146,8 @@ const Recommended = ({ WCount, RCount }) => {
             // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
             if (suggestionsArray !== undefined) {
                 checkIfRead(suggestionsArray);
-            } else {
-
-            };
-            console.log('your suggestions: ', suggestionsArray);
+            } 
+            // console.log('your suggestions: ', suggestionsArray);
         };
     };
 
@@ -158,14 +163,34 @@ const Recommended = ({ WCount, RCount }) => {
     // any time our suggestions changes, check how many we have, if less than 9 - we need more books
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
+    useEffect(async () => {
+        if(suggestions.length < 9) {
+            // make an api call, and concat the results onto the back of the current suggestions array
+            let newAuthor = uniqueUnusedAuthorArray[0];
+            console.log('newAuthor', newAuthor)
+            let newSubject = uniqueUnusedSubjectArray[0];
+            console.log('newSubject', newSubject)
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject}",inauthor:${newAuthor}`);
+            const newSuggestions = await response.json();
+            const newSuggestionsArray = newSuggestions.items;
+            if (newSuggestionsArray !== undefined) {
+                let updatedSuggestions = await [...suggestions, ...newSuggestionsArray]
+                // this does not appear to be working to remove duplicates
+                let uniqueUpdatedSuggestions = [...new Set(updatedSuggestions)]
+                let nineUniqueUpdatedSuggestions = await uniqueUpdatedSuggestions.slice(0, 9);
+                console.log('nine unique suggestions', nineUniqueUpdatedSuggestions)
+                checkIfRead(nineUniqueUpdatedSuggestions);
+            };
+        };
+    }, [suggestions])
 
     useEffect(() => {
-        console.log('unique subject array', subjectArray);
-    }, [subjectArray]);
+        console.log('unique unused subject array', uniqueUnusedSubjectArray);
+    }, [uniqueUnusedSubjectArray]);
 
     useEffect(() => {
-        console.log('unique author array: ', authorArray);
-    }, [authorArray]);
+        console.log('unique unused author array: ', uniqueUnusedAuthorArray);
+    }, [uniqueUnusedAuthorArray]);
 
     // when author, and subject both have values, call loadSuggestions to send api request
     useEffect(() => {
