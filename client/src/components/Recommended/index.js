@@ -9,6 +9,7 @@ import * as favoriteAPIFunctions from '../../utils/FavoriteAPI';
 import * as readAPIFunctions from '../../utils/ReadAPI';
 import * as wantAPIFunctions from '../../utils/WantToReadAPI';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { set } from "mongoose";
 const stringSimilarity = require('string-similarity');
 
 const Recommended = ({ WCount, RCount }) => {
@@ -33,7 +34,7 @@ const Recommended = ({ WCount, RCount }) => {
 
     const addToSuggestions = async (book) => {
         let newArr = await [...suggestions];
-        newArr.splice(currentIndex, 0, book )
+        newArr.splice(currentIndex, 0, book)
         setSuggestions(newArr);
     };
 
@@ -105,7 +106,7 @@ const Recommended = ({ WCount, RCount }) => {
         let newSuggestions = [];
         await suggestionsArray.forEach((book) => {
             // console.log('title', book?.volumeInfo.title);
-            if(wantTitles.includes(book?.volumeInfo?.title)) {
+            if (wantTitles.includes(book?.volumeInfo?.title)) {
                 // console.log('already on the want list');
             } else {
                 // console.log('this is a new book')
@@ -114,7 +115,17 @@ const Recommended = ({ WCount, RCount }) => {
             };
         });
         console.log('new suggestions: ', newSuggestions)
-        setSuggestions(newSuggestions);
+
+        if(newSuggestions.length > 9) {
+            // if we have a more than 9 unique suggestions, slice the array then set state
+            let nineUniqueUpdatedSuggestions = await newSuggestions.slice(0, 9);
+            setSuggestions(nineUniqueUpdatedSuggestions);
+        } else {
+            // otherwise, present what we have
+            setSuggestions(newSuggestions);
+        }
+        // console.log('nine unique suggestions', nineUniqueUpdatedSuggestions)
+        // setSuggestions(newSuggestions);
     };
 
     // remove any book that you've read already from the suggestions
@@ -146,7 +157,7 @@ const Recommended = ({ WCount, RCount }) => {
             // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
             if (suggestionsArray !== undefined) {
                 checkIfRead(suggestionsArray);
-            } 
+            }
             // console.log('your suggestions: ', suggestionsArray);
         };
     };
@@ -163,23 +174,39 @@ const Recommended = ({ WCount, RCount }) => {
     // any time our suggestions changes, check how many we have, if less than 9 - we need more books
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
+    let bool = true;
     useEffect(async () => {
-        if(suggestions.length < 9) {
+        if (suggestions.length < 9 && bool) {
             // make an api call, and concat the results onto the back of the current suggestions array
             let newAuthor = uniqueUnusedAuthorArray[0];
             console.log('newAuthor', newAuthor)
             let newSubject = uniqueUnusedSubjectArray[0];
             console.log('newSubject', newSubject)
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject}",inauthor:${newAuthor}`);
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject ? newSubject : subject}",inauthor:${newAuthor ? newAuthor : author}`);
             const newSuggestions = await response.json();
             const newSuggestionsArray = newSuggestions.items;
+            console.log('new suggestions array - 2nd api call: ', newSuggestionsArray);
+            bool = false;
             if (newSuggestionsArray !== undefined) {
+                console.log(newSuggestionsArray);
                 let updatedSuggestions = await [...suggestions, ...newSuggestionsArray]
                 // this does not appear to be working to remove duplicates
-                let uniqueUpdatedSuggestions = [...new Set(updatedSuggestions)]
-                let nineUniqueUpdatedSuggestions = await uniqueUpdatedSuggestions.slice(0, 9);
-                console.log('nine unique suggestions', nineUniqueUpdatedSuggestions)
-                checkIfRead(nineUniqueUpdatedSuggestions);
+                console.log(updatedSuggestions)
+                let uniqueUpdatedSuggestions = await [...new Set(updatedSuggestions)]
+
+                // let uniqueUpdatedSuggestions = new Set;
+                // let result = [];
+                // await updatedSuggestions.forEach(book => {
+                //     if(!uniqueUpdatedSuggestions.has(book.id)) {
+                //         uniqueUpdatedSuggestions.add(book.id);
+                //         result.push(book);
+                //     };
+                // })
+                // console.log(result);
+                // checkIfRead(result);
+
+                console.log(uniqueUpdatedSuggestions)
+                checkIfRead(uniqueUpdatedSuggestions);
             };
         };
     }, [suggestions])
@@ -209,12 +236,12 @@ const Recommended = ({ WCount, RCount }) => {
                 <div>
                     {suggestions.length > 0 && (
                         suggestions.map((book, index) =>
-                            <td 
-                            data-tooltip-id="bookTip"
-                            data-tooltip-content="Click to add to a list!"
-        
-                            key={index} 
-                            className="button recommended-box book-card">
+                            <td
+                                data-tooltip-id="bookTip"
+                                data-tooltip-content="Click to add to a list!"
+
+                                key={index}
+                                className="button recommended-box book-card">
                                 <div onClick={() => {
                                     openModal(book, index);
                                 }}>
@@ -232,9 +259,9 @@ const Recommended = ({ WCount, RCount }) => {
                         readCount={RCount}
                         reAddBook={addToSuggestions}
                         removeBook={removeFromSuggestions}
-                        // we'll need a callback function to handle re-adding books
-                        // we'll need another callback function to handle removing books
-                        />
+                    // we'll need a callback function to handle re-adding books
+                    // we'll need another callback function to handle removing books
+                    />
                 </div>
                 :
                 <div>Favorite a few books, to view suggestions here!</div>
