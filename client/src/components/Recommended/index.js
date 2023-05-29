@@ -185,28 +185,23 @@ const Recommended = ({ WCount, RCount }) => {
             const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject ? newSubject : subject}",inauthor:${newAuthor ? newAuthor : author}`);
             const newSuggestions = await response.json();
             const newSuggestionsArray = newSuggestions.items;
-            console.log('new suggestions array - 2nd api call: ', newSuggestionsArray);
-            bool = false;
             if (newSuggestionsArray !== undefined) {
                 console.log(newSuggestionsArray);
                 let updatedSuggestions = await [...suggestions, ...newSuggestionsArray]
                 // this does not appear to be working to remove duplicates
                 console.log(updatedSuggestions)
-                let uniqueUpdatedSuggestions = await [...new Set(updatedSuggestions)]
 
-                // let uniqueUpdatedSuggestions = new Set;
-                // let result = [];
-                // await updatedSuggestions.forEach(book => {
-                //     if(!uniqueUpdatedSuggestions.has(book.id)) {
-                //         uniqueUpdatedSuggestions.add(book.id);
-                //         result.push(book);
-                //     };
-                // })
-                // console.log(result);
-                // checkIfRead(result);
-
+                let uniqueUpdatedSuggestions = new Set;
+                let result = [];
+                await updatedSuggestions.forEach(book => {
+                    if(!uniqueUpdatedSuggestions.has(book.id)) {
+                        uniqueUpdatedSuggestions.add(book.id);
+                        result.push(book);
+                    };
+                })
+                console.log(result);
                 console.log(uniqueUpdatedSuggestions)
-                checkIfRead(uniqueUpdatedSuggestions);
+                checkIfRead(result);
             };
         };
     }, [suggestions])
