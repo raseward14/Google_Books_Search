@@ -119,13 +119,12 @@ const Recommended = ({ WCount, RCount }) => {
         if(newSuggestions.length > 9) {
             // if we have a more than 9 unique suggestions, slice the array then set state
             let nineUniqueUpdatedSuggestions = await newSuggestions.slice(0, 9);
+            console.log('nine unique updated suggestions', nineUniqueUpdatedSuggestions)
             setSuggestions(nineUniqueUpdatedSuggestions);
         } else {
             // otherwise, present what we have
             setSuggestions(newSuggestions);
         }
-        // console.log('nine unique suggestions', nineUniqueUpdatedSuggestions)
-        // setSuggestions(newSuggestions);
     };
 
     // remove any book that you've read already from the suggestions
@@ -174,23 +173,31 @@ const Recommended = ({ WCount, RCount }) => {
     // any time our suggestions changes, check how many we have, if less than 9 - we need more books
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
-    let bool = true;
     useEffect(async () => {
-        if (suggestions.length < 9 && bool) {
-            // make an api call, and concat the results onto the back of the current suggestions array
+        if (suggestions.length < 9) {
             let newAuthor = uniqueUnusedAuthorArray[0];
-            console.log('newAuthor', newAuthor)
             let newSubject = uniqueUnusedSubjectArray[0];
-            console.log('newSubject', newSubject)
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject ? newSubject : subject}",inauthor:${newAuthor ? newAuthor : author}`);
+
+            let response;
+            if((newAuthor === undefined && newSubject !== undefined) || (newAuthor === undefined && newSubject === undefined)) {
+                // if newAuthor is undefined because we've filtered everything out of our array, the current author is the only author on the favs page, and newSubject is not undefined then lets send the api call based on subject alone - this could be an or
+                 // if newSubject and newAuthor are both undefined, lets send the api call based on the current subject - product decision, will include new authors
+                response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject ? newSubject : subject}"`);
+                console.log('no unique author, searching by unique subject if we have it, otherwise, default is orig subject')
+            } else if ((newSubject === undefined && newAuthor !== undefined)) {
+                // if newsubject is undefined because we've filtered everything out of our array, the current subject is the only subject on the favs page, and the newAuthor is not undefined, then lets send the api call based on author alone
+                response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${newAuthor ? newAuthor : author}`);
+                console.log('new unique subject, searching by unique author')
+            } else {
+                // neither is undefined, add them both to the call
+                response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject}",inauthor:${newAuthor}`);
+                console.log('searching by unique author and subject!')
+            }
+           
             const newSuggestions = await response.json();
             const newSuggestionsArray = newSuggestions.items;
             if (newSuggestionsArray !== undefined) {
-                console.log(newSuggestionsArray);
                 let updatedSuggestions = await [...suggestions, ...newSuggestionsArray]
-                // this does not appear to be working to remove duplicates
-                console.log(updatedSuggestions)
-
                 let uniqueUpdatedSuggestions = new Set;
                 let result = [];
                 await updatedSuggestions.forEach(book => {
@@ -199,8 +206,6 @@ const Recommended = ({ WCount, RCount }) => {
                         result.push(book);
                     };
                 })
-                console.log(result);
-                console.log(uniqueUpdatedSuggestions)
                 checkIfRead(result);
             };
         };
