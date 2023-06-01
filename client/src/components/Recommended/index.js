@@ -198,6 +198,8 @@ const Recommended = ({ WCount, RCount }) => {
             const newSuggestionsArray = newSuggestions.items;
             if (newSuggestionsArray !== undefined) {
                 let updatedSuggestions = await [...suggestions, ...newSuggestionsArray]
+
+                // this is the code that I added
                 let uniqueUpdatedSuggestions = new Set;
                 let result = [];
                 await updatedSuggestions.forEach(book => {
@@ -205,7 +207,8 @@ const Recommended = ({ WCount, RCount }) => {
                         uniqueUpdatedSuggestions.add(book.id);
                         result.push(book);
                     };
-                })
+                });
+
                 checkIfRead(result);
             };
         };
