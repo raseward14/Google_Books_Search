@@ -199,7 +199,9 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         </tbody>
                     </table>
 
-                    <button onClick={logout}>Logout</button>
+                    <button 
+                    className='navButton'
+                    onClick={logout}>Logout</button>
                 </section >
             ) : (
                 <section className='register'>
