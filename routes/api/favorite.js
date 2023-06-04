@@ -16,6 +16,7 @@ router.route('/')
 // routes that end in api/favorite/:id
 router.route('/:id')
     .get(verifyJWT, favoritesController.findById)
+    .put(verifyJWT, favoritesController.updateFavorite)
     .delete(verifyJWT, favoritesController.remove)
 
 module.exports = router;

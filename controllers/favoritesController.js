@@ -4,6 +4,7 @@ module.exports = {
     findAll: (req, res) => {
         // GET My Reading Recommendations or favorites
         let thisIsbn13 = req.params.isbn13
+        console.log('favController: ', thisIsbn13)
         let query = thisIsbn13 ? {
             $and: [
                 {
@@ -64,5 +65,17 @@ module.exports = {
                 res.send(book);
             }
         })
+    },
+
+    updateFavorite: (req, res) => {
+        db.Favorite.findOneAndUpdate(
+            { _id: req.body.id},
+            { $set: {
+                rating: req.body.rating
+            }},
+            { returnOriginal: false }
+        )
+        .then(dbModel => res.json(dbModel))
+        .catch(err => res.status(422).json(err));
     }
 };
