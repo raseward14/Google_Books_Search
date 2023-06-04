@@ -63,13 +63,13 @@ module.exports = {
             { $set: { 
                 favorited: req.body.favorited,
                 rating: req.body.rating 
-            } },
+            }},
             { returnOriginal: false }
         )
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-    
+
     remove: (req, res) => {
         // DELETE a Book I've Read
         db.Library.findByIdAndDelete(req.params.id, (err, book) => {
