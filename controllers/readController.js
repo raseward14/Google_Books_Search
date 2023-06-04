@@ -1,9 +1,13 @@
 const db = require('../models')
 
 module.exports = {
+    findByUserIdAndIsbn13: (req, res) => {
+
+    },
     findAll: (req, res) => {
         // GET To Read Books List
-        let thisIsbn13 = req.query.isbn13
+        // the isbn13 is logging as undefined and the default is req.query.userID
+        let thisIsbn13 = req.params.isbn13
         let query = thisIsbn13 ? { 
             $and: [
                 {
@@ -13,7 +17,8 @@ module.exports = {
                     isbn13: thisIsbn13 
                 }
             ]
-        } : { user_id: req.query.user_id }
+        } 
+        : { user_id: req.query.user_id }
         console.log('QUERY', query)
         db.Read.find(query, (err, books) => {
             if (err) {

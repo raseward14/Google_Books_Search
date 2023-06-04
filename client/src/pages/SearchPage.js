@@ -63,12 +63,14 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
     async function deleteFromRead(book) {
         let isbn13Array = book.volumeInfo.industryIdentifiers.filter((isbn) => isbn.identifier.length === 13);
         let thisIsbn13 = isbn13Array[0].identifier;
+        console.log('front end isbn13: ', thisIsbn13)
         let result = await readAPIFunctions.getReadByIsbn13(axiosPrivate, thisIsbn13, accessToken, userID);
         let readResult = result.data;
         readAPIFunctions.deleteRead(axiosPrivate, readResult[0]._id, accessToken);
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, userID, thisIsbn13, accessToken);
         if (favoriteResult.data.length) {
             let favoriteResultData = favoriteResult.data;
+            console.log('FE received from BE: ', favoriteResultData)
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
             let fCount = await (favCount - 1)
             setFavCount(fCount);

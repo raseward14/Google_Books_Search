@@ -3,8 +3,7 @@ const db = require('../models/index');
 module.exports = {
     findAll: (req, res) => {
         // GET My Reading Recommendations or favorites
-        let thisIsbn13 = req.params.isbn13
-        console.log('favController: ', thisIsbn13)
+        let thisIsbn13 = req.query.isbn13
         let query = thisIsbn13 ? {
             $and: [
                 {
@@ -15,7 +14,6 @@ module.exports = {
                 }
             ]
         } : { user_id: req.query.user_id }
-        console.log('favorite query: ', req.params.isbn13)
         db.Favorite.find(query, (err, books) => {
             if (err) {
                 res.send(err);
