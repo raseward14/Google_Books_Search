@@ -57,25 +57,19 @@ module.exports = {
         })
     },
 
-    updateFavorite: (req, res) => {
+    updateRead: (req, res) => {
         db.Library.findOneAndUpdate(
             { _id: req.params.id },
-            { $set: { favorited: req.body.favorited } },
+            { $set: { 
+                favorited: req.body.favorited,
+                rating: req.body.rating 
+            } },
             { returnOriginal: false }
         )
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-    updateRating: (req, res) => {
-        db.Library.findOneAndUpdate(
-            { _id: req.params.id },
-            { $set: { rating: req.body.rating } },
-            { returnOriginal: false }
-        )
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
-    },
-
+    
     remove: (req, res) => {
         // DELETE a Book I've Read
         db.Library.findByIdAndDelete(req.params.id, (err, book) => {

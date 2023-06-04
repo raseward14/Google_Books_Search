@@ -63,7 +63,10 @@ const librarySchema = new Schema({
     },
     isbn13: String,
     date: Date,
-    rating: Number
+    rating: {
+        type: Number,
+        default: 0
+    }
 });
 
 // Favorite Model Schema
@@ -84,7 +87,10 @@ const favoriteSchema = new Schema({
     infoLink: String,
     isbn13: String,
     date: Date,
-    rating: Number
+    rating: {
+        type: Number,
+        default: 0
+    }
 });
 
 // Creating model objects

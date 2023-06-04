@@ -10,8 +10,7 @@ router.route('/')
 // routes that end in api/library/:id
 router.route('/:id')
     .get(verifyJWT, libraryController.findById)
-    .put(verifyJWT, libraryController.updateFavorite)
-    .put(verifyJWT, libraryController.updateRating)
+    .put(verifyJWT, libraryController.updateRead)
     .delete(verifyJWT, libraryController.remove);
 
 module.exports = router;
