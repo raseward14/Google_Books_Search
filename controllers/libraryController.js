@@ -4,7 +4,7 @@ module.exports = {
     findAll: (req, res) => {
         // GET books I've Read Shelf
         let thisIsbn13 = req.query.isbn13
-        let query = thisIsbn13 ? {  
+        let query = thisIsbn13 ? {
             $and: [
                 {
                     user_id: req.query.user_id
@@ -13,7 +13,8 @@ module.exports = {
                     isbn13: thisIsbn13
                 }
 
-        ]} : {  user_id: req.query.user_id }
+            ]
+        } : { user_id: req.query.user_id }
         console.log('QUERY', query)
         db.Library.find(query, (err, books) => {
             if (err) {
@@ -35,7 +36,8 @@ module.exports = {
         libraryBook.subject = req.body.subject;
         libraryBook.isbn13 = req.body.isbn13;
         libraryBook.date = Date.now();
-        libraryBook.user_id = req.body.user_id
+        libraryBook.user_id = req.body.user_id;
+        libraryBook.rating = req.body.rating;
         libraryBook.save(req.body, (err) => {
             if (err) {
                 res.send(err);
@@ -54,15 +56,26 @@ module.exports = {
             };
         })
     },
-    update: (req, res) => {
-            db.Library.findOneAndUpdate(
-                { _id: req.params.id  }, 
-                { $set: { favorited: req.body.favorited }}, 
-                { returnOriginal: false }
-            )
+
+    updateFavorite: (req, res) => {
+        db.Library.findOneAndUpdate(
+            { _id: req.params.id },
+            { $set: { favorited: req.body.favorited } },
+            { returnOriginal: false }
+        )
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
+    updateRating: (req, res) => {
+        db.Library.findOneAndUpdate(
+            { _id: req.params.id },
+            { $set: { rating: req.body.rating } },
+            { returnOriginal: false }
+        )
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
+
     remove: (req, res) => {
         // DELETE a Book I've Read
         db.Library.findByIdAndDelete(req.params.id, (err, book) => {
