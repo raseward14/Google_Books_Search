@@ -17,7 +17,7 @@ const getFavorites = (axiosPrivate, accessToken, userID) => {
 };
 
 const getfavoriteByIsbn13 = (axiosPrivate, userID, isbn13, accessToken) => {
-    return axiosPrivate.get(`/api/favorite/?user_id=${userID}&isbn13=${isbn13}`, {
+    return axiosPrivate.get(`/api/favorite?user_id=${userID}&isbn13=${isbn13}`, {
         headers: {
             Authorization: 'Bearer ' + accessToken,
             'Content-Type': 'application/json'

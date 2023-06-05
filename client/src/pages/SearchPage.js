@@ -70,7 +70,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let favoriteResult = await favoriteAPIFunctions.getfavoriteByIsbn13(axiosPrivate, userID, thisIsbn13, accessToken);
         if (favoriteResult.data.length) {
             let favoriteResultData = favoriteResult.data;
-            console.log('FE received from BE: ', favoriteResultData)
             favoriteAPIFunctions.deleteFavorite(axiosPrivate, favoriteResultData[0]._id, accessToken);
             let fCount = await (favCount - 1)
             setFavCount(fCount);

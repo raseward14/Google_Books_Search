@@ -3,6 +3,7 @@ const db = require('../models/index');
 module.exports = {
     findAll: (req, res) => {
         // GET My Reading Recommendations or favorites
+        // uses URL query parameters, rather than path parameters, after the ? mark - found with req.query
         let thisIsbn13 = req.query.isbn13
         let query = thisIsbn13 ? {
             $and: [
