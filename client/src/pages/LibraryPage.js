@@ -11,6 +11,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
+import Rating from '../components/Rating';
+
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -174,6 +176,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <p>{book.title}</p>
                                 <p>{book.authors}</p>
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
+                                <Rating />
                             </div>
                             <div className='button-container'>
                                 {book.favorited === true ?
