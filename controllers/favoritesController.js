@@ -68,7 +68,7 @@ module.exports = {
 
     updateFavorite: (req, res) => {
         db.Favorite.findOneAndUpdate(
-            { _id: req.body.id},
+            { _id: req.params.id},
             { $set: {
                 rating: req.body.rating
             }},
