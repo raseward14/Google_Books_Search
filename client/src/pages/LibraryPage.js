@@ -4,7 +4,7 @@ import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faTrashCan, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faThumbtack, faHeart } from '@fortawesome/free-solid-svg-icons';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
 // tooltip
@@ -184,7 +184,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         unFavoriteBook(book, index);
                                     }}>
                                         <FontAwesomeIcon
-                                            icon={faStar}
+                                            icon={faHeart}
                                             className='fa-2x' />
                                     </button>
                                     : <button
@@ -192,7 +192,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             favoriteBook(book, index);
                                         }}>
                                         <FontAwesomeIcon
-                                            icon={faStar}
+                                            icon={faHeart}
                                             className='fa-2x' />
                                     </button>
                                 }
