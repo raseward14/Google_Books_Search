@@ -9,6 +9,28 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.heart-icon {
+  font-size: 26px;
+}
+
+.heart-icon:hover {
+ cursor: pointer;
+ color: red;
+}
+
+.trashcan {
+  font-size: 26px;
+}
+
+.trashcan:hover {
+  cursor: pointer;
+  color: #63F82C;
+}
+
+.fav {
+  color: red;
+}
+
 .burger {
   width: 0%;
 }

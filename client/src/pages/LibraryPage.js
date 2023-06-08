@@ -4,7 +4,10 @@ import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { faTrashCan, faThumbtack, faHeart } from '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
 // tooltip
@@ -180,31 +183,29 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                             </div>
                             <div className='button-container'>
                                 {book.favorited === true ?
-                                    <button style={{ "backgroundColor": "yellow" }} onClick={() => {
-                                        unFavoriteBook(book, index);
-                                    }}>
-                                        <FontAwesomeIcon
-                                            icon={faHeart}
-                                            className='fa-2x' />
-                                    </button>
-                                    : <button
+                                    <FontAwesomeIcon
+                                        onClick={() => {
+                                            unFavoriteBook(book, index);
+                                        }}
+                                        className="heart-icon fav"
+                                        icon={icon({ name: "heart", style: "solid" })} />
+                                    :
+                                    <FontAwesomeIcon
                                         onClick={() => {
                                             favoriteBook(book, index);
-                                        }}>
-                                        <FontAwesomeIcon
-                                            icon={faHeart}
-                                            className='fa-2x' />
-                                    </button>
+                                        }}
+                                        className="heart-icon"
+                                        icon={icon({ name: "heart", style: "regular" })} />
                                 }
-                                <button
+                                
+                                <FontAwesomeIcon
+                                    className="trashcan"
                                     onClick={() => {
                                         removeFromRead(book);
                                     }}
-                                >
-                                    <FontAwesomeIcon
-                                        icon={faTrashCan}
-                                        className='fa-2x' />
-                                </button>
+                                    icon={icon({ name: "trash-can", style: "regular" })} />
+
+                                     
                             </div>
                         </div>
                         {book.expand ?
