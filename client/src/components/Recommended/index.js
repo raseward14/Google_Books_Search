@@ -186,13 +186,12 @@ const Recommended = ({ WCount, RCount }) => {
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
     useEffect(async () => {
-        let i = 0;
+        let i;
         setTimeout(async () => {
-
             if (suggestions.length < 9) {
                 console.log(`suggestions length ${suggestions.length}`)
-                let newAuthor = uniqueUnusedAuthorArray[i];
-                let newSubject = uniqueUnusedSubjectArray[i];
+                let newAuthor = uniqueUnusedAuthorArray[i === null ? 0 : i];
+                let newSubject = uniqueUnusedSubjectArray[i === null ? 0: i];
                 console.log(`ineration count: ${i}`)
                 i++;
                 let response;
@@ -228,7 +227,6 @@ const Recommended = ({ WCount, RCount }) => {
                     checkIfRead(result);
                 };
             };
-
         }, 1000)
 
     }, [suggestions])
