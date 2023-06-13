@@ -203,9 +203,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     onClick={() => {
                                         removeFromRead(book);
                                     }}
-                                    icon={icon({ name: "trash-can", style: "regular" })} />
-
-                                     
+                                    icon={icon({ name: "trash-can", style: "regular" })} />   
                             </div>
                         </div>
                         {book.expand ?

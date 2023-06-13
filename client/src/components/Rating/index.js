@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 // fontawesome
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCircle } from '@fortawesome/free-solid-svg-icons';
-// import 'font-awesome/css/font-awesome.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
@@ -27,26 +24,56 @@ const Rating = (book, index) => {
         <>
             {/* it will have to be a button container that is only clickable, and calls the onclick function on a fontAwesome icon, so the hover state will only apply to the icons themselves, and the onclick will only be in the icons */}
             {/* the value will apply to the button itself, and be determined by the book.rating */}
-            <button>
+            <div>
                 {book.rating === 5 ?
-                    <button>5</button>
-                    :
-                    book.rating === 4 ?
-                        <button>4</button>
+                    <div>
+                        <FontAwesomeIcon icon={icon({ name: "star" })} />
+                        <FontAwesomeIcon icon={icon({ name: "star" })} />
+                        <FontAwesomeIcon icon={icon({ name: "star" })} />
+                        <FontAwesomeIcon icon={icon({ name: "star" })} />
+                        <FontAwesomeIcon icon={icon({ name: "star" })} />
+                    </div>
+                    : book.rating === 4 ?
+                        <div>
+                            <FontAwesomeIcon icon={icon({ name: "star" })} />
+                            <FontAwesomeIcon icon={icon({ name: "star" })} />
+                            <FontAwesomeIcon icon={icon({ name: "star" })} />
+                            <FontAwesomeIcon icon={icon({ name: "star" })} />
+                            <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                        </div>
                         : book.rating === 3 ?
-                            <button>3</button>
+                            <div>
+                                <FontAwesomeIcon icon={icon({ name: "star" })} />
+                                <FontAwesomeIcon icon={icon({ name: "star" })} />
+                                <FontAwesomeIcon icon={icon({ name: "star" })} />
+                                <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                            </div>
                             : book.rating === 2 ?
-                                <button>2</button>
+                                <div>
+                                    <FontAwesomeIcon icon={icon({ name: "star" })} />
+                                    <FontAwesomeIcon icon={icon({ name: "star" })} />
+                                    <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                    <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                    <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                </div>
                                 : book.rating === 1 ?
-                                    <button>1</button>
-                                    : <button>
-                                        <FontAwesomeIcon icon={icon({name: "star", style: "regular"})}/>
-                                        <FontAwesomeIcon icon={icon({name: "star", style: "regular"})}/>
-                                        <FontAwesomeIcon icon={icon({name: "star", style: "regular"})}/>
-                                        <FontAwesomeIcon icon={icon({name: "star", style: "regular"})}/>
-                                        <FontAwesomeIcon icon={icon({name: "star", style: "regular"})}/>
-                                            </button>}
-            </button>
+                                    <div>
+                                        <FontAwesomeIcon icon={icon({ name: "star" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+
+                                    </div>
+                                    : <div>
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                        <FontAwesomeIcon icon={icon({ name: "star", style: "regular" })} />
+                                    </div>}
+            </div>
         </>
     )
 };

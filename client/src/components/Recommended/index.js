@@ -9,7 +9,6 @@ import * as favoriteAPIFunctions from '../../utils/FavoriteAPI';
 import * as readAPIFunctions from '../../utils/ReadAPI';
 import * as wantAPIFunctions from '../../utils/WantToReadAPI';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { set } from "mongoose";
 const stringSimilarity = require('string-similarity');
 
 const Recommended = ({ WCount, RCount }) => {
@@ -173,25 +172,27 @@ const Recommended = ({ WCount, RCount }) => {
     // any time our suggestions changes, check how many we have, if less than 9 - we need more books
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
-    useEffect(async () => {
+    useEffect(async () => { 
+        let i = 0;
         if (suggestions.length < 9) {
-            let newAuthor = uniqueUnusedAuthorArray[0];
-            let newSubject = uniqueUnusedSubjectArray[0];
-
+            let newAuthor = uniqueUnusedAuthorArray[i];
+            let newSubject = uniqueUnusedSubjectArray[i];
+            console.log(`ineration count: ${i}`)
+            i++;
             let response;
             if((newAuthor === undefined && newSubject !== undefined) || (newAuthor === undefined && newSubject === undefined)) {
                 // if newAuthor is undefined because we've filtered everything out of our array, the current author is the only author on the favs page, and newSubject is not undefined then lets send the api call based on subject alone - this could be an or
                  // if newSubject and newAuthor are both undefined, lets send the api call based on the current subject - product decision, will include new authors
                 response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject ? newSubject : subject}"`);
-                console.log('no unique author, searching by unique subject if we have it, otherwise, default is orig subject')
+                console.log(`no unique author, searching by unique subject: ${newSubject} if we have it, otherwise, default is orig subject: ${subject}`)
             } else if ((newSubject === undefined && newAuthor !== undefined)) {
                 // if newsubject is undefined because we've filtered everything out of our array, the current subject is the only subject on the favs page, and the newAuthor is not undefined, then lets send the api call based on author alone
                 response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${newAuthor ? newAuthor : author}`);
-                console.log('new unique subject, searching by unique author')
+                console.log(`no unique subject, searching by unique author: ${newAuthor}, diff from orig author: ${author}`)
             } else {
                 // neither is undefined, add them both to the call
                 response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${newSubject}",inauthor:${newAuthor}`);
-                console.log('searching by unique author and subject!')
+                console.log(`searching by unique author: ${newAuthor} and subject: ${newSubject}!`)
             }
            
             const newSuggestions = await response.json();
@@ -208,7 +209,6 @@ const Recommended = ({ WCount, RCount }) => {
                         result.push(book);
                     };
                 });
-
                 checkIfRead(result);
             };
         };

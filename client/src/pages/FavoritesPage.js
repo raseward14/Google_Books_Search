@@ -5,7 +5,10 @@ import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// fontawesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
 const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
@@ -88,14 +91,13 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                 <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='button-container'>
-                                <button
-                                onClick={() => {
-                                    deleteFavorite(favorite)
-                                }}>
                                     <FontAwesomeIcon
-                                        icon={faTrashCan}
-                                        className='fa-2x' />
-                                </button>
+                                                                        className="trashcan"
+
+                                    onClick={() => {
+                                        deleteFavorite(favorite)
+                                    }}
+                                        icon={icon({ name: "trash-can", style: "regular" })}/>
                             </div>
                         </div>
                         {favorite.expand ?
