@@ -24,6 +24,7 @@ const Recommended = ({ WCount, RCount }) => {
     const axiosPrivate = useAxiosPrivate();
     const accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
+    const [i, setI] = useState(0);
 
     const removeFromSuggestions = () => {
         let newArr = [...suggestions];
@@ -186,14 +187,19 @@ const Recommended = ({ WCount, RCount }) => {
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
     useEffect(async () => {
-        let i;
         setTimeout(async () => {
             if (suggestions.length < 9) {
                 console.log(`suggestions length ${suggestions.length}`)
-                let newAuthor = uniqueUnusedAuthorArray[i === null ? 0 : i];
-                let newSubject = uniqueUnusedSubjectArray[i === null ? 0: i];
+                
+                // let newAuthor = uniqueUnusedAuthorArray[i === null ? 0 : i];
+                // let newSubject = uniqueUnusedSubjectArray[i === null ? 0: i];
+                let newAuthor = uniqueUnusedAuthorArray[i];
+                let newSubject = uniqueUnusedSubjectArray[i];
+
                 console.log(`ineration count: ${i}`)
-                i++;
+                let newI = i++;
+                setI(newI);
+
                 let response;
                 if ((newAuthor === undefined && newSubject !== undefined) || (newAuthor === undefined && newSubject === undefined)) {
                     // if newAuthor is undefined because we've filtered everything out of our array, the current author is the only author on the favs page, and newSubject is not undefined then lets send the api call based on subject alone - this could be an or
