@@ -67,17 +67,17 @@ const Recommended = ({ WCount, RCount }) => {
         for (var i = 0; i < favAPI.length; ++i) {
             authorArray.push(favAPI[i].authors[0])
         };
-        console.log('authorArray: ', authorArray);
+        // console.log('authorArray: ', authorArray);
         // remove the duplicates from the array 
         let uniqueAuthorArray = [...new Set(authorArray)]
-        console.log('uniqueAuthorArray: ', uniqueAuthorArray)
+        // console.log('uniqueAuthorArray: ', uniqueAuthorArray)
         // call our mostUsedInArray function to find the most used author
         let favAuthor = await mostUsedInArray(authorArray);
         setAuthor(favAuthor);
-        console.log('fav author: ', favAuthor)
+        // console.log('fav author: ', favAuthor)
         // we should also remove the current author used in the original search - filter
         let unusedUniqueAuthorArray = await uniqueAuthorArray.filter(uniqueAuthor => uniqueAuthor !== favAuthor)
-        console.log('unique unused author array: ', unusedUniqueAuthorArray)
+        // console.log('unique unused author array: ', unusedUniqueAuthorArray)
         setUniqueUnusedAuthorArray(unusedUniqueAuthorArray);
 
         // right now, I dont store the subject of my favorites - fixed! should be able to pick back up here next time
@@ -85,13 +85,13 @@ const Recommended = ({ WCount, RCount }) => {
         for (var i = 0; i < favAPI.length; ++i) {
             subjectArray.push(favAPI[i].subject)
         };
-        console.log('subjectArray: ', subjectArray);
+        // console.log('subjectArray: ', subjectArray);
         // remove the duplicates from the array 
         let uniqueSubjectArray = [...new Set(subjectArray)];
         // call our mostUsedinArray function to find the most used subject
         let favSubject = await mostUsedInArray(subjectArray);
         setSubject(favSubject);
-        console.log('fav subject: ', favSubject);
+        // console.log('fav subject: ', favSubject);
 
         // we should also remove the current subject already used in the original search - filter
         let unusedUniqueSubjectArray = await uniqueSubjectArray.filter(uniqueSubject => uniqueSubject !== favSubject)
@@ -119,7 +119,7 @@ const Recommended = ({ WCount, RCount }) => {
         if (newSuggestions.length > 9) {
             // if we have a more than 9 unique suggestions, slice the array then set state
             let nineUniqueUpdatedSuggestions = await newSuggestions.slice(0, 9);
-            console.log('nine unique updated suggestions', nineUniqueUpdatedSuggestions)
+            // console.log('nine unique updated suggestions', nineUniqueUpdatedSuggestions)
             setSuggestions(nineUniqueUpdatedSuggestions);
         } else {
             setSuggestions(newSuggestions)
@@ -175,14 +175,11 @@ const Recommended = ({ WCount, RCount }) => {
     useEffect(async () => {
         // setTimeout(async () => {
             if (suggestions.length < 9) {
-                console.log(`suggestions length ${suggestions.length}`)
-                
-                // let newAuthor = uniqueUnusedAuthorArray[i === null ? 0 : i];
-                // let newSubject = uniqueUnusedSubjectArray[i === null ? 0: i];
+                // console.log(`suggestions length ${suggestions.length}`)
                 let newAuthor = uniqueUnusedAuthorArray[i];
                 let newSubject = uniqueUnusedSubjectArray[i];
 
-                console.log(`iteration count: ${i} ${newAuthor} ${newSubject}`)
+                // console.log(`iteration count: ${i} ${newAuthor} ${newSubject}`)
                 let newI = await i + 1;
                 setI(newI);
 
@@ -219,16 +216,14 @@ const Recommended = ({ WCount, RCount }) => {
                     checkIfRead(result);
                 };
             };
-        // }, 1000)
-
     }, [suggestions])
 
     useEffect(() => {
-        console.log('unique unused subject array', uniqueUnusedSubjectArray);
+        // console.log('unique unused subject array', uniqueUnusedSubjectArray);
     }, [uniqueUnusedSubjectArray]);
 
     useEffect(() => {
-        console.log('unique unused author array: ', uniqueUnusedAuthorArray);
+        // console.log('unique unused author array: ', uniqueUnusedAuthorArray);
     }, [uniqueUnusedAuthorArray]);
 
     // when author, and subject both have values, call loadSuggestions to send api request
