@@ -122,21 +122,7 @@ const Recommended = ({ WCount, RCount }) => {
             console.log('nine unique updated suggestions', nineUniqueUpdatedSuggestions)
             setSuggestions(nineUniqueUpdatedSuggestions);
         } else {
-            // otherwise, present what we have
-            // we need a way to stop the useEffect from running
-            let updatedSuggestions = [...suggestions, ...newSuggestions];
-
-            let uniqueUpdatedSuggestions = new Set;
-            let result = [];
-            await updatedSuggestions.forEach(book => {
-                if (!uniqueUpdatedSuggestions.has(book.id)) {
-                    uniqueUpdatedSuggestions.add(book.id);
-                    result.push(book);
-                };
-            });
-
-            let nineUniqueUpdatedSuggestions = await result.slice(0, 9)
-            setSuggestions(nineUniqueUpdatedSuggestions);
+            setSuggestions(newSuggestions)
         }
     };
 
@@ -187,7 +173,7 @@ const Recommended = ({ WCount, RCount }) => {
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
     useEffect(async () => {
-        setTimeout(async () => {
+        // setTimeout(async () => {
             if (suggestions.length < 9) {
                 console.log(`suggestions length ${suggestions.length}`)
                 
@@ -196,8 +182,8 @@ const Recommended = ({ WCount, RCount }) => {
                 let newAuthor = uniqueUnusedAuthorArray[i];
                 let newSubject = uniqueUnusedSubjectArray[i];
 
-                console.log(`ineration count: ${i}`)
-                let newI = i++;
+                console.log(`iteration count: ${i} ${newAuthor} ${newSubject}`)
+                let newI = await i + 1;
                 setI(newI);
 
                 let response;
@@ -233,7 +219,7 @@ const Recommended = ({ WCount, RCount }) => {
                     checkIfRead(result);
                 };
             };
-        }, 1000)
+        // }, 1000)
 
     }, [suggestions])
 
