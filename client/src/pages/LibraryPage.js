@@ -124,6 +124,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let rCount = await APIRead.length;
             setReadCount(rCount);
             setRead(APIRead);
+            console.log('read books: ', APIRead)
         } catch (err) {
             navigate('/login', { state: { from: location }, replace: true });
         };
@@ -179,7 +180,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <p>{book.title}</p>
                                 <p>{book.authors}</p>
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
-                                <Rating />
+                                <Rating
+                                    book={book} />
                             </div>
                             <div className='button-container'>
                                 {book.favorited === true ?
@@ -197,13 +199,13 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         className="heart-icon"
                                         icon={icon({ name: "heart", style: "regular" })} />
                                 }
-                                
+
                                 <FontAwesomeIcon
                                     className="trashcan"
                                     onClick={() => {
                                         removeFromRead(book);
                                     }}
-                                    icon={icon({ name: "trash-can", style: "regular" })} />   
+                                    icon={icon({ name: "trash-can", style: "regular" })} />
                             </div>
                         </div>
                         {book.expand ?

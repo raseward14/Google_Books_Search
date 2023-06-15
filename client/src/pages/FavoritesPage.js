@@ -24,7 +24,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const userID = sessionStorage.getItem('userID');
-    
+
     async function deleteFavorite(book) {
         await favoriteAPIFunctions.deleteFavorite(axiosPrivate, book._id, accessToken);
         setFavorites(favorites.filter(fav => fav._id !== book._id))
@@ -91,13 +91,13 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                 <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='button-container'>
-                                    <FontAwesomeIcon
-                                                                        className="trashcan"
+                                <FontAwesomeIcon
+                                    className="trashcan"
 
                                     onClick={() => {
                                         deleteFavorite(favorite)
                                     }}
-                                        icon={icon({ name: "trash-can", style: "regular" })}/>
+                                    icon={icon({ name: "trash-can", style: "regular" })} />
                             </div>
                         </div>
                         {favorite.expand ?
