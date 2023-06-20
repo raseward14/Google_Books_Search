@@ -37,6 +37,22 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    async function updateRating(value, index) {
+        console.log('new value: ', value)
+        console.log(`books ID: ${read[index]._id}`)
+        let result = await readAPIFunctions.updateRead(axiosPrivate, read[index]._id, { "rating": value }, accessToken);
+        console.log(result)
+    }
+
+    async function postRating(value, index) {
+        let updatedBook = read[index];
+        updatedBook.rating = value;
+        let newArr = [...read];
+        newArr[index] = updatedBook;
+        setRead(newArr);
+        updateRating(value, index)
+    }
+
     async function deleteFromFavorites(book) {
         let result = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
         let APIFavorites = result.data
@@ -181,8 +197,9 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <p>{book.authors}</p>
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                                 <Rating
-                                    rating={book.rating}/>
-                                    <span>{book.rating}</span>
+                                    rating={book.rating}
+                                    updateRating={postRating}
+                                    index={index} />
                             </div>
                             <div className='button-container'>
                                 {book.favorited === true ?

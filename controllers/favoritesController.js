@@ -67,14 +67,18 @@ module.exports = {
     },
 
     updateFavorite: (req, res) => {
+        console.log(req.body.rating)
         db.Favorite.findOneAndUpdate(
-            { _id: req.params.id},
-            { $set: {
-                rating: req.body.rating
-            }},
+            { _id: req.params.id },
+            {
+                $set: {
+                    rating: req.body.rating
+                }
+            },
             { returnOriginal: false }
         )
-        .then(dbModel => res.json(dbModel))
-        .catch(err => res.status(422).json(err));
+            .then(dbModel =>
+                res.json(dbModel))
+            .catch(err => res.status(422).json(err));
     }
 };
