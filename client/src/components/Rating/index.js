@@ -3,13 +3,11 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-import * as readAPIFunctions from '../../utils/ReadAPI'
 import './style.css'
 
 const Rating = ({ rating, updateRating, index }) => {
     // will need a state variable for a books rating
     // this will take in a book and an index, and depending on the book.rating value, render a different number of stars
-    // const accessToken = sessionStorage.getItem('accessToken');
     async function rateBook(value, index) {
         updateRating(value, index)
     };
@@ -30,7 +28,7 @@ const Rating = ({ rating, updateRating, index }) => {
                             className="rating-star-selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
-                                rateBook(5, index)
+                                rateBook(4, index)
                             }} />
                         <FontAwesomeIcon
                             className="rating-star-selected"
@@ -69,7 +67,7 @@ const Rating = ({ rating, updateRating, index }) => {
                                             className="rating-star-selected"
                                             icon={icon({ name: "star" })}
                                             onClick={() => {
-                                                rateBook(4, index)
+                                                rateBook(3, index)
                                             }} />
                                     <FontAwesomeIcon
                                         className="rating-star-selected"
@@ -108,7 +106,7 @@ const Rating = ({ rating, updateRating, index }) => {
                                     className="rating-star-selected"
                                     icon={icon({ name: "star" })}
                                     onClick={() => {
-                                        rateBook(3, index)
+                                        rateBook(2, index)
                                     }} />
                                 <FontAwesomeIcon
                                     className="rating-star-selected"
@@ -147,7 +145,7 @@ const Rating = ({ rating, updateRating, index }) => {
                                         className="rating-star-selected"
                                         icon={icon({ name: "star" })}
                                         onClick={() => {
-                                            rateBook(2, index)
+                                            rateBook(1, index)
                                         }} />
                                     <FontAwesomeIcon
                                         className="rating-star-selected"
@@ -186,7 +184,7 @@ const Rating = ({ rating, updateRating, index }) => {
                                             className="rating-star-selected"
                                             icon={icon({ name: "star" })}
                                             onClick={() => {
-                                                rateBook(1, index)
+                                                rateBook(0, index)
                                             }} />
 
                                     </div>

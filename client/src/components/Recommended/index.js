@@ -180,6 +180,7 @@ const Recommended = ({ WCount, RCount }) => {
                 let newSubject = uniqueUnusedSubjectArray[i];
 
                 // console.log(`iteration count: ${i} ${newAuthor} ${newSubject}`)
+                // logic that allows us to move through each index of the uniqueUnusedAuthor and subject arrays
                 let newI = await i + 1;
                 setI(newI);
 
