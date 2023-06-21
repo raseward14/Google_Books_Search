@@ -71,3 +71,5 @@ Resources:
 * [npm react-burger-menu](https://www.npmjs.com/package/react-burger-menu?activeTab=readme)
 * [npm string-similarity](https://www.npmjs.com/package/string-similarity)
 * [npm react-tooltip](https://www.npmjs.com/package/react-tooltip)
+* [CSS Previous sibling selectors and how to fake them](https://medium.com/free-code-camp/how-to-make-the-impossible-possible-in-css-with-a-little-creativity-bd96bb42b29d)
+* [Understanding sibling combinators in CSS: A complete guide](https://blog.logrocket.com/understanding-sibling-combinators-css/)
