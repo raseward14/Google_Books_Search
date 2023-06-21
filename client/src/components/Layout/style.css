@@ -9,6 +9,27 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.rating:hover {
+  cursor: pointer;
+}
+
+.rating-star:hover ~ .rating-star {
+  color: black !important;
+}
+.rating-star:hover {
+  color: black !important;
+}
+
+.rating-star {
+  color: white;
+}
+
+
 .heart-icon {
   font-size: 26px;
 }

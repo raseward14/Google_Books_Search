@@ -9,17 +9,10 @@ import './style.css'
 const Rating = ({ rating, updateRating, index }) => {
     // will need a state variable for a books rating
     // this will take in a book and an index, and depending on the book.rating value, render a different number of stars
-    const accessToken = sessionStorage.getItem('accessToken');
-    const [stringValue, setStringValue] = useState('')
-
+    // const accessToken = sessionStorage.getItem('accessToken');
     async function rateBook(value, index) {
         updateRating(value, index)
     };
-
-    // will always render 5, but will change the background color depending on the score
-    // on click will call the updateRead function from readAPI
-    // similarly to favorited being true or false, will need to render
-
 
     // useEffect will be called on load to retrieve the books rating, by its id, and then set the state of the var
     useEffect(() => {
@@ -32,171 +25,201 @@ const Rating = ({ rating, updateRating, index }) => {
             {/* the value will apply to the button itself, and be determined by the book.rating */}
             <div>
                 {rating === 5 ?
-                    <div>
+                    <div className="rating">
                         <FontAwesomeIcon
+                            className="rating-star-selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
-                                rateBook(1, index)
+                                rateBook(5, index)
                             }} />
                         <FontAwesomeIcon
-                            icon={icon({ name: "star" })}
-                            onClick={() => {
-                                rateBook(2, index)
-                            }} />
-                        <FontAwesomeIcon
-                            icon={icon({ name: "star" })}
-                            onClick={() => {
-                                rateBook(3, index)
-                            }} />
-                        <FontAwesomeIcon
+                            className="rating-star-selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
                                 rateBook(4, index)
                             }} />
                         <FontAwesomeIcon
+                            className="rating-star-selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
-                                rateBook(5, index)
+                                rateBook(3, index)
+                            }} />
+                        <FontAwesomeIcon
+                            className="rating-star-selected"
+                            icon={icon({ name: "star" })}
+                            onClick={() => {
+                                rateBook(2, index)
+                            }} />
+                        <FontAwesomeIcon
+                            className="rating-star-selected"
+                            icon={icon({ name: "star" })}
+                            onClick={() => {
+                                rateBook(1, index)
                             }} />
                     </div>
                     : rating === 4 ?
-                        <div>
+                    <div className="rating">
                             <FontAwesomeIcon
+                                className="rating-star"
                                 icon={icon({ name: "star" })}
-                                onClick={() => {
-                                    rateBook(1, index)
-                                }} />
-                            <FontAwesomeIcon
-                                icon={icon({ name: "star" })}
-                                onClick={() => {
-                                    rateBook(2, index)
-                                }} />
-                            <FontAwesomeIcon
-                                icon={icon({ name: "star" })}
-                                onClick={() => {
-                                    rateBook(3, index)
-                                }} />
-                            <FontAwesomeIcon
-                                icon={icon({ name: "star" })}
-                                onClick={() => {
-                                    rateBook(4, index)
-                                }} />
-                            <FontAwesomeIcon
-                                icon={icon({ name: "star", style: "regular" })}
                                 onClick={() => {
                                     rateBook(5, index)
                                 }} />
-                        </div>
-                        : rating === 3 ?
-                            <div>
+                                        <FontAwesomeIcon
+                                            className="rating-star-selected"
+                                            icon={icon({ name: "star" })}
+                                            onClick={() => {
+                                                rateBook(4, index)
+                                            }} />
+                                    <FontAwesomeIcon
+                                        className="rating-star-selected"
+                                        icon={icon({ name: "star" })}
+                                        onClick={() => {
+                                            rateBook(3, index)
+                                        }} />
                                 <FontAwesomeIcon
-                                    icon={icon({ name: "star" })}
-                                    onClick={() => {
-                                        rateBook(1, index)
-                                    }} />
-                                <FontAwesomeIcon
+                                    className="rating-star-selected"
                                     icon={icon({ name: "star" })}
                                     onClick={() => {
                                         rateBook(2, index)
                                     }} />
+                            <FontAwesomeIcon
+                                className="rating-star-selected"
+                                icon={icon({ name: "star" })}
+                                onClick={() => {
+                                    rateBook(1, index)
+                                }} />
+                        </div>
+                        : rating === 3 ?
+                            <div className="rating">
                                 <FontAwesomeIcon
+                                    className="rating-star"
+                                    icon={icon({ name: "star" })}
+                                    onClick={() => {
+                                        rateBook(5, index)
+                                    }} />
+                                <FontAwesomeIcon
+                                    className="rating-star"
+                                    icon={icon({ name: "star" })}
+                                    onClick={() => {
+                                        rateBook(4, index)
+                                    }} />
+                                <FontAwesomeIcon
+                                    className="rating-star-selected"
                                     icon={icon({ name: "star" })}
                                     onClick={() => {
                                         rateBook(3, index)
                                     }} />
                                 <FontAwesomeIcon
-                                    icon={icon({ name: "star", style: "regular" })}
+                                    className="rating-star-selected"
+                                    icon={icon({ name: "star" })}
                                     onClick={() => {
-                                        rateBook(4, index)
+                                        rateBook(2, index)
                                     }} />
                                 <FontAwesomeIcon
-                                    icon={icon({ name: "star", style: "regular" })}
+                                    className="rating-star-selected"
+                                    icon={icon({ name: "star" })}
                                     onClick={() => {
-                                        rateBook(5, index)
+                                        rateBook(1, index)
                                     }} />
                             </div>
                             : rating === 2 ?
-                                <div>
+                                <div className="rating">
                                     <FontAwesomeIcon
+                                        className="rating-star"
                                         icon={icon({ name: "star" })}
                                         onClick={() => {
-                                            rateBook(1, index)
+                                            rateBook(5, index)
                                         }} />
                                     <FontAwesomeIcon
+                                        className="rating-star"
+                                        icon={icon({ name: "star" })}
+                                        onClick={() => {
+                                            rateBook(4, index)
+                                        }} />
+                                    <FontAwesomeIcon
+                                        className="rating-star"
+                                        icon={icon({ name: "star" })}
+                                        onClick={() => {
+                                            rateBook(3, index)
+                                        }} />
+                                    <FontAwesomeIcon
+                                        className="rating-star-selected"
                                         icon={icon({ name: "star" })}
                                         onClick={() => {
                                             rateBook(2, index)
                                         }} />
                                     <FontAwesomeIcon
-                                        icon={icon({ name: "star", style: "regular" })}
+                                        className="rating-star-selected"
+                                        icon={icon({ name: "star" })}
                                         onClick={() => {
-                                            rateBook(3, index)
-                                        }} />
-                                    <FontAwesomeIcon
-                                        icon={icon({ name: "star", style: "regular" })}
-                                        onClick={() => {
-                                            rateBook(4, index)
-                                        }} />
-                                    <FontAwesomeIcon
-                                        icon={icon({ name: "star", style: "regular" })}
-                                        onClick={() => {
-                                            rateBook(5, index)
+                                            rateBook(1, index)
                                         }} />
                                 </div>
                                 : rating === 1 ?
-                                    <div>
+                                    <div className="rating">
                                         <FontAwesomeIcon
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
+                                            onClick={() => {
+                                                rateBook(5, index)
+                                            }} />
+                                        <FontAwesomeIcon
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
+                                            onClick={() => {
+                                                rateBook(4, index)
+                                            }} />
+                                        <FontAwesomeIcon
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
+                                            onClick={() => {
+                                                rateBook(3, index)
+                                            }} />
+                                        <FontAwesomeIcon
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
+                                            onClick={() => {
+                                                rateBook(2, index)
+                                            }} />
+                                        <FontAwesomeIcon
+                                            className="rating-star-selected"
                                             icon={icon({ name: "star" })}
                                             onClick={() => {
                                                 rateBook(1, index)
                                             }} />
-                                        <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
-                                            onClick={() => {
-                                                rateBook(2, index)
-                                            }} />
-                                        <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
-                                            onClick={() => {
-                                                rateBook(3, index)
-                                            }} />
-                                        <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
-                                            onClick={() => {
-                                                rateBook(4, index)
-                                            }} />
-                                        <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
-                                            onClick={() => {
-                                                rateBook(5, index)
-                                            }} />
 
                                     </div>
-                                    : <div>
+                                    : <div className="rating">
                                         <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
                                             onClick={() => {
-                                                rateBook(1, index)
+                                                rateBook(5, index)
                                             }} />
                                         <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
-                                            onClick={() => {
-                                                rateBook(2, index)
-                                            }} />
-                                        <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
-                                            onClick={() => {
-                                                rateBook(3, index)
-                                            }} />
-                                        <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
                                             onClick={() => {
                                                 rateBook(4, index)
                                             }} />
                                         <FontAwesomeIcon
-                                            icon={icon({ name: "star", style: "regular" })}
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
                                             onClick={() => {
-                                                rateBook(5, index)
+                                                rateBook(3, index)
+                                            }} />
+                                        <FontAwesomeIcon
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
+                                            onClick={() => {
+                                                rateBook(2, index)
+                                            }} />
+                                        <FontAwesomeIcon
+                                            className="rating-star"
+                                            icon={icon({ name: "star" })}
+                                            onClick={() => {
+                                                rateBook(1, index)
                                             }} />
                                     </div>}
             </div>

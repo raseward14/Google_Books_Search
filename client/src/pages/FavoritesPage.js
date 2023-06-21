@@ -8,8 +8,9 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 // fontawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 
+import Rating from '../components/Rating';
 
 const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
@@ -90,6 +91,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                 <p>{favorite.authors}</p>
                                 <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                             </div>
+                            <Rating />
                             <div className='button-container'>
                                 <FontAwesomeIcon
                                     className="trashcan"
