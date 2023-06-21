@@ -27,8 +27,12 @@
 
 .rating-star {
   color: white;
+  font-size: 22px;
 }
 
+.selected {
+  color: unset;
+}
 
 .heart-icon {
   font-size: 26px;
@@ -286,7 +290,6 @@ img {
 
 .rating-container {
   margin-left: auto;
-
   display: flex;
   justify-content: space-evenly;
   align-items: center;

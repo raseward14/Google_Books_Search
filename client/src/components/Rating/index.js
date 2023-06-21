@@ -25,64 +25,64 @@ const Rating = ({ rating, updateRating, index }) => {
                 {rating === 5 ?
                     <div className="rating">
                         <FontAwesomeIcon
-                            className="rating-star-selected"
+                            className="rating-star selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
                                 rateBook(4, index)
                             }} />
                         <FontAwesomeIcon
-                            className="rating-star-selected"
+                            className="rating-star selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
                                 rateBook(4, index)
                             }} />
                         <FontAwesomeIcon
-                            className="rating-star-selected"
+                            className="rating-star selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
                                 rateBook(3, index)
                             }} />
                         <FontAwesomeIcon
-                            className="rating-star-selected"
+                            className="rating-star selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
                                 rateBook(2, index)
                             }} />
                         <FontAwesomeIcon
-                            className="rating-star-selected"
+                            className="rating-star selected"
                             icon={icon({ name: "star" })}
                             onClick={() => {
                                 rateBook(1, index)
                             }} />
                     </div>
                     : rating === 4 ?
-                    <div className="rating">
+                        <div className="rating">
                             <FontAwesomeIcon
                                 className="rating-star"
                                 icon={icon({ name: "star" })}
                                 onClick={() => {
                                     rateBook(5, index)
                                 }} />
-                                        <FontAwesomeIcon
-                                            className="rating-star-selected"
-                                            icon={icon({ name: "star" })}
-                                            onClick={() => {
-                                                rateBook(3, index)
-                                            }} />
-                                    <FontAwesomeIcon
-                                        className="rating-star-selected"
-                                        icon={icon({ name: "star" })}
-                                        onClick={() => {
-                                            rateBook(3, index)
-                                        }} />
-                                <FontAwesomeIcon
-                                    className="rating-star-selected"
-                                    icon={icon({ name: "star" })}
-                                    onClick={() => {
-                                        rateBook(2, index)
-                                    }} />
                             <FontAwesomeIcon
-                                className="rating-star-selected"
+                                className="rating-star selected"
+                                icon={icon({ name: "star" })}
+                                onClick={() => {
+                                    rateBook(3, index)
+                                }} />
+                            <FontAwesomeIcon
+                                className="rating-star selected"
+                                icon={icon({ name: "star" })}
+                                onClick={() => {
+                                    rateBook(3, index)
+                                }} />
+                            <FontAwesomeIcon
+                                className="rating-star selected"
+                                icon={icon({ name: "star" })}
+                                onClick={() => {
+                                    rateBook(2, index)
+                                }} />
+                            <FontAwesomeIcon
+                                className="rating-star selected"
                                 icon={icon({ name: "star" })}
                                 onClick={() => {
                                     rateBook(1, index)
@@ -103,19 +103,19 @@ const Rating = ({ rating, updateRating, index }) => {
                                         rateBook(4, index)
                                     }} />
                                 <FontAwesomeIcon
-                                    className="rating-star-selected"
+                                    className="rating-star selected"
                                     icon={icon({ name: "star" })}
                                     onClick={() => {
                                         rateBook(2, index)
                                     }} />
                                 <FontAwesomeIcon
-                                    className="rating-star-selected"
+                                    className="rating-star selected"
                                     icon={icon({ name: "star" })}
                                     onClick={() => {
                                         rateBook(2, index)
                                     }} />
                                 <FontAwesomeIcon
-                                    className="rating-star-selected"
+                                    className="rating-star selected"
                                     icon={icon({ name: "star" })}
                                     onClick={() => {
                                         rateBook(1, index)
@@ -142,13 +142,13 @@ const Rating = ({ rating, updateRating, index }) => {
                                             rateBook(3, index)
                                         }} />
                                     <FontAwesomeIcon
-                                        className="rating-star-selected"
+                                        className="rating-star selected"
                                         icon={icon({ name: "star" })}
                                         onClick={() => {
                                             rateBook(1, index)
                                         }} />
                                     <FontAwesomeIcon
-                                        className="rating-star-selected"
+                                        className="rating-star selected"
                                         icon={icon({ name: "star" })}
                                         onClick={() => {
                                             rateBook(1, index)
@@ -181,7 +181,7 @@ const Rating = ({ rating, updateRating, index }) => {
                                                 rateBook(2, index)
                                             }} />
                                         <FontAwesomeIcon
-                                            className="rating-star-selected"
+                                            className="rating-star selected"
                                             icon={icon({ name: "star" })}
                                             onClick={() => {
                                                 rateBook(0, index)
