@@ -196,6 +196,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <p>{book.title}</p>
                                 <p>{book.authors}</p>
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
+                            </div>
+                            <div className='rating-container'>
                                 <Rating
                                     rating={book.rating}
                                     updateRating={postRating}
