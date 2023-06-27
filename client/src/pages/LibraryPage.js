@@ -37,11 +37,26 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    async function updateFavoriteRating(id, value) {
+        // update this on the favorites page, so we need to PUT the corresponding favorites rating
+        // the body needs a "rating": value
+        // the params need an ID
+        console.log('updating this favorite: ', id, value)
+
+       let result = await favoriteAPIFunctions.updateFavorite(axiosPrivate, id, { "rating": value }, accessToken);
+       console.log(result.data)
+    }
+
     async function updateRating(value, index) {
         console.log('new value: ', value)
         console.log(`books ID: ${read[index]._id}`)
         let result = await readAPIFunctions.updateRead(axiosPrivate, read[index]._id, { "rating": value }, accessToken);
-        console.log(result)
+        let favResult = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
+
+        let favoriteToUpdate = await favResult.data.filter(book => book.isbn13 === result.data.isbn13);
+        if(favoriteToUpdate.length > 0) {
+            updateFavoriteRating(favoriteToUpdate[0]._id, value);
+        }
     }
 
     async function postRating(value, index) {
@@ -96,7 +111,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             subject: book.subject,
             infoLink: book.infoLink,
             isbn13: book.isbn13,
-            user_id: userID
+            user_id: userID,
+            rating: book.rating
         }, accessToken);
         // IF its not already in favorites
         // if .title === .title of the book we are favoriting

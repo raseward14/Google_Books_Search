@@ -26,6 +26,38 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
     const location = useLocation();
     const userID = sessionStorage.getItem('userID');
 
+    async function updateReadRating(id, value) {
+        // update this on the read page, so we need to PUT the corresponding read rating
+        // the body needs a "rating": value
+        // the params need an ID
+        console.log('updating this read: ', id, value);
+
+       let result = await readAPIFunctions.updateRead(axiosPrivate, id, { "rating": value }, accessToken);
+       console.log(result.data);
+
+    };
+
+    async function updateRating(value, index) {
+        console.log('new value: ', value);
+        console.log(`books ID: ${favorites[index]._id}`);
+        let result = await favoriteAPIFunctions.updateFavorite(axiosPrivate, favorites[index]._id, { "rating": value }, accessToken);
+        let readResult = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
+
+        let readToUpdate = await readResult.data.filter(book => book.isbn13 === result.data.isbn13);
+        if(readToUpdate.length > 0) {
+            updateReadRating(readToUpdate[0]._id, value);
+        };
+    }
+
+    async function postRating(value, index) {
+        let updatedFavorite = favorites[index]
+        updatedFavorite.rating = value
+        let newArr = [...favorites];
+        newArr[index] = updatedFavorite;
+        setFavorites(newArr);
+        updateRating(value, index)
+    }
+
     async function deleteFavorite(book) {
         await favoriteAPIFunctions.deleteFavorite(axiosPrivate, book._id, accessToken);
         setFavorites(favorites.filter(fav => fav._id !== book._id))
@@ -91,7 +123,13 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                 <p>{favorite.authors}</p>
                                 <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                             </div>
-                            <Rating />
+                            <div className='rating-container'>
+                            <Rating
+                            rating={favorite.rating}
+                            updateRating={postRating}
+                            index={index} />
+
+                            </div>
                             <div className='button-container'>
                                 <FontAwesomeIcon
                                     className="trashcan"
