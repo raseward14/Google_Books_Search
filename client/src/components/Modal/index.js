@@ -196,101 +196,109 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount, reAddBook,
                 <tbody>
                     <tr>
                         {modalBook ? (
-                            <tr>
-                                <td className="recommended-box book-card">
-                                    <p style={{ color: "white" }}>{book.volumeInfo.title}</p>
-                                    <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade" />
-                                </td>
-                                <td className="modal-buttons-container" >
-                                    <ReactTooltip id="myTip" />
-                                    <tr className="modal-button">
-                                        {modalBook.read === true ?
-                                            <button
-                                                data-tooltip-id="myTip"
-                                                data-tooltip-content="Remove from your read books!"
-                                                style={{
-                                                    backgroundColor: "green",
-                                                    width: "45px"
-                                                }}
-                                                onClick={() => {
-                                                    clickedRead(modalBook);
-                                                }}><FontAwesomeIcon icon={faSquareCheck}
-                                                    className='fa-2x' /></button>
-                                            :
-                                            <button
-                                                data-tooltip-id="myTip"
-                                                data-tooltip-content="Add to your read books!"
-                                                style={{
-                                                    backgroundColor: "revert",
-                                                    width: "45px"
-                                                }}
-                                                onClick={() => {
-                                                    clickedRead(modalBook);
-                                                }}><FontAwesomeIcon icon={faQuestion}
-                                                    className='fa-2x' /></button>
-                                        }
-                                    </tr>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td className="recommended-box book-card">
+                                            <p style={{ color: "white" }}>{book.volumeInfo.title}</p>
+                                            <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade" />
+                                        </td>
+                                        <td className="modal-buttons-container" >
+                                            <ReactTooltip id="myTip" />
+                                            <tr className="modal-button">
+                                                {modalBook.read === true ?
+                                                    <button
+                                                        data-tooltip-id="myTip"
+                                                        data-tooltip-content="Remove from your read books!"
+                                                        style={{
+                                                            backgroundColor: "green",
+                                                            width: "45px"
+                                                        }}
+                                                        onClick={() => {
+                                                            clickedRead(modalBook);
+                                                        }}><FontAwesomeIcon icon={faSquareCheck}
+                                                            className='fa-2x' /></button>
+                                                    :
+                                                    <button
+                                                        data-tooltip-id="myTip"
+                                                        data-tooltip-content="Add to your read books!"
+                                                        style={{
+                                                            backgroundColor: "revert",
+                                                            width: "45px"
+                                                        }}
+                                                        onClick={() => {
+                                                            clickedRead(modalBook);
+                                                        }}><FontAwesomeIcon icon={faQuestion}
+                                                            className='fa-2x' /></button>
+                                                }
+                                            </tr>
 
-                                    <tr className="modal-button">{modalBook.want === true ?
-                                        <button
-                                            data-tooltip-id="myTip"
-                                            data-tooltip-content="Remove from want to read list!"
-                                            style={{
-                                                backgroundColor: "green",
-                                                width: "45px"
-                                            }}
-                                            onClick={() => {
-                                                clickedWant(modalBook);
-                                            }}><FontAwesomeIcon
-                                                icon={faBookBookmark}
-                                                className='fa-2x' /></button>
-                                        : modalBook.read ?
-                                            <FontAwesomeIcon
-                                                icon={faBookBookmark}
-                                                className='fa-2x' />
-                                            :
-                                            <button
-                                                data-tooltip-id="myTip"
-                                                data-tooltip-content="Add to want to read list!"
-                                                style={{
-                                                    backgroundColor: "revert",
-                                                    width: "45px"
-                                                }}
-                                                onClick={() => {
-                                                    clickedWant(modalBook);
-                                                }}><FontAwesomeIcon
-                                                    icon={faBook}
-                                                    className='fa-2x' /></button>
-                                    }
-                                    </tr>
+                                            <tr className="modal-button">{modalBook.want === true ?
+                                                <button
+                                                    data-tooltip-id="myTip"
+                                                    data-tooltip-content="Remove from want to read list!"
+                                                    style={{
+                                                        backgroundColor: "green",
+                                                        width: "45px"
+                                                    }}
+                                                    onClick={() => {
+                                                        clickedWant(modalBook);
+                                                    }}><FontAwesomeIcon
+                                                        icon={faBookBookmark}
+                                                        className='fa-2x' /></button>
+                                                : modalBook.read ?
+                                                    <FontAwesomeIcon
+                                                        icon={faBookBookmark}
+                                                        className='fa-2x' />
+                                                    :
+                                                    <button
+                                                        data-tooltip-id="myTip"
+                                                        data-tooltip-content="Add to want to read list!"
+                                                        style={{
+                                                            backgroundColor: "revert",
+                                                            width: "45px"
+                                                        }}
+                                                        onClick={() => {
+                                                            clickedWant(modalBook);
+                                                        }}><FontAwesomeIcon
+                                                            icon={faBook}
+                                                            className='fa-2x' /></button>
+                                            }
+                                            </tr>
 
-                                    <tr className="modal-button">
-                                        <ReactTooltip id="closeBookTip" />
-                                        <span
-                                            data-tooltip-id="closeBookTip"
-                                            data-tooltip-content="close"
-                                            className="book-modal-close"
-                                            onClick={() => {
-                                                closeModal();
-                                            }}>&times;</span>
+                                            <tr className="modal-button">
+                                                <ReactTooltip id="closeBookTip" />
+                                                <span
+                                                    data-tooltip-id="closeBookTip"
+                                                    data-tooltip-content="close"
+                                                    className="book-modal-close"
+                                                    onClick={() => {
+                                                        closeModal();
+                                                    }}>&times;</span>
+                                            </tr>
+                                        </td>
                                     </tr>
-                                </td>
-                            </tr>
+                                </tbody>
+                            </table>
                             // component for adding to read, and adding to want to read
                         )
                             :
-                            <tr>
-                                <td><p>Modal Content</p></td>
-                                <td
-                                    data-tooltip-id="closeBookTip"
-                                    data-tooltip-content="close"
-                                >
-                                    <span
-                                        className="close"
-                                        onClick={() => {
-                                            closeModal();
-                                        }}>&times;</span></td>
-                            </tr>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><p>Modal Content</p></td>
+                                        <td
+                                            data-tooltip-id="closeBookTip"
+                                            data-tooltip-content="close"
+                                        >
+                                            <span
+                                                className="close"
+                                                onClick={() => {
+                                                    closeModal();
+                                                }}>&times;</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         }
                     </tr>
                 </tbody>
