@@ -444,6 +444,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     <p>{book.volumeInfo?.authors}</p>
                                     <a href={book.volumeInfo?.infoLink} className='book-link'>Buy me!</a>
                                 </div>
+                                <div className='rating-container'></div>
                                 <div key={index} className='button-container'>
                                     {/* <button onClick={() => clickedFavorite(book)}>FAVORITE</button> */}
                                     {book.read === true ?

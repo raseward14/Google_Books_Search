@@ -195,6 +195,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                 <a href={book?.infoLink} className='book-link'>Buy me!</a>
 
                             </div>
+                            <div className='rating-container'></div>
                             <div className='button-container'>
                                 {book.inProgress === true ?
                                     <button

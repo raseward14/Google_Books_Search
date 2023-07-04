@@ -32,8 +32,8 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
         // the params need an ID
         console.log('updating this read: ', id, value);
 
-       let result = await readAPIFunctions.updateRead(axiosPrivate, id, { "rating": value }, accessToken);
-       console.log(result.data);
+        let result = await readAPIFunctions.updateRead(axiosPrivate, id, { "rating": value }, accessToken);
+        console.log(result.data);
 
     };
 
@@ -44,7 +44,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
         let readResult = await readAPIFunctions.getRead(axiosPrivate, accessToken, userID);
 
         let readToUpdate = await readResult.data.filter(book => book.isbn13 === result.data.isbn13);
-        if(readToUpdate.length > 0) {
+        if (readToUpdate.length > 0) {
             updateReadRating(readToUpdate[0]._id, value);
         };
     }
@@ -124,10 +124,10 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                 <a href={favorite.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='rating-container'>
-                            <Rating
-                            rating={favorite.rating}
-                            updateRating={postRating}
-                            index={index} />
+                                <Rating
+                                    rating={favorite.rating}
+                                    updateRating={postRating}
+                                    index={index} />
 
                             </div>
                             <div className='button-container'>
