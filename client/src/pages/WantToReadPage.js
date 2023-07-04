@@ -4,7 +4,7 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favAPIFunctions from '../utils/FavoriteAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faBook, faCheck, faBookOpen, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
@@ -204,7 +204,6 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         onClick={() => {
                                             clickedInProgress(book, index)
                                         }}
-                                        // icon={faBookOpen}
                                         icon={icon({ name: "book-open" })}
                                         className='book-button'
                                         style={{ 'color': 'green' }} />
@@ -213,7 +212,6 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         onClick={() => {
                                             clickedInProgress(book, index)
                                         }}
-                                        // icon={faBook}
                                         icon={icon({ name: "book" })}
                                         className='book-button'
                                         style={{ 'color': 'black' }} />
@@ -233,7 +231,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
-                                        icon={icon({ name: "circle-check", style: "regular" })}
+                                        icon={icon({ name: "circle", style: "regular" })}
                                         className='book-button' />
                                 }
                                 <FontAwesomeIcon

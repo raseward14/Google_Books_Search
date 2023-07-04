@@ -451,18 +451,18 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     {/* <button onClick={() => clickedFavorite(book)}>FAVORITE</button> */}
                                     {book.read === true ?
                                         <FontAwesomeIcon
-                                        onClick={() => {
-                                            clickedRead(book, index)
-                                        }}
-                                        icon={icon({ name: "check" })}
-                                        className='book-button'
-                                        style={{ "color": "green" }} />
+                                            onClick={() => {
+                                                clickedRead(book, index)
+                                            }}
+                                            icon={icon({ name: "circle-check", style:"regular" })}
+                                            className='book-button'
+                                            style={{ "color": "green" }} />
                                         :
                                         <FontAwesomeIcon
                                             onClick={() => {
                                                 clickedRead(book, index)
                                             }}
-                                            icon={icon({ name: "question" })}
+                                            icon={icon({ name: "circle", style:"regular" })}
                                             className='book-button'
                                             style={{ "color": "black" }} />
                                     }
@@ -470,17 +470,18 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         <FontAwesomeIcon
                                             style={{ "color": "green" }}
                                             onClick={() => clickedWantToRead(book, index)}
-                                            icon={faBookBookmark}
+                                            // icon={faBookBookmark}
+                                            icon={icon({ name:"book-bookmark" })}
                                             className='book-button' />
                                         : book.read === true ?
                                             <FontAwesomeIcon
-                                                icon={icon({ name:"book" })}
-                                                className='book-button' 
+                                                icon={icon({ name: "book" })}
+                                                className='book-button'
                                                 style={{ "color": "black" }} />
                                             :
                                             <FontAwesomeIcon
                                                 onClick={() => clickedWantToRead(book, index)}
-                                                icon={icon({ name:"book" })}
+                                                icon={icon({ name: "book" })}
                                                 className='book-button'
                                                 style={{ "color": "black" }} />
                                     }

@@ -5,6 +5,8 @@ import 'react-tooltip/dist/react-tooltip.css'
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookBookmark, faSquareCheck, faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+
 // api calls - read, want, and axiosPrivate
 import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
@@ -118,6 +120,8 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount, reAddBook,
                 "want": false
             })
             addToRead(clickedBook);
+            // remove from want
+            deleteFromWant(clickedBook);
         };
     };
 
@@ -207,62 +211,69 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount, reAddBook,
                                             <ReactTooltip id="myTip" />
                                             <tr className="modal-button">
                                                 {modalBook.read === true ?
-                                                    <button
+                                                    <FontAwesomeIcon
                                                         data-tooltip-id="myTip"
                                                         data-tooltip-content="Remove from your read books!"
                                                         style={{
-                                                            backgroundColor: "green",
+                                                            color: "green",
                                                             width: "45px"
                                                         }}
                                                         onClick={() => {
                                                             clickedRead(modalBook);
-                                                        }}><FontAwesomeIcon icon={faSquareCheck}
-                                                            className='fa-2x' /></button>
+                                                        }}
+                                                        icon={icon({ name:"circle-check", style:"regular" })}
+                                                        className='book-button' />
                                                     :
-                                                    <button
+                                                    <FontAwesomeIcon
                                                         data-tooltip-id="myTip"
                                                         data-tooltip-content="Add to your read books!"
                                                         style={{
-                                                            backgroundColor: "revert",
+                                                            color: "revert",
                                                             width: "45px"
                                                         }}
                                                         onClick={() => {
                                                             clickedRead(modalBook);
-                                                        }}><FontAwesomeIcon icon={faQuestion}
-                                                            className='fa-2x' /></button>
+                                                        }}
+                                                        icon={icon({ name:"circle", style:"regular" })}
+                                                        className='book-button' />
                                                 }
                                             </tr>
 
                                             <tr className="modal-button">{modalBook.want === true ?
-                                                <button
+                                                <FontAwesomeIcon
                                                     data-tooltip-id="myTip"
                                                     data-tooltip-content="Remove from want to read list!"
                                                     style={{
-                                                        backgroundColor: "green",
+                                                        color: "green",
                                                         width: "45px"
                                                     }}
                                                     onClick={() => {
                                                         clickedWant(modalBook);
-                                                    }}><FontAwesomeIcon
-                                                        icon={faBookBookmark}
-                                                        className='fa-2x' /></button>
+                                                    }}
+                                                    icon={icon({ name: "book-bookmark" })}
+                                                    className='book-button' />
                                                 : modalBook.read ?
                                                     <FontAwesomeIcon
-                                                        icon={faBookBookmark}
-                                                        className='fa-2x' />
+                                                        icon={icon({ name: "book" })}
+                                                        className='book-button' 
+                                                        style={{
+                                                            color: "revert",
+                                                            width: "45px"
+                                                        }}
+                                                        />
                                                     :
-                                                    <button
+                                                    <FontAwesomeIcon
                                                         data-tooltip-id="myTip"
                                                         data-tooltip-content="Add to want to read list!"
                                                         style={{
-                                                            backgroundColor: "revert",
+                                                            color: "revert",
                                                             width: "45px"
                                                         }}
                                                         onClick={() => {
                                                             clickedWant(modalBook);
-                                                        }}><FontAwesomeIcon
-                                                            icon={faBook}
-                                                            className='fa-2x' /></button>
+                                                        }}
+                                                        icon={icon({ name: "book" })}
+                                                        className='book-button' />
                                             }
                                             </tr>
 
