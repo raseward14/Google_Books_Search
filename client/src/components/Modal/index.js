@@ -120,7 +120,6 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount, reAddBook,
                 "want": false
             })
             addToRead(clickedBook);
-            // remove from want
             deleteFromWant(clickedBook);
         };
     };
