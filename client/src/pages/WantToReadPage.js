@@ -5,6 +5,8 @@ import * as favAPIFunctions from '../utils/FavoriteAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faBook, faCheck, faBookOpen, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -198,58 +200,48 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                             <div className='rating-container'></div>
                             <div className='button-container'>
                                 {book.inProgress === true ?
-                                    <button
-                                        style={{ 'backgroundColor': 'green' }}
+                                    <FontAwesomeIcon
                                         onClick={() => {
                                             clickedInProgress(book, index)
                                         }}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faBookOpen}
-                                            className='fa-2x' />
-                                    </button>
+                                        // icon={faBookOpen}
+                                        icon={icon({ name: "book-open" })}
+                                        className='book-button'
+                                        style={{ 'color': 'green' }} />
                                     :
-                                    <button
+                                    <FontAwesomeIcon
                                         onClick={() => {
                                             clickedInProgress(book, index)
                                         }}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faBook}
-                                            className='fa-2x' />
-                                    </button>
+                                        // icon={faBook}
+                                        icon={icon({ name: "book" })}
+                                        className='book-button'
+                                        style={{ 'color': 'black' }} />
 
                                 }
                                 {book.read === true ?
-                                    <button
-                                        style={{ 'backgroundColor': 'green' }}
+                                    <FontAwesomeIcon
+                                        style={{ 'color': 'green' }}
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faCheck}
-                                            className='fa-2x' />
-                                    </button> :
-                                    <button
+                                        // icon={faCheck}
+                                        icon={icon({ name: "circle-check" })}
+                                        className='book-button' />
+                                    :
+                                    <FontAwesomeIcon
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faCheck}
-                                            className='fa-2x' />
-                                    </button>
+                                        icon={icon({ name: "circle-check", style: "regular" })}
+                                        className='book-button' />
                                 }
-                                <button
+                                <FontAwesomeIcon
                                     onClick={() => {
                                         removeFromWantToRead(book);
                                     }}
-                                >
-                                    <FontAwesomeIcon
-                                        icon={faTrashCan}
-                                        className='fa-2x' />
-                                </button>
+                                    icon={icon({ name: "trash-can", style: "regular" })}
+                                    className='book-button' />
                             </div>
                         </div>
                         {book.expand ?

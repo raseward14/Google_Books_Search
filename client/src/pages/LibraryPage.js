@@ -237,7 +237,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 }
 
                                 <FontAwesomeIcon
-                                    className="trashcan"
+                                    className="book-button"
                                     onClick={() => {
                                         removeFromRead(book);
                                     }}

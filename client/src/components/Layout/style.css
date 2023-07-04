@@ -18,11 +18,11 @@
   color: red;
 }
 
-.trashcan {
+.book-button {
   font-size: 26px;
 }
 
-.trashcan:hover {
+.book-button:hover {
   cursor: pointer;
   color: #63F82C;
 }

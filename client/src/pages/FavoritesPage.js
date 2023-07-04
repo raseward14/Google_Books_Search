@@ -4,7 +4,6 @@ import * as readAPIFunctions from '../utils/ReadAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate, useLocation } from "react-router-dom";
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 // fontawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -132,7 +131,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                             </div>
                             <div className='button-container'>
                                 <FontAwesomeIcon
-                                    className="trashcan"
+                                    className="book-button"
 
                                     onClick={() => {
                                         deleteFavorite(favorite)
