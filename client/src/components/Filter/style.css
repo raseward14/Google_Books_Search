@@ -100,7 +100,6 @@
 @media (max-width: 360px) {
     .recommend-modal {
         width: 150px;
-        height: fit-content;
     }
 }
 
