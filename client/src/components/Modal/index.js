@@ -202,9 +202,11 @@ const Modal = ({ state, callbackFunction, book, wantCount, readCount, reAddBook,
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td className="recommended-box book-card">
+                                        <td className="recommended-box book-card recommend-modal">
                                             <p style={{ color: "white" }}>{book.volumeInfo.title}</p>
-                                            <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade" />
+                                            {/* <img src={book.volumeInfo?.imageLinks?.thumbnail} className="fade" /> */}
+                                            <p className='modal-description'>{book.volumeInfo?.description}</p>
+
                                         </td>
                                         <td className="modal-buttons-container" >
                                             <ReactTooltip id="myTip" />

@@ -67,3 +67,40 @@
     margin-top: -2%;
 }
 
+@media (max-width: 850px) {
+    .modal {
+        padding-left: 11%;
+    }
+}
+
+@media (max-width: 750px) {
+    .recommend-modal {
+        width: 400px;
+    }
+}
+
+@media (max-width: 650px) {
+    .recommend-modal {
+        width: 300px;
+    }
+}
+
+@media (max-width: 530px) {
+    .recommend-modal {
+        width: 250px;
+    }
+}
+
+@media (max-width: 450px) {
+    .recommend-modal {
+        width: 200px;
+    }
+}
+
+@media (max-width: 360px) {
+    .recommend-modal {
+        width: 150px;
+        height: fit-content;
+    }
+}
+

@@ -10,6 +10,15 @@
     cursor: pointer;
 }
 
+.recommend-modal {
+    width: 500px;
+    height: fit-content;
+}
+
+.modal-description {
+    padding: 10px;
+}
+
 .book-modal-content {
     background-color: #fefefe;
     padding: 20px;
