@@ -214,7 +214,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         }}
                                         icon={icon({ name: "book" })}
                                         className='book-button'
-                                        style={{ 'color': 'black' }} />
+                                         />
 
                                 }
                                 {book.read === true ?
