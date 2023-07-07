@@ -3,6 +3,7 @@ import { stack as Menu } from 'react-burger-menu';
 import NavBar from '../Navbar/nav';
 import { Squash as Hamburger } from 'hamburger-react';
 import './style.css'
+import logo from '../Images/2023-07-06_18-05-18.png'
 
 // make a new context
 const MyContext = React.createContext();
@@ -44,6 +45,13 @@ const Navigation = ({ fCount, rCount, wCount }) => {
             customBurgerIcon={false}
             isOpen={ctx.isMenuOpen}
             onStateChange={(state) => ctx.stateChangeHandler(state)}>
+                <img
+                    src={logo}
+                    style={{
+                        'width': '121%',
+                        'margin-left': '-27px',
+                        'margin-top': '-7px'
+                    }} />
             <NavBar
                 fCount={fCount}
                 rCount={rCount}

@@ -16,15 +16,14 @@
 .hamburger-react {
   display: none;
   z-index: 2000;
-  color: rgb(147, 241, 5);
+  color: rgb(156, 243, 26);
   left: 5vw;
   top: 3vh;
   border-radius: 4px;
   position: fixed !important;
+  border: 2px black solid;
 }
-
-
-
+ 
 .hamburger-react-white {
   display: none;
   z-index: 2000;

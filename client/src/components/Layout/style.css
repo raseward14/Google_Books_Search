@@ -226,7 +226,8 @@ img {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  width: 30%;
+  width: 33%;
+  align-items: center;
 }
 
 .pin {
@@ -249,15 +250,16 @@ img {
   justify-self: flex-start;
 }
 
-.heading-container-header p {
+.heading-container-header>* {
   border: 1px black solid;
   border-radius: 5px;
   padding: 5px;
+  margin: 16px 0px;
 }
 
 /*https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container*/
 .button-container {
-  width: 30%;
+  width: 33%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;

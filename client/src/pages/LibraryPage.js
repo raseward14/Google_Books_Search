@@ -43,8 +43,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         // the params need an ID
         console.log('updating this favorite: ', id, value)
 
-       let result = await favoriteAPIFunctions.updateFavorite(axiosPrivate, id, { "rating": value }, accessToken);
-       console.log(result.data)
+        let result = await favoriteAPIFunctions.updateFavorite(axiosPrivate, id, { "rating": value }, accessToken);
+        console.log(result.data)
     }
 
     async function updateRating(value, index) {
@@ -54,7 +54,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let favResult = await favoriteAPIFunctions.getFavorites(axiosPrivate, accessToken, userID);
 
         let favoriteToUpdate = await favResult.data.filter(book => book.isbn13 === result.data.isbn13);
-        if(favoriteToUpdate.length > 0) {
+        if (favoriteToUpdate.length > 0) {
             updateFavoriteRating(favoriteToUpdate[0]._id, value);
         }
     }
@@ -200,7 +200,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                     }}
                 />
                 <div className='heading-container-header'>
-                    <p>Favorite</p>
+                    <p>Favorite{"\n"}
+                        <FontAwesomeIcon
+                            className="fav"
+                            icon={icon({ name: "heart", style: "solid" })} />
+                    </p>
                     <p>Remove</p>
                 </div>
             </div>

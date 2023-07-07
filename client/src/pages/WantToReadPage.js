@@ -182,8 +182,14 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                     }}
                 />
                 <div className='heading-container-header'>
-                    <p>In Progress</p>
-                    <p>Complete</p>
+                    <p>In Progress{"\n"}
+                        <FontAwesomeIcon
+                            icon={icon({ name: "book-open" })}
+                            style={{ 'color': 'green' }} /></p>
+                    <p>Complete{"\n"}
+                        <FontAwesomeIcon
+                            style={{ 'color': 'green' }}
+                            icon={icon({ name: "circle-check" })}/></p>
                     <p>Remove</p>
                 </div>
             </div>
@@ -214,8 +220,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         }}
                                         icon={icon({ name: "book" })}
                                         className='book-button'
-                                         />
-
+                                    />
                                 }
                                 {book.read === true ?
                                     <FontAwesomeIcon
@@ -223,7 +228,6 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                                         onClick={() => {
                                             clickedRead(book, index);
                                         }}
-                                        // icon={faCheck}
                                         icon={icon({ name: "circle-check" })}
                                         className='book-button' />
                                     :

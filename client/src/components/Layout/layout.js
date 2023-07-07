@@ -6,6 +6,7 @@ import Footer from '../Footer/footer';
 import { Outlet } from 'react-router-dom';
 import './style.css'
 import Burger from '../Burger/burger';
+import logo from '../Images/2023-07-06_18-05-18.png'
 
 
 const Layout = ({ fCount, rCount, wCount }) => {
@@ -25,6 +26,11 @@ const Layout = ({ fCount, rCount, wCount }) => {
     return (
         <div>
             <div className='sidebar'>
+                <img
+                    src={logo}
+                    style={{
+                        'width': '100%'
+                    }} />
                 <NavBar
                     fCount={fCount}
                     rCount={rCount}
