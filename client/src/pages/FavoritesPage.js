@@ -7,15 +7,23 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // fontawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 import Rating from '../components/Rating';
+
+// tooltip
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip as ReactTooltip } from "react-tooltip";
+// search
+import Search from '../components/Search';
 
 const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
     const [readCount, setReadCount] = useState(null);
     const [wantCount, setWantCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
+    const [pinned, setPinned] = useState(false);
 
     const [favorites, setFavorites] = useState([]);
     let accessToken = sessionStorage.getItem('accessToken');
@@ -113,6 +121,34 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
     return (
         <div>
             <h3>Favorites</h3>
+            <ReactTooltip id="pinTip" />
+
+            <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
+                <FontAwesomeIcon
+                    data-tooltip-id="pinTip"
+                    data-tooltip-content="Pin this header!"
+
+                    icon={faThumbtack}
+                    className={pinned ? 'pin pinned' : 'pin not-pinned'}
+                    onClick={() => {
+                        if (pinned === false) {
+                            setPinned(true);
+                        } else {
+                            setPinned(false);
+                        }
+                    }}
+                />
+                <Search className="single-book-header" />
+
+                <div className='heading-container-header'>
+                    <p>Remove{"\n"}
+                        <FontAwesomeIcon
+                            icon={icon({ name: "trash-can", style: "regular" })} />
+                    </p>
+                </div>
+            </div>
+
+
             <div>
                 {favorites.map((favorite, index) => (
                     <div key={favorite._id} className='single-book'>

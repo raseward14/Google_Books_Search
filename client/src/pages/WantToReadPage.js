@@ -13,8 +13,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 // tooltip
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip as ReactTooltip } from "react-tooltip";
-
-
+// search
+import Search from '../components/Search';
 
 const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
@@ -181,6 +181,8 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                         }
                     }}
                 />
+                <Search className="single-book-header" />
+
                 <div className='heading-container-header'>
                     <p>In Progress{"\n"}
                         <FontAwesomeIcon

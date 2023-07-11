@@ -15,6 +15,8 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import Rating from '../components/Rating';
+// search
+import Search from '../components/Search';
 
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
@@ -199,6 +201,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         };
                     }}
                 />
+                <Search className="single-book-header" />
                 <div className='heading-container-header'>
                     <p>Favorite{"\n"}
                         <FontAwesomeIcon

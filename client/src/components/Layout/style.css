@@ -213,6 +213,7 @@ img {
   padding: 10px;
   height: 2 0px;
   background-color: aliceblue;
+  align-items: center;
 }
 
 .sticky {
