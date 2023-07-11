@@ -189,8 +189,11 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                     <p>Complete{"\n"}
                         <FontAwesomeIcon
                             style={{ 'color': 'green' }}
-                            icon={icon({ name: "circle-check" })}/></p>
-                    <p>Remove</p>
+                            icon={icon({ name: "circle-check" })} /></p>
+                    <p>Remove{"\n"}
+                        <FontAwesomeIcon
+                            icon={icon({ name: "trash-can", style: "regular" })} />
+                    </p>
                 </div>
             </div>
             <div>

@@ -432,8 +432,18 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                     }}
                 />
                 <div className='heading-container-header'>
-                    <p>Read Books</p>
-                    <p>Want to Read</p>
+                    <p>Read Books{"\n"}
+                        <FontAwesomeIcon
+                            icon={icon({ name: "circle-check" })}
+                            className='fav'
+                            style={{ "color": "green" }} />
+                    </p>
+                    <p>Want to Read{"\n"}
+                        <FontAwesomeIcon
+                            style={{ "color": "green" }}
+                            icon={icon({ name: "book-bookmark" })}
+                            className='fav' />
+                    </p>
                 </div>
             </div>
             {books.length > 0 && (
@@ -454,7 +464,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             onClick={() => {
                                                 clickedRead(book, index)
                                             }}
-                                            icon={icon({ name: "circle-check", style:"regular" })}
+                                            icon={icon({ name: "circle-check" })}
                                             className='book-button'
                                             style={{ "color": "green" }} />
                                         :
@@ -462,7 +472,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             onClick={() => {
                                                 clickedRead(book, index)
                                             }}
-                                            icon={icon({ name: "circle", style:"regular" })}
+                                            icon={icon({ name: "circle", style: "regular" })}
                                             className='book-button'
                                             style={{ "color": "black" }} />
                                     }
@@ -470,14 +480,13 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         <FontAwesomeIcon
                                             style={{ "color": "green" }}
                                             onClick={() => clickedWantToRead(book, index)}
-                                            // icon={faBookBookmark}
-                                            icon={icon({ name:"book-bookmark" })}
+                                            icon={icon({ name: "book-bookmark" })}
                                             className='book-button' />
                                         : book.read === true ?
                                             <FontAwesomeIcon
                                                 icon={icon({ name: "book" })}
                                                 className='book-button'
-                                                style={{ "color": "black" }} />
+                                                style={{ "color": "grey" }} />
                                             :
                                             <FontAwesomeIcon
                                                 onClick={() => clickedWantToRead(book, index)}

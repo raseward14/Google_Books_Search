@@ -5,7 +5,7 @@ import * as wantAPIFunctions from '../utils/WantToReadAPI';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
-import { faTrashCan, faThumbtack, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
@@ -205,7 +205,10 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                             className="fav"
                             icon={icon({ name: "heart", style: "solid" })} />
                     </p>
-                    <p>Remove</p>
+                    <p>Remove{"\n"}
+                        <FontAwesomeIcon
+                            icon={icon({ name: "trash-can", style: "regular" })} />
+                    </p>
                 </div>
             </div>
             <div>
@@ -239,7 +242,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         className="heart-icon"
                                         icon={icon({ name: "heart", style: "regular" })} />
                                 }
-
                                 <FontAwesomeIcon
                                     className="book-button"
                                     onClick={() => {
