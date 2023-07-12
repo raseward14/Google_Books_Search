@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@bugsnag/js": "^7.20.2",
+    "@bugsnag/plugin-react": "^7.19.0",
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-regular": "^5.0.13",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
@@ -53,8 +55,8 @@
       "last 1 safari version"
     ]
   },
-  "babelMacros" : {
-    "fontawesome-svg-core" : {
+  "babelMacros": {
+    "fontawesome-svg-core": {
       "license": "free"
     }
   }

@@ -181,7 +181,9 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                         }
                     }}
                 />
-                <Search className="single-book-header" />
+                <Search 
+                bookArray={want}
+                className="single-book-header" />
 
                 <div className='heading-container-header'>
                     <p>In Progress{"\n"}
