@@ -36,6 +36,10 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    async function filterBooks(filteredArray) {
+        console.log('want to read page has this book array: ', filteredArray)
+    }
+
     const deleteFromRead = async (book) => {
         let readBook = await readAPIFunctions.getReadByIsbn13(axiosPrivate, book.isbn13, accessToken);
         const readBookID = readBook.data[0]._id;
@@ -183,7 +187,8 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                 />
                 <Search 
                 bookArray={want}
-                className="single-book-header" />
+                className="single-book-header"
+                callback={filterBooks} />
 
                 <div className='heading-container-header'>
                     <p>In Progress{"\n"}

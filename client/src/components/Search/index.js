@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import './style.css';
-const Search = ({ bookArray }) => {
+const Search = ({ bookArray, callback }) => {
     const [search, setSearch] = useState('');
     const [arrow, setArrow] = useState(false);
 
     const filterBooks = async (array) => {
         const regex = new RegExp(search, 'i');
-        console.log(array)
         const newArray = await array.filter(book => {
             let bookTitle = book.title.toLowerCase();
             return regex.test(bookTitle)
         })
         console.log('the filter has kept: ', newArray)
+        callback(newArray)
     }
 
     useEffect(() => {
