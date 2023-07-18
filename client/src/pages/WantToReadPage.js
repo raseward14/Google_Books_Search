@@ -38,6 +38,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
 
     async function filterBooks(filteredArray) {
         console.log('want to read page has this book array: ', filteredArray)
+        setWant(filteredArray);
     }
 
     const deleteFromRead = async (book) => {

@@ -6,12 +6,12 @@ const Search = ({ bookArray, callback }) => {
 
     const filterBooks = async (array) => {
         const regex = new RegExp(search, 'i');
-        const newArray = await array.filter(book => {
-            let bookTitle = book.title.toLowerCase();
-            return regex.test(bookTitle)
-        })
-        console.log('the filter has kept: ', newArray)
-        callback(newArray)
+            const newArray = await array.filter(book => {
+                let bookTitle = book.title.toLowerCase();
+                return regex.test(bookTitle)
+            })
+            console.log('the filter has kept: ', newArray)
+                callback(newArray)
     }
 
     useEffect(() => {
