@@ -3,20 +3,54 @@ import './style.css';
 const Search = ({ bookArray, callback }) => {
     const [search, setSearch] = useState('');
     const [arrow, setArrow] = useState(false);
+    const [searchProperty, setSearchProperty] = useState('title');
+
+    const updateSearch = (text) => {
+        setSearchProperty(text);
+    };
+
+    const toggleSearchOptions = (bool) => {
+        console.log(bool)
+        if (bool) {
+            document.getElementById("my-search-dropdown").classList.toggle("show-search-options")
+        } else {
+            document.getElementById("my-search-dropdown").classList.toggle("show-search-options")
+        };
+    };
 
     const filterBooks = async (array) => {
         const regex = new RegExp(search, 'i');
+        if (searchProperty === 'title') {
             const newArray = await array.filter(book => {
                 let bookTitle = book.title.toLowerCase();
                 return regex.test(bookTitle)
             })
             console.log('the filter has kept: ', newArray)
-                callback(newArray)
+            callback(newArray)
+        } else if (searchProperty === 'author') {
+            const newArray = await array.filter(book => {
+                let bookAuthor = book.authors.forEach(author => author.toLowerCase());
+                return regex.test(bookAuthor)
+            })
+            // console.log('the filter has kept: ', newArray)
+            // callback(newArray)
+        } else {
+            const newArray = await array.filter(book => {
+                let bookSubject = book.subject.toLowerCase();
+                return regex.test(bookSubject)
+            })
+            console.log('the filter has kept: ', newArray)
+            callback(newArray)
+        }
     }
 
     useEffect(() => {
+        console.log(`search property is: ${searchProperty}`)
+    }, [searchProperty])
+
+    useEffect(() => {
         console.log('search received this array: ', bookArray)
-    }, [bookArray])
+    }, [bookArray]);
 
     useEffect(() => {
         console.log('arrow is: ', arrow);
@@ -24,35 +58,57 @@ const Search = ({ bookArray, callback }) => {
 
     useEffect(() => {
         console.log('search term: ', search);
-        filterBooks(bookArray)
+        filterBooks(bookArray);
     }, [search]);
 
     return (
         <div>
-            <button
-            className="button-filter"
-            >
-                {arrow ?
-                <i 
-                class="arrow up"
-                onClick={() => {
-                    setArrow(false);
-                }}
-                ></i>
-                :
-                <i 
-                onClick={() => {
-                    setArrow(true);
-                }}
-                class="arrow down"></i>
-            }
-            </button>
+            <div className="search-dropdown">
+                <button className="button-filter">
+                    {searchProperty === 'title' ? <span>Book Title</span> 
+                    : searchProperty === 'authors' ? <span>Book Authors</span> 
+                    : <span>Book Subject</span>}
+                    {arrow ?
+                        <i
+                            class="arrow up"
+                            onClick={() => {
+                                setArrow(false);
+                                toggleSearchOptions(false);
+                            }}
+                        ></i>
+                        :
+                        <i
+                            onClick={() => {
+                                setArrow(true);
+                                toggleSearchOptions(true);
+                            }}
+                            class="arrow down"></i>
+                    }
+                </button>
+                <div id="my-search-dropdown" className="dropdown-content">
+                    <button
+                        onClick={()=> {
+                            updateSearch('title');
+                        }}
+                    >Book Title</button>
+                    <button
+                        onClick={() => {
+                            updateSearch('authors');
+                        }}
+                    >Book Author</button>
+                    <button
+                        onClick={() => {
+                            updateSearch('subject'); 
+                        }}
+                    >Book Subject</button> 
+                </div>
+            </div>
             <input
-            className="page-filter"
-            placeholder="Find book"
-            onChange={(event) => {
-                setSearch(event.target.value);
-            }} />
+                className="page-filter"
+                placeholder="Find book"
+                onChange={(event) => {
+                    setSearch(event.target.value);
+                }} />
         </div>
     )
 }

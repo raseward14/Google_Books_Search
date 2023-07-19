@@ -22,6 +22,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
     const [wantCount, setWantCount] = useState(null);
     const [readCount, setReadCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
+    const [searchArray, setSearchArray] = useState(null);
 
     const [want, setWant] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -142,6 +143,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
             let wCount = await APIWant.length;
             setWantCount(wCount);
             setWant(APIWant);
+            setSearchArray(APIWant);
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });
@@ -187,7 +189,7 @@ const WantToReadPage = ({ appReadCount, appFavCount, appWantCount }) => {
                     }}
                 />
                 <Search 
-                bookArray={want}
+                bookArray={searchArray}
                 className="single-book-header"
                 callback={filterBooks} />
 
