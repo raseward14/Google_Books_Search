@@ -25,6 +25,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [readCount, setReadCount] = useState(null);
     const [wantCount, setWantCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
+    const [searchArray, setSearchArray] = useState(null);
 
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -38,6 +39,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // navigate to login, and then back to this location
     const navigate = useNavigate();
     const location = useLocation();
+
+    async function filterBooks(filteredArray) {
+        console.log('want to read page has this book array: ', filteredArray)
+        setRead(filteredArray);
+    }
 
     async function updateFavoriteRating(id, value) {
         // update this on the favorites page, so we need to PUT the corresponding favorites rating
@@ -158,6 +164,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let rCount = await APIRead.length;
             setReadCount(rCount);
             setRead(APIRead);
+            setSearchArray(APIRead);
             console.log('read books: ', APIRead)
         } catch (err) {
             navigate('/login', { state: { from: location }, replace: true });
@@ -201,7 +208,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         };
                     }}
                 />
-                <Search className="single-book-header" />
+                <Search 
+                bookArray={searchArray}
+                className="single-book-header"
+                callback={filterBooks} />
+                
                 <div className='heading-container-header'>
                     <p>Favorite{"\n"}
                         <FontAwesomeIcon

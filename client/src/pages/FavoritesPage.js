@@ -24,6 +24,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
     const [wantCount, setWantCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
     const [pinned, setPinned] = useState(false);
+    const [searchArray, setSearchArray] = useState(null);
 
     const [favorites, setFavorites] = useState([]);
     let accessToken = sessionStorage.getItem('accessToken');
@@ -32,6 +33,11 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const userID = sessionStorage.getItem('userID');
+
+    async function filterBooks(filteredArray) {
+        console.log('want to read page has this book array: ', filteredArray)
+        setFavorites(filteredArray);
+    }
 
     async function updateReadRating(id, value) {
         // update this on the read page, so we need to PUT the corresponding read rating
@@ -93,6 +99,7 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
             let fCount = result.data.length;
             setFavCount(fCount);
             setFavorites(APIFavorites);
+            setSearchArray(APIFavorites);
             console.log('favorites: ', favorites)
         } catch (err) {
             console.error(err);
@@ -138,7 +145,10 @@ const FavoritesPage = ({ appReadCount, appFavCount, appWantCount }) => {
                         }
                     }}
                 />
-                <Search className="single-book-header" />
+                <Search 
+                bookArray={searchArray}
+                className="single-book-header"
+                callback={filterBooks} />
 
                 <div className='heading-container-header'>
                     <p>Remove{"\n"}

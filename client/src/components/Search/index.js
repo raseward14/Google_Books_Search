@@ -28,6 +28,7 @@ const Search = ({ bookArray, callback }) => {
             console.log('the filter has kept: ', newArray)
             callback(newArray)
         } else if (searchProperty === 'author') {
+            // not working yet!
             const newArray = await array.filter(book => {
                 let bookAuthor = book.authors.forEach(author => author.toLowerCase());
                 return regex.test(bookAuthor)
