@@ -27,12 +27,29 @@ const Search = ({ bookArray, callback }) => {
             })
             console.log('the filter has kept: ', newArray)
             callback(newArray)
-        } else if (searchProperty === 'author') {
-            // not working yet!
+        } else if (searchProperty === 'authors') {
             const newArray = await array.filter(book => {
-                let bookAuthor = book.authors.forEach(author => author.toLowerCase());
-                return regex.test(bookAuthor)
-            })
+                let bookAuthors = book.authors;
+                let result;
+                bookAuthors.some((author) => {
+                    console.log(author.toLowerCase())
+                    let testResult = regex.test(author.toLowerCase());
+                    return testResult === true;
+                })
+            }
+            )
+
+            // let newArray = await array.forEach(book => {
+            //     let bookAuthors = await JSON.stringify(book.authors)
+            //     bookAuthors.forEach(author => {
+            //         let updatedString = author.toLowerCase()
+            //     })
+            // })
+            // not working yet!
+            // const newArray = await array.filter(book => {
+            //     let bookAuthor = book.authors.forEach(author => author.toLowerCase());
+            //     return regex.test(bookAuthor)
+            // })
             // console.log('the filter has kept: ', newArray)
             // callback(newArray)
         } else {

@@ -17,7 +17,6 @@ const ErrorBoundary = Bugsnag.getPlugin('react')
 
 Bugsnag.notify(new Error('Test error'))
 
-
 ReactDOM.render(
   <ErrorBoundary>
 
