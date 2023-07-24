@@ -32,11 +32,10 @@ const Search = ({ bookArray, callback }) => {
                 let bookAuthors = book.authors;
                 console.log(bookAuthors)
                 let authorsHaveSearch = bookAuthors.some((author) => {
-                    console.log(author)
                     return regex.test(author.toLowerCase());
                 })
                 console.log(authorsHaveSearch)
-                if(authorsHaveSearch) {
+                if (authorsHaveSearch) {
                     return book;
                 }
             })
@@ -71,30 +70,36 @@ const Search = ({ bookArray, callback }) => {
     return (
         <div>
             <div className="search-dropdown">
-                <button className="button-filter">
-                    {searchProperty === 'title' ? <span>Book Title</span> 
-                    : searchProperty === 'authors' ? <span>Book Authors</span> 
-                    : <span>Book Subject</span>}
-                    {arrow ?
-                        <i
-                            class="arrow up"
-                            onClick={() => {
-                                setArrow(false);
-                                toggleSearchOptions(false);
-                            }}
-                        ></i>
-                        :
-                        <i
-                            onClick={() => {
-                                setArrow(true);
-                                toggleSearchOptions(true);
-                            }}
-                            class="arrow down"></i>
-                    }
-                </button>
+
+                {arrow ?
+                    <button
+                        className="button-filter"
+                        onClick={() => {
+                            setArrow(false);
+                            toggleSearchOptions(false);
+                        }}>
+                        {searchProperty === 'title' ? <span>Book Title</span>
+                            : searchProperty === 'authors' ? <span>Book Authors</span>
+                                : <span>Book Subject</span>}
+                        <i class="arrow up"></i>
+                    </button>
+                    :
+                    <button
+                        className="button-filter"
+                        onClick={() => {
+                            setArrow(true);
+                            toggleSearchOptions(true);
+                        }}>
+                        {searchProperty === 'title' ? <span>Book Title</span>
+                            : searchProperty === 'authors' ? <span>Book Authors</span>
+                                : <span>Book Subject</span>}
+                        <i class="arrow down"></i>
+                    </button>
+                }
+
                 <div id="my-search-dropdown" className="dropdown-content">
                     <button
-                        onClick={()=> {
+                        onClick={() => {
                             updateSearch('title');
                         }}
                     >Book Title</button>
@@ -105,9 +110,9 @@ const Search = ({ bookArray, callback }) => {
                     >Book Author</button>
                     <button
                         onClick={() => {
-                            updateSearch('subject'); 
+                            updateSearch('subject');
                         }}
-                    >Book Subject</button> 
+                    >Book Subject</button>
                 </div>
             </div>
             <input
