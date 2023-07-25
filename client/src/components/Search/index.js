@@ -101,16 +101,22 @@ const Search = ({ bookArray, callback }) => {
                     <button
                         onClick={() => {
                             updateSearch('title');
+                            setArrow(false);
+                            toggleSearchOptions(false);
                         }}
                     >Book Title</button>
                     <button
                         onClick={() => {
                             updateSearch('authors');
+                            setArrow(false);
+                            toggleSearchOptions(false);
                         }}
                     >Book Author</button>
                     <button
                         onClick={() => {
                             updateSearch('subject');
+                            setArrow(false);
+                            toggleSearchOptions(false);
                         }}
                     >Book Subject</button>
                 </div>
