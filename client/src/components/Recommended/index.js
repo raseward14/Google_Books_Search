@@ -104,7 +104,7 @@ const Recommended = ({ WCount, RCount }) => {
         const wantAPI = await wantBooks.data;
         const wantTitles = await wantAPI.map(book => book.title);
         let newSuggestions = [];
-        await suggestionsArray.forEach((book) => {
+        await suggestionsArray.forEach(async (book) => {
             // console.log('title', book?.volumeInfo.title);
             if (wantTitles.includes(book?.volumeInfo?.title)) {
                 // console.log('already on the want list');
@@ -142,9 +142,22 @@ const Recommended = ({ WCount, RCount }) => {
                 unreadSuggestions.push(book);
             };
         });
-        // console.log('unread suggestions: ', unreadSuggestions);
+        console.log('unread suggestions: ', unreadSuggestions);
         checkIfWant(unreadSuggestions);
     };
+
+    const checkForDupes = async (suggestionsArray) => {
+        let uniqueSet = new Set;
+        let result = [];
+        await suggestionsArray.forEach(suggestion => {
+            if(!uniqueSet.has(suggestion?.volumeInfo.title)) {
+                uniqueSet.add(suggestion?.volumeInfo.title);
+                result.push(suggestion);
+            }
+            console.log(suggestion)
+        })
+        checkIfRead(result)
+    }
 
     const loadSuggestions = async (author, subject) => {
         if (author !== '' && subject !== '') {
@@ -152,9 +165,11 @@ const Recommended = ({ WCount, RCount }) => {
             const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:"${subject}",inauthor:${author}`);
             const suggestions = await response.json();
             const suggestionsArray = suggestions.items;
+            // should remove duplicates before checking if read, and before checking if want
             // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
             if (suggestionsArray !== undefined) {
-                checkIfRead(suggestionsArray);
+                checkForDupes(suggestionsArray)
+                // checkIfRead(suggestionsArray);
             }
             // console.log('your suggestions: ', suggestionsArray);
         };
@@ -173,7 +188,6 @@ const Recommended = ({ WCount, RCount }) => {
     // look for more authors from our unique author array - authorArray - and subjects from our subject array - subjectArray - and use them to call Google API
     // concat those results onto the current suggestions, and only show the first 9
     useEffect(async () => {
-        // setTimeout(async () => {
             if (suggestions.length < 9) {
                 // console.log(`suggestions length ${suggestions.length}`)
                 let newAuthor = uniqueUnusedAuthorArray[i];
