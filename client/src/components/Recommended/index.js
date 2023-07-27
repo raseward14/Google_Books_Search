@@ -154,10 +154,10 @@ const Recommended = ({ WCount, RCount }) => {
                 uniqueSet.add(suggestion?.volumeInfo.title);
                 result.push(suggestion);
             }
-            console.log(suggestion)
+            console.log(suggestion);
         })
-        checkIfRead(result)
-    }
+        checkIfRead(result);
+    };
 
     const loadSuggestions = async (author, subject) => {
         if (author !== '' && subject !== '') {
@@ -169,9 +169,7 @@ const Recommended = ({ WCount, RCount }) => {
             // your suggestions is undefined bc inauthor='David B Wong',subject='Fiction' doesn't return any results
             if (suggestionsArray !== undefined) {
                 checkForDupes(suggestionsArray)
-                // checkIfRead(suggestionsArray);
             }
-            // console.log('your suggestions: ', suggestionsArray);
         };
     };
 

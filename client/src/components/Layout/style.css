@@ -27,6 +27,27 @@
   color: #63F82C;
 }
 
+.calendar:hover {
+  cursor: pointer;
+}
+
+.date-picker {
+  display: flex;
+  justify-content: center;
+  margin-right: 5%;
+}
+
+.date-picker > * {
+  float: left;
+  margin-right: 5%
+}
+
+.calendar {
+  color: grey;
+  margin-right: 40%;
+  font-size: 26px;
+}
+
 .fav {
   color: red;
 }

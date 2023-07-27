@@ -18,6 +18,9 @@ import Rating from '../components/Rating';
 // search
 import Search from '../components/Search';
 
+// import flatpickr.js
+import flatpickr from "flatpickr";
+
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -26,6 +29,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [wantCount, setWantCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
     const [searchArray, setSearchArray] = useState(null);
+    const [datePicker, setDatePicker] = useState(false);
 
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -39,6 +43,18 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // navigate to login, and then back to this location
     const navigate = useNavigate();
     const location = useLocation();
+
+    async function showDatePicker(index) {
+        if (datePicker) {
+            setDatePicker(false);
+        } else {
+            setDatePicker(true);
+        }
+        const fp = flatpickr(`my-date-picker-${index}`, {
+            mode: "multiple",
+            dateFormat: "Y-m-d"
+        })
+    }
 
     async function filterBooks(filteredArray) {
         console.log('want to read page has this book array: ', filteredArray)
@@ -193,6 +209,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     return (
         <div>
             <h3>Library of books I've read.</h3>
+            <ReactTooltip id="calTip" />
             <ReactTooltip id="pinTip" />
             <div className={pinned ? 'single-book-header sticky' : 'single-book-header'}>
                 <FontAwesomeIcon
@@ -208,11 +225,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                         };
                     }}
                 />
-                <Search 
-                bookArray={searchArray}
-                className="single-book-header"
-                callback={filterBooks} />
-                
+                <Search
+                    bookArray={searchArray}
+                    className="single-book-header"
+                    callback={filterBooks} />
+
                 <div className='heading-container-header'>
                     <p>Favorite{"\n"}
                         <FontAwesomeIcon
@@ -235,6 +252,18 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='rating-container'>
+                                <div class="date-picker" id={`my-date-picker-${index}`}>
+                                    <input type="text" placeholder='Select Date..' data-input />
+                                    <FontAwesomeIcon
+                                        data-tooltip-id="calTip"
+                                        data-tooltip-content="Select when you read this book!"
+                                        className="calendar"
+                                        data-toggle
+                                        onClick={() => {
+                                            showDatePicker(index);
+                                        }}
+                                        icon={icon({ name: "calendar", style: "solid" })} />
+                                </div>
                                 <Rating
                                     rating={book.rating}
                                     updateRating={postRating}
