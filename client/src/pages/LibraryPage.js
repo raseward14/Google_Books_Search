@@ -19,7 +19,8 @@ import Rating from '../components/Rating';
 import Search from '../components/Search';
 
 // import flatpickr.js
-import flatpickr from "flatpickr";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_green.css";
 
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
@@ -44,16 +45,20 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    // datepicker useRef
+    const fp = useRef(null);
+
     async function showDatePicker(index) {
         if (datePicker) {
             setDatePicker(false);
         } else {
             setDatePicker(true);
         }
-        const fp = flatpickr(`my-date-picker-${index}`, {
-            mode: "multiple",
-            dateFormat: "Y-m-d"
-        })
+        // const fp = Flatpickr(`my-date-picker-${index}`, {
+        //     mode: "multiple",
+        //     dateFormat: "Y-m-d"
+        // })
+        // const fp = useRef(null);
     }
 
     async function filterBooks(filteredArray) {
@@ -253,16 +258,24 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                             </div>
                             <div className='rating-container'>
                                 <div class="date-picker" id={`my-date-picker-${index}`}>
-                                    <input type="text" placeholder='Select Date..' data-input />
+                                    <Flatpickr ref={fp} />
                                     <FontAwesomeIcon
                                         data-tooltip-id="calTip"
                                         data-tooltip-content="Select when you read this book!"
                                         className="calendar"
-                                        data-toggle
                                         onClick={() => {
                                             showDatePicker(index);
                                         }}
                                         icon={icon({ name: "calendar", style: "solid" })} />
+                                    {/* <button
+                                        type="button"
+                                        onClick={() => {
+                                            if (!fp?.current?.flatpickr) return;
+                                            fp.current.flatpickr.clear();
+                                        }}
+                                    >
+                                        Clear
+                                    </button> */}
                                 </div>
                                 <Rating
                                     rating={book.rating}
