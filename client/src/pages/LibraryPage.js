@@ -47,18 +47,24 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     // datepicker useRef
     const fp = useRef(null);
+    const sharedOptions = {
+            mode: "multiple",
+            dateFormat: "Y-m-d"
+    }
 
-    async function showDatePicker(index) {
-        if (datePicker) {
-            setDatePicker(false);
-        } else {
-            setDatePicker(true);
-        }
+    async function showDatePicker(selectedDates, dateStr, instance) {
+        // if (datePicker) {
+        //     setDatePicker(false);
+        // } else {
+        //     setDatePicker(true);
+        // }
+
         // const fp = Flatpickr(`my-date-picker-${index}`, {
         //     mode: "multiple",
         //     dateFormat: "Y-m-d"
         // })
         // const fp = useRef(null);
+        console.log('here', selectedDates, dateStr, instance);
     }
 
     async function filterBooks(filteredArray) {
@@ -257,17 +263,14 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='rating-container'>
-                                <div class="date-picker" id={`my-date-picker-${index}`}>
-                                    <Flatpickr ref={fp} />
-                                    <FontAwesomeIcon
-                                        data-tooltip-id="calTip"
-                                        data-tooltip-content="Select when you read this book!"
-                                        className="calendar"
-                                        onClick={() => {
-                                            showDatePicker(index);
-                                        }}
-                                        icon={icon({ name: "calendar", style: "solid" })} />
-                                    {/* <button
+                                <div className="date-picker" id={`my-date-picker-${index}`}>
+                                    <Flatpickr 
+                                    options={sharedOptions}
+                                    ref={fp}
+                                    onChange={(selectedDates, dateStr, instance, index) => {
+                                        showDatePicker(selectedDates, dateStr, instance, index)
+                                    }} />
+                                    <button
                                         type="button"
                                         onClick={() => {
                                             if (!fp?.current?.flatpickr) return;
@@ -275,7 +278,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         }}
                                     >
                                         Clear
-                                    </button> */}
+                                    </button>
                                 </div>
                                 <Rating
                                     rating={book.rating}
