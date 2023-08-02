@@ -81,7 +81,7 @@ const Search = ({ bookArray, callback }) => {
                         {searchProperty === 'title' ? <span>Book Title</span>
                             : searchProperty === 'authors' ? <span>Book Authors</span>
                                 : <span>Book Subject</span>}
-                        <i class="arrow up"></i>
+                        <i className="arrow up"></i>
                     </button>
                     :
                     <button
@@ -93,7 +93,7 @@ const Search = ({ bookArray, callback }) => {
                         {searchProperty === 'title' ? <span>Book Title</span>
                             : searchProperty === 'authors' ? <span>Book Authors</span>
                                 : <span>Book Subject</span>}
-                        <i class="arrow down"></i>
+                        <i className="arrow down"></i>
                     </button>
                 }
 

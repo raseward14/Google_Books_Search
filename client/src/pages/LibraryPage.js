@@ -22,6 +22,9 @@ import Search from '../components/Search';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 
+// import dropdown arrow
+import Dropdown from '../components/Dropdown';
+
 
 const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
@@ -263,14 +266,19 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='rating-container'>
+                                    <p className='dates-read'>Dates Read<Dropdown /></p>
+                                    
                                 <div className="date-picker" id={`my-date-picker-${index}`}>
                                     <Flatpickr 
+                                    placeholder="Select Date.."
+                                    className='flatpickr'
                                     options={sharedOptions}
                                     ref={fp}
                                     onChange={(selectedDates, dateStr, instance, index) => {
                                         showDatePicker(selectedDates, dateStr, instance, index)
                                     }} />
-                                    <button
+                                    {/* <button
+                                        data-clear
                                         type="button"
                                         onClick={() => {
                                             if (!fp?.current?.flatpickr) return;
@@ -278,7 +286,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         }}
                                     >
                                         Clear
-                                    </button>
+                                    </button> */}
                                 </div>
                                 <Rating
                                     rating={book.rating}

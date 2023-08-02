@@ -9,6 +9,25 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.dates-read {
+  width: 135px !important;
+  border: 1px solid black;
+  background-color: silver;
+  border-radius: 5px;
+  padding: 3px;
+  margin-right: 10px;
+}
+
+.dates-read > * {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.flatpickr {
+  padding: 5px;
+  border-radius: 5px;
+}
+
 .heart-icon {
   font-size: 26px;
 }
