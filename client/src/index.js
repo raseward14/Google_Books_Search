@@ -8,7 +8,7 @@ import Bugsnag from '@bugsnag/js'
 import BugsnagPluginReact from '@bugsnag/plugin-react'
 
 Bugsnag.start({
-  apiKey: '9ede7a73fd26502bc2269502043032e2',
+  apiKey: '9ede7a73fd26502bc2269502043032e2-',
   plugins: [new BugsnagPluginReact()]
 })
 

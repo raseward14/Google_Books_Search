@@ -62,7 +62,8 @@ module.exports = {
             { _id: req.params.id },
             { $set: { 
                 favorited: req.body.favorited,
-                rating: req.body.rating 
+                rating: req.body.rating,
+                datesRead: req.body.datesRead
             }},
             { returnOriginal: false }
         )

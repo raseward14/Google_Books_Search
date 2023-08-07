@@ -51,11 +51,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // datepicker useRef
     const fp = useRef(null);
     const sharedOptions = {
-            mode: "multiple",
-            dateFormat: "Y-m-d"
+        mode: "multiple",
+        dateFormat: "Y-m-d"
     }
 
-    async function showDatePicker(selectedDates, dateStr, instance) {
+    async function showDatePicker(selectedDates, dateStr, instance, id) {
         // if (datePicker) {
         //     setDatePicker(false);
         // } else {
@@ -68,6 +68,10 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         // })
         // const fp = useRef(null);
         console.log('here', selectedDates, dateStr, instance);
+        let datesRead = [];
+        await selectedDates.forEach(date => { datesRead.push(date) });
+        console.log(datesRead);
+        await APIRead.updateRead(axiosPrivate, id, { datesRead: datesRead }, accessToken)
     }
 
     async function filterBooks(filteredArray) {
@@ -275,7 +279,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     options={sharedOptions}
                                     ref={fp}
                                     onChange={(selectedDates, dateStr, instance, index) => {
-                                        showDatePicker(selectedDates, dateStr, instance, index)
+                                        let id = book._id
+                                        showDatePicker(selectedDates, dateStr, instance, id)
                                     }} />
                                     {/* <button
                                         data-clear

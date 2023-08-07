@@ -66,7 +66,8 @@ const librarySchema = new Schema({
     rating: {
         type: Number,
         default: 0
-    }
+    },
+    datesRead: [Date]
 });
 
 // Favorite Model Schema
