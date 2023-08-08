@@ -44,7 +44,7 @@ module.exports = {
             } else {
                 res.send({ message: 'Book added to Library:', libraryBook });
             };
-        })
+        });
     },
     findById: (req, res) => {
         // GET a book I've read
@@ -54,10 +54,11 @@ module.exports = {
             } else {
                 res.send(book);
             };
-        })
+        });
     },
 
     updateRead: (req, res) => {
+        console.log(`datesRead: ${req.body.datesRead}`)
         db.Library.findOneAndUpdate(
             { _id: req.params.id },
             { $set: { 

@@ -67,7 +67,9 @@ const librarySchema = new Schema({
         type: Number,
         default: 0
     },
-    datesRead: [Date]
+    datesRead: {
+        type: [String]
+    }
 });
 
 // Favorite Model Schema

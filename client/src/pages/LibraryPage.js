@@ -68,10 +68,14 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         // })
         // const fp = useRef(null);
         console.log('here', selectedDates, dateStr, instance);
+        let dateArray = dateStr.split(',')
         let datesRead = [];
-        await selectedDates.forEach(date => { datesRead.push(date) });
+        // datesRead.push(dateStr);
+        await dateArray.forEach(date => { datesRead.push(date) });
         console.log(datesRead);
-        await APIRead.updateRead(axiosPrivate, id, { datesRead: datesRead }, accessToken)
+        await readAPIFunctions.updateRead(axiosPrivate, id, {
+            datesRead: datesRead
+        }, accessToken)
     }
 
     async function filterBooks(filteredArray) {
