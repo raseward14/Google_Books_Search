@@ -61,11 +61,15 @@ module.exports = {
         console.log(`datesRead: ${req.body.datesRead}`)
         db.Library.findOneAndUpdate(
             { _id: req.params.id },
-            { $set: { 
-                favorited: req.body.favorited,
-                rating: req.body.rating,
-                datesRead: req.body.datesRead
-            }},
+            {
+                $set: {
+                    favorited: req.body.favorited,
+                    rating: req.body.rating
+                },
+                $addToSet: {
+                    datesRead: { $each: req.body.datesRead }
+                }
+            },
             { returnOriginal: false }
         )
             .then(dbModel => res.json(dbModel))

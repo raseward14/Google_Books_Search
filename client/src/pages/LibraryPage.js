@@ -71,7 +71,10 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let dateArray = dateStr.split(',')
         let datesRead = [];
         // datesRead.push(dateStr);
-        await dateArray.forEach(date => { datesRead.push(date) });
+        await dateArray.forEach(date => { 
+            let newDate = date.trim();
+            datesRead.push(newDate);
+        });
         console.log(datesRead);
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: datesRead
