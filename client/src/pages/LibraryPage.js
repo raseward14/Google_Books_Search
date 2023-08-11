@@ -79,6 +79,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: datesRead
         }, accessToken)
+        datesRead = [];
     }
 
     async function filterBooks(filteredArray) {
