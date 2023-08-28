@@ -20,7 +20,7 @@ import Search from '../components/Search';
 
 // import flatpickr.js
 import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/material_green.css";
+import "flatpickr/dist/themes/dark.css"
 
 // import dropdown arrow
 import Dropdown from '../components/Dropdown';
@@ -278,10 +278,11 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='rating-container'>
-                                    <p className='dates-read'>Dates Read<Dropdown /></p>
+                                    <p className='dates-read'>Dates Read<Dropdown book={book}
+                                    index={index} /></p>
                                     
                                 <div className="date-picker" id={`my-date-picker-${index}`}>
-                                    <Flatpickr 
+                                    {/* <Flatpickr 
                                     placeholder="Select Date.."
                                     className='flatpickr'
                                     options={sharedOptions}
@@ -289,7 +290,9 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     onChange={(selectedDates, dateStr, instance, index) => {
                                         let id = book._id
                                         showDatePicker(selectedDates, dateStr, instance, id)
-                                    }} />
+                                    }} >
+                                        <Dropdown book={book}/> */}
+                                    {/* </Flatpickr> */}
                                     {/* <button
                                         data-clear
                                         type="button"

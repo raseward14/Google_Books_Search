@@ -28,6 +28,22 @@
   border-radius: 5px;
 }
 
+input.flatpickr-input {
+  /* visibility: hidden; */
+  width: 0px;
+  height: 0px;
+  /* padding: 2px 2px 2px 2px; */
+  z-index: -1 !important;
+}
+
+div.flatpickr-calendar {
+  /* display: block; */
+}
+
+.hide-date-picker {
+  display: none
+}
+
 .heart-icon {
   font-size: 26px;
 }
