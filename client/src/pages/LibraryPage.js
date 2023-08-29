@@ -55,7 +55,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         dateFormat: "Y-m-d"
     }
 
-    async function showDatePicker(selectedDates, dateStr, instance, id) {
+    async function showDatePicker(selectedDates, dateStr, instance, id, index) {
         console.log('here', selectedDates, dateStr, instance);
         let dateArray = dateStr.split(',')
         let datesRead = [];
@@ -275,9 +275,10 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     className='dates-read'
                                     options={sharedOptions}
                                     ref={fp}
+                                    id={`${index}`}
                                     onChange={(selectedDates, dateStr, instance, index) => {
                                         let id = book._id
-                                        showDatePicker(selectedDates, dateStr, instance, id)
+                                        showDatePicker(selectedDates, dateStr, instance, id, index)
                                     }} >
                                         <Dropdown book={book}/> 
                                     </Flatpickr> 
