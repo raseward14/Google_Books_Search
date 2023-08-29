@@ -71,7 +71,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         let dateArray = dateStr.split(',')
         let datesRead = [];
         // datesRead.push(dateStr);
-        await dateArray.forEach(date => { 
+        await dateArray.forEach(date => {
             let newDate = date.trim();
             datesRead.push(newDate);
         });
@@ -278,9 +278,9 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='rating-container'>
-                                    <p className='dates-read'>Dates Read<Dropdown book={book}
-                                    index={index} /></p>
-                                    
+                                <Dropdown book={book}
+                                    index={index} />
+
                                 <div className="date-picker" id={`my-date-picker-${index}`}>
                                     {/* <Flatpickr 
                                     placeholder="Select Date.."

@@ -1,18 +1,14 @@
 import React, { useState, useRef } from "react";
 import './style.css';
-
 import * as readAPIFunctions from '../../utils/ReadAPI';
-
 
 // import flatpickr.js
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css"
-
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const Dropdown = (book, index) => {
     const [arrow, setArrow] = useState(false);
-
 
     let accessToken = sessionStorage.getItem('accessToken');
     const userID = sessionStorage.getItem('userID');
@@ -58,34 +54,29 @@ const Dropdown = (book, index) => {
 
     const flipArrow = (index) => {
         if (arrow) {
-            // datePicker[0].classList.add('hide-date-picker');
-
             setArrow(false);
         } else {
-            // datePicker[0].classList.remove('hide-date-picker');
-
             setArrow(true)
         }
     }
 
     return (
-        <div>
+        <div className="flatpickr-container">
+            <Flatpickr
+                placeholder="Dates Read"
+                className='dates-read'
+                options={sharedOptions}
+                ref={fp}
+                onChange={(selectedDates, dateStr, instance, index) => {
+                    let id = book._id
+                    showDatePicker(selectedDates, dateStr, instance, id)
+                }} />
             {arrow ?
                 <button
                     className="date-arrow"
                     onClick={(index) => {
                         flipArrow(index);
                     }}>
-                    <Flatpickr
-                        placeholder="Select Date.."
-                        className='flatpickr'
-                        options={sharedOptions}
-                        ref={fp}
-                        onChange={(selectedDates, dateStr, instance, index) => {
-                            let id = book._id
-                            showDatePicker(selectedDates, dateStr, instance, id)
-                        }} />
-
                     <i className="arrow up date-arrow" />
                 </button>
                 :
@@ -94,18 +85,6 @@ const Dropdown = (book, index) => {
                     onClick={() => {
                         flipArrow();
                     }}>
-
-                    <Flatpickr
-                        placeholder="Select Date.."
-                        className='flatpickr'
-                        options={sharedOptions}
-                        ref={fp}
-                        onChange={(selectedDates, dateStr, instance, index) => {
-                            let id = book._id
-                            showDatePicker(selectedDates, dateStr, instance, id)
-                        }} />
-
-
                     <i className="arrow down date-arrow" />
                 </button>
             }
