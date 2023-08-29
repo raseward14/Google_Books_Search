@@ -16,7 +16,7 @@
 }
 
 .dates-read {
-  width: 72px !important;
+  width: 60px !important;
   background-color: silver;
   border-radius: 5px;
   padding: 5px;
@@ -51,12 +51,6 @@
   display: flex;
   justify-content: center;
   margin-right: 5%;
-}
-
-.date-picker > * {
-  float: left;
-  margin-right: 5%;
-  cursor: pointer
 }
 
 .fav {
