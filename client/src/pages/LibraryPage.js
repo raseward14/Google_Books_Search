@@ -57,9 +57,14 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     async function showDatePicker(selectedDates, dateStr, instance, id, index) {
         console.log('here', selectedDates, dateStr, instance);
-        let dateArray = dateStr.split(',')
+        let dateArray;
+        if(dateStr) {
+            dateArray = dateStr.split(',')
+        } else {
+            dateArray = selectedDates;
+        }
+        console.log(dateArray);
         let datesRead = [];
-        // datesRead.push(dateStr);
         await dateArray.forEach(date => {
             let newDate = date.trim();
             datesRead.push(newDate);
@@ -68,7 +73,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: datesRead
         }, accessToken)
-        datesRead = [];
     }
 
     async function filterBooks(filteredArray) {

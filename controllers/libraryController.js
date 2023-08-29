@@ -62,10 +62,11 @@ module.exports = {
         // let emptyArray = '';
         db.Library.findOneAndUpdate(
             { _id: req.params.id },
-            {   $set: {
+            {
+                $set: {
                     favorited: req.body.favorited,
                     rating: req.body.rating,
-                }, 
+                },
                 $addToSet: {
                     datesRead: { $each: req.body.datesRead }
                 }
