@@ -64,7 +64,9 @@ const Search = ({ bookArray, callback }) => {
 
     useEffect(() => {
         console.log('search term: ', search);
-        filterBooks(bookArray);
+        if(bookArray !== null) {
+            filterBooks(bookArray);
+        }
     }, [search]);
 
     return (

@@ -34,6 +34,13 @@ const Dropdown = (datesRead, index) => {
     //     setDatesReadArray(datesRead);
     // });
 
+    useEffect(() => {
+        if(datesRead !== undefined) {
+            setDatesReadArray(datesRead)
+            // console.log('existing dates read: ', Object.keys(datesReadArray))
+        }
+    })
+
     return (
         <div className="flatpickr-container">
             {arrow ?
