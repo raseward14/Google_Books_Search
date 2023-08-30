@@ -66,9 +66,8 @@ module.exports = {
                 $set: {
                     favorited: req.body.favorited,
                     rating: req.body.rating,
-                },
-                $addToSet: {
-                    datesRead: { $each: req.body.datesRead }
+                    datesRead: req.body.datesRead
+
                 }
             },
             { returnOriginal: false }

@@ -59,7 +59,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         console.log('here', selectedDates, dateStr, instance);
         let dateArray;
         if(dateStr) {
-            dateArray = dateStr.split(',')
+            dateArray = dateStr.split(',');
         } else {
             dateArray = selectedDates;
         }
