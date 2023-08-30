@@ -55,10 +55,14 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         dateFormat: "Y-m-d"
     }
 
+    async function createDateDropdown(index) {
+
+    }
+
     async function showDatePicker(selectedDates, dateStr, instance, id, index) {
         console.log('here', selectedDates, dateStr, instance);
         let dateArray;
-        if(dateStr) {
+        if (dateStr) {
             dateArray = dateStr.split(',');
         } else {
             dateArray = selectedDates;
@@ -73,6 +77,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: datesRead
         }, accessToken)
+        createDateDropdown(index)
     }
 
     async function filterBooks(filteredArray) {
@@ -271,21 +276,23 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <a href={book.infoLink} className='book-link'>Buy me!</a>
                             </div>
                             <div className='rating-container'>
-                                <Dropdown />
+                                <Dropdown 
+                                datesRead={book.datesRead}
+                                index={index} />
 
                                 <div className="date-picker" >
-                                     <Flatpickr 
-                                    placeholder="Calendar"
-                                    className='dates-read'
-                                    options={sharedOptions}
-                                    ref={fp}
-                                    id={`${index}`}
-                                    onChange={(selectedDates, dateStr, instance, index) => {
-                                        let id = book._id
-                                        showDatePicker(selectedDates, dateStr, instance, id, index)
-                                    }} >
-                                        <Dropdown book={book}/> 
-                                    </Flatpickr> 
+                                    <Flatpickr
+                                        placeholder="Calendar"
+                                        className='dates-read'
+                                        options={sharedOptions}
+                                        ref={fp}
+                                        id={`${index}`}
+                                        onChange={(selectedDates, dateStr, instance, index) => {
+                                            let id = book._id
+                                            showDatePicker(selectedDates, dateStr, instance, id, index)
+                                        }} >
+                                        <Dropdown book={book} />
+                                    </Flatpickr>
                                     {/* <button
                                         data-clear
                                         type="button"
