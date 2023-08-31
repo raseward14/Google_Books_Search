@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import './style.css';
 
 
-const Dropdown = (datesRead, index) => {
+const Dropdown = ({ datesRead, index }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const dropdownParent = document.getElementById(`${index}`);
@@ -35,9 +35,12 @@ const Dropdown = (datesRead, index) => {
     // });
 
     useEffect(() => {
+        console.log(`our existing dates array for ${index}: ${datesReadArray}`)
+    }, [datesReadArray])
+
+    useEffect(() => {
         if(datesRead !== undefined) {
             setDatesReadArray(datesRead)
-            // console.log('existing dates read: ', Object.keys(datesReadArray))
         }
     })
 

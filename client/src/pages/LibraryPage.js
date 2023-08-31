@@ -52,7 +52,18 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const fp = useRef(null);
     const sharedOptions = {
         mode: "multiple",
-        dateFormat: "Y-m-d"
+        dateFormat: "Y-m-d",
+    }
+
+    async function formatDatesRead(book) {
+        if(book.datesRead[0]) {
+            console.log(book.datesRead)
+            let datesReadArray = book.datesRead;
+            let emptyString = '';
+            await datesReadArray.forEach(date => emptyString.concat(JSON.stringify(date), ', '))
+            console.log(emptyString)
+            return emptyString;
+        }
     }
 
     async function createDateDropdown(index) {
@@ -284,14 +295,21 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                     <Flatpickr
                                         placeholder="Calendar"
                                         className='dates-read'
-                                        options={sharedOptions}
+                                        options={{
+                                            mode: "multiple",
+                                            dateFormat: "Y-m-d",
+                                            // defaultDate: `${book.datesRead}`
+                                            // defaultDate: "2023-08-30, 2023-09-01"
+                                            // defaultDate: `${book.datesRead.split(',')}`
+                                            defaultDate: formatDatesRead(book)
+                                        }}
                                         ref={fp}
                                         id={`${index}`}
                                         onChange={(selectedDates, dateStr, instance, index) => {
                                             let id = book._id
                                             showDatePicker(selectedDates, dateStr, instance, id, index)
                                         }} >
-                                        <Dropdown book={book} />
+                                        {/* <Dropdown book={book} /> */}
                                     </Flatpickr>
                                     {/* <button
                                         data-clear
