@@ -59,11 +59,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         if(book.datesRead[0]) {
             console.log(book.datesRead)
             let datesReadArray = book.datesRead;
-            let emptyString = '';
-            await datesReadArray.forEach(date => emptyString.concat(JSON.stringify(date), ', '))
-            console.log(emptyString)
-            return emptyString;
         }
+        return '2023-08-29'
     }
 
     async function createDateDropdown(index) {
@@ -301,7 +298,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             // defaultDate: `${book.datesRead}`
                                             // defaultDate: "2023-08-30, 2023-09-01"
                                             // defaultDate: `${book.datesRead.split(',')}`
-                                            defaultDate: formatDatesRead(book)
+                                            // defaultDate: formatDatesRead(book)
+                                            defaultDate: JSON.stringify(book.datesRead).replace(',', ', ')
                                         }}
                                         ref={fp}
                                         id={`${index}`}
