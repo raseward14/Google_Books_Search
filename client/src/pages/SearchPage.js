@@ -98,7 +98,6 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
-            // subject: book.volumeInfo.categories[0],
             subject: categories,
             infoLink: book.volumeInfo.infoLink,
             isbn13: thisIsbn13,
