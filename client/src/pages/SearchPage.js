@@ -92,12 +92,14 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             setBooks(newArr)
             deleteFromWant(book)
         }
+        let categories = "categories" in book.volumeInfo ? book.volumeInfo.categories[0] : null;
         readAPIFunctions.saveRead(axiosPrivate, {
             title: book.volumeInfo.title,
             authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
             imageLink: book.volumeInfo.imageLinks.thumbnail,
-            subject: book.volumeInfo.categories[0],
+            // subject: book.volumeInfo.categories[0],
+            subject: categories,
             infoLink: book.volumeInfo.infoLink,
             isbn13: thisIsbn13,
             user_id: userID
@@ -326,7 +328,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 let fCount = await fav.data.length
                 setFavCount(fCount);
                 console.log('searchPage loadHistory favCount: ', fCount);
-
+                console.log(searchedBooks)
                 setBooks(searchedBooks)
             } else {
                 setBooks([])
