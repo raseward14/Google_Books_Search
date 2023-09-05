@@ -33,7 +33,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [wantCount, setWantCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
     const [searchArray, setSearchArray] = useState(null);
-    const [datePicker, setDatePicker] = useState(false);
 
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -50,40 +49,14 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
 
     // datepicker useRef
     const fp = useRef(null);
-    const sharedOptions = {
-        mode: "multiple",
-        dateFormat: "Y-m-d",
-    }
-
-    async function formatDatesRead(book) {
-        if(book.datesRead[0]) {
-            console.log(book.datesRead)
-            let datesReadArray = book.datesRead;
-        }
-        return '2023-08-29'
-    }
 
     async function createDateDropdown(index) {
 
     }
 
-    async function showDatePicker(selectedDates, dateStr, instance, id, index) {
-        console.log('here', selectedDates, dateStr, instance);
-        let dateArray;
-        if (dateStr) {
-            dateArray = dateStr.split(',');
-        } else {
-            dateArray = selectedDates;
-        }
-        console.log(dateArray);
-        let datesRead = [];
-        await dateArray.forEach(date => {
-            let newDate = date.trim();
-            datesRead.push(newDate);
-        });
-        console.log(datesRead);
+    async function setDatePicker(selectedDates, dateStr, instance, id, index) {
         await readAPIFunctions.updateRead(axiosPrivate, id, {
-            datesRead: datesRead
+            datesRead: instance.element.value
         }, accessToken)
         createDateDropdown(index)
     }
@@ -295,17 +268,14 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         options={{
                                             mode: "multiple",
                                             dateFormat: "Y-m-d",
-                                            // defaultDate: `${book.datesRead}`
-                                            // defaultDate: "2023-08-30, 2023-09-01"
-                                            // defaultDate: `${book.datesRead.split(',')}`
-                                            // defaultDate: formatDatesRead(book)
                                             defaultDate: JSON.stringify(book.datesRead).replace(',', ', ')
                                         }}
                                         ref={fp}
                                         id={`${index}`}
                                         onChange={(selectedDates, dateStr, instance, index) => {
                                             let id = book._id
-                                            showDatePicker(selectedDates, dateStr, instance, id, index)
+                                            setDatePicker(selectedDates, dateStr, instance, id, index)
+                                            console.log(instance.element.value)
                                         }} >
                                         {/* <Dropdown book={book} /> */}
                                     </Flatpickr>
