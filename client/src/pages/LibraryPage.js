@@ -50,15 +50,23 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // datepicker useRef
     const fp = useRef(null);
 
-    async function createDateDropdown(index) {
-
+    async function createDateDropdown() {
+        console.log(`made it here index`)
+        const newDiv = document.createElement('div');
+        const textNode = document.createTextNode('hello world');
+        newDiv.appendChild(textNode)
+        // const dropdownParent = await document.getElementById(`${}`);
+        // dropdownParent.appendChild(newDiv);
+        // document.body.insertBefore(newDiv, dropdownParent)
+        
     }
 
-    async function setDatePicker(selectedDates, dateStr, instance, id, index) {
+    async function setDatePicker(selectedDates, dateStr, instance, id) {
+        console.log(selectedDates, dateStr, instance, id)
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: instance.element.value
         }, accessToken)
-        createDateDropdown(index)
+        createDateDropdown()
     }
 
     async function filterBooks(filteredArray) {
@@ -261,21 +269,19 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 datesRead={book.datesRead}
                                 index={index} />
 
-                                <div className="date-picker" >
+                                <div className="date-picker">
                                     <Flatpickr
                                         placeholder="Calendar"
                                         className='dates-read'
                                         options={{
                                             mode: "multiple",
                                             dateFormat: "Y-m-d",
-                                            defaultDate: JSON.stringify(book.datesRead).replace(',', ', ')
+                                            defaultDate: JSON.stringify(book.datesRead)
                                         }}
                                         ref={fp}
-                                        id={`${index}`}
-                                        onChange={(selectedDates, dateStr, instance, index) => {
-                                            let id = book._id
-                                            setDatePicker(selectedDates, dateStr, instance, id, index)
-                                            console.log(instance.element.value)
+                                        onChange={(selectedDates, dateStr, instance) => {
+                                            let id = book._id;
+                                            setDatePicker(selectedDates, dateStr, instance, id);
                                         }} >
                                         {/* <Dropdown book={book} /> */}
                                     </Flatpickr>

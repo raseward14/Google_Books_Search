@@ -35,6 +35,10 @@ const Dropdown = ({ datesRead, index }) => {
     // });
 
     useEffect(() => {
+        console.log('dropdown got this index: ', index)
+    })
+
+    useEffect(() => {
         console.log(`our existing dates array for ${index}: ${datesReadArray}`)
     }, [datesReadArray])
 
