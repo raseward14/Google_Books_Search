@@ -1,4 +1,38 @@
 .date-arrow {
     z-index: auto;
-    /* padding: 5px; */
 }
+
+.date-dropdown {
+    position: relative;
+    display: inline-block;
+
+}
+
+.date-dropdown-content {
+    position: absolute;
+    z-index: 1;
+    box-shadow: 0px, 8px, 16px, 0px, rgba(0,0,0,0.2);
+}
+
+.date-dropdown-content div {
+    border: 1px black solid;
+    background-color: greenyellow;
+    padding: 10px;
+    border-radius: 2px;
+    /* display: block; */
+    /* visibility: visible; */
+    width: 110px;
+}
+
+.show-dates {
+    display: block;
+}
+
+.remove-date-icon {
+    float: right;
+}
+
+.remove-date-icon:hover {
+    cursor: pointer;
+    color: red;
+  }
