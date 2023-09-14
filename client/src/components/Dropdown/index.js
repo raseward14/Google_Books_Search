@@ -26,6 +26,13 @@ const Dropdown = ({ datesRead, index }) => {
         }
     }
 
+    const removeDate = async (date) => {
+        let newArr = await datesReadArray.filter(originalDate => {
+            return originalDate !== date
+        })
+        setDatesReadArray(newArr);
+    }
+
     useEffect(() => {
         if (index !== undefined) {
             setItemIndex(index)
@@ -53,9 +60,12 @@ const Dropdown = ({ datesRead, index }) => {
                     <div id={`${itemIndex}`} className='date-dropdown-content'>
                         {datesReadArray.map((date) => (
                             <div key={date[index]}>{date}
-                            <FontAwesomeIcon
-                            className="remove-date-icon"
-                            icon={icon({ name: "rectangle-xmark", style: "regular" })}/>
+                                <FontAwesomeIcon
+                                    className="remove-date-icon"
+                                    onClick={() => {
+                                        removeDate(date)
+                                    }}
+                                    icon={icon({ name: "rectangle-xmark", style: "regular" })} />
                             </div>
                         ))}
                     </div>
