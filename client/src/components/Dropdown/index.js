@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+
+import * as readAPIFunctions from '../../utils/ReadAPI';
+
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
@@ -26,10 +29,18 @@ const Dropdown = ({ datesRead, index }) => {
         }
     }
 
+    const updateDatesRead = (newDateString) => {
+        // api call to update the dates read value in db
+        console.log(newDateString)
+    }
+
     const removeDate = async (date) => {
         let newArr = await datesReadArray.filter(originalDate => {
             return originalDate !== date
         })
+        // need to update the dates read in the db
+        let newDateString = newArr.join(', ');
+        updateDatesRead(newDateString);
         setDatesReadArray(newArr);
     }
 
