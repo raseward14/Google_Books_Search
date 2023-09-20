@@ -6,16 +6,19 @@ import * as readAPIFunctions from '../../utils/ReadAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
-import '@fortawesome/fontawesome-svg-core/styles.css'
-
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 import './style.css';
 
-
-const Dropdown = ({ datesRead, index }) => {
+const Dropdown = ({ datesRead, index, id }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
+
+    const axiosPrivate = useAxiosPrivate();
+    let accessToken = sessionStorage.getItem('accessToken');
+
 
     const flipArrow = () => {
         if (arrow) {
@@ -29,8 +32,12 @@ const Dropdown = ({ datesRead, index }) => {
         }
     }
 
-    const updateDatesRead = (newDateString) => {
+    const updateDatesRead = async (newDateString) => {
         // api call to update the dates read value in db
+        await readAPIFunctions.updateRead(axiosPrivate, id, {
+            datesRead: newDateString
+        }, accessToken)
+        // console.log('this books id: ', id)
         console.log(newDateString)
     }
 

@@ -267,7 +267,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                             <div className='rating-container'>
                                 <Dropdown 
                                 datesRead={book.datesRead}
-                                index={index} />
+                                index={index}
+                                id={book._id} />
 
                                 <div className="date-picker">
                                     <Flatpickr
