@@ -11,7 +11,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id }) => {
+const Dropdown = ({ datesRead, index, id, dateString }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
@@ -50,6 +50,17 @@ const Dropdown = ({ datesRead, index, id }) => {
         updateDatesRead(newDateString);
         setDatesReadArray(newArr);
     }
+
+    useEffect(async () => {
+        if(dateString !== null) {
+            console.log(`dropdown component has dateStr ${dateString}`)
+            let newArr = [];
+            newArr.push(dateString);
+            let finalArray = newArr[0].split(', ');
+            console.log(finalArray);
+            // setDatesReadArray(finalArray)
+        }
+    }, [dateString])
 
     useEffect(() => {
         if (index !== undefined) {

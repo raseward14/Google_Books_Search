@@ -34,6 +34,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [favCount, setFavCount] = useState(null);
     const [searchArray, setSearchArray] = useState(null);
 
+    const [dateStr, setDateStr] = useState(null);
+
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
     let APIRead;
@@ -66,7 +68,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: instance.element.value
         }, accessToken)
-        createDateDropdown()
+        // createDateDropdown()
     }
 
     async function filterBooks(filteredArray) {
@@ -268,7 +270,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <Dropdown 
                                 datesRead={book.datesRead}
                                 index={index}
-                                id={book._id} />
+                                id={book._id}
+                                dateString={dateStr} />
 
                                 <div className="date-picker">
                                     <Flatpickr
@@ -283,6 +286,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                         onChange={(selectedDates, dateStr, instance) => {
                                             let id = book._id;
                                             setDatePicker(selectedDates, dateStr, instance, id);
+                                            setDateStr(dateStr)
                                         }} >
                                         {/* <Dropdown book={book} /> */}
                                     </Flatpickr>
