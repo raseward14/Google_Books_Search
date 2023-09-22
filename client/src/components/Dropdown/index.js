@@ -11,10 +11,13 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id, dateString }) => {
+const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
+
+    const [arrayOfArrays, setArrayOfArrays] = useState([])
+    let array = [];
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
@@ -51,16 +54,24 @@ const Dropdown = ({ datesRead, index, id, dateString }) => {
         setDatesReadArray(newArr);
     }
 
+    useEffect(() => {
+        console.log(arrayOfDatesRead)
+    }, [arrayOfDatesRead])
+
     useEffect(async () => {
         if(dateString !== null) {
             console.log(`dropdown component has dateStr ${dateString}`)
             let newArr = [];
             newArr.push(dateString);
             let finalArray = newArr[0].split(', ');
-            console.log(finalArray);
+            console.log(finalArray, index);
+            // this is the final array, but how do I only update a single row
+            // a single useState variable is being used by all of the books
             // setDatesReadArray(finalArray)
+            console.log(arrayOfArrays)
         }
     }, [dateString])
+
 
     useEffect(() => {
         if (index !== undefined) {
@@ -72,6 +83,8 @@ const Dropdown = ({ datesRead, index, id, dateString }) => {
         if (datesRead !== undefined) {
             let dateArray = datesRead[0].split(', ');
             setDatesReadArray(dateArray);
+            // array.push(dateArray);
+            // console.log(array)
         }
     }, [itemIndex])
 

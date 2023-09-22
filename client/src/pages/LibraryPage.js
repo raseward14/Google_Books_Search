@@ -35,6 +35,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [searchArray, setSearchArray] = useState(null);
 
     const [dateStr, setDateStr] = useState(null);
+    const [arrayOfDatesRead, setArrayOfDatesRead] = useState([])
 
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -52,15 +53,21 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // datepicker useRef
     const fp = useRef(null);
 
-    async function createDateDropdown() {
-        console.log(`made it here index`)
-        const newDiv = document.createElement('div');
-        const textNode = document.createTextNode('hello world');
-        newDiv.appendChild(textNode)
-        // const dropdownParent = await document.getElementById(`${}`);
-        // dropdownParent.appendChild(newDiv);
-        // document.body.insertBefore(newDiv, dropdownParent)
+    // async function createDateDropdown() {
+    //     console.log(`made it here index`)
+    //     const newDiv = document.createElement('div');
+    //     const textNode = document.createTextNode('hello world');
+    //     newDiv.appendChild(textNode)
+    //     // const dropdownParent = await document.getElementById(`${}`);
+    //     // dropdownParent.appendChild(newDiv);
+    //     // document.body.insertBefore(newDiv, dropdownParent)
         
+    // }
+
+    async function createReadBookDatesArray(APIRead) {
+        let APIDatesReadArray = await APIRead.map(book => book.datesRead);
+        console.log('from library page', APIDatesReadArray);
+        setArrayOfDatesRead(APIDatesReadArray);
     }
 
     async function setDatePicker(selectedDates, dateStr, instance, id) {
@@ -195,6 +202,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
             let rCount = await APIRead.length;
             setReadCount(rCount);
             setRead(APIRead);
+            createReadBookDatesArray(APIRead);
             setSearchArray(APIRead);
             console.log('read books: ', APIRead)
         } catch (err) {
@@ -271,7 +279,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 datesRead={book.datesRead}
                                 index={index}
                                 id={book._id}
-                                dateString={dateStr} />
+                                dateString={dateStr}
+                                arrayOfDatesRead={arrayOfDatesRead} />
 
                                 <div className="date-picker">
                                     <Flatpickr
