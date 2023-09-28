@@ -35,7 +35,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [searchArray, setSearchArray] = useState(null);
 
     const [dateStr, setDateStr] = useState(null);
-    const [arrayOfDatesRead, setArrayOfDatesRead] = useState([])
+    const [arrayOfDatesRead, setArrayOfDatesRead] = useState([]);
+    const [clickedIndex, setClickedIndex] = useState();
 
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
@@ -280,7 +281,8 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 index={index}
                                 id={book._id}
                                 dateString={dateStr}
-                                arrayOfDatesRead={arrayOfDatesRead} />
+                                arrayOfDatesRead={arrayOfDatesRead}
+                                theIndexClicked={clickedIndex} />
 
                                 <div className="date-picker">
                                     <Flatpickr
@@ -296,6 +298,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             let id = book._id;
                                             setDatePicker(selectedDates, dateStr, instance, id);
                                             setDateStr(dateStr)
+                                            setClickedIndex(index);
                                         }} >
                                         {/* <Dropdown book={book} /> */}
                                     </Flatpickr>

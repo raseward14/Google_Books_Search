@@ -11,10 +11,11 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead }) => {
+const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead, theIndexClicked }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
+    const [clickedItem, setClickedItem] = useState();
 
     const [arrayOfArrays, setArrayOfArrays] = useState([])
     let array = [];
@@ -40,7 +41,6 @@ const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead }) => {
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: newDateString
         }, accessToken)
-        // console.log('this books id: ', id)
         console.log(newDateString)
     }
 
@@ -54,8 +54,27 @@ const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead }) => {
         setDatesReadArray(newArr);
     }
 
+    const updateDateDropdowns = async () => {
+        console.log()
+    };
+
+    // useEffect(() => {
+    //     if(theIndexClicked !== undefined) {
+    //         setClickedItem(theIndexClicked);
+    //         console.log('the clicked index', theIndexClicked)
+    //         // let updatedArrayOfArrays = [...arrayOfArrays];
+    //         let updatedArrayOfArrays = [...arrayOfDatesRead];
+    //         console.log(updatedArrayOfArrays)
+    //         let stringToArray = dateString.split(", ")
+    //         updatedArrayOfArrays[theIndexClicked] = stringToArray;
+    //         console.log(updatedArrayOfArrays);
+    //         // setDatesReadArray(updatedArrayOfArrays);
+    //     }
+    // }, [theIndexClicked]);
+
     useEffect(() => {
         console.log(arrayOfDatesRead)
+        setArrayOfArrays(arrayOfDatesRead)
     }, [arrayOfDatesRead])
 
     useEffect(async () => {
@@ -64,13 +83,17 @@ const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead }) => {
             let newArr = [];
             newArr.push(dateString);
             let finalArray = newArr[0].split(', ');
-            console.log(finalArray, index);
+            console.log(finalArray);
+
+            // updatedArrayOfArrays[clickedItem] = finalArray;
+            // setArrayOfArrays(updatedArrayOfArrays);
+            // setDatesReadArray(updatedArrayOfArrays)
             // this is the final array, but how do I only update a single row
             // a single useState variable is being used by all of the books
             // setDatesReadArray(finalArray)
-            console.log(arrayOfArrays)
         }
-    }, [dateString])
+    }, [dateString]);
+
 
 
     useEffect(() => {
@@ -83,8 +106,6 @@ const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead }) => {
         if (datesRead !== undefined) {
             let dateArray = datesRead[0].split(', ');
             setDatesReadArray(dateArray);
-            // array.push(dateArray);
-            // console.log(array)
         }
     }, [itemIndex])
 
@@ -100,6 +121,21 @@ const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead }) => {
                         <i className="arrow up date-arrow" />
                     </button>
                     <div id={`${itemIndex}`} className='date-dropdown-content'>
+                        {/* {arrayOfArrays.forEach((array) => {
+                            console.log(array);
+                            let newArr = array.split(", ")
+                            await newArr.map((date) => {
+                                <div key={date[index]}>{date}
+                                <FontAwesomeIcon
+                                    className="remove-date-icon"
+                                    onClick={() => {
+                                        removeDate(date)
+                                    }}
+                                    icon={icon({ name: "rectangle-xmark", style: "regular" })} />
+                            </div>
+
+                              })
+                        })} */}
                         {datesReadArray.map((date) => (
                             <div key={date[index]}>{date}
                                 <FontAwesomeIcon
