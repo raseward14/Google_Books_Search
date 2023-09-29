@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import * as readAPIFunctions from '../../utils/ReadAPI';
 
@@ -11,14 +11,15 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead, theIndexClicked }) => {
+const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
-    const [clickedItem, setClickedItem] = useState();
+    const [state1, setState1] = useState();
+    const [state2, setState2] = useState();
 
-    const [arrayOfArrays, setArrayOfArrays] = useState([])
-    let array = [];
+    const fpIndex = useRef(null);
+
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
@@ -45,55 +46,74 @@ const Dropdown = ({ datesRead, index, id, dateString, arrayOfDatesRead, theIndex
     }
 
     const removeDate = async (date) => {
+        console.log(datesReadArray)
         let newArr = await datesReadArray.filter(originalDate => {
             return originalDate !== date
         })
         // need to update the dates read in the db
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
+        console.log(newArr);
         setDatesReadArray(newArr);
     }
 
-    const updateDateDropdowns = async () => {
-        console.log()
-    };
 
     // useEffect(() => {
     //     if(theIndexClicked !== undefined) {
-    //         setClickedItem(theIndexClicked);
-    //         console.log('the clicked index', theIndexClicked)
-    //         // let updatedArrayOfArrays = [...arrayOfArrays];
-    //         let updatedArrayOfArrays = [...arrayOfDatesRead];
-    //         console.log(updatedArrayOfArrays)
-    //         let stringToArray = dateString.split(", ")
-    //         updatedArrayOfArrays[theIndexClicked] = stringToArray;
-    //         console.log(updatedArrayOfArrays);
-    //         // setDatesReadArray(updatedArrayOfArrays);
+    //         console.log(clickedItem)
+    //         setClickedItem(theIndexClicked)
+    //         console.log(theIndexClicked)
     //     }
     // }, [theIndexClicked]);
 
-    useEffect(() => {
-        console.log(arrayOfDatesRead)
-        setArrayOfArrays(arrayOfDatesRead)
-    }, [arrayOfDatesRead])
 
-    useEffect(async () => {
-        if(dateString !== null) {
-            console.log(`dropdown component has dateStr ${dateString}`)
-            let newArr = [];
-            newArr.push(dateString);
-            let finalArray = newArr[0].split(', ');
-            console.log(finalArray);
+    // useEffect(async () => {
+    //     if(dateString !== null) {
+    //         // console.log(`dropdown component has dateStr ${dateString}`)
+    //         let newArr = [];
+    //         newArr.push(dateString);
+    //         let finalArray = newArr[0].split(', ');
+    //         console.log(finalArray);
+    //         console.log(index, clickedItem);
+    //         if(index === clickedItem) {
+    //             setDatesReadArray(finalArray);
+    //         }
 
-            // updatedArrayOfArrays[clickedItem] = finalArray;
-            // setArrayOfArrays(updatedArrayOfArrays);
-            // setDatesReadArray(updatedArrayOfArrays)
-            // this is the final array, but how do I only update a single row
-            // a single useState variable is being used by all of the books
-            // setDatesReadArray(finalArray)
+    //     }
+    // }, [dateString, clickedItem]);
+
+    // const testFunction = async (clickedIndex, dateString) => {
+    //     if((clickedIndex !== undefined) && (index === clickedIndex)) {
+    //         console.log(index, clickedIndex, dateString)
+    //         let newArr = [];
+    //         newArr.push(dateString);
+    //         let finalArray = newArr[0].split(', ');
+    //         console.log(finalArray);
+    //         setDatesReadArray(finalArray);
+    //     }
+    // }
+
+    const testFunction = async (clickedIndex, dateString) => {
+        if((clickedIndex !== undefined) && (itemIndex === clickedIndex)) {
+            console.log(itemIndex, clickedIndex, dateString)
+            // let newArr = [];
+            // newArr.push(dateString);
+            // let finalArray = newArr[0].split(', ');
+            // console.log(finalArray);
+            // setDatesReadArray(finalArray);
+            // fpIndex.current = null;
+            // console.log(fpIndex.current)
         }
-    }, [dateString]);
+    }
 
+
+    useEffect(() => {
+        // we need to above function to only run when 
+        fpIndex.current = theIndexClicked
+        console.log(theIndexClicked)
+        // one of them changes first, and this causes the above condition to be satisfied before the index has a chance to change
+        testFunction(fpIndex.current, dateString)
+    }, [theIndexClicked, dateString])
 
 
     useEffect(() => {

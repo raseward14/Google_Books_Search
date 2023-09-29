@@ -35,7 +35,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [searchArray, setSearchArray] = useState(null);
 
     const [dateStr, setDateStr] = useState(null);
-    const [arrayOfDatesRead, setArrayOfDatesRead] = useState([]);
     const [clickedIndex, setClickedIndex] = useState();
 
     const [read, setRead] = useState([]);
@@ -68,7 +67,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     async function createReadBookDatesArray(APIRead) {
         let APIDatesReadArray = await APIRead.map(book => book.datesRead);
         console.log('from library page', APIDatesReadArray);
-        setArrayOfDatesRead(APIDatesReadArray);
     }
 
     async function setDatePicker(selectedDates, dateStr, instance, id) {
@@ -281,7 +279,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 index={index}
                                 id={book._id}
                                 dateString={dateStr}
-                                arrayOfDatesRead={arrayOfDatesRead}
                                 theIndexClicked={clickedIndex} />
 
                                 <div className="date-picker">
@@ -299,6 +296,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             setDatePicker(selectedDates, dateStr, instance, id);
                                             setDateStr(dateStr)
                                             setClickedIndex(index);
+                                            console.log(index)
                                         }} >
                                         {/* <Dropdown book={book} /> */}
                                     </Flatpickr>
