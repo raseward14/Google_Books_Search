@@ -13,6 +13,11 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css"
 
+// tooltip
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
+
 
 import './style.css';
 
@@ -29,7 +34,7 @@ const Dropdown = ({ datesRead, index, id }) => {
 
 
     async function setDatePicker(selectedDates, dateStr, instance, id) {
-        console.log(selectedDates, dateStr, instance, id)
+        console.log(instance.element.value)
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: instance.element.value
         }, accessToken)
@@ -89,6 +94,8 @@ const Dropdown = ({ datesRead, index, id }) => {
 
     return (
         <div className="flatpickr-container">
+        <ReactTooltip id="flatTip" />
+
             {arrow ?
                 <div className="date-dropdown">
                     <button
@@ -127,6 +134,8 @@ const Dropdown = ({ datesRead, index, id }) => {
 
             <div className="date-picker">
                 <Flatpickr
+                    data-tooltip-id="flatTip"
+                    data-tooltip-content="Open date picker!"
                     placeholder="Calendar"
                     className='dates-read'
                     options={{
