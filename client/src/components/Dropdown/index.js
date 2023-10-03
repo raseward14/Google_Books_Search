@@ -16,15 +16,10 @@ import "flatpickr/dist/themes/dark.css"
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
+const Dropdown = ({ datesRead, index, id }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
-
-    const [dateStrr, setDateStrr] = useState(null);
-    const [clickedIndexx, setClickedIndexx] = useState();
-
-
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
@@ -38,9 +33,7 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: instance.element.value
         }, accessToken)
-        // createDateDropdown()
-    }
-
+    };
 
     const flipArrow = () => {
         if (arrow) {
@@ -52,7 +45,7 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
             document.getElementById(`${itemIndex}`).classList.toggle("show-dates")
             setArrow(true)
         }
-    }
+    };
 
     const updateDatesRead = async (newDateString) => {
         // api call to update the dates read value in db
@@ -72,72 +65,14 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
         updateDatesRead(newDateString);
         console.log(newArr);
         setDatesReadArray(newArr);
-    }
+    };
 
-
-    // useEffect(() => {
-    //     if(theIndexClicked !== undefined) {
-    //         console.log(clickedItem)
-    //         setClickedItem(theIndexClicked)
-    //         console.log(theIndexClicked)
-    //     }
-    // }, [theIndexClicked]);
-
-
-    // useEffect(async () => {
-    //     if(dateString !== null) {
-    //         // console.log(`dropdown component has dateStr ${dateString}`)
-    //         let newArr = [];
-    //         newArr.push(dateString);
-    //         let finalArray = newArr[0].split(', ');
-    //         console.log(finalArray);
-    //         console.log(index, clickedItem);
-    //         if(index === clickedItem) {
-    //             setDatesReadArray(finalArray);
-    //         }
-
-    //     }
-    // }, [dateString, clickedItem]);
-
-    // const testFunction = async (clickedIndex, dateString) => {
-    //     if((clickedIndex !== undefined) && (index === clickedIndex)) {
-    //         console.log(index, clickedIndex, dateString)
-    //         let newArr = [];
-    //         newArr.push(dateString);
-    //         let finalArray = newArr[0].split(', ');
-    //         console.log(finalArray);
-    //         setDatesReadArray(finalArray);
-    //     }
-    // }
-
-    const testFunction = async (clickedIndex, dateString) => {
-        if ((clickedIndex !== undefined) && (itemIndex === clickedIndex)) {
-            console.log(itemIndex, clickedIndex, dateString)
-            // let newArr = [];
-            // newArr.push(dateString);
-            // let finalArray = newArr[0].split(', ');
-            // console.log(finalArray);
-            // setDatesReadArray(finalArray);
-            // fpIndex.current = null;
-            // console.log(fpIndex.current)
-        }
-    }
-
-    const testFunction2 = async (dateString) => {
+    const updateDropdown = async (dateString) => {
         let newArr = [];
         newArr.push(dateString);
         let finalArray = await newArr[0].split(', ');
         setDatesReadArray(finalArray);
-    }
-
-
-    useEffect(() => {
-        // we need to above function to only run when 
-        console.log(theIndexClicked)
-        // one of them changes first, and this causes the above condition to be satisfied before the index has a chance to change
-        testFunction(theIndexClicked, dateString)
-    }, [theIndexClicked, dateString])
-
+    };
 
     useEffect(() => {
         if (index !== undefined) {
@@ -203,13 +138,10 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
                     onChange={(selectedDates, dateStr, instance) => {
                         setDatePicker(selectedDates, dateStr, instance, id);
                         console.log(index)
-                        testFunction2(dateStr);
+                        updateDropdown(dateStr);
                     }} >
                 </Flatpickr>
             </div>
-
-
-
         </div>
     );
 };

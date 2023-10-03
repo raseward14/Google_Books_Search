@@ -18,10 +18,6 @@ import Rating from '../components/Rating';
 // search
 import Search from '../components/Search';
 
-// import flatpickr.js
-import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/dark.css"
-
 // import dropdown arrow
 import Dropdown from '../components/Dropdown';
 
@@ -49,20 +45,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     // navigate to login, and then back to this location
     const navigate = useNavigate();
     const location = useLocation();
-
-    // datepicker useRef
-    const fp = useRef(null);
-
-    // async function createDateDropdown() {
-    //     console.log(`made it here index`)
-    //     const newDiv = document.createElement('div');
-    //     const textNode = document.createTextNode('hello world');
-    //     newDiv.appendChild(textNode)
-    //     // const dropdownParent = await document.getElementById(`${}`);
-    //     // dropdownParent.appendChild(newDiv);
-    //     // document.body.insertBefore(newDiv, dropdownParent)
-        
-    // }
 
     async function createReadBookDatesArray(APIRead) {
         let APIDatesReadArray = await APIRead.map(book => book.datesRead);
@@ -282,7 +264,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 theIndexClicked={clickedIndex} />
 
                                 <div className="date-picker">
-                                    <Flatpickr
+                                    {/* <Flatpickr
                                         placeholder="Calendar"
                                         className='dates-read'
                                         options={{
@@ -297,9 +279,9 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                             setDateStr(dateStr)
                                             setClickedIndex(index);
                                             console.log(index)
-                                        }} >
+                                        }} > */}
                                         {/* <Dropdown book={book} /> */}
-                                    </Flatpickr>
+                                    {/* </Flatpickr> */}
                                     {/* <button
                                         data-clear
                                         type="button"
