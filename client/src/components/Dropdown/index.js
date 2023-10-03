@@ -9,20 +9,37 @@ import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
+// import flatpickr.js
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/dark.css"
+
+
 import './style.css';
 
 const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
-    const [state1, setState1] = useState();
-    const [state2, setState2] = useState();
 
-    const fpIndex = useRef(null);
+    const [dateStrr, setDateStrr] = useState(null);
+    const [clickedIndexx, setClickedIndexx] = useState();
+
 
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
+
+    // datepicker useRef
+    const fp = useRef(null);
+
+
+    async function setDatePicker(selectedDates, dateStr, instance, id) {
+        console.log(selectedDates, dateStr, instance, id)
+        await readAPIFunctions.updateRead(axiosPrivate, id, {
+            datesRead: instance.element.value
+        }, accessToken)
+        // createDateDropdown()
+    }
 
 
     const flipArrow = () => {
@@ -94,7 +111,7 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
     // }
 
     const testFunction = async (clickedIndex, dateString) => {
-        if((clickedIndex !== undefined) && (itemIndex === clickedIndex)) {
+        if ((clickedIndex !== undefined) && (itemIndex === clickedIndex)) {
             console.log(itemIndex, clickedIndex, dateString)
             // let newArr = [];
             // newArr.push(dateString);
@@ -106,13 +123,19 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
         }
     }
 
+    const testFunction2 = async (dateString) => {
+        let newArr = [];
+        newArr.push(dateString);
+        let finalArray = await newArr[0].split(', ');
+        setDatesReadArray(finalArray);
+    }
+
 
     useEffect(() => {
         // we need to above function to only run when 
-        fpIndex.current = theIndexClicked
         console.log(theIndexClicked)
         // one of them changes first, and this causes the above condition to be satisfied before the index has a chance to change
-        testFunction(fpIndex.current, dateString)
+        testFunction(theIndexClicked, dateString)
     }, [theIndexClicked, dateString])
 
 
@@ -141,21 +164,6 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
                         <i className="arrow up date-arrow" />
                     </button>
                     <div id={`${itemIndex}`} className='date-dropdown-content'>
-                        {/* {arrayOfArrays.forEach((array) => {
-                            console.log(array);
-                            let newArr = array.split(", ")
-                            await newArr.map((date) => {
-                                <div key={date[index]}>{date}
-                                <FontAwesomeIcon
-                                    className="remove-date-icon"
-                                    onClick={() => {
-                                        removeDate(date)
-                                    }}
-                                    icon={icon({ name: "rectangle-xmark", style: "regular" })} />
-                            </div>
-
-                              })
-                        })} */}
                         {datesReadArray.map((date) => (
                             <div key={date[index]}>{date}
                                 <FontAwesomeIcon
@@ -180,6 +188,28 @@ const Dropdown = ({ datesRead, index, id, dateString, theIndexClicked }) => {
                     <div id={`${itemIndex}`}></div>
                 </div>
             }
+
+
+            <div className="date-picker">
+                <Flatpickr
+                    placeholder="Calendar"
+                    className='dates-read'
+                    options={{
+                        mode: "multiple",
+                        dateFormat: "Y-m-d",
+                        defaultDate: JSON.stringify(datesRead)
+                    }}
+                    ref={fp}
+                    onChange={(selectedDates, dateStr, instance) => {
+                        setDatePicker(selectedDates, dateStr, instance, id);
+                        console.log(index)
+                        testFunction2(dateStr);
+                    }} >
+                </Flatpickr>
+            </div>
+
+
+
         </div>
     );
 };
