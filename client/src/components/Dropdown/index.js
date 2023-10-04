@@ -21,7 +21,14 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import './style.css';
 
+// function useForceUpdate() {
+//     const [, setToggle] = useState(false);
+//     return () => setToggle(toggle => !toggle);
+// };
+
 const Dropdown = ({ datesRead, index, id }) => {
+    // const forceUpdate = useForceUpdate();
+
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
@@ -69,7 +76,8 @@ const Dropdown = ({ datesRead, index, id }) => {
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
         console.log(newArr);
-        setDatesReadArray(newArr);
+        setDatesReadArray(newArr);    
+        forceUpdate();    
     };
 
     const updateDropdown = async (dateString) => {
@@ -148,6 +156,7 @@ const Dropdown = ({ datesRead, index, id }) => {
                         setDatePicker(selectedDates, dateStr, instance, id);
                         console.log(index)
                         updateDropdown(dateStr);
+                        // forceUpdate();
                     }} >
                 </Flatpickr>
             </div>
