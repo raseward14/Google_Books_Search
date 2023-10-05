@@ -17,21 +17,14 @@ import "flatpickr/dist/themes/dark.css"
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-
-
 import './style.css';
 
-// function useForceUpdate() {
-//     const [, setToggle] = useState(false);
-//     return () => setToggle(toggle => !toggle);
-// };
-
 const Dropdown = ({ datesRead, index, id }) => {
-    // const forceUpdate = useForceUpdate();
 
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
+    const [fpKey, setFpKey] = useState();
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
@@ -76,8 +69,11 @@ const Dropdown = ({ datesRead, index, id }) => {
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
         console.log(newArr);
-        setDatesReadArray(newArr);    
-        forceUpdate();    
+        setDatesReadArray(newArr);
+        // generate a new key to reload the flatpickr, and show the updates we made from the dropdown component 
+        let newKey = Math.random();
+        console.log(newKey);
+        setFpKey(newKey);   
     };
 
     const updateDropdown = async (dateString) => {
@@ -86,6 +82,15 @@ const Dropdown = ({ datesRead, index, id }) => {
         let finalArray = await newArr[0].split(', ');
         setDatesReadArray(finalArray);
     };
+
+    useEffect(() => {
+        console.log(fpKey)
+    }, [fpKey])
+
+    useEffect(async () => {
+        let key = Math.random();
+        setFpKey(key);
+    }, [])
 
     useEffect(() => {
         if (index !== undefined) {
@@ -142,6 +147,7 @@ const Dropdown = ({ datesRead, index, id }) => {
 
             <div className="date-picker">
                 <Flatpickr
+                    key={fpKey}
                     data-tooltip-id="flatTip"
                     data-tooltip-content="Open date picker!"
                     placeholder="Calendar"
@@ -156,7 +162,6 @@ const Dropdown = ({ datesRead, index, id }) => {
                         setDatePicker(selectedDates, dateStr, instance, id);
                         console.log(index)
                         updateDropdown(dateStr);
-                        // forceUpdate();
                     }} >
                 </Flatpickr>
             </div>
