@@ -24,7 +24,7 @@ const Dropdown = ({ datesRead, index, id }) => {
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
-    const [fpKey, setFpKey] = useState();
+    const [fpKey, setFpKey] = useState(0);
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
@@ -71,7 +71,7 @@ const Dropdown = ({ datesRead, index, id }) => {
         console.log(newArr);
         setDatesReadArray(newArr);
         // generate a new key to reload the flatpickr, and show the updates we made from the dropdown component 
-        let newKey = Math.random();
+        let newKey = (fpKey + Math.random());
         console.log(newKey);
         setFpKey(newKey);   
     };
@@ -87,10 +87,6 @@ const Dropdown = ({ datesRead, index, id }) => {
         console.log(fpKey)
     }, [fpKey])
 
-    useEffect(async () => {
-        let key = Math.random();
-        setFpKey(key);
-    }, [])
 
     useEffect(() => {
         if (index !== undefined) {
@@ -99,9 +95,13 @@ const Dropdown = ({ datesRead, index, id }) => {
     });
 
     useEffect(() => {
-        if (datesRead !== undefined) {
-            let dateArray = datesRead[0].split(', ');
-            setDatesReadArray(dateArray);
+        if (!datesRead !== undefined) {
+            let arrayINeed = Object.values(datesRead);
+            let arrayINeedString = arrayINeed[0];
+            if(arrayINeedString !== undefined) {
+                let newArray = arrayINeedString.split(', ');
+                setDatesReadArray(newArray)
+            }
         }
     }, [itemIndex])
 
@@ -147,14 +147,14 @@ const Dropdown = ({ datesRead, index, id }) => {
 
             <div className="date-picker">
                 <Flatpickr
-                    key={fpKey}
+                // key={fpKey.toString()}
                     data-tooltip-id="flatTip"
                     data-tooltip-content="Open date picker!"
                     placeholder="Calendar"
                     className='dates-read'
                     options={{
                         mode: "multiple",
-                        dateFormat: "Y-m-d",
+                        dateFormat: "M-d-Y",
                         defaultDate: JSON.stringify(datesRead)
                     }}
                     ref={fp}
