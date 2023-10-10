@@ -19,19 +19,18 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id }) => {
+const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
 
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
-    const [fpKey, setFpKey] = useState(0);
+    // const [fpKey, setFpKey] = useState(0);
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
 
     // datepicker useRef
     const fp = useRef(null);
-
 
     async function setDatePicker(selectedDates, dateStr, instance, id) {
         console.log(instance.element.value)
@@ -60,7 +59,7 @@ const Dropdown = ({ datesRead, index, id }) => {
         console.log(newDateString)
     }
 
-    const removeDate = async (date) => {
+    const removeDate = async (date, index) => {
         console.log(datesReadArray)
         let newArr = await datesReadArray.filter(originalDate => {
             return originalDate !== date
@@ -68,12 +67,8 @@ const Dropdown = ({ datesRead, index, id }) => {
         // need to update the dates read in the db
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
-        console.log(newArr);
         setDatesReadArray(newArr);
-        // generate a new key to reload the flatpickr, and show the updates we made from the dropdown component 
-        let newKey = (fpKey + Math.random());
-        console.log(newKey);
-        setFpKey(newKey);   
+        callbackFunction(newArr, index);
     };
 
     const updateDropdown = async (dateString) => {
@@ -83,9 +78,10 @@ const Dropdown = ({ datesRead, index, id }) => {
         setDatesReadArray(finalArray);
     };
 
-    useEffect(() => {
-        console.log(fpKey)
-    }, [fpKey])
+    // useEffect(() => {
+    //     console.log(fpKey)
+    //     DDkey(fpKey);
+    // }, [fpKey])
 
 
     useEffect(() => {
@@ -95,7 +91,7 @@ const Dropdown = ({ datesRead, index, id }) => {
     });
 
     useEffect(() => {
-        if (!datesRead !== undefined) {
+        if (datesRead !== undefined) {
             let arrayINeed = Object.values(datesRead);
             let arrayINeedString = arrayINeed[0];
             if(arrayINeedString !== undefined) {
@@ -124,7 +120,8 @@ const Dropdown = ({ datesRead, index, id }) => {
                                 <FontAwesomeIcon
                                     className="remove-date-icon"
                                     onClick={() => {
-                                        removeDate(date)
+                                        removeDate(date, index)
+                                        console.log(index)
                                     }}
                                     icon={icon({ name: "rectangle-xmark", style: "regular" })} />
                             </div>
@@ -156,6 +153,8 @@ const Dropdown = ({ datesRead, index, id }) => {
                         mode: "multiple",
                         dateFormat: "M-d-Y",
                         defaultDate: JSON.stringify(datesRead)
+                        // defaultDate: datesReadArray
+
                     }}
                     ref={fp}
                     onChange={(selectedDates, dateStr, instance) => {
