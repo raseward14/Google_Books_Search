@@ -18,13 +18,13 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import './style.css';
+import flatpickr from "flatpickr";
 
 const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
 
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
-    // const [fpKey, setFpKey] = useState(0);
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
@@ -68,7 +68,10 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
         setDatesReadArray(newArr);
-        callbackFunction(newArr, index);
+        console.log(typeof newDateString)
+        document.getElementById(`f-${itemIndex}`).flatpickr({
+            setDate: newDateString
+        })
     };
 
     const updateDropdown = async (dateString) => {
@@ -77,12 +80,6 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         let finalArray = await newArr[0].split(', ');
         setDatesReadArray(finalArray);
     };
-
-    // useEffect(() => {
-    //     console.log(fpKey)
-    //     DDkey(fpKey);
-    // }, [fpKey])
-
 
     useEffect(() => {
         if (index !== undefined) {
@@ -142,9 +139,8 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
             }
 
 
-            <div className="date-picker">
+            <div id={`f-${itemIndex}`} className="date-picker">
                 <Flatpickr
-                // key={fpKey.toString()}
                     data-tooltip-id="flatTip"
                     data-tooltip-content="Open date picker!"
                     placeholder="Calendar"
@@ -153,15 +149,14 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                         mode: "multiple",
                         dateFormat: "M-d-Y",
                         defaultDate: JSON.stringify(datesRead)
-                        // defaultDate: datesReadArray
-
                     }}
                     ref={fp}
                     onChange={(selectedDates, dateStr, instance) => {
                         setDatePicker(selectedDates, dateStr, instance, id);
                         console.log(index)
                         updateDropdown(dateStr);
-                    }} >
+                    }} 
+                    >
                 </Flatpickr>
             </div>
         </div>

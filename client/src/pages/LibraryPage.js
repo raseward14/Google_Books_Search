@@ -52,12 +52,12 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         console.log('from library page', APIDatesReadArray);
     }
 
-    async function setDatePicker(selectedDates, dateStr, instance, id) {
-        console.log(selectedDates, dateStr, instance, id)
-        await readAPIFunctions.updateRead(axiosPrivate, id, {
-            datesRead: instance.element.value
-        }, accessToken)
-    }
+    // async function setDatePicker(selectedDates, dateStr, instance, id) {
+    //     console.log(selectedDates, dateStr, instance, id)
+    //     await readAPIFunctions.updateRead(axiosPrivate, id, {
+    //         datesRead: instance.element.value
+    //     }, accessToken)
+    // }
 
     async function filterBooks(filteredArray) {
         console.log('want to read page has this book array: ', filteredArray)
@@ -192,13 +192,18 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     };
 
     async function updateReadArray(value, index) {
-        console.log(read[index].datesRead)
-        let newString = value.join(', ')
-        console.log(newString)
-        let newArr = [...read];
-        newArr[index].datesRead[0] = newString;
-        console.log(newArr)
-        setRead(newArr);
+        // let newString = value.join(', ')
+        // console.log(newString)
+        // let newArr = [...read];
+        // let bookToUpdate = newArr[index];
+        // console.log(bookToUpdate.datesRead[0]);
+        // bookToUpdate.datesRead[0] = newString;
+        // setDateStr(newString)
+        // console.log(bookToUpdate.datesRead[0]);
+        // newArr[index] = bookToUpdate;
+        // console.log(newArr)
+        // setRead(newArr);
+        loadRead()
     }
 
     useEffect(() => {
