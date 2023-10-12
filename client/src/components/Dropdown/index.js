@@ -71,7 +71,13 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         
         // this removes the dropdown date from the flatpickr as well, in case its open
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
-        flatpickr(`#f-${itemIndex}`).setDate(newArrayOfDates, true);
+        flatpickr(`#f-${itemIndex}`, {
+            options: {
+                mode: "multiple",
+                dateFormat: "M-d-Y",
+                defaultDate: JSON.stringify(datesRead)
+            }
+        }).setDate(newArrayOfDates);
 
     };
 
@@ -118,7 +124,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                     </button>
                     <div id={`${itemIndex}`} className='date-dropdown-content'>
                         {datesReadArray.map((date) => (
-                            <div key={date[index]}>{date}
+                            <div>{date}
                                 <FontAwesomeIcon
                                     className="remove-date-icon"
                                     onClick={() => {
@@ -145,6 +151,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
 
 
             <div  className="date-picker">
+                
                 <Flatpickr
                     id={`f-${itemIndex}`} 
                     data-tooltip-id="flatTip"
@@ -163,7 +170,6 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                         updateDropdown(dateStr);
                     }} 
                     >
-                        <input data-input/>
                 </Flatpickr>
             </div>
         </div>
