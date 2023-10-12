@@ -70,6 +70,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         updateDatesRead(newDateString);
         
         // this removes the dropdown date from the flatpickr as well, in case its open
+        // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
         flatpickr(`#f-${itemIndex}`, {
             options: {
@@ -165,9 +166,11 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                     }}
                     ref={fp}
                     onChange={(selectedDates, dateStr, instance) => {
-                        setDatePicker(selectedDates, dateStr, instance, id);
+
+                            setDatePicker(selectedDates, dateStr, instance, id);
                         console.log(index)
-                        updateDropdown(dateStr);
+
+                            updateDropdown(dateStr);
                     }} 
                     >
                 </Flatpickr>
