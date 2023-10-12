@@ -275,8 +275,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 datesRead={book.datesRead}
                                 index={index}
                                 id={book._id}
-                                callbackFunction={updateReadArray}
-                                 />
+                                callbackFunction={updateReadArray} />
 
                                 <div className="date-picker">
                                     {/* <Flatpickr

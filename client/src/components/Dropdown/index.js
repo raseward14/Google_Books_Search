@@ -64,14 +64,15 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         let newArr = await datesReadArray.filter(originalDate => {
             return originalDate !== date
         })
+        setDatesReadArray(newArr);
         // need to update the dates read in the db
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
-        setDatesReadArray(newArr);
-        console.log(typeof newDateString)
-        document.getElementById(`f-${itemIndex}`).flatpickr({
-            setDate: newDateString
-        })
+        
+        // this removes the dropdown date from the flatpickr as well, in case its open
+        let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
+        flatpickr(`#f-${itemIndex}`).setDate(newArrayOfDates, true);
+
     };
 
     const updateDropdown = async (dateString) => {
@@ -80,6 +81,10 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         let finalArray = await newArr[0].split(', ');
         setDatesReadArray(finalArray);
     };
+
+    useEffect(() => {
+        console.log('this is the format I need:', datesRead)
+    }, [datesRead])
 
     useEffect(() => {
         if (index !== undefined) {
@@ -139,8 +144,9 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
             }
 
 
-            <div id={`f-${itemIndex}`} className="date-picker">
+            <div  className="date-picker">
                 <Flatpickr
+                    id={`f-${itemIndex}`} 
                     data-tooltip-id="flatTip"
                     data-tooltip-content="Open date picker!"
                     placeholder="Calendar"
@@ -157,6 +163,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                         updateDropdown(dateStr);
                     }} 
                     >
+                        <input data-input/>
                 </Flatpickr>
             </div>
         </div>
