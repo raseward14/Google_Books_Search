@@ -65,24 +65,32 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
             return originalDate !== date
         })
         setDatesReadArray(newArr);
+        console.log(newArr)
         // need to update the dates read in the db
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
-        
+        console.log([newDateString])
         // this removes the dropdown date from the flatpickr as well, in case its open
         // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
-        flatpickr(`#f-${itemIndex}`, {
-            options: {
-                mode: "multiple",
-                dateFormat: "M-d-Y",
-                defaultDate: JSON.stringify(datesRead)
-            }
-        }).setDate(newArrayOfDates);
+        console.log(newArrayOfDates)
+        flatpickr(`#f-${itemIndex}`
+        // , {
+            // options: {
+            //     mode: "multiple",
+                // dateFormat: "M-d-Y",
+                // defaultDate: JSON.stringify(datesRead)
+            // }
+            // works once
+        // }).setDate(newArrayOfDates);
+    // }
+    // the error occurs the second time I update the date picker, from the dropdown component
+    ).setDate(newArrayOfDates);
 
     };
 
     const updateDropdown = async (dateString) => {
+        console.log(dateString)
         let newArr = [];
         newArr.push(dateString);
         let finalArray = await newArr[0].split(', ');
@@ -103,7 +111,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         if (datesRead !== undefined) {
             let arrayINeed = Object.values(datesRead);
             let arrayINeedString = arrayINeed[0];
-            if(arrayINeedString !== undefined) {
+            if (arrayINeedString !== undefined) {
                 let newArray = arrayINeedString.split(', ');
                 setDatesReadArray(newArray)
             }
@@ -112,7 +120,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
 
     return (
         <div className="flatpickr-container">
-        <ReactTooltip id="flatTip" />
+            <ReactTooltip id="flatTip" />
 
             {arrow ?
                 <div className="date-dropdown">
@@ -151,10 +159,10 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
             }
 
 
-            <div  className="date-picker">
-                
+            <div className="date-picker">
+
                 <Flatpickr
-                    id={`f-${itemIndex}`} 
+                    id={`f-${itemIndex}`}
                     data-tooltip-id="flatTip"
                     data-tooltip-content="Open date picker!"
                     placeholder="Calendar"
@@ -166,13 +174,11 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                     }}
                     ref={fp}
                     onChange={(selectedDates, dateStr, instance) => {
-
-                            setDatePicker(selectedDates, dateStr, instance, id);
+                        setDatePicker(selectedDates, dateStr, instance, id);
                         console.log(index)
-
-                            updateDropdown(dateStr);
-                    }} 
-                    >
+                        updateDropdown(dateStr);
+                    }}
+                >
                 </Flatpickr>
             </div>
         </div>
