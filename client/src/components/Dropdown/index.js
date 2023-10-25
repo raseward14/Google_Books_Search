@@ -74,7 +74,22 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
         console.log(newArrayOfDates)
-        flatpickr(`#f-${itemIndex}`
+
+
+
+
+        // this is where the error occurs - the second time I update the date pickr- same problem
+        // const fp = flatpickr(`#f-${itemIndex}`, {
+        //         mode: "multiple",
+        //         dateFormat: "M-d-Y",
+        //     })
+        // fp.setDate(newArrayOfDates)
+
+
+
+
+        // this is where the error occurs - the second time I update the date pickr
+        // flatpickr(`#f-${itemIndex}`
         // , {
             // options: {
             //     mode: "multiple",
@@ -85,7 +100,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         // }).setDate(newArrayOfDates);
     // }
     // the error occurs the second time I update the date picker, from the dropdown component
-    ).setDate(newArrayOfDates);
+    // ).setDate(newArrayOfDates);
 
     };
 
