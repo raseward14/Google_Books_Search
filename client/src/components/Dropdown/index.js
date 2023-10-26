@@ -12,13 +12,13 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 // import flatpickr.js
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css"
+import flatpickr from "flatpickr";
 
 // tooltip
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import './style.css';
-import flatpickr from "flatpickr";
 
 const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
 
@@ -59,31 +59,49 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         console.log(newDateString)
     }
 
+
     const removeDate = async (date, index) => {
-        console.log(datesReadArray)
+        console.log(datesReadArray, date, itemIndex)
         let newArr = await datesReadArray.filter(originalDate => {
             return originalDate !== date
         })
-        setDatesReadArray(newArr);
+
+        // sets the state of the dates read for this book - has nothing to do with the error
         console.log(newArr)
-        // need to update the dates read in the db
+        setDatesReadArray(newArr);
+        console.log('made it here')
+        // need to update the dates read in the db - has nothing to do with the error
         let newDateString = newArr.join(', ');
-        updateDatesRead(newDateString);
         console.log([newDateString])
+        updateDatesRead(newDateString);
+
+
+
+
+        
         // this removes the dropdown date from the flatpickr as well, in case its open
         // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
         console.log(newArrayOfDates)
 
 
-
-
         // this is where the error occurs - the second time I update the date pickr- same problem
+        // f-itemIndex is undefined - seems I am trying to access a DOM element that does not exist for some reason
         // const fp = flatpickr(`#f-${itemIndex}`, {
         //         mode: "multiple",
-        //         dateFormat: "M-d-Y",
+        //         // dateFormat: "M-d-Y",
         //     })
         // fp.setDate(newArrayOfDates)
+
+        // let test = document.getElementById(`f-${itemIndex}`)
+        // test.value = newDateString
+        // console.log(test.value)
+
+            const fp = flatpickr(`#f-${itemIndex}`, {
+                mode: "multiple",
+            })
+            fp.setDate(newArrayOfDates)
+
 
 
 
@@ -188,11 +206,11 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                         defaultDate: JSON.stringify(datesRead)
                     }}
                     ref={fp}
-                    onChange={(selectedDates, dateStr, instance) => {
-                        setDatePicker(selectedDates, dateStr, instance, id);
-                        console.log(index)
-                        updateDropdown(dateStr);
-                    }}
+                    // the flatpickr is undefined the second time
+                    // onChange={(selectedDates, dateStr, instance) => {
+                    //     setDatePicker(selectedDates, dateStr, instance, id);
+                    //     updateDropdown(dateStr);
+                    // }}
                 >
                 </Flatpickr>
             </div>
