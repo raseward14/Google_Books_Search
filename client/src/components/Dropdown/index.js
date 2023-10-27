@@ -70,48 +70,21 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         // sets the state of the dates read for this book - has nothing to do with the error
         console.log(newArr)
         setDatesReadArray(newArr);
+        
         // need to update the dates read in the db - has nothing to do with the error
         let newDateString = newArr.join(', ');
-        console.log([newDateString])
         updateDatesRead(newDateString);
-
-
-
+        // updateDropdown(newDateString);
+        
         // this removes the dropdown date from the flatpickr as well, in case its open
         // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
         console.log(newArrayOfDates)
-
-
-        // this is where the error occurs - the second time I update the date pickr- same problem
-        // f-itemIndex is undefined - seems I am trying to access a DOM element that does not exist for some reason
-        // const fp = flatpickr(`#f-${itemIndex}`, {
-        //         mode: "multiple",
-        //         // dateFormat: "M-d-Y",
-        //     })
-        // fp.setDate(newArrayOfDates)
-
-
+        
         const fp = flatpickr(`#f-${index}`, {
             mode: "multiple",
         })
         fp.setDate(newArrayOfDates)
-
-
-        // this is where the error occurs - the second time I update the date pickr
-        // flatpickr(`#f-${itemIndex}`
-        // , {
-        // options: {
-        //     mode: "multiple",
-        // dateFormat: "M-d-Y",
-        // defaultDate: JSON.stringify(datesRead)
-        // }
-        // works once
-        // }).setDate(newArrayOfDates);
-        // }
-        // the error occurs the second time I update the date picker, from the dropdown component
-        // ).setDate(newArrayOfDates);
-
     };
 
     const updateDropdown = async (dateString) => {
@@ -119,6 +92,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         let newArr = [];
         newArr.push(dateString);
         let finalArray = await newArr[0].split(', ');
+        console.log(finalArray);
         setDatesReadArray(finalArray);
     };
 
@@ -157,13 +131,13 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                         <i className="arrow up date-arrow" />
                     </button>
                     <div id={`${itemIndex}`} className='date-dropdown-content'>
-                        {datesReadArray.map((date) => (
-                            <div>{date}
+                        {datesReadArray.map((date, i) => (
+                            <div key={i}>{date}
                                 <FontAwesomeIcon
                                     className="remove-date-icon"
                                     onClick={() => {
                                         removeDate(date, index)
-                                        console.log(index)
+                                        console.log(index, i)
                                     }}
                                     icon={icon({ name: "rectangle-xmark", style: "regular" })} />
                             </div>
@@ -202,7 +176,6 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                     onChange={(selectedDates, dateStr, instance) => {
                         // updateDatesRead(instance.element.value)
                         // updateDropdown(dateStr);
-
                         // console.log(itemIndex, selectedDates)
                         myFunction(selectedDates, dateStr, instance);
                     }}
