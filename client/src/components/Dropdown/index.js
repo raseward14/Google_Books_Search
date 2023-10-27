@@ -32,12 +32,13 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
     // datepicker useRef
     const fp = useRef(null);
 
-    async function setDatePicker(selectedDates, dateStr, instance, id) {
-        console.log(instance.element.value)
-        await readAPIFunctions.updateRead(axiosPrivate, id, {
-            datesRead: instance.element.value
-        }, accessToken)
-    };
+    async function myFunction(selectedDates, dateStr, instance) {
+        updateDatesRead(instance.element.value)
+        updateDropdown(dateStr);
+        console.log(itemIndex, selectedDates, dateStr, instance, id)
+        console.log('made it here')
+    }
+
 
     const flipArrow = () => {
         if (arrow) {
@@ -53,10 +54,10 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
 
     const updateDatesRead = async (newDateString) => {
         // api call to update the dates read value in db
+        console.log(newDateString)
         await readAPIFunctions.updateRead(axiosPrivate, id, {
             datesRead: newDateString
         }, accessToken)
-        console.log(newDateString)
     }
 
 
@@ -69,7 +70,6 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         // sets the state of the dates read for this book - has nothing to do with the error
         console.log(newArr)
         setDatesReadArray(newArr);
-        console.log('made it here')
         // need to update the dates read in the db - has nothing to do with the error
         let newDateString = newArr.join(', ');
         console.log([newDateString])
@@ -77,8 +77,6 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
 
 
 
-
-        
         // this removes the dropdown date from the flatpickr as well, in case its open
         // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
@@ -93,32 +91,26 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         //     })
         // fp.setDate(newArrayOfDates)
 
-        // let test = document.getElementById(`f-${itemIndex}`)
-        // test.value = newDateString
-        // console.log(test.value)
 
-            const fp = flatpickr(`#f-${itemIndex}`, {
-                mode: "multiple",
-            })
-            fp.setDate(newArrayOfDates)
-
-
-
+        const fp = flatpickr(`#f-${index}`, {
+            mode: "multiple",
+        })
+        fp.setDate(newArrayOfDates)
 
 
         // this is where the error occurs - the second time I update the date pickr
         // flatpickr(`#f-${itemIndex}`
         // , {
-            // options: {
-            //     mode: "multiple",
-                // dateFormat: "M-d-Y",
-                // defaultDate: JSON.stringify(datesRead)
-            // }
-            // works once
+        // options: {
+        //     mode: "multiple",
+        // dateFormat: "M-d-Y",
+        // defaultDate: JSON.stringify(datesRead)
+        // }
+        // works once
         // }).setDate(newArrayOfDates);
-    // }
-    // the error occurs the second time I update the date picker, from the dropdown component
-    // ).setDate(newArrayOfDates);
+        // }
+        // the error occurs the second time I update the date picker, from the dropdown component
+        // ).setDate(newArrayOfDates);
 
     };
 
@@ -207,10 +199,13 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                     }}
                     ref={fp}
                     // the flatpickr is undefined the second time
-                    // onChange={(selectedDates, dateStr, instance) => {
-                    //     setDatePicker(selectedDates, dateStr, instance, id);
-                    //     updateDropdown(dateStr);
-                    // }}
+                    onChange={(selectedDates, dateStr, instance) => {
+                        // updateDatesRead(instance.element.value)
+                        // updateDropdown(dateStr);
+
+                        // console.log(itemIndex, selectedDates)
+                        myFunction(selectedDates, dateStr, instance);
+                    }}
                 >
                 </Flatpickr>
             </div>
