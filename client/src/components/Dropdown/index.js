@@ -20,11 +20,12 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
+const Dropdown = ({ datesRead, index, id }) => {
 
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
     const [itemIndex, setItemIndex] = useState();
+    const [ID, setID] = useState();
 
     const axiosPrivate = useAxiosPrivate();
     let accessToken = sessionStorage.getItem('accessToken');
@@ -33,22 +34,28 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
     const fp = useRef(null);
 
     async function myFunction(selectedDates, dateStr, instance) {
+        // if ((selectedDates !== undefined) && (dateStr !== undefined) && (instance !== undefined)) {
         updateDatesRead(instance.element.value)
         updateDropdown(dateStr);
         console.log(itemIndex, selectedDates, dateStr, instance, id)
         console.log('made it here');
+        // } else {
+        // console.log('no dates read for this book yet')
+        // }
     }
 
 
     const flipArrow = () => {
         if (arrow) {
-            console.log(itemIndex)
-            document.getElementById(`${itemIndex}`).classList.toggle("show-dates")
+            // document.getElementById(`${itemIndex}-${ID}`).classList.toggle("show-dates");
             setArrow(false);
+            console.log(itemIndex, arrow)
         } else {
-            console.log(itemIndex)
-            document.getElementById(`${itemIndex}`).classList.toggle("show-dates")
-            setArrow(true)
+            // if(datesReadArray.length > 0) {
+            // document.getElementById(`${itemIndex}-${ID}`).classList.toggle("show-dates");
+            // }
+            setArrow(true);
+            console.log(itemIndex, arrow)
         }
     };
 
@@ -61,30 +68,30 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
     }
 
 
-    const removeDate = async (date, index) => {
-        console.log(datesReadArray, date, itemIndex)
+    const removeDate = async (date) => {
+        console.log(date)
         let newArr = await datesReadArray.filter(originalDate => {
-            return originalDate !== date
+            return originalDate !== date;
         })
 
-        // sets the state of the dates read for this book - has nothing to do with the error
+        // sets the state of the dates read for this book 
         console.log(newArr)
         setDatesReadArray(newArr);
-        
-        // need to update the dates read in the db - has nothing to do with the error
+
+        // need to update the dates read in the db 
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
         // updateDropdown(newDateString);
-        
+
         // this removes the dropdown date from the flatpickr as well, in case its open
         // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
         console.log(newArrayOfDates)
-        
-        const fp = flatpickr(`#f-${index}`, {
+
+        const fp = flatpickr(`#f-${itemIndex}`, {
             mode: "multiple",
         })
-        fp.setDate(newArrayOfDates)
+        fp.setDate(newArrayOfDates);
     };
 
     const updateDropdown = async (dateString) => {
@@ -95,6 +102,12 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         console.log(finalArray);
         setDatesReadArray(finalArray);
     };
+
+    useEffect(() => {
+        if (id !== undefined) {
+            setID(id);
+        }
+    }, [id])
 
     useEffect(() => {
         console.log('this is the format I need:', datesRead)
@@ -126,18 +139,19 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                     <button
                         className="date-arrow"
                         onClick={() => {
+                            console.log(`arrow: ${arrow} clicked`)
                             flipArrow();
                         }}>Dates Read
                         <i className="arrow up date-arrow" />
                     </button>
-                    <div id={`${itemIndex}`} className='date-dropdown-content'>
+                    <div id={`${itemIndex}-${ID}`} className='date-dropdown-content'>
                         {datesReadArray.map((date, i) => (
                             <div key={i}>{date}
                                 <FontAwesomeIcon
                                     className="remove-date-icon"
                                     onClick={() => {
-                                        removeDate(date, index)
-                                        console.log(index, i)
+                                        removeDate(date)
+                                        console.log(date)
                                     }}
                                     icon={icon({ name: "rectangle-xmark", style: "regular" })} />
                             </div>
@@ -145,21 +159,21 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                     </div>
                 </div>
                 :
-                <div>
+                <div className="date-dropdown">
                     <button
                         className="date-arrow"
                         onClick={() => {
+                            console.log(`arrow: ${arrow} clicked`)
                             flipArrow();
                         }}>Dates Read
                         <i className="arrow down date-arrow" />
                     </button>
-                    <div id={`${itemIndex}`}></div>
+                    <div id={`${itemIndex}-${ID}`}></div>
                 </div>
             }
 
 
             <div className="date-picker">
-
                 <Flatpickr
                     id={`f-${itemIndex}`}
                     data-tooltip-id="flatTip"
@@ -177,7 +191,13 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
                         // updateDatesRead(instance.element.value)
                         // updateDropdown(dateStr);
                         // console.log(itemIndex, selectedDates)
-                        myFunction(selectedDates, dateStr, instance);
+
+
+                        if ((selectedDates !== undefined) && (dateStr !== undefined) && (instance !== undefined)) {
+                            myFunction(selectedDates, dateStr, instance);
+                        } else {
+                            console.log(`flatpickr has undefined values`)
+                        }
                     }}
                 >
                 </Flatpickr>

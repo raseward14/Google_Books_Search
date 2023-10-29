@@ -191,20 +191,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
         };
     };
 
-    async function updateReadArray(value, index) {
-        // let newString = value.join(', ')
-        // console.log(newString)
-        // let newArr = [...read];
-        // let bookToUpdate = newArr[index];
-        // console.log(bookToUpdate.datesRead[0]);
-        // bookToUpdate.datesRead[0] = newString;
-        // setDateStr(newString)
-        // console.log(bookToUpdate.datesRead[0]);
-        // newArr[index] = bookToUpdate;
-        // console.log(newArr)
-        // setRead(newArr);
-        loadRead()
-    }
 
     useEffect(() => {
         appReadCount(readCount)
@@ -274,8 +260,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <Dropdown 
                                 datesRead={book.datesRead}
                                 index={index}
-                                id={book._id}
-                                callbackFunction={updateReadArray} />
+                                id={book._id} />
 
                                 <div className="date-picker">
                                     {/* <Flatpickr

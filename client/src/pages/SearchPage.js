@@ -387,36 +387,35 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
             <h3>Search</h3>
             <table>
                 <thead>
+                    <tr>
+                        <td>
+                            <Filter
+                                tText={(text) => {
+                                    setIntitle(text)
+                                }}
+                                aText={(text) => {
+                                    setInauthor(text)
+                                }}
+                                gText={(text) => {
+                                    setSubject(text)
+                                }} />
 
-                <tr>
-                    <td>
-                        <Filter
-                            tText={(text) => {
-                                setIntitle(text)
-                            }}
-                            aText={(text) => {
-                                setInauthor(text)
-                            }}
-                            gText={(text) => {
-                                setSubject(text)
-                            }} />
+                        </td>
+                        <td>
+                            <input
+                                className='search'
+                                placeholder='General Search'
+                                onChange={(event) => {
+                                    setSearch(event.target.value);
+                                }} />
 
-                    </td>
-                    <td>
-                        <input
-                            className='search'
-                            placeholder='General Search'
-                            onChange={(event) => {
-                                setSearch(event.target.value);
-                            }} />
-
-                    </td>
-                    <td>
-                        <button
-                            className='submit'
-                            onClick={handleSubmit}>Submit</button>
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            <button
+                                className='submit'
+                                onClick={handleSubmit}>Submit</button>
+                        </td>
+                    </tr>
                 </thead>
             </table>
             <ReactTooltip id="pinTip" />
