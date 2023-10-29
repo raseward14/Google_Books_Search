@@ -386,6 +386,8 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
         <div>
             <h3>Search</h3>
             <table>
+                <thead>
+
                 <tr>
                     <td>
                         <Filter
@@ -415,6 +417,7 @@ const SearchPage = ({ appReadCount, appWantCount, appFavCount }) => {
                             onClick={handleSubmit}>Submit</button>
                     </td>
                 </tr>
+                </thead>
             </table>
             <ReactTooltip id="pinTip" />
 

@@ -36,7 +36,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         updateDatesRead(instance.element.value)
         updateDropdown(dateStr);
         console.log(itemIndex, selectedDates, dateStr, instance, id)
-        console.log('made it here')
+        console.log('made it here');
     }
 
 
@@ -104,7 +104,7 @@ const Dropdown = ({ datesRead, index, id, callbackFunction }) => {
         if (index !== undefined) {
             setItemIndex(index)
         }
-    });
+    }, [index]);
 
     useEffect(() => {
         if (datesRead !== undefined) {
