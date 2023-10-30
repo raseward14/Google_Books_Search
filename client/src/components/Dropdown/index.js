@@ -47,13 +47,13 @@ const Dropdown = ({ datesRead, index, id, callback }) => {
 
     const flipArrow = () => {
         if (arrow) {
-            // document.getElementById(`${itemIndex}-${ID}`).classList.toggle("show-dates");
+            document.getElementById(`${itemIndex}-${ID}`).classList.toggle("show-dates");
             setArrow(false);
-            console.log(itemIndex, arrow)
+            console.log(datesReadArray[0], itemIndex, arrow)
         } else {
-            // document.getElementById(`${itemIndex}-${ID}`).classList.toggle("show-dates");
+            document.getElementById(`${itemIndex}-${ID}`).classList.toggle("show-dates");
             setArrow(true);
-            console.log(itemIndex, arrow)
+            console.log(datesReadArray[0], itemIndex, arrow)
         }
     };
 
@@ -144,22 +144,26 @@ const Dropdown = ({ datesRead, index, id, callback }) => {
                         }}>Dates Read
                         <i className="arrow up date-arrow" />
                     </button>
-                    <div id={`${itemIndex}-${ID}`} className='date-dropdown-content'>
-                        {datesReadArray.map((date, i) => (
-                            <div key={i}>{date}
-                                <FontAwesomeIcon
-                                    className="remove-date-icon"
-                                    onClick={() => {
-                                        removeDate(date)
-                                        console.log(date, index)
-                                    }}
-                                    icon={icon({ name: "rectangle-xmark", style: "regular" })} />
-                            </div>
-                        ))}
-                    </div>
+                    {(datesReadArray[0] !== "") ?
+                        <div id={`${itemIndex}-${ID}`} className='date-dropdown-content'>
+                            {datesReadArray.map((date, i) => (
+                                <div key={i}>{date}
+                                    <FontAwesomeIcon
+                                        className="remove-date-icon"
+                                        onClick={() => {
+                                            removeDate(date)
+                                            console.log(date, index)
+                                        }}
+                                        icon={icon({ name: "rectangle-xmark", style: "regular" })} />
+                                </div>
+                            ))}
+                        </div>
+                        :
+                        <div id={`${itemIndex}-${ID}`}></div>
+                    }
                 </div>
                 :
-                <div className="date-dropdown">
+                <div>
                     <button
                         className="date-arrow"
                         onClick={() => {
