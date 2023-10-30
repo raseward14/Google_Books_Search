@@ -72,26 +72,23 @@ const Dropdown = ({ datesRead, index, id, callback }) => {
             return originalDate !== date;
         })
 
-        // sets the state of the dates read for this book 
-        console.log(newArr)
+        // sets the state of the dates read for this book- updates the dropdowns 
         setDatesReadArray(newArr);
 
         // need to update the dates read in the db 
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
-        console.log(newDateString)
-        // updateDropdown(newDateString);
-        callback(newDateString, index);
 
         // this removes the dropdown date from the flatpickr as well, in case its open
-        // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
         console.log(newArrayOfDates)
 
+        // this is the mistake
         // const fp = flatpickr(`#f-${itemIndex}`, {
         //     mode: "multiple",
         // })
         // fp.setDate(newArrayOfDates);
+        // and here's how I fixed it
         const fp = document.querySelector(`#f-${itemIndex}`)._flatpickr;
         fp.setDate(newArrayOfDates);
 

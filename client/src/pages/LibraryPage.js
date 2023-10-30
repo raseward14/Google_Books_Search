@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as readAPIFunctions from '../utils/ReadAPI';
 import * as favoriteAPIFunctions from '../utils/FavoriteAPI';
 import * as wantAPIFunctions from '../utils/WantToReadAPI';
@@ -29,11 +29,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     const [wantCount, setWantCount] = useState(null);
     const [favCount, setFavCount] = useState(null);
     const [searchArray, setSearchArray] = useState(null);
-
-    // const [dateStr, setDateStr] = useState(null);
-    // const [clickedIndex, setClickedIndex] = useState();
-    // const [dropdownKey, setsDropdownKey] = useState();
-
     const [read, setRead] = useState([]);
     const [pinned, setPinned] = useState(false);
     let APIRead;
@@ -50,25 +45,6 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     async function createReadBookDatesArray(APIRead) {
         let APIDatesReadArray = await APIRead.map(book => book.datesRead);
         console.log('from library page', APIDatesReadArray);
-    }
-
-    // async function setDatePicker(selectedDates, dateStr, instance, id) {
-    //     console.log(selectedDates, dateStr, instance, id)
-    //     await readAPIFunctions.updateRead(axiosPrivate, id, {
-    //         datesRead: instance.element.value
-    //     }, accessToken)
-    // }
-    async function resetRead(dateString, updateIndex) {
-        // console.log(dateString, updateIndex);
-        // console.log(read[updateIndex].datesRead[0]);
-        // let newArr = [...read];
-        // let newBook = read[updateIndex];
-        // newBook.datesRead[0] = dateString;
-        // console.log(newBook.datesRead[0]);
-        // newArr[updateIndex] = newBook;
-        // console.log(newArr);
-        // setRead(newArr);
-        loadRead();
     }
 
     async function filterBooks(filteredArray) {
@@ -272,8 +248,7 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <Dropdown 
                                 datesRead={book.datesRead}
                                 index={index}
-                                id={book._id}
-                                callback={resetRead} />
+                                id={book._id} />
 
                                 <Rating
                                     rating={book.rating}

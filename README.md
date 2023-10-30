@@ -73,3 +73,6 @@ Resources:
 * [npm react-tooltip](https://www.npmjs.com/package/react-tooltip)
 * [CSS Previous sibling selectors and how to fake them](https://medium.com/free-code-camp/how-to-make-the-impossible-possible-in-css-with-a-little-creativity-bd96bb42b29d)
 * [Understanding sibling combinators in CSS: A complete guide](https://blog.logrocket.com/understanding-sibling-combinators-css/)
+* [The flatpickr Instance: Retrieving the flatpickr instance](https://flatpickr.js.org/instance-methods-properties-elements/)
+* **Resource that solved a difficult problem retrieving flatpickr instance**  
+![Instance not saved to variable](client/src/components/Images/flatpickr.png)
