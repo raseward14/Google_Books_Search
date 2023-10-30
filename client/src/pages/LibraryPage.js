@@ -58,6 +58,18 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
     //         datesRead: instance.element.value
     //     }, accessToken)
     // }
+    async function resetRead(dateString, updateIndex) {
+        // console.log(dateString, updateIndex);
+        // console.log(read[updateIndex].datesRead[0]);
+        // let newArr = [...read];
+        // let newBook = read[updateIndex];
+        // newBook.datesRead[0] = dateString;
+        // console.log(newBook.datesRead[0]);
+        // newArr[updateIndex] = newBook;
+        // console.log(newArr);
+        // setRead(newArr);
+        loadRead();
+    }
 
     async function filterBooks(filteredArray) {
         console.log('want to read page has this book array: ', filteredArray)
@@ -260,38 +272,9 @@ const LibraryPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <Dropdown 
                                 datesRead={book.datesRead}
                                 index={index}
-                                id={book._id} />
+                                id={book._id}
+                                callback={resetRead} />
 
-                                <div className="date-picker">
-                                    {/* <Flatpickr
-                                        placeholder="Calendar"
-                                        className='dates-read'
-                                        options={{
-                                            mode: "multiple",
-                                            dateFormat: "Y-m-d",
-                                            defaultDate: JSON.stringify(book.datesRead)
-                                        }}
-                                        ref={fp}
-                                        onChange={(selectedDates, dateStr, instance) => {
-                                            let id = book._id;
-                                            setDatePicker(selectedDates, dateStr, instance, id);
-                                            setDateStr(dateStr)
-                                            setClickedIndex(index);
-                                            console.log(index)
-                                        }} > */}
-                                        {/* <Dropdown book={book} /> */}
-                                    {/* </Flatpickr> */}
-                                    {/* <button
-                                        data-clear
-                                        type="button"
-                                        onClick={() => {
-                                            if (!fp?.current?.flatpickr) return;
-                                            fp.current.flatpickr.clear();
-                                        }}
-                                    >
-                                        Clear
-                                    </button> */}
-                                </div>
                                 <Rating
                                     rating={book.rating}
                                     updateRating={postRating}

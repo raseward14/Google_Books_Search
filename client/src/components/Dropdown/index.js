@@ -20,7 +20,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import './style.css';
 
-const Dropdown = ({ datesRead, index, id }) => {
+const Dropdown = ({ datesRead, index, id, callback }) => {
 
     const [arrow, setArrow] = useState(false);
     const [datesReadArray, setDatesReadArray] = useState();
@@ -51,9 +51,7 @@ const Dropdown = ({ datesRead, index, id }) => {
             setArrow(false);
             console.log(itemIndex, arrow)
         } else {
-            // if(datesReadArray.length > 0) {
             // document.getElementById(`${itemIndex}-${ID}`).classList.toggle("show-dates");
-            // }
             setArrow(true);
             console.log(itemIndex, arrow)
         }
@@ -81,17 +79,22 @@ const Dropdown = ({ datesRead, index, id }) => {
         // need to update the dates read in the db 
         let newDateString = newArr.join(', ');
         updateDatesRead(newDateString);
+        console.log(newDateString)
         // updateDropdown(newDateString);
+        callback(newDateString, index);
 
         // this removes the dropdown date from the flatpickr as well, in case its open
         // the flatpickr becomes undefined for some reason
         let newArrayOfDates = await newArr.map((date) => new Date(`${date}`));
         console.log(newArrayOfDates)
 
-        const fp = flatpickr(`#f-${itemIndex}`, {
-            mode: "multiple",
-        })
+        // const fp = flatpickr(`#f-${itemIndex}`, {
+        //     mode: "multiple",
+        // })
+        // fp.setDate(newArrayOfDates);
+        const fp = document.querySelector(`#f-${itemIndex}`)._flatpickr;
         fp.setDate(newArrayOfDates);
+
     };
 
     const updateDropdown = async (dateString) => {
@@ -151,7 +154,7 @@ const Dropdown = ({ datesRead, index, id }) => {
                                     className="remove-date-icon"
                                     onClick={() => {
                                         removeDate(date)
-                                        console.log(date)
+                                        console.log(date, index)
                                     }}
                                     icon={icon({ name: "rectangle-xmark", style: "regular" })} />
                             </div>
