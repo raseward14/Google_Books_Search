@@ -17,10 +17,10 @@
 
 .dates-read {
   width: 20px !important;
-  background-color: black;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 5px;
   box-shadow: 0px 3px 5px #888888;
+  opacity: 0%;
 }
 
 .dates-read:hover {
@@ -54,7 +54,6 @@
 .date-picker {
   display: flex;
   justify-content: center;
-  margin-right: 5%;
 }
 
 .fav {
@@ -73,10 +72,6 @@ table {
 thead tr th {
   width: 50%;
   /* border: 1px black solid; */
-}
-
-tbody tr td {
-  /* border: 1px solid black; */
 }
 
 tbody tr {

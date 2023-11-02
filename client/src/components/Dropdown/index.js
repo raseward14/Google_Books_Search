@@ -134,6 +134,35 @@ const Dropdown = ({ datesRead, index, id, callback }) => {
         <div className="flatpickr-container">
             <ReactTooltip id="flatTip" />
 
+            <div className="date-picker">
+                <Flatpickr
+                    id={`f-${itemIndex}`}
+                    data-tooltip-id="flatTip"
+                    data-tooltip-content="Open date picker!"
+                    placeholder="Calendar"
+                    className='dates-read'
+                    options={{
+                        mode: "multiple",
+                        dateFormat: "M-d-Y",
+                        position: "auto right",
+                        defaultDate: JSON.stringify(datesRead)
+                    }}
+                    ref={fp}
+                    // the flatpickr is undefined the second time
+                    onChange={(selectedDates, dateStr, instance) => {
+                        if ((selectedDates !== undefined) && (dateStr !== undefined) && (instance !== undefined)) {
+                            myFunction(selectedDates, dateStr, instance);
+                        } else {
+                            console.log(`flatpickr has undefined values`)
+                        }
+                    }}
+                >
+                </Flatpickr>
+                <FontAwesomeIcon
+                    className="calendar-icon"
+                    icon={icon({ name: "calendar", style: "regular" })} />
+            </div>
+
             {arrow ?
                 <div className="date-dropdown">
                     <button
@@ -169,7 +198,8 @@ const Dropdown = ({ datesRead, index, id, callback }) => {
                         onClick={() => {
                             console.log(`arrow: ${arrow} clicked`)
                             flipArrow();
-                        }}>Dates Read
+                        }}>  
+                            Dates Read
                         <i className="arrow down date-arrow" />
                     </button>
                     <div id={`${itemIndex}-${ID}`}></div>
@@ -177,35 +207,6 @@ const Dropdown = ({ datesRead, index, id, callback }) => {
             }
 
 
-            <div className="date-picker">
-                <Flatpickr
-                    id={`f-${itemIndex}`}
-                    data-tooltip-id="flatTip"
-                    data-tooltip-content="Open date picker!"
-                    placeholder="Calendar"
-                    className='dates-read'
-                    options={{
-                        mode: "multiple",
-                        dateFormat: "M-d-Y",
-                        defaultDate: JSON.stringify(datesRead)
-                    }}
-                    ref={fp}
-                    // the flatpickr is undefined the second time
-                    onChange={(selectedDates, dateStr, instance) => {
-                        // updateDatesRead(instance.element.value)
-                        // updateDropdown(dateStr);
-                        // console.log(itemIndex, selectedDates)
-
-
-                        if ((selectedDates !== undefined) && (dateStr !== undefined) && (instance !== undefined)) {
-                            myFunction(selectedDates, dateStr, instance);
-                        } else {
-                            console.log(`flatpickr has undefined values`)
-                        }
-                    }}
-                >
-                </Flatpickr>
-            </div>
         </div>
     );
 };
