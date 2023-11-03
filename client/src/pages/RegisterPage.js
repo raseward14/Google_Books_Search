@@ -11,6 +11,7 @@ import * as wantAPIFunctions from '../utils/WantToReadAPI';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Recommended from '../components/Recommended';
+import CurrentlyReading from '../components/CurrentlyReading';
 
 const user_regex = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
 
@@ -174,19 +175,19 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                 <section>
                     <h2>Welcome</h2>
                     <p>
-                        Search for a book, then save it! Add books you'd like to read to the <em>Want to Read</em> list, and books you've already read to the <em>Read list</em>.
+                        Search for a book, then save it! Add books you'd like to read to the <b><em>Want to Read</em></b> list, and books you've already read to the <em>Read list</em>.
                     </p>
                     <p>
-                        Move books you've already read from the <em>Want to Read List</em>, to the <em>Read List</em>.
+                        Move books you've already read from the <em>Want to Read List</em>, to the <b><em>Read List</em></b>.
                     </p>
                     <p>
-                        Add your Favorites from the <em>Read List</em> to the <em>Favorites</em> list.
+                        Add your Favorites from the <em>Read List</em> to the <b><em>Favorites</em></b> list.
                     </p>
                     <table>
                         <thead>
                             <tr>
                                 <th colSpan={1}>Recommended for you!</th>
-                                <th colSpan={1}></th>
+                                <th colSpan={1}>Currently Reading</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,7 +195,8 @@ const RegisterPage = ({ appReadCount, appWantCount, appFavCount }) => {
                                 <td><Recommended
                                     WCount={wantCallbackCount}
                                     RCount={readCallbackCount} /></td>
-                                <td></td>
+                                <td className="currently-reading"><CurrentlyReading 
+                                /></td>
                             </tr>
                         </tbody>
                     </table>

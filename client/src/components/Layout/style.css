@@ -9,6 +9,10 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.currently-reading {
+  vertical-align: top;
+}
+
 .flatpickr-container {
   display: flex;
   align-items: center;
