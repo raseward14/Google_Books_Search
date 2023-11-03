@@ -16,7 +16,8 @@ const CurrentlyReading = () => {
     // state variable to contain whats currently being read
     const [inProgress, setInProgress] = useState([]);
 
-    async function removeFromInProgress(id) {
+    async function removeFromInProgress(id, book) {
+        setInProgress(inProgress.filter(progress => progress._id !== book._id))
         // PUT needs, axiosPrivate, id, body, accessToken
         await wantAPIFunctions.updateWantToRead(axiosPrivate, id, {
             "inProgress": false
@@ -61,7 +62,7 @@ const CurrentlyReading = () => {
                                                     data-tooltip-content="Remove from in progress."
                                                     className="book-modal-close ip-x"
                                                     onClick={() => {
-                                                        removeFromInProgress(book._id);
+                                                        removeFromInProgress(book._id, book);
                                                     }}>&times;</span>
                     </div>
                 ))}
