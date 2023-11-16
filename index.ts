@@ -11,6 +11,14 @@ type LibraryResult = {
     date: Date,
     rating: number,
     datesRead: string[]
+};
+
+if(process.argv[2] == null)
+{
+    console.log('please enter a valid book title')
+    process.exit();
+} else {
+    console.log('valid book title')
 }
 
 type FavoriteResult = {
@@ -24,7 +32,7 @@ type FavoriteResult = {
     isbn13: string,
     date: Date
     rating: number,
-}
+};
 
 type ReadResult = {
     title: string,
@@ -37,4 +45,4 @@ type ReadResult = {
     inProgress: boolean,
     isbn13: string,
     date: Date
-}
+};
