@@ -13,14 +13,6 @@ type LibraryResult = {
     datesRead: string[]
 };
 
-if(process.argv[2] == null)
-{
-    console.log('please enter a valid book title')
-    process.exit();
-} else {
-    console.log('valid book title')
-}
-
 type FavoriteResult = {
     title: string,
     user_id: number,
@@ -46,3 +38,47 @@ type ReadResult = {
     isbn13: string,
     date: Date
 };
+
+type PlateResult = {
+    weight: number,
+    count: number
+}
+
+if(Number.isNaN(parseInt(process.argv[2])) || process.argv[2] == null) {
+    console.log('please enter a valid barbell weight')
+    process.exit();
+} 
+
+let barGoal = parseInt(process.argv[2]);
+let barWeight = process.argv[3] ? parseInt(process.argv[3]) : 45;
+
+barGoal -= barWeight;
+
+const WEIGHT_VALUES = [
+    45,
+    35,
+    25,
+    15,
+    10,
+    5,
+    2.5
+];
+
+let results: PlateResult[] = [];
+
+for(let i = 0; i < WEIGHT_VALUES.length; i++)
+{
+    let count = Math.floor(barGoal / (WEIGHT_VALUES[i] * 2))
+    count *=2
+
+    results.push({
+        weight: WEIGHT_VALUES[i],
+        count
+    });
+
+    barGoal -= WEIGHT_VALUES[i] * count;
+} 
+
+results.map(weight => {
+    console.log(`You will need ${weight.count} of ${weight.weight}.`)
+});
